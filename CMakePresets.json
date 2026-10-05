@@ -1,0 +1,198 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 21,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "default",
+            "displayName": "Default (Release)",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "SUB0PUB_BUILD_TESTING": "ON",
+                "SUB0PUB_BUILD_EXAMPLES": "ON"
+            }
+        },
+        {
+            "name": "debug",
+            "displayName": "Debug",
+            "binaryDir": "${sourceDir}/build-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "SUB0PUB_BUILD_TESTING": "ON",
+                "SUB0PUB_BUILD_EXAMPLES": "ON"
+            }
+        },
+        {
+            "name": "ci-msvc",
+            "displayName": "CI - MSVC",
+            "binaryDir": "${sourceDir}/build-ci",
+            "cacheVariables": {
+                "SUB0PUB_BUILD_TESTING": "ON",
+                "SUB0PUB_BUILD_EXAMPLES": "ON"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "ci-asan",
+            "displayName": "CI - ASan/UBSan",
+            "binaryDir": "${sourceDir}/build-asan",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_CXX_FLAGS": "-fsanitize=address,undefined -fno-omit-frame-pointer",
+                "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=address,undefined",
+                "SUB0PUB_BUILD_TESTING": "ON",
+                "SUB0PUB_BUILD_EXAMPLES": "ON"
+            },
+            "condition": {
+                "type": "notEquals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "ci-asan-release",
+            "displayName": "CI - ASan/UBSan (NDEBUG)",
+            "binaryDir": "${sourceDir}/build-asan-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+                "CMAKE_CXX_FLAGS": "-fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer",
+                "CMAKE_CXX_FLAGS_RELWITHDEBINFO": "-O2 -g -DNDEBUG",
+                "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=address,undefined",
+                "SUB0PUB_BUILD_TESTING": "ON",
+                "SUB0PUB_BUILD_EXAMPLES": "ON"
+            },
+            "condition": {
+                "type": "notEquals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "ci-tsan",
+            "displayName": "CI - TSan",
+            "binaryDir": "${sourceDir}/build-tsan",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_CXX_FLAGS": "-fsanitize=thread -fno-omit-frame-pointer",
+                "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=thread",
+                "SUB0PUB_BUILD_TESTING": "ON",
+                "SUB0PUB_BUILD_EXAMPLES": "ON"
+            },
+            "condition": {
+                "type": "notEquals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "ci-unix",
+            "displayName": "CI - GCC/Clang",
+            "binaryDir": "${sourceDir}/build-ci",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "SUB0PUB_BUILD_TESTING": "ON",
+                "SUB0PUB_BUILD_EXAMPLES": "ON"
+            },
+            "condition": {
+                "type": "notEquals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "default",
+            "configurePreset": "default",
+            "configuration": "Release"
+        },
+        {
+            "name": "debug",
+            "configurePreset": "debug",
+            "configuration": "Debug"
+        },
+        {
+            "name": "ci-msvc",
+            "configurePreset": "ci-msvc",
+            "configuration": "Release"
+        },
+        {
+            "name": "ci-unix",
+            "configurePreset": "ci-unix"
+        },
+        {
+            "name": "ci-asan",
+            "configurePreset": "ci-asan"
+        },
+        {
+            "name": "ci-asan-release",
+            "configurePreset": "ci-asan-release"
+        },
+        {
+            "name": "ci-tsan",
+            "configurePreset": "ci-tsan"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "default",
+            "configurePreset": "default",
+            "configuration": "Release",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "debug",
+            "configurePreset": "debug",
+            "configuration": "Debug",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "ci-msvc",
+            "configurePreset": "ci-msvc",
+            "configuration": "Release",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "ci-unix",
+            "configurePreset": "ci-unix",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "ci-asan",
+            "configurePreset": "ci-asan",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "ci-asan-release",
+            "configurePreset": "ci-asan-release",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "ci-tsan",
+            "configurePreset": "ci-tsan",
+            "output": {
+                "outputOnFailure": true
+            }
+        }
+    ]
+}

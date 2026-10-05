@@ -1,0 +1,10 @@
+# Runs a variant and its handwritten reference and fails unless their output (checksum) is identical.
+execute_process(COMMAND "${REFERENCE}" OUTPUT_VARIABLE ref_out RESULT_VARIABLE ref_rc)
+execute_process(COMMAND "${VARIANT}" OUTPUT_VARIABLE var_out RESULT_VARIABLE var_rc)
+if(NOT ref_rc EQUAL 0 OR NOT var_rc EQUAL 0)
+    message(FATAL_ERROR "run failed: reference=${ref_rc} variant=${var_rc}")
+endif()
+if(NOT ref_out STREQUAL var_out)
+    message(FATAL_ERROR "behaviour differs from handwritten\n  reference: ${ref_out}  variant:   ${var_out}")
+endif()
+message(STATUS "same behaviour: ${var_out}")

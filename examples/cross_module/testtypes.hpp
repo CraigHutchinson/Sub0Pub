@@ -1,32 +1,43 @@
+/** Publisher, accumulators and stream adapters for the cross-DLL experiment
+ *
+ * Use when: tracing the participants introduced by main.cpp.
+ * Demonstrates: publishers/subscribers for float and int plus their serialization adapters.
+ * Story: ReadingSource emits 1.019F and 2 per call. ReadingAccumulator adds both to total;
+ * ReadingStreamForwarder writes serialized bytes to stdout via its inherited serializer.
+ * ReadingStreamReceiver is an unused stdin deserialization sketch, not instantiated by main.cpp.
+ * Keep in mind: the shared total and broker state are part of the unvalidated module-sharing
+ * experiment. Mixed diagnostic/binary stdout is illustrative, not a production transport protocol.
+ * Run: companion header for the disabled Sub0Pub_CrossModule targets; see main.cpp and README.md.
+ */
 #pragma once
 #include <iostream>
 
 #include "sub0pub/sub0pub.hpp"
 
 
-class A : public sub0::Publish<float>
-		, public sub0::Publish<int>
+class ReadingSource : public sub0::Publish<float>
+        , public sub0::Publish<int>
 {
 public:
-	void doIt()
-	{
-		const float floatData = 1.019F;
-		std::cout << "A sent float : " << floatData << std::endl;
-		sub0::publish( this, floatData );
+    void publishPair()
+    {
+        const float floatData = 1.019F;
+        std::cout << "ReadingSource sent float : " << floatData << std::endl;
+        sub0::publish( this, floatData );
 
-		const int intData = 2;
-		std::cout << "A sent int : " << intData << std::endl;
-		sub0::publish( this, intData );
-	}
+        const int intData = 2;
+        std::cout << "ReadingSource sent int : " << intData << std::endl;
+        sub0::publish( this, intData );
+    }
 };
 
 
-class D : public sub0::StreamDeserializer<>
-        , public sub0::ForwardPublish<float,D>
-        , public sub0::ForwardPublish<int,D>
+class ReadingStreamReceiver : public sub0::StreamDeserializer<>
+        , public sub0::ForwardPublish<float,ReadingStreamReceiver>
+        , public sub0::ForwardPublish<int,ReadingStreamReceiver>
 {
 public:
-    D()
+    ReadingStreamReceiver()
         : sub0::StreamDeserializer<>( std::cin )
     {
     }
@@ -35,35 +46,26 @@ public:
 
 float total = 0.0F;
 
-class B : public sub0::Subscribe<float>
-	, public sub0::Subscribe<int>
+class ReadingAccumulator : public sub0::Subscribe<float>
+    , public sub0::Subscribe<int>
 {
 public:
-	virtual void receive( const float& data )
-	{
-		std::cout << "B received float : " << data << std::endl;
-		total += data;
-	}
-	virtual void receive( const int& data )
-	{
-		std::cout << "B received int : " << data << std::endl;
-		total += data;
-	}
+    void receive( const float& data ) noexcept override
+    {
+        total += data;
+    }
+    void receive( const int& data ) noexcept override
+    {
+        total += data;
+    }
 };
 
-class C : public sub0::StreamSerializer<>
-        , public sub0::ForwardSubscribe<float,C>
-        , public sub0::ForwardSubscribe<int,C>
+class ReadingStreamForwarder : public sub0::StreamSerializer<>
+        , public sub0::ForwardSubscribe<float,ReadingStreamForwarder>
+        , public sub0::ForwardSubscribe<int,ReadingStreamForwarder>
 {
 public:
-    C() : sub0::StreamSerializer<>( std::cout )
+    ReadingStreamForwarder() : sub0::StreamSerializer<>( std::cout )
     {}
 
-
-    template<typename Data>
-    void forward( const Data& data )
-    {
-        std::cout << "Serialised " << data << ":\n";
-        sub0::StreamSerializer<>::forward(data);
-    }
 };

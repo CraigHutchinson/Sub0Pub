@@ -1,0 +1,191 @@
+name: CI
+
+on:
+  push:
+    branches: [develop, v2, main]
+  pull_request:
+    branches: [develop, v2, main, 'claude/**'] # claude/**: PRs stacked on another PR's branch
+  workflow_dispatch:
+
+env:
+  # Routine PR and merge feedback checks representative public-API budgets. Dispatch CI manually for the full matrix.
+  COLLAPSE_PROFILE: ${{ github.event_name == 'workflow_dispatch' && 'full' || 'smoke' }}
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        compiler: [gcc, clang]
+        include:
+          - compiler: gcc
+            cc: gcc
+            cxx: g++
+          - compiler: clang
+            cc: clang
+            cxx: clang++
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake --preset ci-unix -DSUB0PUB_COLLAPSE_PROFILE=${{ env.COLLAPSE_PROFILE }}
+        env:
+          CC: ${{ matrix.cc }}
+          CXX: ${{ matrix.cxx }}
+      - name: Build
+        run: cmake --build --preset ci-unix --parallel 2
+      - name: Test
+        run: ctest --preset ci-unix --parallel 2
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake --preset ci-msvc -DSUB0PUB_COLLAPSE_PROFILE=${{ env.COLLAPSE_PROFILE }}
+      - name: Build
+        run: cmake --build --preset ci-msvc --parallel 2
+      - name: Test
+        run: ctest --preset ci-msvc --parallel 2
+      - name: MSVC final-image evidence (static fan-out)
+        if: github.event_name == 'workflow_dispatch'
+        run: python tests/collapse/collapse_evidence.py --build msvc-O2 --case many_receivers --json msvc-fanout.json > msvc-fanout.md
+      - name: MSVC final-image evidence (cross-file LTCG)
+        if: github.event_name == 'workflow_dispatch'
+        run: python tests/collapse/collapse_evidence.py --build msvc-O2-lto --case cross_file --json msvc-ltcg.json > msvc-ltcg.md
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'workflow_dispatch'
+        with:
+          name: msvc-evidence-smoke
+          path: |
+            msvc-fanout.*
+            msvc-ltcg.*
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake --preset ci-unix -DSUB0PUB_COLLAPSE_PROFILE=${{ env.COLLAPSE_PROFILE }}
+      - name: Build
+        run: cmake --build --preset ci-unix --parallel 2
+      - name: Test
+        run: ctest --preset ci-unix --parallel 2
+
+  sanitizers:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # ci-asan: Debug with assertions; ci-asan-release: -O2 -DNDEBUG (release-mode capacity contract, issue #4);
+        # ci-tsan: data races, incl. the cross-thread teardown test (tests/config/test_endpoints.cpp)
+        preset: [ci-asan, ci-asan-release, ci-tsan]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure (ASan + UBSan)
+        run: cmake --preset ${{ matrix.preset }} -DSUB0PUB_COLLAPSE_PROFILE=${{ env.COLLAPSE_PROFILE }}
+        env:
+          CC: gcc
+          CXX: g++
+      - name: Build
+        run: cmake --build --preset ${{ matrix.preset }} --parallel 2
+      - name: Test
+        run: ctest --preset ${{ matrix.preset }} --parallel 2
+
+  collapse-evidence:
+    name: collapse-evidence (${{ matrix.group }})
+    # Each group checks both ordinary and LTO builds against the same per-build budgets. Keep all named Unix builds
+    # from collapse_evidence.py here; Windows evidence runs in build-windows.
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - group: gcc
+            standard: gcc-O2
+            lto: gcc-O2-lto
+            packages: valgrind
+          - group: clang
+            standard: clang-O2
+            lto: clang-O2-lto
+            packages: valgrind clang
+          - group: cm33
+            standard: cm33-gcc-Os
+            lto: cm33-gcc-Os-lto
+            packages: gcc-arm-none-eabi libstdc++-arm-none-eabi-newlib
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install toolchains
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ${{ matrix.packages }}
+      - name: Collect evidence
+        run: |
+          python3 tests/collapse/collapse_evidence.py \
+            --profile ${{ env.COLLAPSE_PROFILE }} \
+            --build ${{ matrix.standard }} --build ${{ matrix.lto }} \
+            --budgets tests/collapse/budgets.json \
+            --json collapse-evidence-${{ matrix.group }}.json > collapse-evidence-${{ matrix.group }}.md
+      - name: Summary
+        if: always()
+        run: cat collapse-evidence-${{ matrix.group }}.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: collapse-evidence-${{ matrix.group }}
+          path: collapse-evidence-${{ matrix.group }}.*
+
+  benchmark-regression:
+    # Machine-checked instruction budgets for default dispatch, representative optional policies, and IPC.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Callgrind
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends valgrind
+      - name: Check benchmark gate contracts
+        run: python3 tests/bench/test_baseline_gate.py
+      - name: Build benchmark scenarios
+        run: |
+          cmake --preset ci-unix -DSUB0PUB_COLLAPSE_PROFILE=smoke
+          cmake --build --preset ci-unix --parallel 2 --target Sub0Pub_Bench Sub0Pub_Bench_Checked Sub0Pub_Bench_Full Sub0Pub_Bench_ThreadSafe Sub0Pub_Bench_Ipc Sub0Pub_Bench_Axes
+      - name: Check instruction budgets
+        run: python3 tests/bench/run_baseline.py build-ci/tests --no-timing --budgets tests/bench/budgets.json > baseline.md
+      - name: Summary
+        if: always()
+        run: if [ -f baseline.md ]; then cat baseline.md >> "$GITHUB_STEP_SUMMARY"; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: benchmark-regression
+          path: baseline.md
+
+  comparison-footprint-benchmarks:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install toolchains
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends valgrind clang gcc-arm-none-eabi libstdc++-arm-none-eabi-newlib
+      - name: Migration comparison (including mixed paths)
+        run: python3 tests/compare/compare_versions.py > migration-comparison.md
+      - name: Footprint (host and Cortex-M33, each configuration option)
+        run: python3 tests/footprint/measure_footprint.py > footprint.md
+      - name: Benchmark baseline (instr/op, docs/PERFORMANCE_BASELINE.md)
+        run: |
+          cmake --preset default
+          cmake --build --preset default --parallel 2 --target Sub0Pub_Bench Sub0Pub_Bench_Checked Sub0Pub_Bench_Full Sub0Pub_Bench_ThreadSafe Sub0Pub_Bench_Ipc Sub0Pub_Bench_Axes
+          python3 tests/bench/run_baseline.py build/tests --no-timing > baseline.md
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: comparison-footprint-benchmarks
+          path: |
+            migration-comparison.md
+            footprint.md
+            baseline.md
+

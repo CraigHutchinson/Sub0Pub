@@ -1,0 +1,5116 @@
+{
+ "budgets": {
+  "clang-O2-lto/cross_file/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2-lto/cross_file/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2-lto/cross_file/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 25,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2-lto/cross_file/observable/sub0pub_virtual": {
+   "publish": 44.0,
+   "setup": 33,
+   "teardown": 79,
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 2327,
+   "ram": 296,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2-lto/cross_file/observable/sub0pub_virtual_lean": {
+   "publish": 44.0,
+   "setup": 33,
+   "teardown": 79,
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 2327,
+   "ram": 296,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2-lto/cross_file/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2-lto/cross_file/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2-lto/cross_file/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2-lto/cross_file/removable/sub0pub_virtual": {
+   "publish": 42.0,
+   "setup": 35,
+   "teardown": 79,
+   "path": 23,
+   "indirect_calls": 1,
+   "text": 2393,
+   "ram": 304,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2-lto/cross_file/removable/sub0pub_virtual_lean": {
+   "publish": 42.0,
+   "setup": 35,
+   "teardown": 79,
+   "path": 23,
+   "indirect_calls": 1,
+   "text": 2393,
+   "ram": 304,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/cancellation/observable/sub0_b2_cancelable": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/cancellation/observable/sub0_b1_cancelable": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/cancellation/removable/sub0_b2_cancelable": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/cancellation/removable/sub0_b1_cancelable": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/cancellation_filtered/observable/sub0_b2_cancelable": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/cancellation_filtered/removable/sub0_b2_cancelable": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/cross_file/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/cross_file/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/cross_file/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/cross_file/observable/sub0pub_virtual": {
+   "publish": 24.0,
+   "setup": 35,
+   "teardown": 81,
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 2262,
+   "ram": 288,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/cross_file/observable/sub0pub_virtual_lean": {
+   "publish": 24.0,
+   "setup": 35,
+   "teardown": 81,
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 2262,
+   "ram": 288,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/cross_file/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/cross_file/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/cross_file/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/cross_file/removable/sub0pub_virtual": {
+   "publish": 24.0,
+   "setup": 35,
+   "teardown": 81,
+   "path": 4,
+   "indirect_calls": 1,
+   "text": 2261,
+   "ram": 288,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/cross_file/removable/sub0pub_virtual_lean": {
+   "publish": 24.0,
+   "setup": 35,
+   "teardown": 81,
+   "path": 4,
+   "indirect_calls": 1,
+   "text": 2261,
+   "ram": 288,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/dynamic_subscriptions/observable/sub0pub_virtual": {
+   "publish": 2,
+   "setup": 2,
+   "teardown": 4,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 363,
+   "ram": 80,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/dynamic_subscriptions/observable/sub0pub_virtual_lean": {
+   "publish": 2,
+   "setup": 2,
+   "teardown": 4,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 363,
+   "ram": 80,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/dynamic_subscriptions/removable/sub0pub_virtual": {
+   "publish": 2,
+   "setup": 2,
+   "teardown": 4,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 363,
+   "ram": 80,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/dynamic_subscriptions/removable/sub0pub_virtual_lean": {
+   "publish": 2,
+   "setup": 2,
+   "teardown": 4,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 363,
+   "ram": 80,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/filters/observable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/filters/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/filters/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/filters/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 18,
+   "indirect_calls": 0,
+   "text": 15,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/filters/observable/sub0pub_virtual": {
+   "publish": 55.5,
+   "setup": 23,
+   "teardown": 47,
+   "path": 22,
+   "indirect_calls": 2,
+   "text": 2056,
+   "ram": 288,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/filters/observable/sub0pub_virtual_lean": {
+   "publish": 55.5,
+   "setup": 23,
+   "teardown": 47,
+   "path": 22,
+   "indirect_calls": 2,
+   "text": 2056,
+   "ram": 288,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/filters/removable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/filters/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/filters/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/filters/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/filters/removable/sub0pub_virtual": {
+   "publish": 56.0,
+   "setup": 23,
+   "teardown": 47,
+   "path": 37,
+   "indirect_calls": 2,
+   "text": 2072,
+   "ram": 288,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/filters/removable/sub0pub_virtual_lean": {
+   "publish": 56.0,
+   "setup": 23,
+   "teardown": 47,
+   "path": 37,
+   "indirect_calls": 2,
+   "text": 2072,
+   "ram": 288,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/large_payload/observable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/large_payload/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/large_payload/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/large_payload/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 21,
+   "indirect_calls": 0,
+   "text": 10,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/large_payload/observable/sub0pub_virtual": {
+   "publish": 52.0,
+   "setup": 23,
+   "teardown": 47,
+   "path": 21,
+   "indirect_calls": 1,
+   "text": 2096,
+   "ram": 280,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/large_payload/observable/sub0pub_virtual_lean": {
+   "publish": 52.0,
+   "setup": 23,
+   "teardown": 47,
+   "path": 21,
+   "indirect_calls": 1,
+   "text": 2096,
+   "ram": 280,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/large_payload/removable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/large_payload/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/large_payload/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/large_payload/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 5,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/large_payload/removable/sub0pub_virtual": {
+   "publish": 49.0,
+   "setup": 23,
+   "teardown": 47,
+   "path": 40,
+   "indirect_calls": 1,
+   "text": 2116,
+   "ram": 280,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/large_payload/removable/sub0pub_virtual_lean": {
+   "publish": 49.0,
+   "setup": 23,
+   "teardown": 47,
+   "path": 40,
+   "indirect_calls": 1,
+   "text": 2116,
+   "ram": 280,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/many_receivers/observable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/many_receivers/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/many_receivers/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/many_receivers/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 258,
+   "indirect_calls": 0,
+   "text": 8,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/many_receivers/observable/sub0pub_virtual": {
+   "publish": 343.0,
+   "setup": 302,
+   "teardown": 2795,
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 14280,
+   "ram": 776,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/many_receivers/observable/sub0pub_virtual_lean": {
+   "publish": 343.0,
+   "setup": 302,
+   "teardown": 2795,
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 14280,
+   "ram": 776,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/many_receivers/removable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/many_receivers/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/many_receivers/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/many_receivers/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/many_receivers/removable/sub0pub_virtual": {
+   "publish": 303.0,
+   "setup": 334,
+   "teardown": 2795,
+   "path": 24,
+   "indirect_calls": 1,
+   "text": 15400,
+   "ram": 904,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/many_receivers/removable/sub0pub_virtual_lean": {
+   "publish": 303.0,
+   "setup": 334,
+   "teardown": 2795,
+   "path": 24,
+   "indirect_calls": 1,
+   "text": 15400,
+   "ram": 904,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_receivers/observable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_receivers/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_receivers/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_receivers/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 29,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_receivers/observable/sub0pub_virtual": {
+   "publish": 46.0,
+   "setup": 33,
+   "teardown": 81,
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 2410,
+   "ram": 288,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_receivers/observable/sub0pub_virtual_lean": {
+   "publish": 46.0,
+   "setup": 33,
+   "teardown": 81,
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 2410,
+   "ram": 288,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_receivers/removable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_receivers/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_receivers/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_receivers/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 5,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_receivers/removable/sub0pub_virtual": {
+   "publish": 42.0,
+   "setup": 35,
+   "teardown": 81,
+   "path": 24,
+   "indirect_calls": 1,
+   "text": 2463,
+   "ram": 296,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_receivers/removable/sub0pub_virtual_lean": {
+   "publish": 42.0,
+   "setup": 35,
+   "teardown": 81,
+   "path": 24,
+   "indirect_calls": 1,
+   "text": 2463,
+   "ram": 296,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_types/observable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_types/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_types/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_types/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 38,
+   "indirect_calls": 0,
+   "text": 6,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_types/observable/sub0pub_virtual": {
+   "publish": 73.0,
+   "setup": 51,
+   "teardown": 98,
+   "path": 15,
+   "indirect_calls": 2,
+   "text": 3775,
+   "ram": 584,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_types/observable/sub0pub_virtual_lean": {
+   "publish": 73.0,
+   "setup": 51,
+   "teardown": 98,
+   "path": 15,
+   "indirect_calls": 2,
+   "text": 3775,
+   "ram": 584,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_types/removable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_types/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_types/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_types/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 6,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_types/removable/sub0pub_virtual": {
+   "publish": 62.0,
+   "setup": 51,
+   "teardown": 98,
+   "path": 42,
+   "indirect_calls": 2,
+   "text": 3768,
+   "ram": 584,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/multi_types/removable/sub0pub_virtual_lean": {
+   "publish": 62.0,
+   "setup": 51,
+   "teardown": 98,
+   "path": 42,
+   "indirect_calls": 2,
+   "text": 3768,
+   "ram": 584,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/nested_publish/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/nested_publish/observable/sub0_b2_static": {
+   "publish": 4.0,
+   "setup": 0,
+   "teardown": 0,
+   "path": 7,
+   "indirect_calls": 0,
+   "text": 38,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/nested_publish/observable/sub0pub_virtual": {
+   "publish": 75.0,
+   "setup": 37,
+   "teardown": 70,
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 3300,
+   "ram": 584,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/nested_publish/observable/sub0pub_virtual_lean": {
+   "publish": 75.0,
+   "setup": 37,
+   "teardown": 70,
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 3300,
+   "ram": 584,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/nested_publish/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/nested_publish/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/nested_publish/removable/sub0pub_virtual": {
+   "publish": 94.0,
+   "setup": 37,
+   "teardown": 70,
+   "path": 24,
+   "indirect_calls": 1,
+   "text": 3423,
+   "ram": 584,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/nested_publish/removable/sub0pub_virtual_lean": {
+   "publish": 94.0,
+   "setup": 37,
+   "teardown": 70,
+   "path": 24,
+   "indirect_calls": 1,
+   "text": 3423,
+   "ram": 584,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/one_receiver/observable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/one_receiver/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/one_receiver/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/one_receiver/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 10,
+   "indirect_calls": 0,
+   "text": 12,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/one_receiver/observable/sub0pub_virtual": {
+   "publish": 23.0,
+   "setup": 12,
+   "teardown": 20,
+   "path": 14,
+   "indirect_calls": 1,
+   "text": 1272,
+   "ram": 208,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/one_receiver/observable/sub0pub_virtual_lean": {
+   "publish": 23.0,
+   "setup": 12,
+   "teardown": 20,
+   "path": 14,
+   "indirect_calls": 1,
+   "text": 1272,
+   "ram": 208,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/one_receiver/removable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/one_receiver/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/one_receiver/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/one_receiver/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/one_receiver/removable/sub0pub_virtual": {
+   "publish": 24.0,
+   "setup": 13,
+   "teardown": 20,
+   "path": 24,
+   "indirect_calls": 1,
+   "text": 1288,
+   "ram": 216,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/one_receiver/removable/sub0pub_virtual_lean": {
+   "publish": 24.0,
+   "setup": 13,
+   "teardown": 20,
+   "path": 24,
+   "indirect_calls": 1,
+   "text": 1288,
+   "ram": 216,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/publisher_ergonomics/observable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/publisher_ergonomics/removable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/static_dynamic_bridge/observable/sub0_bridge_broker": {
+   "publish": 2,
+   "setup": 7,
+   "teardown": 20,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 774,
+   "ram": 104,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/static_dynamic_bridge/observable/sub0_bridge_slots": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 29,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/static_dynamic_bridge/removable/sub0_bridge_broker": {
+   "publish": 2,
+   "setup": 7,
+   "teardown": 20,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 783,
+   "ram": 104,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/static_dynamic_bridge/removable/sub0_bridge_slots": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 29,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/static_dynamic_bridge_churn/observable/sub0_bridge_broker": {
+   "publish": 2.5,
+   "setup": 10,
+   "teardown": 26,
+   "path": 28,
+   "indirect_calls": 0,
+   "text": 986,
+   "ram": 104,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/static_dynamic_bridge_churn/observable/sub0_bridge_slots": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 29,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/static_dynamic_bridge_churn/removable/sub0_bridge_broker": {
+   "publish": 2.75,
+   "setup": 10,
+   "teardown": 26,
+   "path": 29,
+   "indirect_calls": 0,
+   "text": 995,
+   "ram": 104,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/static_dynamic_bridge_churn/removable/sub0_bridge_slots": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 29,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/static_dynamic_bridge_empty/observable/sub0_bridge_broker": {
+   "publish": 2,
+   "setup": 3,
+   "teardown": 12,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 322,
+   "ram": 24,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/static_dynamic_bridge_empty/observable/sub0_bridge_slots": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/static_dynamic_bridge_empty/removable/sub0_bridge_broker": {
+   "publish": 2,
+   "setup": 3,
+   "teardown": 12,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 322,
+   "ram": 24,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/static_dynamic_bridge_empty/removable/sub0_bridge_slots": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/transport_endpoint/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/transport_endpoint/observable/sub0_b1_wire_origin_transport": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/transport_endpoint/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/transport_endpoint/observable/sub0_b2_static_origin_transport": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/transport_endpoint/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 17,
+   "indirect_calls": 0,
+   "text": 13,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/transport_endpoint/observable/sub0_dynamic_route": {
+   "publish": 113.0,
+   "setup": 28,
+   "teardown": 65,
+   "path": 49,
+   "indirect_calls": 2,
+   "text": 2684,
+   "ram": 320,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/transport_endpoint/observable/sub0_dynamic_route_lean": {
+   "publish": 112.0,
+   "setup": 28,
+   "teardown": 65,
+   "path": 49,
+   "indirect_calls": 2,
+   "text": 2644,
+   "ram": 320,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/transport_endpoint/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/transport_endpoint/removable/sub0_b1_wire_origin_transport": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/transport_endpoint/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/transport_endpoint/removable/sub0_b2_static_origin_transport": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/transport_endpoint/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 8,
+   "indirect_calls": 0,
+   "text": 4,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/transport_endpoint/removable/sub0_dynamic_route": {
+   "publish": 110.0,
+   "setup": 28,
+   "teardown": 65,
+   "path": 64,
+   "indirect_calls": 2,
+   "text": 2716,
+   "ram": 320,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/transport_endpoint/removable/sub0_dynamic_route_lean": {
+   "publish": 109.0,
+   "setup": 28,
+   "teardown": 65,
+   "path": 64,
+   "indirect_calls": 2,
+   "text": 2676,
+   "ram": 320,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/transport_two_links/observable/sub0_b1_wire": {
+   "publish": 10.0,
+   "setup": 6,
+   "teardown": 0,
+   "path": 17,
+   "indirect_calls": 0,
+   "text": 96,
+   "ram": 32,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/transport_two_links/observable/sub0_b1_wire_typed_links": {
+   "publish": 5.0,
+   "setup": 6,
+   "teardown": 0,
+   "path": 6,
+   "indirect_calls": 0,
+   "text": 64,
+   "ram": 32,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/transport_two_links/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/transport_two_links/removable/sub0_b1_wire": {
+   "publish": 9.0,
+   "setup": 6,
+   "teardown": 0,
+   "path": 15,
+   "indirect_calls": 0,
+   "text": 96,
+   "ram": 32,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/transport_two_links/removable/sub0_b1_wire_typed_links": {
+   "publish": 4.0,
+   "setup": 6,
+   "teardown": 0,
+   "path": 3,
+   "indirect_calls": 0,
+   "text": 48,
+   "ram": 32,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/transport_two_links/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/two_domains/observable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/two_domains/observable/sub0_b1_one_publisher": {
+   "publish": 3.0,
+   "setup": 6,
+   "teardown": 0,
+   "path": 3,
+   "indirect_calls": 0,
+   "text": 48,
+   "ram": 24,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/two_domains/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/two_domains/observable/sub0_b2_one_publisher": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/two_domains/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/two_domains/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 34,
+   "indirect_calls": 0,
+   "text": 12,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/two_domains/observable/sub0_dynamic_domain": {
+   "publish": 63.0,
+   "setup": 39,
+   "teardown": 98,
+   "path": 22,
+   "indirect_calls": 2,
+   "text": 3134,
+   "ram": 424,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/two_domains/removable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/two_domains/removable/sub0_b1_one_publisher": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/two_domains/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/two_domains/removable/sub0_b2_one_publisher": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/two_domains/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/two_domains/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 5,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/two_domains/removable/sub0_dynamic_domain": {
+   "publish": 60.0,
+   "setup": 41,
+   "teardown": 98,
+   "path": 47,
+   "indirect_calls": 2,
+   "text": 3187,
+   "ram": 432,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/zero_receivers/observable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/zero_receivers/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/zero_receivers/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/zero_receivers/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/zero_receivers/observable/sub0pub_virtual": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/zero_receivers/observable/sub0pub_virtual_lean": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/zero_receivers/removable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/zero_receivers/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/zero_receivers/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/zero_receivers/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/zero_receivers/removable/sub0pub_virtual": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "clang-O2/zero_receivers/removable/sub0pub_virtual_lean": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os-lto/cross_file/observable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os-lto/cross_file/observable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os-lto/cross_file/observable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os-lto/cross_file/observable/sub0pub_virtual": {
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 528,
+   "ram": 60,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os-lto/cross_file/observable/sub0pub_virtual_lean": {
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 528,
+   "ram": 60,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os-lto/cross_file/removable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os-lto/cross_file/removable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os-lto/cross_file/removable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os-lto/cross_file/removable/sub0pub_virtual": {
+   "path": 11,
+   "indirect_calls": 1,
+   "text": 540,
+   "ram": 60,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os-lto/cross_file/removable/sub0pub_virtual_lean": {
+   "path": 11,
+   "indirect_calls": 1,
+   "text": 540,
+   "ram": 60,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/cancellation/observable/sub0_b2_cancelable": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/cancellation/observable/sub0_b1_cancelable": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/cancellation/removable/sub0_b2_cancelable": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/cancellation/removable/sub0_b1_cancelable": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/cancellation_filtered/observable/sub0_b2_cancelable": {
+   "path": 4,
+   "indirect_calls": 0,
+   "text": 12,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/cancellation_filtered/removable/sub0_b2_cancelable": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/cross_file/observable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/cross_file/observable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/cross_file/observable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/cross_file/observable/sub0pub_virtual": {
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 492,
+   "ram": 60,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/cross_file/observable/sub0pub_virtual_lean": {
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 492,
+   "ram": 60,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/cross_file/removable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/cross_file/removable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/cross_file/removable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/cross_file/removable/sub0pub_virtual": {
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 496,
+   "ram": 60,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/cross_file/removable/sub0pub_virtual_lean": {
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 496,
+   "ram": 60,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/dynamic_subscriptions/observable/sub0pub_virtual": {
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 32,
+   "ram": 4,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/dynamic_subscriptions/observable/sub0pub_virtual_lean": {
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 32,
+   "ram": 4,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/dynamic_subscriptions/removable/sub0pub_virtual": {
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 28,
+   "ram": 4,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/dynamic_subscriptions/removable/sub0pub_virtual_lean": {
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 28,
+   "ram": 4,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/filters/observable/sub0_b1_mixin": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/filters/observable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/filters/observable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/filters/observable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/filters/observable/sub0pub_virtual": {
+   "path": 15,
+   "indirect_calls": 2,
+   "text": 544,
+   "ram": 52,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/filters/observable/sub0pub_virtual_lean": {
+   "path": 15,
+   "indirect_calls": 2,
+   "text": 544,
+   "ram": 52,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/filters/removable/sub0_b1_mixin": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/filters/removable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/filters/removable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/filters/removable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/filters/removable/sub0pub_virtual": {
+   "path": 27,
+   "indirect_calls": 2,
+   "text": 528,
+   "ram": 52,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/filters/removable/sub0pub_virtual_lean": {
+   "path": 27,
+   "indirect_calls": 2,
+   "text": 528,
+   "ram": 52,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/large_payload/observable/sub0_b1_mixin": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/large_payload/observable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/large_payload/observable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/large_payload/observable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/large_payload/observable/sub0pub_virtual": {
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 496,
+   "ram": 52,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/large_payload/observable/sub0pub_virtual_lean": {
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 496,
+   "ram": 52,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/large_payload/removable/sub0_b1_mixin": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/large_payload/removable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/large_payload/removable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/large_payload/removable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/large_payload/removable/sub0pub_virtual": {
+   "path": 20,
+   "indirect_calls": 1,
+   "text": 504,
+   "ram": 52,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/large_payload/removable/sub0pub_virtual_lean": {
+   "path": 20,
+   "indirect_calls": 1,
+   "text": 504,
+   "ram": 52,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/many_receivers/observable/sub0_b1_mixin": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/many_receivers/observable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/many_receivers/observable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/many_receivers/observable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/many_receivers/observable/sub0pub_virtual": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 568,
+   "ram": 388,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/many_receivers/observable/sub0pub_virtual_lean": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 568,
+   "ram": 388,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/many_receivers/removable/sub0_b1_mixin": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/many_receivers/removable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/many_receivers/removable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/many_receivers/removable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/many_receivers/removable/sub0pub_virtual": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 916,
+   "ram": 388,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/many_receivers/removable/sub0pub_virtual_lean": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 916,
+   "ram": 388,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_receivers/observable/sub0_b1_mixin": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_receivers/observable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_receivers/observable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_receivers/observable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_receivers/observable/sub0pub_virtual": {
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 484,
+   "ram": 60,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_receivers/observable/sub0pub_virtual_lean": {
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 484,
+   "ram": 60,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_receivers/removable/sub0_b1_mixin": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_receivers/removable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_receivers/removable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_receivers/removable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_receivers/removable/sub0pub_virtual": {
+   "path": 11,
+   "indirect_calls": 1,
+   "text": 492,
+   "ram": 60,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_receivers/removable/sub0pub_virtual_lean": {
+   "path": 11,
+   "indirect_calls": 1,
+   "text": 492,
+   "ram": 60,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_types/observable/sub0_b1_mixin": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_types/observable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_types/observable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_types/observable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_types/observable/sub0pub_virtual": {
+   "path": 10,
+   "indirect_calls": 2,
+   "text": 752,
+   "ram": 104,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_types/observable/sub0pub_virtual_lean": {
+   "path": 10,
+   "indirect_calls": 2,
+   "text": 752,
+   "ram": 104,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_types/removable/sub0_b1_mixin": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_types/removable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_types/removable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_types/removable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_types/removable/sub0pub_virtual": {
+   "path": 28,
+   "indirect_calls": 2,
+   "text": 732,
+   "ram": 104,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/multi_types/removable/sub0pub_virtual_lean": {
+   "path": 28,
+   "indirect_calls": 2,
+   "text": 732,
+   "ram": 104,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/nested_publish/observable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 4,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/nested_publish/observable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/nested_publish/observable/sub0pub_virtual": {
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 688,
+   "ram": 96,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/nested_publish/observable/sub0pub_virtual_lean": {
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 688,
+   "ram": 96,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/nested_publish/removable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/nested_publish/removable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/nested_publish/removable/sub0pub_virtual": {
+   "path": 9,
+   "indirect_calls": 1,
+   "text": 636,
+   "ram": 96,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/nested_publish/removable/sub0pub_virtual_lean": {
+   "path": 9,
+   "indirect_calls": 1,
+   "text": 636,
+   "ram": 96,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/one_receiver/observable/sub0_b1_mixin": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/one_receiver/observable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/one_receiver/observable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/one_receiver/observable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/one_receiver/observable/sub0pub_virtual": {
+   "path": 16,
+   "indirect_calls": 0,
+   "text": 416,
+   "ram": 44,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/one_receiver/observable/sub0pub_virtual_lean": {
+   "path": 16,
+   "indirect_calls": 0,
+   "text": 416,
+   "ram": 44,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/one_receiver/removable/sub0_b1_mixin": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/one_receiver/removable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/one_receiver/removable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/one_receiver/removable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/one_receiver/removable/sub0pub_virtual": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 380,
+   "ram": 44,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/one_receiver/removable/sub0pub_virtual_lean": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 380,
+   "ram": 44,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/publisher_ergonomics/observable/sub0_b1_mixin": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/publisher_ergonomics/removable/sub0_b1_mixin": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/static_dynamic_bridge/observable/sub0_bridge_broker": {
+   "path": 3,
+   "indirect_calls": 0,
+   "text": 1644,
+   "ram": 116,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/static_dynamic_bridge/observable/sub0_bridge_slots": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/static_dynamic_bridge/removable/sub0_bridge_broker": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 1632,
+   "ram": 116,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/static_dynamic_bridge/removable/sub0_bridge_slots": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/static_dynamic_bridge_churn/observable/sub0_bridge_broker": {
+   "path": 39,
+   "indirect_calls": 0,
+   "text": 1644,
+   "ram": 124,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/static_dynamic_bridge_churn/observable/sub0_bridge_slots": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/static_dynamic_bridge_churn/removable/sub0_bridge_broker": {
+   "path": 41,
+   "indirect_calls": 0,
+   "text": 1648,
+   "ram": 124,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/static_dynamic_bridge_churn/removable/sub0_bridge_slots": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/static_dynamic_bridge_empty/observable/sub0_bridge_broker": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 1536,
+   "ram": 108,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/static_dynamic_bridge_empty/observable/sub0_bridge_slots": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/static_dynamic_bridge_empty/removable/sub0_bridge_broker": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 1536,
+   "ram": 108,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/static_dynamic_bridge_empty/removable/sub0_bridge_slots": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/transport_endpoint/observable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/transport_endpoint/observable/sub0_b1_wire_origin_transport": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/transport_endpoint/observable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/transport_endpoint/observable/sub0_b2_static_origin_transport": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/transport_endpoint/observable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/transport_endpoint/observable/sub0_dynamic_route": {
+   "path": 2,
+   "indirect_calls": 2,
+   "text": 716,
+   "ram": 324,
+   "init_array": 0,
+   "added_deps": [
+    "TLS"
+   ]
+  },
+  "cm33-gcc-Os/transport_endpoint/observable/sub0_dynamic_route_lean": {
+   "path": 2,
+   "indirect_calls": 2,
+   "text": 688,
+   "ram": 68,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/transport_endpoint/removable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/transport_endpoint/removable/sub0_b1_wire_origin_transport": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/transport_endpoint/removable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/transport_endpoint/removable/sub0_b2_static_origin_transport": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/transport_endpoint/removable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/transport_endpoint/removable/sub0_dynamic_route": {
+   "path": 7,
+   "indirect_calls": 2,
+   "text": 728,
+   "ram": 324,
+   "init_array": 0,
+   "added_deps": [
+    "TLS"
+   ]
+  },
+  "cm33-gcc-Os/transport_endpoint/removable/sub0_dynamic_route_lean": {
+   "path": 7,
+   "indirect_calls": 2,
+   "text": 700,
+   "ram": 68,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/transport_two_links/observable/sub0_b1_wire": {
+   "path": 10,
+   "indirect_calls": 0,
+   "text": 28,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/transport_two_links/observable/sub0_b1_wire_typed_links": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 4,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/transport_two_links/observable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/transport_two_links/removable/sub0_b1_wire": {
+   "path": 10,
+   "indirect_calls": 0,
+   "text": 28,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/transport_two_links/removable/sub0_b1_wire_typed_links": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/transport_two_links/removable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/two_domains/observable/sub0_b1_mixin": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/two_domains/observable/sub0_b1_one_publisher": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/two_domains/observable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/two_domains/observable/sub0_b2_one_publisher": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/two_domains/observable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/two_domains/observable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/two_domains/observable/sub0_dynamic_domain": {
+   "path": 9,
+   "indirect_calls": 1,
+   "text": 2232,
+   "ram": 228,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/two_domains/removable/sub0_b1_mixin": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/two_domains/removable/sub0_b1_one_publisher": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/two_domains/removable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/two_domains/removable/sub0_b2_one_publisher": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/two_domains/removable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/two_domains/removable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/two_domains/removable/sub0_dynamic_domain": {
+   "path": 27,
+   "indirect_calls": 1,
+   "text": 2240,
+   "ram": 228,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/zero_receivers/observable/sub0_b1_mixin": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/zero_receivers/observable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/zero_receivers/observable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/zero_receivers/observable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/zero_receivers/observable/sub0pub_virtual": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/zero_receivers/observable/sub0pub_virtual_lean": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/zero_receivers/removable/sub0_b1_mixin": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/zero_receivers/removable/sub0_b1_wire": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/zero_receivers/removable/sub0_b2_static": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/zero_receivers/removable/sub0_b3_sink": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/zero_receivers/removable/sub0pub_virtual": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "cm33-gcc-Os/zero_receivers/removable/sub0pub_virtual_lean": {
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2-lto/cross_file/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2-lto/cross_file/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2-lto/cross_file/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2-lto/cross_file/observable/sub0pub_virtual": {
+   "publish": 56.0,
+   "setup": 32,
+   "teardown": 89,
+   "path": 12,
+   "indirect_calls": 1,
+   "text": 2104,
+   "ram": 352,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2-lto/cross_file/observable/sub0pub_virtual_lean": {
+   "publish": 56.0,
+   "setup": 32,
+   "teardown": 89,
+   "path": 12,
+   "indirect_calls": 1,
+   "text": 2104,
+   "ram": 352,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2-lto/cross_file/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2-lto/cross_file/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2-lto/cross_file/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2-lto/cross_file/removable/sub0pub_virtual": {
+   "publish": 52.0,
+   "setup": 32,
+   "teardown": 89,
+   "path": 33,
+   "indirect_calls": 1,
+   "text": 2123,
+   "ram": 352,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2-lto/cross_file/removable/sub0pub_virtual_lean": {
+   "publish": 52.0,
+   "setup": 32,
+   "teardown": 89,
+   "path": 33,
+   "indirect_calls": 1,
+   "text": 2123,
+   "ram": 352,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/cancellation/observable/sub0_b2_cancelable": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/cancellation/observable/sub0_b1_cancelable": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/cancellation/removable/sub0_b2_cancelable": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/cancellation/removable/sub0_b1_cancelable": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/cancellation_filtered/observable/sub0_b2_cancelable": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 3,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/cancellation_filtered/removable/sub0_b2_cancelable": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/cross_file/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/cross_file/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/cross_file/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/cross_file/observable/sub0pub_virtual": {
+   "publish": 25.0,
+   "setup": 32,
+   "teardown": 84,
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 1870,
+   "ram": 312,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/cross_file/observable/sub0pub_virtual_lean": {
+   "publish": 25.0,
+   "setup": 32,
+   "teardown": 84,
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 1870,
+   "ram": 312,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/cross_file/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/cross_file/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/cross_file/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/cross_file/removable/sub0pub_virtual": {
+   "publish": 25.0,
+   "setup": 32,
+   "teardown": 84,
+   "path": 3,
+   "indirect_calls": 1,
+   "text": 1869,
+   "ram": 312,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/cross_file/removable/sub0pub_virtual_lean": {
+   "publish": 25.0,
+   "setup": 32,
+   "teardown": 84,
+   "path": 3,
+   "indirect_calls": 1,
+   "text": 1869,
+   "ram": 312,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/dynamic_subscriptions/observable/sub0pub_virtual": {
+   "publish": 3.5,
+   "setup": 0,
+   "teardown": 4,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 292,
+   "ram": 64,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/dynamic_subscriptions/observable/sub0pub_virtual_lean": {
+   "publish": 3.5,
+   "setup": 0,
+   "teardown": 4,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 292,
+   "ram": 64,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/dynamic_subscriptions/removable/sub0pub_virtual": {
+   "publish": 3.5,
+   "setup": 0,
+   "teardown": 4,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 248,
+   "ram": 64,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/dynamic_subscriptions/removable/sub0pub_virtual_lean": {
+   "publish": 3.5,
+   "setup": 0,
+   "teardown": 4,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 248,
+   "ram": 64,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/filters/observable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/filters/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/filters/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/filters/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/filters/observable/sub0pub_virtual": {
+   "publish": 67.5,
+   "setup": 23,
+   "teardown": 45,
+   "path": 31,
+   "indirect_calls": 2,
+   "text": 1742,
+   "ram": 304,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/filters/observable/sub0pub_virtual_lean": {
+   "publish": 67.5,
+   "setup": 23,
+   "teardown": 45,
+   "path": 31,
+   "indirect_calls": 2,
+   "text": 1742,
+   "ram": 304,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/filters/removable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/filters/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/filters/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/filters/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/filters/removable/sub0pub_virtual": {
+   "publish": 67.0,
+   "setup": 23,
+   "teardown": 45,
+   "path": 45,
+   "indirect_calls": 2,
+   "text": 1714,
+   "ram": 304,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/filters/removable/sub0pub_virtual_lean": {
+   "publish": 67.0,
+   "setup": 23,
+   "teardown": 45,
+   "path": 45,
+   "indirect_calls": 2,
+   "text": 1714,
+   "ram": 304,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/large_payload/observable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/large_payload/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/large_payload/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/large_payload/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/large_payload/observable/sub0pub_virtual": {
+   "publish": 36.0,
+   "setup": 23,
+   "teardown": 45,
+   "path": 6,
+   "indirect_calls": 1,
+   "text": 1609,
+   "ram": 296,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/large_payload/observable/sub0pub_virtual_lean": {
+   "publish": 36.0,
+   "setup": 23,
+   "teardown": 45,
+   "path": 6,
+   "indirect_calls": 1,
+   "text": 1609,
+   "ram": 296,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/large_payload/removable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/large_payload/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/large_payload/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/large_payload/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/large_payload/removable/sub0pub_virtual": {
+   "publish": 76.0,
+   "setup": 23,
+   "teardown": 45,
+   "path": 43,
+   "indirect_calls": 1,
+   "text": 1695,
+   "ram": 296,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/large_payload/removable/sub0pub_virtual_lean": {
+   "publish": 76.0,
+   "setup": 23,
+   "teardown": 45,
+   "path": 43,
+   "indirect_calls": 1,
+   "text": 1695,
+   "ram": 296,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/many_receivers/observable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/many_receivers/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/many_receivers/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/many_receivers/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/many_receivers/observable/sub0pub_virtual": {
+   "publish": 134.0,
+   "setup": 291,
+   "teardown": 1640,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 7545,
+   "ram": 792,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/many_receivers/observable/sub0pub_virtual_lean": {
+   "publish": 134.0,
+   "setup": 291,
+   "teardown": 1640,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 7545,
+   "ram": 792,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/many_receivers/removable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/many_receivers/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/many_receivers/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/many_receivers/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/many_receivers/removable/sub0pub_virtual": {
+   "publish": 2,
+   "setup": 291,
+   "teardown": 1640,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 7997,
+   "ram": 792,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/many_receivers/removable/sub0pub_virtual_lean": {
+   "publish": 2,
+   "setup": 291,
+   "teardown": 1640,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 7997,
+   "ram": 792,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_receivers/observable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_receivers/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_receivers/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_receivers/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_receivers/observable/sub0pub_virtual": {
+   "publish": 56.0,
+   "setup": 32,
+   "teardown": 76,
+   "path": 11,
+   "indirect_calls": 1,
+   "text": 1876,
+   "ram": 304,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_receivers/observable/sub0pub_virtual_lean": {
+   "publish": 56.0,
+   "setup": 32,
+   "teardown": 76,
+   "path": 11,
+   "indirect_calls": 1,
+   "text": 1876,
+   "ram": 304,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_receivers/removable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_receivers/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_receivers/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_receivers/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_receivers/removable/sub0pub_virtual": {
+   "publish": 52.0,
+   "setup": 32,
+   "teardown": 76,
+   "path": 31,
+   "indirect_calls": 1,
+   "text": 1848,
+   "ram": 304,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_receivers/removable/sub0pub_virtual_lean": {
+   "publish": 52.0,
+   "setup": 32,
+   "teardown": 76,
+   "path": 31,
+   "indirect_calls": 1,
+   "text": 1848,
+   "ram": 304,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_types/observable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_types/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_types/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_types/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_types/observable/sub0pub_virtual": {
+   "publish": 82.0,
+   "setup": 46,
+   "teardown": 93,
+   "path": 29,
+   "indirect_calls": 2,
+   "text": 3130,
+   "ram": 608,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_types/observable/sub0pub_virtual_lean": {
+   "publish": 82.0,
+   "setup": 46,
+   "teardown": 93,
+   "path": 29,
+   "indirect_calls": 2,
+   "text": 3130,
+   "ram": 608,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_types/removable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_types/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_types/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_types/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_types/removable/sub0pub_virtual": {
+   "publish": 74.0,
+   "setup": 46,
+   "teardown": 93,
+   "path": 51,
+   "indirect_calls": 2,
+   "text": 2966,
+   "ram": 608,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/multi_types/removable/sub0pub_virtual_lean": {
+   "publish": 74.0,
+   "setup": 46,
+   "teardown": 93,
+   "path": 51,
+   "indirect_calls": 2,
+   "text": 2966,
+   "ram": 608,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/nested_publish/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 161,
+   "indirect_calls": 0,
+   "text": 536,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/nested_publish/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 161,
+   "indirect_calls": 0,
+   "text": 536,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/nested_publish/observable/sub0pub_virtual": {
+   "publish": 81.5,
+   "setup": 35,
+   "teardown": 64,
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 2742,
+   "ram": 592,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/nested_publish/observable/sub0pub_virtual_lean": {
+   "publish": 81.5,
+   "setup": 35,
+   "teardown": 64,
+   "path": 2,
+   "indirect_calls": 1,
+   "text": 2742,
+   "ram": 592,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/nested_publish/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/nested_publish/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/nested_publish/removable/sub0pub_virtual": {
+   "publish": 84.5,
+   "setup": 35,
+   "teardown": 64,
+   "path": 33,
+   "indirect_calls": 1,
+   "text": 2906,
+   "ram": 592,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/nested_publish/removable/sub0pub_virtual_lean": {
+   "publish": 84.5,
+   "setup": 35,
+   "teardown": 64,
+   "path": 33,
+   "indirect_calls": 1,
+   "text": 2906,
+   "ram": 592,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/one_receiver/observable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/one_receiver/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/one_receiver/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/one_receiver/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/one_receiver/observable/sub0pub_virtual": {
+   "publish": 11.0,
+   "setup": 12,
+   "teardown": 20,
+   "path": 12,
+   "indirect_calls": 0,
+   "text": 1123,
+   "ram": 224,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/one_receiver/observable/sub0pub_virtual_lean": {
+   "publish": 11.0,
+   "setup": 12,
+   "teardown": 20,
+   "path": 12,
+   "indirect_calls": 0,
+   "text": 1123,
+   "ram": 224,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/one_receiver/removable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/one_receiver/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/one_receiver/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/one_receiver/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/one_receiver/removable/sub0pub_virtual": {
+   "publish": 2,
+   "setup": 12,
+   "teardown": 20,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 1015,
+   "ram": 224,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/one_receiver/removable/sub0pub_virtual_lean": {
+   "publish": 2,
+   "setup": 12,
+   "teardown": 20,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 1015,
+   "ram": 224,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/publisher_ergonomics/observable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/publisher_ergonomics/removable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/static_dynamic_bridge/observable/sub0_bridge_broker": {
+   "publish": 2,
+   "setup": 15,
+   "teardown": 29,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 943,
+   "ram": 120,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/static_dynamic_bridge/observable/sub0_bridge_slots": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 48,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/static_dynamic_bridge/removable/sub0_bridge_broker": {
+   "publish": 2,
+   "setup": 15,
+   "teardown": 29,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 899,
+   "ram": 120,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/static_dynamic_bridge/removable/sub0_bridge_slots": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 48,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/static_dynamic_bridge_churn/observable/sub0_bridge_broker": {
+   "publish": 2,
+   "setup": 22,
+   "teardown": 39,
+   "path": 39,
+   "indirect_calls": 0,
+   "text": 1155,
+   "ram": 120,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/static_dynamic_bridge_churn/observable/sub0_bridge_slots": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 15,
+   "indirect_calls": 0,
+   "text": 68,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/static_dynamic_bridge_churn/removable/sub0_bridge_broker": {
+   "publish": 3.5,
+   "setup": 22,
+   "teardown": 39,
+   "path": 14,
+   "indirect_calls": 0,
+   "text": 1059,
+   "ram": 120,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/static_dynamic_bridge_churn/removable/sub0_bridge_slots": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 48,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/static_dynamic_bridge_empty/observable/sub0_bridge_broker": {
+   "publish": 2,
+   "setup": 3,
+   "teardown": 19,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 460,
+   "ram": 24,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/static_dynamic_bridge_empty/observable/sub0_bridge_slots": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/static_dynamic_bridge_empty/removable/sub0_bridge_broker": {
+   "publish": 2,
+   "setup": 3,
+   "teardown": 19,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 444,
+   "ram": 24,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/static_dynamic_bridge_empty/removable/sub0_bridge_slots": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/transport_endpoint/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/transport_endpoint/observable/sub0_b1_wire_origin_transport": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/transport_endpoint/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/transport_endpoint/observable/sub0_b2_static_origin_transport": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/transport_endpoint/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/transport_endpoint/observable/sub0_dynamic_route": {
+   "publish": 116.0,
+   "setup": 27,
+   "teardown": 64,
+   "path": 53,
+   "indirect_calls": 2,
+   "text": 2351,
+   "ram": 376,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/transport_endpoint/observable/sub0_dynamic_route_lean": {
+   "publish": 116.0,
+   "setup": 27,
+   "teardown": 64,
+   "path": 53,
+   "indirect_calls": 2,
+   "text": 2335,
+   "ram": 368,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/transport_endpoint/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/transport_endpoint/removable/sub0_b1_wire_origin_transport": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/transport_endpoint/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/transport_endpoint/removable/sub0_b2_static_origin_transport": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/transport_endpoint/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/transport_endpoint/removable/sub0_dynamic_route": {
+   "publish": 113.0,
+   "setup": 27,
+   "teardown": 64,
+   "path": 65,
+   "indirect_calls": 2,
+   "text": 2323,
+   "ram": 376,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/transport_endpoint/removable/sub0_dynamic_route_lean": {
+   "publish": 113.0,
+   "setup": 27,
+   "teardown": 64,
+   "path": 65,
+   "indirect_calls": 2,
+   "text": 2307,
+   "ram": 368,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/transport_two_links/observable/sub0_b1_wire": {
+   "publish": 8.0,
+   "setup": 0,
+   "teardown": 0,
+   "path": 15,
+   "indirect_calls": 0,
+   "text": 48,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/transport_two_links/observable/sub0_b1_wire_typed_links": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/transport_two_links/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/transport_two_links/removable/sub0_b1_wire": {
+   "publish": 8.0,
+   "setup": 0,
+   "teardown": 0,
+   "path": 15,
+   "indirect_calls": 0,
+   "text": 48,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/transport_two_links/removable/sub0_b1_wire_typed_links": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/transport_two_links/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/two_domains/observable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/two_domains/observable/sub0_b1_one_publisher": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/two_domains/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/two_domains/observable/sub0_b2_one_publisher": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/two_domains/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/two_domains/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/two_domains/observable/sub0_dynamic_domain": {
+   "publish": 71.0,
+   "setup": 68,
+   "teardown": 110,
+   "path": 32,
+   "indirect_calls": 2,
+   "text": 2827,
+   "ram": 496,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/two_domains/removable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/two_domains/removable/sub0_b1_one_publisher": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/two_domains/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/two_domains/removable/sub0_b2_one_publisher": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/two_domains/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/two_domains/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/two_domains/removable/sub0_dynamic_domain": {
+   "publish": 67.0,
+   "setup": 68,
+   "teardown": 110,
+   "path": 53,
+   "indirect_calls": 2,
+   "text": 2799,
+   "ram": 496,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/zero_receivers/observable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/zero_receivers/observable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/zero_receivers/observable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/zero_receivers/observable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/zero_receivers/observable/sub0pub_virtual": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/zero_receivers/observable/sub0pub_virtual_lean": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/zero_receivers/removable/sub0_b1_mixin": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/zero_receivers/removable/sub0_b1_wire": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/zero_receivers/removable/sub0_b2_static": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/zero_receivers/removable/sub0_b3_sink": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/zero_receivers/removable/sub0pub_virtual": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  },
+  "gcc-O2/zero_receivers/removable/sub0pub_virtual_lean": {
+   "publish": 2,
+   "setup": 0,
+   "teardown": 0,
+   "path": 2,
+   "indirect_calls": 0,
+   "text": 0,
+   "ram": 0,
+   "init_array": 0,
+   "added_deps": []
+  }
+ },
+ "toolchains": {
+  "gcc-O2": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+  "clang-O2": "Ubuntu clang version 18.1.3 (1ubuntu1)",
+  "cm33-gcc-Os": "arm-none-eabi-g++ (15:13.2.rel1-2) 13.2.1 20231009",
+  "gcc-O2-lto": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+  "clang-O2-lto": "Ubuntu clang version 18.1.3 (1ubuntu1)",
+  "cm33-gcc-Os-lto": "arm-none-eabi-g++ (15:13.2.rel1-2) 13.2.1 20231009"
+ }
+}

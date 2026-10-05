@@ -1,0 +1,270 @@
+{
+  "schema_version": 1,
+  "metadata": {
+    "utc": "2026-09-30T14:02:15.107350+00:00",
+    "compiler": "/usr/bin/g++",
+    "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+    "logical_cpus": 9,
+    "lanes": {
+      "A": {
+        "sha": "ab3622277018b7d18cc507afad64af1d1bfbe6a6",
+        "standard": "c++23"
+      },
+      "B": {
+        "sha": "1e8f1dcef8ed29fa534769625bec6965c9bb42fb",
+        "standard": "c++23"
+      }
+    },
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "include_environment": {},
+    "harness_sha256": "bddff59c7290913a3c9807850ad78c56821ccd8bbfdd538bfc97630290882d2f",
+    "fixture_sha256": "1dc7e167384eecf545ffa151bc698527c8b549461c468f09dc7049361e3e83db",
+    "translation_units": 8,
+    "types": 8,
+    "receivers": 4,
+    "samples": 5,
+    "warmups": 1,
+    "parallelism": 1,
+    "cache_policy": "warm filesystem; fresh objects; direct compiler; no PCH/modules",
+    "command_template": [
+      "/usr/bin/g++",
+      "-std={lane.standard}",
+      "-O2",
+      "-DNDEBUG",
+      "-pthread",
+      "-I{snapshot}/include",
+      "-DPROFILE={profile}",
+      "-DMESSAGE_TYPES={types}",
+      "-DRECEIVER_COUNT={receivers}",
+      "-DTRANSLATION_UNIT={index}",
+      "-c",
+      "{source}",
+      "-o",
+      "{fresh-object}"
+    ]
+  },
+  "results": [
+    {
+      "profile": "wiring",
+      "samples": [
+        {
+          "order": [
+            "B",
+            "A"
+          ],
+          "seconds": {
+            "B": 2.7470070709999987,
+            "A": 2.406708077000019
+          }
+        },
+        {
+          "order": [
+            "A",
+            "B"
+          ],
+          "seconds": {
+            "A": 2.503874183000022,
+            "B": 2.054418780999981
+          }
+        },
+        {
+          "order": [
+            "B",
+            "A"
+          ],
+          "seconds": {
+            "B": 1.9931850819999966,
+            "A": 2.3817359930000066
+          }
+        },
+        {
+          "order": [
+            "A",
+            "B"
+          ],
+          "seconds": {
+            "A": 2.2937254269999983,
+            "B": 2.118734952000011
+          }
+        },
+        {
+          "order": [
+            "B",
+            "A"
+          ],
+          "seconds": {
+            "B": 1.968524909999985,
+            "A": 2.8051474710000264
+          }
+        }
+      ],
+      "summary": {
+        "A": {
+          "median_s": 2.406708077000019,
+          "min_s": 2.2937254269999983,
+          "max_s": 2.8051474710000264,
+          "mad_s": 0.09716610600000308
+        },
+        "B": {
+          "median_s": 2.054418780999981,
+          "min_s": 1.968524909999985,
+          "max_s": 2.7470070709999987,
+          "mad_s": 0.06431617100002995
+        }
+      },
+      "median_change_percent": -14.637807525006075
+    },
+    {
+      "profile": "broker",
+      "samples": [
+        {
+          "order": [
+            "B",
+            "A"
+          ],
+          "seconds": {
+            "B": 11.523041632000002,
+            "A": 10.972007265999991
+          }
+        },
+        {
+          "order": [
+            "A",
+            "B"
+          ],
+          "seconds": {
+            "A": 10.634492894999994,
+            "B": 10.858312321999989
+          }
+        },
+        {
+          "order": [
+            "B",
+            "A"
+          ],
+          "seconds": {
+            "B": 13.946482701999997,
+            "A": 15.253216756
+          }
+        },
+        {
+          "order": [
+            "A",
+            "B"
+          ],
+          "seconds": {
+            "A": 11.633075574000031,
+            "B": 10.404543904000036
+          }
+        },
+        {
+          "order": [
+            "B",
+            "A"
+          ],
+          "seconds": {
+            "B": 11.073512076999975,
+            "A": 10.374723515000028
+          }
+        }
+      ],
+      "summary": {
+        "A": {
+          "median_s": 10.972007265999991,
+          "min_s": 10.374723515000028,
+          "max_s": 15.253216756,
+          "mad_s": 0.5972837509999636
+        },
+        "B": {
+          "median_s": 11.073512076999975,
+          "min_s": 10.404543904000036,
+          "max_s": 13.946482701999997,
+          "mad_s": 0.44952955500002645
+        }
+      },
+      "median_change_percent": 0.9251252623075246
+    },
+    {
+      "profile": "umbrella",
+      "samples": [
+        {
+          "order": [
+            "B",
+            "A"
+          ],
+          "seconds": {
+            "B": 8.805579726000019,
+            "A": 7.743451654000012
+          }
+        },
+        {
+          "order": [
+            "A",
+            "B"
+          ],
+          "seconds": {
+            "A": 7.100520126999982,
+            "B": 7.09681237999996
+          }
+        },
+        {
+          "order": [
+            "B",
+            "A"
+          ],
+          "seconds": {
+            "B": 8.982666441999982,
+            "A": 8.48112838999998
+          }
+        },
+        {
+          "order": [
+            "A",
+            "B"
+          ],
+          "seconds": {
+            "A": 8.521660216000043,
+            "B": 11.523576827
+          }
+        },
+        {
+          "order": [
+            "B",
+            "A"
+          ],
+          "seconds": {
+            "B": 9.12371427200003,
+            "A": 7.485329049999962
+          }
+        }
+      ],
+      "summary": {
+        "A": {
+          "median_s": 7.743451654000012,
+          "min_s": 7.100520126999982,
+          "max_s": 8.521660216000043,
+          "mad_s": 0.6429315270000302
+        },
+        "B": {
+          "median_s": 8.982666441999982,
+          "min_s": 7.09681237999996,
+          "max_s": 11.523576827,
+          "mad_s": 0.1770867159999625
+        }
+      },
+      "median_change_percent": 16.003390262788454
+    }
+  ]
+}

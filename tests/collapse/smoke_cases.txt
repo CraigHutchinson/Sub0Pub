@@ -1,0 +1,6 @@
+# Representative PR coverage: static wiring, fan-out, filters, runtime subscriptions, and cross-TU linking.
+one_receiver
+many_receivers
+filters
+dynamic_subscriptions
+cross_file

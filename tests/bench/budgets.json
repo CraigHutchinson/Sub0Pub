@@ -1,0 +1,15 @@
+{
+  "recorded_with": "GCC 13.3.0, Release, Callgrind; CI run 36790377271",
+  "measurements": [
+    {"suite": "Core publish/subscribe by policy", "section": "Publish", "scenario": "0 subscribers", "variant": "Direct (default)", "max_instr_per_op": 24.0},
+    {"suite": "Core publish/subscribe by policy", "section": "Publish", "scenario": "1 subscriber", "variant": "Direct (default)", "max_instr_per_op": 38.0},
+    {"suite": "Core publish/subscribe by policy", "section": "Publish", "scenario": "8 subscribers (max default)", "variant": "Direct (default)", "max_instr_per_op": 101.0},
+    {"suite": "Core publish/subscribe by policy", "section": "Re-entrant publish", "scenario": "1 subscriber, nested depth 1", "variant": "Direct (default)", "max_instr_per_op": 74.0},
+    {"suite": "Core publish/subscribe by policy", "section": "Subscription lifetime", "scenario": "create + destroy subscriber (empty table)", "variant": "Direct (default)", "max_instr_per_op": 46.0},
+    {"suite": "Core publish/subscribe by policy", "section": "Publish", "scenario": "1 subscriber", "variant": "Full (snapshot, cancel, filter)", "max_instr_per_op": 98.0},
+    {"suite": "Core publish/subscribe by policy", "section": "Publish", "scenario": "8 subscribers (max default)", "variant": "Full (snapshot, cancel, filter)", "max_instr_per_op": 293.0},
+    {"suite": "Core publish/subscribe by policy", "section": "Publish", "scenario": "1 subscriber", "variant": "ThreadSafe", "max_instr_per_op": 277.0},
+    {"suite": "IPC end-to-end", "section": "IPC 4B payload (17B framed)", "scenario": "serialize: publish -> stream", "variant": "Default", "max_instr_per_op": 105.0},
+    {"suite": "IPC end-to-end", "section": "IPC 4B payload (17B framed)", "scenario": "deserialize: stream -> subscriber", "variant": "Default", "max_instr_per_op": 446.0}
+  ]
+}

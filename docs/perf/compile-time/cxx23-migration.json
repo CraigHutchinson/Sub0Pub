@@ -1,0 +1,270 @@
+{
+  "schema_version": 1,
+  "metadata": {
+    "utc": "2026-09-30T09:08:51.567423+00:00",
+    "compiler": "/usr/bin/g++",
+    "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logical_cpus": 9,
+    "lanes": {
+      "A": {
+        "sha": "ab3622277018b7d18cc507afad64af1d1bfbe6a6",
+        "standard": "c++17"
+      },
+      "B": {
+        "sha": "1e8f1dcef8ed29fa534769625bec6965c9bb42fb",
+        "standard": "c++23"
+      }
+    },
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "include_environment": {},
+    "harness_sha256": "bddff59c7290913a3c9807850ad78c56821ccd8bbfdd538bfc97630290882d2f",
+    "fixture_sha256": "1dc7e167384eecf545ffa151bc698527c8b549461c468f09dc7049361e3e83db",
+    "translation_units": 8,
+    "types": 8,
+    "receivers": 4,
+    "samples": 5,
+    "warmups": 1,
+    "parallelism": 1,
+    "cache_policy": "warm filesystem; fresh objects; direct compiler; no PCH/modules",
+    "command_template": [
+      "/usr/bin/g++",
+      "-std={lane.standard}",
+      "-O2",
+      "-DNDEBUG",
+      "-pthread",
+      "-I{snapshot}/include",
+      "-DPROFILE={profile}",
+      "-DMESSAGE_TYPES={types}",
+      "-DRECEIVER_COUNT={receivers}",
+      "-DTRANSLATION_UNIT={index}",
+      "-c",
+      "{source}",
+      "-o",
+      "{fresh-object}"
+    ]
+  },
+  "results": [
+    {
+      "profile": "wiring",
+      "samples": [
+        {
+          "order": [
+            "B",
+            "A"
+          ],
+          "seconds": {
+            "B": 1.3039102250004362,
+            "A": 0.7487098629999309
+          }
+        },
+        {
+          "order": [
+            "A",
+            "B"
+          ],
+          "seconds": {
+            "A": 0.7462320100003126,
+            "B": 1.1555786729995816
+          }
+        },
+        {
+          "order": [
+            "B",
+            "A"
+          ],
+          "seconds": {
+            "B": 1.1644591679996665,
+            "A": 0.7217963010007225
+          }
+        },
+        {
+          "order": [
+            "A",
+            "B"
+          ],
+          "seconds": {
+            "A": 0.7468693700002405,
+            "B": 1.1851130079994618
+          }
+        },
+        {
+          "order": [
+            "B",
+            "A"
+          ],
+          "seconds": {
+            "B": 1.2788543370006664,
+            "A": 0.7568769280005654
+          }
+        }
+      ],
+      "summary": {
+        "A": {
+          "median_s": 0.7468693700002405,
+          "min_s": 0.7217963010007225,
+          "max_s": 0.7568769280005654,
+          "mad_s": 0.0018404929996904684
+        },
+        "B": {
+          "median_s": 1.1851130079994618,
+          "min_s": 1.1555786729995816,
+          "max_s": 1.3039102250004362,
+          "mad_s": 0.02953433499988023
+        }
+      },
+      "median_change_percent": 58.677414766531435
+    },
+    {
+      "profile": "broker",
+      "samples": [
+        {
+          "order": [
+            "B",
+            "A"
+          ],
+          "seconds": {
+            "B": 6.849879370999588,
+            "A": 4.221833051000431
+          }
+        },
+        {
+          "order": [
+            "A",
+            "B"
+          ],
+          "seconds": {
+            "A": 4.543372319999435,
+            "B": 6.581073708000076
+          }
+        },
+        {
+          "order": [
+            "B",
+            "A"
+          ],
+          "seconds": {
+            "B": 6.862272759000007,
+            "A": 4.238003270000263
+          }
+        },
+        {
+          "order": [
+            "A",
+            "B"
+          ],
+          "seconds": {
+            "A": 4.240341458999865,
+            "B": 6.864278205000119
+          }
+        },
+        {
+          "order": [
+            "B",
+            "A"
+          ],
+          "seconds": {
+            "B": 6.864435262999905,
+            "A": 4.500406689000556
+          }
+        }
+      ],
+      "summary": {
+        "A": {
+          "median_s": 4.240341458999865,
+          "min_s": 4.221833051000431,
+          "max_s": 4.543372319999435,
+          "mad_s": 0.018508407999433985
+        },
+        "B": {
+          "median_s": 6.862272759000007,
+          "min_s": 6.581073708000076,
+          "max_s": 6.864435262999905,
+          "mad_s": 0.0021625039998980355
+        }
+      },
+      "median_change_percent": 61.83302277308951
+    },
+    {
+      "profile": "umbrella",
+      "samples": [
+        {
+          "order": [
+            "B",
+            "A"
+          ],
+          "seconds": {
+            "B": 4.655793320000157,
+            "A": 2.4601819239996985
+          }
+        },
+        {
+          "order": [
+            "A",
+            "B"
+          ],
+          "seconds": {
+            "A": 2.4142265899999984,
+            "B": 4.407605237000098
+          }
+        },
+        {
+          "order": [
+            "B",
+            "A"
+          ],
+          "seconds": {
+            "B": 4.74936280699967,
+            "A": 2.2597142220001842
+          }
+        },
+        {
+          "order": [
+            "A",
+            "B"
+          ],
+          "seconds": {
+            "A": 2.4116770710006676,
+            "B": 4.234375752999767
+          }
+        },
+        {
+          "order": [
+            "B",
+            "A"
+          ],
+          "seconds": {
+            "B": 4.205521503999989,
+            "A": 2.3527171690002433
+          }
+        }
+      ],
+      "summary": {
+        "A": {
+          "median_s": 2.4116770710006676,
+          "min_s": 2.2597142220001842,
+          "max_s": 2.4601819239996985,
+          "mad_s": 0.048504852999030845
+        },
+        "B": {
+          "median_s": 4.407605237000098,
+          "min_s": 4.205521503999989,
+          "max_s": 4.74936280699967,
+          "mad_s": 0.20208373300010862
+        }
+      },
+      "median_change_percent": 82.76100436495288
+    }
+  ]
+}

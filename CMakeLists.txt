@@ -1,40 +1,28 @@
-# @note 3.7.1 as version use in WIndows Git-Bash
-# @todo >3.10 needed for include(GoogleTest)?
-cmake_minimum_required(VERSION 3.7.1)
+cmake_minimum_required(VERSION 3.21)
 
 # Detect if Sub0Pub is being included inside another project
-# - We can disable test generation etc.
 if(DEFINED PROJECT_NAME)
   set(IS_SUBPROJECT ON)
 endif()
 
-project(Sub0Pub VERSION 0.1.2 LANGUAGES CXX )
+project(Sub0Pub VERSION 2.0.0 LANGUAGES CXX)
 
-# Provide path for scripts
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/CMake")
+include(GNUInstallDirs)
 
-#include(GNUInstallDirs)
-
-# @todo Should set cmake 3.10
-#include(GoogleTest)
-
-#option(SUB0PUB_USE_VALGRIND "Perform SelfTests with Valgrind" OFF)
 option(SUB0PUB_BUILD_TESTING "Build unit-tests" ON)
 option(SUB0PUB_BUILD_EXAMPLES "Build examples" OFF)
-#option(SUB0PUB_ENABLE_COVERAGE "Generate coverage for unit-tests" OFF)
-#option(SUB0PUB_ENABLE_WERROR "Enable all warnings as errors" ON)
-#option(SUB0PUB_INSTALL_DOCS "Install documentation alongside library" ON)
 
-# Define some folders
-# @todo Organise targets into folders i.e Tests etc
-#set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-set(SUB0PUB_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-set(UNITTEST_DIRECTORY ${SUB0PUB_DIRECTORY}/test)
-set(BENCHMARK_DIRECTORY ${SUB0PUB_DIRECTORY}/benchmark)
-set(INCLUDE_DIRECTORY ${SUB0PUB_DIRECTORY}/include)
+# Warnings for Sub0Pub's own tests and examples. Not a usage requirement of the Sub0Pub target: a consumer's
+# warning level is its own choice (the headers are kept clean at these levels by the builds below).
+if(MSVC)
+    add_compile_options(/W4 /Zc:preprocessor)
+else()
+    add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
 
-if (BUILD_TESTING AND SUB0PUB_BUILD_TESTING AND NOT_SUBPROJECT)
-    add_subdirectory(projects)
+if(SUB0PUB_BUILD_TESTING AND NOT IS_SUBPROJECT)
+    enable_testing()
+    add_subdirectory(tests)
 endif()
 
 if(SUB0PUB_BUILD_EXAMPLES)
@@ -42,9 +30,8 @@ if(SUB0PUB_BUILD_EXAMPLES)
 endif()
 
 # Sub0Pub as header only target
-# + Namespaced alias for linking against core library from client
 add_library(Sub0Pub INTERFACE)
-target_compile_features( Sub0Pub INTERFACE cxx_std_11 ) # NOTE: Was C++98 but no longer worth supporting?!
+target_compile_features(Sub0Pub INTERFACE cxx_std_23)
 add_library(Sub0Pub::Sub0Pub ALIAS Sub0Pub)
 
 target_include_directories(Sub0Pub
@@ -59,7 +46,7 @@ target_sources( Sub0Pub
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/sub0pub/sub0pub.hpp>
 )
 
-# Install project if not included by add_subdirecrory(Sub0Pub) from another project
+# Install project if not included by add_subdirectory(Sub0Pub) from another project
 if (NOT IS_SUBPROJECT)
 
     include(CMakePackageConfigHelpers)
@@ -77,32 +64,18 @@ if (NOT IS_SUBPROJECT)
         "${PROJECT_BINARY_DIR}/Sub0PubConfigVersion.cmake"
         COMPATIBILITY 
             SameMajorVersion
+        ARCH_INDEPENDENT # header-only: usable from any target architecture
     )
 
-    # Install Sub0Pub target as Sub0Pub::Sub0Pub
-    # @todo Test/verify install
     install(
         TARGETS
             Sub0Pub
         EXPORT
             Sub0PubTargets
-        DESTINATION 
+        DESTINATION
             ${CMAKE_INSTALL_LIBDIR}
-            
-            
-        #RUNTIME DESTINATION bin ${CMAKE_INSTALL_BINDIR}
-        #LIBRARY DESTINATION lib ${CMAKE_INSTALL_LIBDIR}
-        #ARCHIVE DESTINATION lib ${CMAKE_INSTALL_LIBDIR} # should add lib
-        
-        #LIBRARY DESTINATION lib COMPONENT Runtime
-        #ARCHIVE DESTINATION lib COMPONENT Development
-        #RUNTIME DESTINATION bin COMPONENT Runtime
-        #PUBLIC_HEADER DESTINATION include COMPONENT Development
-        #BUNDLE DESTINATION bin COMPONENT Runtime
     )
-    
-    # Install targets
-    # @todo Gain understanding for what this is doing - is it generating cmake for the targets?
+
     install(
         EXPORT
             Sub0PubTargets
@@ -112,7 +85,6 @@ if (NOT IS_SUBPROJECT)
             ${SUB0PUB_CMAKE_CONFIG_DESTINATION}
     )
     
-    # Install version and config    
     install(
         FILES 
             "${PROJECT_BINARY_DIR}/Sub0PubConfigVersion.cmake"

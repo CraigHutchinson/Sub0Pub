@@ -1,53 +1,36 @@
-/** Minimal (smallest) example of Sub0Pub
-*/
+/** An increment source updates a running total — the smallest runtime pattern
+ *
+ * Use when: you want a compact starting point for one publisher and one subscriber.
+ * Demonstrates: Publish<uint32_t>, Subscribe<uint32_t>, and a noexcept receive() callback.
+ * Story: RunningTotal subscribes when constructed. IncrementSource publishes 3141 once,
+ * and RunningTotal adds that value to its own total. Scope exit disconnects the subscriber.
+ * Keep in mind: this is the default unlocked runtime broker, not static wiring. Registration
+ * must succeed before delivery is expected; the sample checks that its one receiver subscribed.
+ * Run: Sub0Pub_MinimalExample returns zero when the total is 3141; it prints nothing.
+ */
+#include "sub0pub/broker.hpp"
+#include <cstdint>
 
-#include "sub0pub/sub0pub.hpp"
-
-typedef uint32_t Data_t; ///< Port data type we publish and subscribe
-Data_t total = 0U; ///< Total of all published data
-const Data_t cIncrement = 3141U; ///< Amount total is incremented on each publish of Data_t
-
-/** Class publishes a 'Data_t' signal
-*/
-class PubInt : public sub0::Publish<Data_t>
+class IncrementSource final : public sub0::Publish<uint32_t>
 {
 public:
-
-    /** Publishes the increment value to all subscribers of this type
-    */
-	void doIt()
-	{
-		sub0::publish( this, cIncrement );
-	}
+    void add(uint32_t amount) noexcept { sub0::publish(*this, amount); }
 };
 
-/** Class subscribes to any 'Data_t' signals 
-*/
-class SubInt : public sub0::Subscribe<Data_t>
+class RunningTotal final : public sub0::Subscribe<uint32_t>
 {
 public:
-
-    /** Receive data published of type 'Data_t' and adds it to the 'total' 
-    * @param[in] value  The published value which is added to total as 'total += value'
-    */
-	virtual void receive( const Data_t& value ) final
-	{
-		total += value;
-	}
+    uint32_t total = 0;
+    void receive(const uint32_t& amount) noexcept override { total += amount; }
 };
 
-int main ()
+int main()
 {
-    // Publishes the Data_t value
-	PubInt publisher; //< Publisher
-	
-    // Subscriber that does 'total += Data_t'
-    SubInt subscriber;
+    IncrementSource source;
+    RunningTotal counter;
+    if (!counter.isSubscribed())
+        return 1;
 
-    // PubInt will publish the Data_t value 'cIncrement'
-    publisher.doIt();
-
-    // Return result: 
-    //   total = cDoItCallCount * (cSubsciberCount * cIncrement)
-    return static_cast<int>(total);
+    source.add(3141U);
+    return counter.total == 3141U ? 0 : 2;
 }
