@@ -31,7 +31,7 @@
    "publish": 201.01,
    "teardown": 2
   },
-  "bench_ns": 8.5052
+  "bench_ns": 8.3547
  },
  {
   "build": "msvc-O2",
@@ -66,7 +66,7 @@
    "publish": 417.01,
    "teardown": 2
   },
-  "bench_ns": 81.3907
+  "bench_ns": 81.0175
  },
  {
   "build": "msvc-O2",
@@ -119,7 +119,7 @@
    "publish": 732.01,
    "teardown": 11
   },
-  "bench_ns": 90.8803
+  "bench_ns": 89.8045
  },
  {
   "build": "msvc-O2",
@@ -168,7 +168,7 @@
    "publish": 1369.01,
    "teardown": 25
   },
-  "bench_ns": 94.6095
+  "bench_ns": 94.5554
  },
  {
   "build": "msvc-O2",
@@ -203,7 +203,7 @@
    "publish": 205.01,
    "teardown": 2
   },
-  "bench_ns": 8.6273
+  "bench_ns": 8.7601
  },
  {
   "build": "msvc-O2",
@@ -252,7 +252,7 @@
    "publish": 1369.01,
    "teardown": 25
   },
-  "bench_ns": 96.3241
+  "bench_ns": 95.233
  },
  {
   "build": "msvc-O2",
@@ -289,7 +289,7 @@
    "publish": 205.01,
    "teardown": 2
   },
-  "bench_ns": 8.5995
+  "bench_ns": 8.6064
  },
  {
   "build": "msvc-O2",
@@ -326,7 +326,7 @@
    "publish": 417.01,
    "teardown": 2
   },
-  "bench_ns": 80.9686
+  "bench_ns": 82.4312
  },
  {
   "build": "msvc-O2",
@@ -360,7 +360,7 @@
    "publish": 198.01,
    "teardown": 2
   },
-  "bench_ns": 8.3852
+  "bench_ns": 8.1367
  },
  {
   "build": "msvc-O2",
@@ -395,7 +395,7 @@
    "publish": 411.01,
    "teardown": 2
   },
-  "bench_ns": 80.2688
+  "bench_ns": 80.9259
  },
  {
   "build": "msvc-O2",
@@ -448,7 +448,7 @@
    "publish": 790.01,
    "teardown": 11
   },
-  "bench_ns": 91.6221
+  "bench_ns": 84.6197
  },
  {
   "build": "msvc-O2",
@@ -497,7 +497,7 @@
    "publish": 1366.01,
    "teardown": 25
   },
-  "bench_ns": 94.8088
+  "bench_ns": 99.2795
  },
  {
   "build": "msvc-O2",
@@ -532,7 +532,7 @@
    "publish": 199.01,
    "teardown": 2
   },
-  "bench_ns": 8.2246
+  "bench_ns": 9.2693
  },
  {
   "build": "msvc-O2",
@@ -581,7 +581,7 @@
    "publish": 1366.01,
    "teardown": 25
   },
-  "bench_ns": 109.4309
+  "bench_ns": 103.8475
  },
  {
   "build": "msvc-O2",
@@ -618,7 +618,7 @@
    "publish": 199.01,
    "teardown": 2
   },
-  "bench_ns": 9.3051
+  "bench_ns": 8.425
  },
  {
   "build": "msvc-O2",
@@ -655,7 +655,493 @@
    "publish": 411.01,
    "teardown": 2
   },
-  "bench_ns": 78.7465
+  "bench_ns": 80.0437
+ },
+ {
+  "build": "msvc-O2",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "handwritten",
+  "path": {
+   "instructions": 27,
+   "direct_calls": 3,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 139070,
+   "data": 2816,
+   "bss": 2888,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 39.01,
+   "teardown": 2
+  },
+  "bench_ns": 5.2854
+ },
+ {
+  "build": "msvc-O2",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "route_dynamic",
+  "path": {
+   "instructions": 20,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 140162,
+   "data": 3040,
+   "bss": 3032,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 584,
+  "retained_sub0": [
+   "protected: __cdecl sub0::Subscribe<struct app::Sample>::~Subscribe<struct app::Sample>(void) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct app::Sample,0>::filter(struct app::Sample const & __ptr64) __ptr64",
+   "const sub0::Subscribe<struct app::Sample>::`vftable'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct app::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct app::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct app::Sample,0> `RTTI Type Descriptor'",
+   "private: static struct sub0::detail::Table<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> > sub0::detail::BrokerImpl<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> >::global_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 42,
+   "publish": 63.01,
+   "teardown": 96
+  },
+  "bench_ns": 5.5289
+ },
+ {
+  "build": "msvc-O2",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "route_static",
+  "path": {
+   "instructions": 27,
+   "direct_calls": 3,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 139070,
+   "data": 2816,
+   "bss": 2888,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 39.01,
+   "teardown": 2
+  },
+  "bench_ns": 5.2858
+ },
+ {
+  "build": "msvc-O2",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "route_static_out_of_line",
+  "path": {
+   "instructions": 34,
+   "direct_calls": 4,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@SampleRoute@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 139122,
+   "data": 2816,
+   "bss": 2888,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 46.01,
+   "teardown": 2
+  },
+  "bench_ns": 5.7309
+ },
+ {
+  "build": "msvc-O2",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "today_dynamic",
+  "path": {
+   "instructions": 20,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 140162,
+   "data": 3040,
+   "bss": 3032,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 584,
+  "retained_sub0": [
+   "protected: __cdecl sub0::Subscribe<struct app::Sample>::~Subscribe<struct app::Sample>(void) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct app::Sample,0>::filter(struct app::Sample const & __ptr64) __ptr64",
+   "const sub0::Subscribe<struct app::Sample>::`vftable'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct app::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct app::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct app::Sample,0> `RTTI Type Descriptor'",
+   "private: static struct sub0::detail::Table<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> > sub0::detail::BrokerImpl<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> >::global_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 42,
+   "publish": 63.01,
+   "teardown": 96
+  },
+  "bench_ns": 6.4802
+ },
+ {
+  "build": "msvc-O2",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "today_static",
+  "path": {
+   "instructions": 27,
+   "direct_calls": 3,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 139070,
+   "data": 2816,
+   "bss": 2888,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 39.01,
+   "teardown": 2
+  },
+  "bench_ns": 5.2668
+ },
+ {
+  "build": "msvc-O2",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "handwritten",
+  "path": {
+   "instructions": 17,
+   "direct_calls": 3,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 139038,
+   "data": 2816,
+   "bss": 2888,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 24.01,
+   "teardown": 2
+  },
+  "bench_ns": 1.4384
+ },
+ {
+  "build": "msvc-O2",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "route_dynamic",
+  "path": {
+   "instructions": 20,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 140130,
+   "data": 3040,
+   "bss": 3032,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 584,
+  "retained_sub0": [
+   "protected: __cdecl sub0::Subscribe<struct app::Sample>::~Subscribe<struct app::Sample>(void) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct app::Sample,0>::filter(struct app::Sample const & __ptr64) __ptr64",
+   "const sub0::Subscribe<struct app::Sample>::`vftable'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct app::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct app::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct app::Sample,0> `RTTI Type Descriptor'",
+   "private: static struct sub0::detail::Table<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> > sub0::detail::BrokerImpl<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> >::global_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 42,
+   "publish": 48.01,
+   "teardown": 96
+  },
+  "bench_ns": 3.6388
+ },
+ {
+  "build": "msvc-O2",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "route_static",
+  "path": {
+   "instructions": 17,
+   "direct_calls": 3,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 139038,
+   "data": 2816,
+   "bss": 2888,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 24.01,
+   "teardown": 2
+  },
+  "bench_ns": 1.4328
+ },
+ {
+  "build": "msvc-O2",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "route_static_out_of_line",
+  "path": {
+   "instructions": 24,
+   "direct_calls": 4,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@SampleRoute@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 139090,
+   "data": 2816,
+   "bss": 2888,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 31.01,
+   "teardown": 2
+  },
+  "bench_ns": 1.4337
+ },
+ {
+  "build": "msvc-O2",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "today_dynamic",
+  "path": {
+   "instructions": 20,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 140130,
+   "data": 3040,
+   "bss": 3032,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 584,
+  "retained_sub0": [
+   "protected: __cdecl sub0::Subscribe<struct app::Sample>::~Subscribe<struct app::Sample>(void) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct app::Sample,0>::filter(struct app::Sample const & __ptr64) __ptr64",
+   "const sub0::Subscribe<struct app::Sample>::`vftable'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct app::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct app::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct app::Sample,0> `RTTI Type Descriptor'",
+   "private: static struct sub0::detail::Table<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> > sub0::detail::BrokerImpl<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> >::global_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 42,
+   "publish": 48.01,
+   "teardown": 96
+  },
+  "bench_ns": 4.3675
+ },
+ {
+  "build": "msvc-O2",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "today_static",
+  "path": {
+   "instructions": 17,
+   "direct_calls": 3,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 139038,
+   "data": 2816,
+   "bss": 2888,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 24.01,
+   "teardown": 2
+  },
+  "bench_ns": 1.8041
  },
  {
   "build": "msvc-O2",
@@ -689,7 +1175,7 @@
    "publish": 12.01,
    "teardown": 2
   },
-  "bench_ns": 1.7456
+  "bench_ns": 1.7946
  },
  {
   "build": "msvc-O2",
@@ -723,7 +1209,7 @@
    "publish": 22.01,
    "teardown": 2
   },
-  "bench_ns": 1.784
+  "bench_ns": 1.8764
  },
  {
   "build": "msvc-O2",
@@ -786,7 +1272,7 @@
    "publish": 35.01,
    "teardown": 25
   },
-  "bench_ns": 1.9113
+  "bench_ns": 2.013
  },
  {
   "build": "msvc-O2",
@@ -820,7 +1306,7 @@
    "publish": 12.01,
    "teardown": 2
   },
-  "bench_ns": 1.7586
+  "bench_ns": 1.8244
  },
  {
   "build": "msvc-O2",
@@ -884,7 +1370,7 @@
    "publish": 45.01,
    "teardown": 25
   },
-  "bench_ns": 1.9842
+  "bench_ns": 2.416
  },
  {
   "build": "msvc-O2",
@@ -920,7 +1406,7 @@
    "publish": 22.01,
    "teardown": 2
   },
-  "bench_ns": 1.7848
+  "bench_ns": 1.8363
  },
  {
   "build": "msvc-O2",
@@ -973,7 +1459,7 @@
    "publish": 23.01,
    "teardown": 11
   },
-  "bench_ns": 1.7939
+  "bench_ns": 1.878
  },
  {
   "build": "msvc-O2",
@@ -1022,7 +1508,7 @@
    "publish": 34.01,
    "teardown": 25
   },
-  "bench_ns": 1.8728
+  "bench_ns": 2.4748
  },
  {
   "build": "msvc-O2",
@@ -1056,7 +1542,7 @@
    "publish": 12.01,
    "teardown": 2
   },
-  "bench_ns": 1.7535
+  "bench_ns": 1.7474
  },
  {
   "build": "msvc-O2",
@@ -1095,7 +1581,7 @@
    "publish": 12.01,
    "teardown": 2
   },
-  "bench_ns": 1.7552
+  "bench_ns": 2.0022
  },
  {
   "build": "msvc-O2",
@@ -1144,7 +1630,7 @@
    "publish": 34.01,
    "teardown": 25
   },
-  "bench_ns": 1.852
+  "bench_ns": 2.3958
  },
  {
   "build": "msvc-O2",
@@ -1178,7 +1664,7 @@
    "publish": 12.01,
    "teardown": 2
   },
-  "bench_ns": 1.751
+  "bench_ns": 1.7528
  },
  {
   "build": "msvc-O2",
@@ -1212,7 +1698,7 @@
    "publish": 8.01,
    "teardown": 2
   },
-  "bench_ns": 1.3557
+  "bench_ns": 1.5354
  },
  {
   "build": "msvc-O2",
@@ -1246,7 +1732,7 @@
    "publish": 16.01,
    "teardown": 2
   },
-  "bench_ns": 1.5072
+  "bench_ns": 1.4982
  },
  {
   "build": "msvc-O2",
@@ -1309,7 +1795,7 @@
    "publish": 29.01,
    "teardown": 25
   },
-  "bench_ns": 1.4992
+  "bench_ns": 1.4054
  },
  {
   "build": "msvc-O2",
@@ -1343,7 +1829,7 @@
    "publish": 8.01,
    "teardown": 2
   },
-  "bench_ns": 1.3186
+  "bench_ns": 1.3652
  },
  {
   "build": "msvc-O2",
@@ -1407,7 +1893,7 @@
    "publish": 39.01,
    "teardown": 25
   },
-  "bench_ns": 1.8405
+  "bench_ns": 1.9582
  },
  {
   "build": "msvc-O2",
@@ -1443,7 +1929,7 @@
    "publish": 16.01,
    "teardown": 2
   },
-  "bench_ns": 1.4378
+  "bench_ns": 1.6766
  },
  {
   "build": "msvc-O2",
@@ -1496,7 +1982,7 @@
    "publish": 20.01,
    "teardown": 11
   },
-  "bench_ns": 1.4086
+  "bench_ns": 1.4565
  },
  {
   "build": "msvc-O2",
@@ -1545,7 +2031,7 @@
    "publish": 29.01,
    "teardown": 25
   },
-  "bench_ns": 1.4225
+  "bench_ns": 1.4781
  },
  {
   "build": "msvc-O2",
@@ -1579,7 +2065,7 @@
    "publish": 8.01,
    "teardown": 2
   },
-  "bench_ns": 1.353
+  "bench_ns": 1.3989
  },
  {
   "build": "msvc-O2",
@@ -1618,7 +2104,7 @@
    "publish": 8.01,
    "teardown": 2
   },
-  "bench_ns": 1.362
+  "bench_ns": 1.4034
  },
  {
   "build": "msvc-O2",
@@ -1667,7 +2153,7 @@
    "publish": 29.01,
    "teardown": 25
   },
-  "bench_ns": 1.4406
+  "bench_ns": 1.6005
  },
  {
   "build": "msvc-O2",
@@ -1701,7 +2187,7 @@
    "publish": 8.01,
    "teardown": 2
   },
-  "bench_ns": 1.3538
+  "bench_ns": 1.4436
  },
  {
   "build": "msvc-O2",
@@ -1735,7 +2221,7 @@
    "publish": 21.01,
    "teardown": 2
   },
-  "bench_ns": 2.7185
+  "bench_ns": 2.8568
  },
  {
   "build": "msvc-O2",
@@ -1769,7 +2255,7 @@
    "publish": 46.01,
    "teardown": 2
   },
-  "bench_ns": 6.0468
+  "bench_ns": 6.3889
  },
  {
   "build": "msvc-O2",
@@ -1881,7 +2367,7 @@
    "publish": 84.01,
    "teardown": 116
   },
-  "bench_ns": 7.6946
+  "bench_ns": 8.469
  },
  {
   "build": "msvc-O2",
@@ -1915,7 +2401,7 @@
    "publish": 21.01,
    "teardown": 2
   },
-  "bench_ns": 2.7302
+  "bench_ns": 2.7766
  },
  {
   "build": "msvc-O2",
@@ -2029,7 +2515,7 @@
    "publish": 110.01,
    "teardown": 116
   },
-  "bench_ns": 7.7195
+  "bench_ns": 8.314
  },
  {
   "build": "msvc-O2",
@@ -2066,7 +2552,7 @@
    "publish": 47.01,
    "teardown": 2
   },
-  "bench_ns": 6.489
+  "bench_ns": 6.748
  },
  {
   "build": "msvc-O2",
@@ -2149,7 +2635,7 @@
    "publish": 42.01,
    "teardown": 47
   },
-  "bench_ns": 3.9423
+  "bench_ns": 4.1048
  },
  {
   "build": "msvc-O2",
@@ -2217,7 +2703,7 @@
    "publish": 83.01,
    "teardown": 116
   },
-  "bench_ns": 7.7291
+  "bench_ns": 7.9344
  },
  {
   "build": "msvc-O2",
@@ -2251,7 +2737,7 @@
    "publish": 21.01,
    "teardown": 2
   },
-  "bench_ns": 2.7354
+  "bench_ns": 2.7942
  },
  {
   "build": "msvc-O2",
@@ -2285,7 +2771,7 @@
    "publish": 21.01,
    "teardown": 2
   },
-  "bench_ns": 2.7127
+  "bench_ns": 2.7655
  },
  {
   "build": "msvc-O2",
@@ -2333,7 +2819,7 @@
    "publish": 21.01,
    "teardown": 2
   },
-  "bench_ns": 2.7127
+  "bench_ns": 2.7216
  },
  {
   "build": "msvc-O2",
@@ -2401,7 +2887,7 @@
    "publish": 83.01,
    "teardown": 116
   },
-  "bench_ns": 7.8832
+  "bench_ns": 8.2119
  },
  {
   "build": "msvc-O2",
@@ -2435,7 +2921,7 @@
    "publish": 21.01,
    "teardown": 2
   },
-  "bench_ns": 2.7171
+  "bench_ns": 2.7576
  },
  {
   "build": "msvc-O2",
@@ -2469,7 +2955,7 @@
    "publish": 9.01,
    "teardown": 2
   },
-  "bench_ns": 1.4397
+  "bench_ns": 1.496
  },
  {
   "build": "msvc-O2",
@@ -2503,7 +2989,7 @@
    "publish": 27.01,
    "teardown": 2
   },
-  "bench_ns": 1.6489
+  "bench_ns": 1.7845
  },
  {
   "build": "msvc-O2",
@@ -2615,7 +3101,7 @@
    "publish": 66.01,
    "teardown": 116
   },
-  "bench_ns": 4.4392
+  "bench_ns": 4.7278
  },
  {
   "build": "msvc-O2",
@@ -2649,7 +3135,7 @@
    "publish": 9.01,
    "teardown": 2
   },
-  "bench_ns": 1.4442
+  "bench_ns": 1.6049
  },
  {
   "build": "msvc-O2",
@@ -2763,7 +3249,7 @@
    "publish": 92.01,
    "teardown": 116
   },
-  "bench_ns": 5.3206
+  "bench_ns": 5.4773
  },
  {
   "build": "msvc-O2",
@@ -2800,7 +3286,7 @@
    "publish": 28.01,
    "teardown": 2
   },
-  "bench_ns": 1.6485
+  "bench_ns": 1.6858
  },
  {
   "build": "msvc-O2",
@@ -2883,7 +3369,7 @@
    "publish": 29.01,
    "teardown": 47
   },
-  "bench_ns": 1.4255
+  "bench_ns": 1.4727
  },
  {
   "build": "msvc-O2",
@@ -2951,7 +3437,7 @@
    "publish": 65.01,
    "teardown": 116
   },
-  "bench_ns": 4.5329
+  "bench_ns": 4.8466
  },
  {
   "build": "msvc-O2",
@@ -2985,7 +3471,7 @@
    "publish": 9.01,
    "teardown": 2
   },
-  "bench_ns": 1.4599
+  "bench_ns": 1.6188
  },
  {
   "build": "msvc-O2",
@@ -3019,7 +3505,7 @@
    "publish": 9.01,
    "teardown": 2
   },
-  "bench_ns": 1.4241
+  "bench_ns": 1.3979
  },
  {
   "build": "msvc-O2",
@@ -3067,7 +3553,7 @@
    "publish": 9.01,
    "teardown": 2
   },
-  "bench_ns": 1.4558
+  "bench_ns": 1.185
  },
  {
   "build": "msvc-O2",
@@ -3135,7 +3621,7 @@
    "publish": 65.01,
    "teardown": 116
   },
-  "bench_ns": 4.498
+  "bench_ns": 4.7691
  },
  {
   "build": "msvc-O2",
@@ -3169,7 +3655,471 @@
    "publish": 9.01,
    "teardown": 2
   },
-  "bench_ns": 1.4034
+  "bench_ns": 1.2665
+ },
+ {
+  "build": "msvc-O2-lto",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "handwritten",
+  "path": {
+   "instructions": 13,
+   "direct_calls": 0,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 138954,
+   "data": 2832,
+   "bss": 2872,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 19.01,
+   "teardown": 2
+  },
+  "bench_ns": 2.6901
+ },
+ {
+  "build": "msvc-O2-lto",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "route_dynamic",
+  "path": {
+   "instructions": 20,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 140326,
+   "data": 3056,
+   "bss": 3024,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 456,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct app::Sample,0>::filter(struct app::Sample const & __ptr64) __ptr64",
+   "const sub0::Subscribe<struct app::Sample>::`vftable'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "const sub0::Subscribe<struct app::Sample>::`RTTI Complete Object Locator'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Array'",
+   "class sub0::detail::SubscriberInterface<struct app::Sample,0> `RTTI Type Descriptor'",
+   "class sub0::Subscribe<struct app::Sample> `RTTI Type Descriptor'",
+   "private: static struct sub0::detail::Table<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> > sub0::detail::BrokerImpl<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> >::global_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 42,
+   "publish": 63.01,
+   "teardown": 75
+  },
+  "bench_ns": 5.4768
+ },
+ {
+  "build": "msvc-O2-lto",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "route_static",
+  "path": {
+   "instructions": 13,
+   "direct_calls": 0,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 138954,
+   "data": 2832,
+   "bss": 2880,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 19.01,
+   "teardown": 2
+  },
+  "bench_ns": 2.4489
+ },
+ {
+  "build": "msvc-O2-lto",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "route_static_out_of_line",
+  "path": {
+   "instructions": 13,
+   "direct_calls": 0,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 138954,
+   "data": 2832,
+   "bss": 2880,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 19.01,
+   "teardown": 2
+  },
+  "bench_ns": 1.8713
+ },
+ {
+  "build": "msvc-O2-lto",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "today_dynamic",
+  "path": {
+   "instructions": 20,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 140326,
+   "data": 3056,
+   "bss": 3024,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 456,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct app::Sample,0>::filter(struct app::Sample const & __ptr64) __ptr64",
+   "const sub0::Subscribe<struct app::Sample>::`vftable'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "const sub0::Subscribe<struct app::Sample>::`RTTI Complete Object Locator'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Array'",
+   "class sub0::detail::SubscriberInterface<struct app::Sample,0> `RTTI Type Descriptor'",
+   "class sub0::Subscribe<struct app::Sample> `RTTI Type Descriptor'",
+   "private: static struct sub0::detail::Table<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> > sub0::detail::BrokerImpl<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> >::global_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 42,
+   "publish": 63.01,
+   "teardown": 75
+  },
+  "bench_ns": 5.5573
+ },
+ {
+  "build": "msvc-O2-lto",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "today_static",
+  "path": {
+   "instructions": 13,
+   "direct_calls": 0,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 138954,
+   "data": 2832,
+   "bss": 2880,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 19.01,
+   "teardown": 2
+  },
+  "bench_ns": 2.5718
+ },
+ {
+  "build": "msvc-O2-lto",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "handwritten",
+  "path": {
+   "instructions": 3,
+   "direct_calls": 0,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 138890,
+   "data": 2832,
+   "bss": 2872,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 9.01,
+   "teardown": 2
+  },
+  "bench_ns": 1.4489
+ },
+ {
+  "build": "msvc-O2-lto",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "route_dynamic",
+  "path": {
+   "instructions": 20,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 140294,
+   "data": 3056,
+   "bss": 3024,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 456,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct app::Sample,0>::filter(struct app::Sample const & __ptr64) __ptr64",
+   "const sub0::Subscribe<struct app::Sample>::`vftable'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "const sub0::Subscribe<struct app::Sample>::`RTTI Complete Object Locator'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Array'",
+   "class sub0::detail::SubscriberInterface<struct app::Sample,0> `RTTI Type Descriptor'",
+   "class sub0::Subscribe<struct app::Sample> `RTTI Type Descriptor'",
+   "private: static struct sub0::detail::Table<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> > sub0::detail::BrokerImpl<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> >::global_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 42,
+   "publish": 48.01,
+   "teardown": 75
+  },
+  "bench_ns": 3.8645
+ },
+ {
+  "build": "msvc-O2-lto",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "route_static",
+  "path": {
+   "instructions": 3,
+   "direct_calls": 0,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 138890,
+   "data": 2832,
+   "bss": 2880,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 9.01,
+   "teardown": 2
+  },
+  "bench_ns": 1.4638
+ },
+ {
+  "build": "msvc-O2-lto",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "route_static_out_of_line",
+  "path": {
+   "instructions": 3,
+   "direct_calls": 0,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 138890,
+   "data": 2832,
+   "bss": 2880,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 9.01,
+   "teardown": 2
+  },
+  "bench_ns": 1.533
+ },
+ {
+  "build": "msvc-O2-lto",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "today_dynamic",
+  "path": {
+   "instructions": 20,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 140294,
+   "data": 3056,
+   "bss": 3024,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 456,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct app::Sample,0>::filter(struct app::Sample const & __ptr64) __ptr64",
+   "const sub0::Subscribe<struct app::Sample>::`vftable'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "const sub0::Subscribe<struct app::Sample>::`RTTI Complete Object Locator'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Array'",
+   "class sub0::detail::SubscriberInterface<struct app::Sample,0> `RTTI Type Descriptor'",
+   "class sub0::Subscribe<struct app::Sample> `RTTI Type Descriptor'",
+   "private: static struct sub0::detail::Table<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> > sub0::detail::BrokerImpl<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> >::global_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 42,
+   "publish": 48.01,
+   "teardown": 75
+  },
+  "bench_ns": 3.4772
+ },
+ {
+  "build": "msvc-O2-lto",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "today_static",
+  "path": {
+   "instructions": 3,
+   "direct_calls": 0,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 138890,
+   "data": 2832,
+   "bss": 2880,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 9.01,
+   "teardown": 2
+  },
+  "bench_ns": 1.4344
  },
  {
   "build": "clangcl-O2",
@@ -3203,7 +4153,7 @@
    "publish": 136.015,
    "teardown": 2
   },
-  "bench_ns": 5.2579
+  "bench_ns": 5.1652
  },
  {
   "build": "clangcl-O2",
@@ -3237,7 +4187,7 @@
    "publish": 373.015,
    "teardown": 2
   },
-  "bench_ns": 15.484
+  "bench_ns": 15.4609
  },
  {
   "build": "clangcl-O2",
@@ -3289,7 +4239,7 @@
    "publish": 149.015,
    "teardown": 12
   },
-  "bench_ns": 5.3611
+  "bench_ns": 6.2331
  },
  {
   "build": "clangcl-O2",
@@ -3337,7 +4287,7 @@
    "publish": 1573.015,
    "teardown": 28
   },
-  "bench_ns": 83.4509
+  "bench_ns": 91.5897
  },
  {
   "build": "clangcl-O2",
@@ -3371,7 +4321,7 @@
    "publish": 136.015,
    "teardown": 2
   },
-  "bench_ns": 5.1983
+  "bench_ns": 5.8135
  },
  {
   "build": "clangcl-O2",
@@ -3419,7 +4369,7 @@
    "publish": 1573.015,
    "teardown": 28
   },
-  "bench_ns": 83.5242
+  "bench_ns": 88.6645
  },
  {
   "build": "clangcl-O2",
@@ -3453,7 +4403,7 @@
    "publish": 136.015,
    "teardown": 2
   },
-  "bench_ns": 5.2312
+  "bench_ns": 5.2047
  },
  {
   "build": "clangcl-O2",
@@ -3487,7 +4437,7 @@
    "publish": 373.015,
    "teardown": 2
   },
-  "bench_ns": 15.3693
+  "bench_ns": 15.188
  },
  {
   "build": "clangcl-O2",
@@ -3521,7 +4471,7 @@
    "publish": 129.015,
    "teardown": 2
   },
-  "bench_ns": 5.1858
+  "bench_ns": 5.0441
  },
  {
   "build": "clangcl-O2",
@@ -3555,7 +4505,7 @@
    "publish": 367.015,
    "teardown": 2
   },
-  "bench_ns": 15.4121
+  "bench_ns": 15.2249
  },
  {
   "build": "clangcl-O2",
@@ -3607,7 +4557,7 @@
    "publish": 142.015,
    "teardown": 12
   },
-  "bench_ns": 5.1
+  "bench_ns": 5.8581
  },
  {
   "build": "clangcl-O2",
@@ -3655,7 +4605,7 @@
    "publish": 1567.015,
    "teardown": 28
   },
-  "bench_ns": 84.6589
+  "bench_ns": 93.8767
  },
  {
   "build": "clangcl-O2",
@@ -3689,7 +4639,7 @@
    "publish": 129.015,
    "teardown": 2
   },
-  "bench_ns": 5.2171
+  "bench_ns": 5.3522
  },
  {
   "build": "clangcl-O2",
@@ -3737,7 +4687,7 @@
    "publish": 1567.015,
    "teardown": 28
   },
-  "bench_ns": 84.694
+  "bench_ns": 85.6882
  },
  {
   "build": "clangcl-O2",
@@ -3771,7 +4721,7 @@
    "publish": 129.015,
    "teardown": 2
   },
-  "bench_ns": 5.1378
+  "bench_ns": 5.2041
  },
  {
   "build": "clangcl-O2",
@@ -3805,7 +4755,489 @@
    "publish": 367.015,
    "teardown": 2
   },
-  "bench_ns": 15.3723
+  "bench_ns": 15.2743
+ },
+ {
+  "build": "clangcl-O2",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "handwritten",
+  "path": {
+   "instructions": 38,
+   "direct_calls": 3,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 143629,
+   "data": 2845,
+   "bss": 2856,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 53.015,
+   "teardown": 2
+  },
+  "bench_ns": 4.5052
+ },
+ {
+  "build": "clangcl-O2",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "route_dynamic",
+  "path": {
+   "instructions": 25,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 145695,
+   "data": 3037,
+   "bss": 2988,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 416,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct app::Sample,0>::filter(struct app::Sample const & __ptr64) __ptr64",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct app::Sample>::`vftable'",
+   "const sub0::Subscribe<struct app::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct app::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct app::Sample,0> `RTTI Type Descriptor'",
+   "private: static struct sub0::detail::Table<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> > sub0::detail::BrokerImpl<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> >::global_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 38,
+   "publish": 76.015,
+   "teardown": 89
+  },
+  "bench_ns": 5.7095
+ },
+ {
+  "build": "clangcl-O2",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "route_static",
+  "path": {
+   "instructions": 38,
+   "direct_calls": 3,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 143629,
+   "data": 2845,
+   "bss": 2856,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 53.015,
+   "teardown": 2
+  },
+  "bench_ns": 4.9906
+ },
+ {
+  "build": "clangcl-O2",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "route_static_out_of_line",
+  "path": {
+   "instructions": 42,
+   "direct_calls": 4,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@SampleRoute@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 143674,
+   "data": 2845,
+   "bss": 2856,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 57.015,
+   "teardown": 2
+  },
+  "bench_ns": 4.9246
+ },
+ {
+  "build": "clangcl-O2",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "today_dynamic",
+  "path": {
+   "instructions": 25,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 145695,
+   "data": 3037,
+   "bss": 2988,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 416,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct app::Sample,0>::filter(struct app::Sample const & __ptr64) __ptr64",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct app::Sample>::`vftable'",
+   "const sub0::Subscribe<struct app::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct app::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct app::Sample,0> `RTTI Type Descriptor'",
+   "private: static struct sub0::detail::Table<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> > sub0::detail::BrokerImpl<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> >::global_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 38,
+   "publish": 76.015,
+   "teardown": 89
+  },
+  "bench_ns": 5.5254
+ },
+ {
+  "build": "clangcl-O2",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "today_static",
+  "path": {
+   "instructions": 38,
+   "direct_calls": 3,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 143629,
+   "data": 2845,
+   "bss": 2856,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 53.015,
+   "teardown": 2
+  },
+  "bench_ns": 4.9553
+ },
+ {
+  "build": "clangcl-O2",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "handwritten",
+  "path": {
+   "instructions": 21,
+   "direct_calls": 3,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 143586,
+   "data": 2845,
+   "bss": 2856,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 28.015,
+   "teardown": 2
+  },
+  "bench_ns": 1.4287
+ },
+ {
+  "build": "clangcl-O2",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "route_dynamic",
+  "path": {
+   "instructions": 25,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 145651,
+   "data": 3037,
+   "bss": 2988,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 416,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct app::Sample,0>::filter(struct app::Sample const & __ptr64) __ptr64",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct app::Sample>::`vftable'",
+   "const sub0::Subscribe<struct app::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct app::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct app::Sample,0> `RTTI Type Descriptor'",
+   "private: static struct sub0::detail::Table<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> > sub0::detail::BrokerImpl<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> >::global_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 38,
+   "publish": 51.015,
+   "teardown": 89
+  },
+  "bench_ns": 2.7932
+ },
+ {
+  "build": "clangcl-O2",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "route_static",
+  "path": {
+   "instructions": 21,
+   "direct_calls": 3,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 143586,
+   "data": 2845,
+   "bss": 2856,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 28.015,
+   "teardown": 2
+  },
+  "bench_ns": 1.4363
+ },
+ {
+  "build": "clangcl-O2",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "route_static_out_of_line",
+  "path": {
+   "instructions": 25,
+   "direct_calls": 4,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@SampleRoute@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 143642,
+   "data": 2845,
+   "bss": 2856,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 32.015,
+   "teardown": 2
+  },
+  "bench_ns": 1.424
+ },
+ {
+  "build": "clangcl-O2",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "today_dynamic",
+  "path": {
+   "instructions": 25,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 145651,
+   "data": 3037,
+   "bss": 2988,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 416,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct app::Sample,0>::filter(struct app::Sample const & __ptr64) __ptr64",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct app::Sample>::`vftable'",
+   "const sub0::Subscribe<struct app::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct app::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct app::Sample,0> `RTTI Type Descriptor'",
+   "private: static struct sub0::detail::Table<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> > sub0::detail::BrokerImpl<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> >::global_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 38,
+   "publish": 51.015,
+   "teardown": 89
+  },
+  "bench_ns": 2.724
+ },
+ {
+  "build": "clangcl-O2",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "today_static",
+  "path": {
+   "instructions": 21,
+   "direct_calls": 3,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 143586,
+   "data": 2845,
+   "bss": 2856,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 28.015,
+   "teardown": 2
+  },
+  "bench_ns": 1.3557
  },
  {
   "build": "clangcl-O2",
@@ -3839,7 +5271,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.6464
+  "bench_ns": 1.6546
  },
  {
   "build": "clangcl-O2",
@@ -3874,7 +5306,7 @@
    "publish": 25.015,
    "teardown": 2
   },
-  "bench_ns": 1.6816
+  "bench_ns": 1.6903
  },
  {
   "build": "clangcl-O2",
@@ -3936,7 +5368,7 @@
    "publish": 41.015,
    "teardown": 28
   },
-  "bench_ns": 1.8417
+  "bench_ns": 1.7888
  },
  {
   "build": "clangcl-O2",
@@ -3970,7 +5402,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.694
+  "bench_ns": 1.6765
  },
  {
   "build": "clangcl-O2",
@@ -4034,7 +5466,7 @@
    "publish": 48.015,
    "teardown": 28
   },
-  "bench_ns": 1.8458
+  "bench_ns": 1.8189
  },
  {
   "build": "clangcl-O2",
@@ -4071,7 +5503,7 @@
    "publish": 25.015,
    "teardown": 2
   },
-  "bench_ns": 1.7256
+  "bench_ns": 1.9706
  },
  {
   "build": "clangcl-O2",
@@ -4123,7 +5555,7 @@
    "publish": 26.015,
    "teardown": 12
   },
-  "bench_ns": 1.6277
+  "bench_ns": 1.7361
  },
  {
   "build": "clangcl-O2",
@@ -4171,7 +5603,7 @@
    "publish": 40.015,
    "teardown": 28
   },
-  "bench_ns": 1.8737
+  "bench_ns": 1.9251
  },
  {
   "build": "clangcl-O2",
@@ -4205,7 +5637,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.6424
+  "bench_ns": 1.6502
  },
  {
   "build": "clangcl-O2",
@@ -4239,7 +5671,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.6503
+  "bench_ns": 1.661
  },
  {
   "build": "clangcl-O2",
@@ -4287,7 +5719,7 @@
    "publish": 40.015,
    "teardown": 28
   },
-  "bench_ns": 1.9555
+  "bench_ns": 1.9714
  },
  {
   "build": "clangcl-O2",
@@ -4321,7 +5753,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.4326
+  "bench_ns": 1.837
  },
  {
   "build": "clangcl-O2",
@@ -4355,7 +5787,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.3663
+  "bench_ns": 1.4138
  },
  {
   "build": "clangcl-O2",
@@ -4389,7 +5821,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.4236
+  "bench_ns": 1.4061
  },
  {
   "build": "clangcl-O2",
@@ -4451,7 +5883,7 @@
    "publish": 32.015,
    "teardown": 28
   },
-  "bench_ns": 1.4196
+  "bench_ns": 1.494
  },
  {
   "build": "clangcl-O2",
@@ -4485,7 +5917,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.3894
+  "bench_ns": 1.4383
  },
  {
   "build": "clangcl-O2",
@@ -4549,7 +5981,7 @@
    "publish": 39.015,
    "teardown": 28
   },
-  "bench_ns": 1.596
+  "bench_ns": 1.6896
  },
  {
   "build": "clangcl-O2",
@@ -4583,7 +6015,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.3783
+  "bench_ns": 1.3873
  },
  {
   "build": "clangcl-O2",
@@ -4635,7 +6067,7 @@
    "publish": 19.015,
    "teardown": 12
   },
-  "bench_ns": 1.2557
+  "bench_ns": 1.3971
  },
  {
   "build": "clangcl-O2",
@@ -4683,7 +6115,7 @@
    "publish": 32.015,
    "teardown": 28
   },
-  "bench_ns": 1.4866
+  "bench_ns": 1.4949
  },
  {
   "build": "clangcl-O2",
@@ -4717,7 +6149,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.4051
+  "bench_ns": 1.2433
  },
  {
   "build": "clangcl-O2",
@@ -4751,7 +6183,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.2993
+  "bench_ns": 1.5881
  },
  {
   "build": "clangcl-O2",
@@ -4799,7 +6231,7 @@
    "publish": 32.015,
    "teardown": 28
   },
-  "bench_ns": 1.5033
+  "bench_ns": 1.4012
  },
  {
   "build": "clangcl-O2",
@@ -4833,7 +6265,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.1679
+  "bench_ns": 1.0498
  },
  {
   "build": "clangcl-O2",
@@ -4867,7 +6299,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.6983
+  "bench_ns": 3.7943
  },
  {
   "build": "clangcl-O2",
@@ -4903,7 +6335,7 @@
    "publish": 58.015,
    "teardown": 2
   },
-  "bench_ns": 5.6533
+  "bench_ns": 6.2808
  },
  {
   "build": "clangcl-O2",
@@ -5013,7 +6445,7 @@
    "publish": 104.015,
    "teardown": 107
   },
-  "bench_ns": 7.097
+  "bench_ns": 7.2316
  },
  {
   "build": "clangcl-O2",
@@ -5047,7 +6479,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.6678
+  "bench_ns": 3.668
  },
  {
   "build": "clangcl-O2",
@@ -5161,7 +6593,7 @@
    "publish": 123.015,
    "teardown": 107
   },
-  "bench_ns": 7.1791
+  "bench_ns": 7.7489
  },
  {
   "build": "clangcl-O2",
@@ -5200,7 +6632,7 @@
    "publish": 58.015,
    "teardown": 2
   },
-  "bench_ns": 5.647
+  "bench_ns": 5.6611
  },
  {
   "build": "clangcl-O2",
@@ -5275,7 +6707,7 @@
    "publish": 51.015,
    "teardown": 32
   },
-  "bench_ns": 3.6743
+  "bench_ns": 3.6766
  },
  {
   "build": "clangcl-O2",
@@ -5341,7 +6773,7 @@
    "publish": 103.015,
    "teardown": 107
   },
-  "bench_ns": 7.2571
+  "bench_ns": 7.3183
  },
  {
   "build": "clangcl-O2",
@@ -5375,7 +6807,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.6787
+  "bench_ns": 3.9536
  },
  {
   "build": "clangcl-O2",
@@ -5409,7 +6841,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.6702
+  "bench_ns": 3.6766
  },
  {
   "build": "clangcl-O2",
@@ -5448,7 +6880,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.644
+  "bench_ns": 3.6736
  },
  {
   "build": "clangcl-O2",
@@ -5514,7 +6946,7 @@
    "publish": 103.015,
    "teardown": 107
   },
-  "bench_ns": 7.0971
+  "bench_ns": 8.3723
  },
  {
   "build": "clangcl-O2",
@@ -5548,7 +6980,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.6731
+  "bench_ns": 3.6704
  },
  {
   "build": "clangcl-O2",
@@ -5582,7 +7014,7 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.452
+  "bench_ns": 1.4416
  },
  {
   "build": "clangcl-O2",
@@ -5617,7 +7049,7 @@
    "publish": 18.015,
    "teardown": 2
   },
-  "bench_ns": 1.4301
+  "bench_ns": 1.4209
  },
  {
   "build": "clangcl-O2",
@@ -5727,7 +7159,7 @@
    "publish": 72.015,
    "teardown": 107
   },
-  "bench_ns": 2.9653
+  "bench_ns": 2.7733
  },
  {
   "build": "clangcl-O2",
@@ -5761,7 +7193,7 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.445
+  "bench_ns": 1.5398
  },
  {
   "build": "clangcl-O2",
@@ -5875,7 +7307,7 @@
    "publish": 91.015,
    "teardown": 107
   },
-  "bench_ns": 3.6362
+  "bench_ns": 3.6564
  },
  {
   "build": "clangcl-O2",
@@ -5912,7 +7344,7 @@
    "publish": 18.015,
    "teardown": 2
   },
-  "bench_ns": 1.3911
+  "bench_ns": 1.4104
  },
  {
   "build": "clangcl-O2",
@@ -5987,7 +7419,7 @@
    "publish": 27.015,
    "teardown": 32
   },
-  "bench_ns": 1.4374
+  "bench_ns": 1.4416
  },
  {
   "build": "clangcl-O2",
@@ -6053,7 +7485,7 @@
    "publish": 71.015,
    "teardown": 107
   },
-  "bench_ns": 2.8217
+  "bench_ns": 3.3293
  },
  {
   "build": "clangcl-O2",
@@ -6087,7 +7519,7 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.4636
+  "bench_ns": 1.4456
  },
  {
   "build": "clangcl-O2",
@@ -6121,7 +7553,7 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.4995
+  "bench_ns": 1.003
  },
  {
   "build": "clangcl-O2",
@@ -6160,7 +7592,7 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.4899
+  "bench_ns": 1.4386
  },
  {
   "build": "clangcl-O2",
@@ -6226,7 +7658,7 @@
    "publish": 71.015,
    "teardown": 107
   },
-  "bench_ns": 2.984
+  "bench_ns": 2.74
  },
  {
   "build": "clangcl-O2",
@@ -6260,7 +7692,7 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.4275
+  "bench_ns": 1.4439
  },
  {
   "build": "icx-O2",
@@ -6294,7 +7726,7 @@
    "publish": 250.015,
    "teardown": 2
   },
-  "bench_ns": 9.611
+  "bench_ns": 11.8123
  },
  {
   "build": "icx-O2",
@@ -6328,7 +7760,7 @@
    "publish": 248.015,
    "teardown": 2
   },
-  "bench_ns": 9.5718
+  "bench_ns": 9.6244
  },
  {
   "build": "icx-O2",
@@ -6380,7 +7812,7 @@
    "publish": 739.015,
    "teardown": 7
   },
-  "bench_ns": 104.732
+  "bench_ns": 103.2543
  },
  {
   "build": "icx-O2",
@@ -6428,7 +7860,7 @@
    "publish": 1571.015,
    "teardown": 21
   },
-  "bench_ns": 83.6048
+  "bench_ns": 82.8455
  },
  {
   "build": "icx-O2",
@@ -6462,7 +7894,7 @@
    "publish": 250.015,
    "teardown": 2
   },
-  "bench_ns": 9.6095
+  "bench_ns": 10.3992
  },
  {
   "build": "icx-O2",
@@ -6510,7 +7942,7 @@
    "publish": 1571.015,
    "teardown": 21
   },
-  "bench_ns": 83.3807
+  "bench_ns": 83.8223
  },
  {
   "build": "icx-O2",
@@ -6544,7 +7976,7 @@
    "publish": 250.015,
    "teardown": 2
   },
-  "bench_ns": 9.5602
+  "bench_ns": 9.4455
  },
  {
   "build": "icx-O2",
@@ -6578,7 +8010,7 @@
    "publish": 248.015,
    "teardown": 2
   },
-  "bench_ns": 9.3889
+  "bench_ns": 10.5526
  },
  {
   "build": "icx-O2",
@@ -6612,7 +8044,7 @@
    "publish": 244.015,
    "teardown": 2
   },
-  "bench_ns": 9.6467
+  "bench_ns": 9.6303
  },
  {
   "build": "icx-O2",
@@ -6646,7 +8078,7 @@
    "publish": 242.015,
    "teardown": 2
   },
-  "bench_ns": 10.2489
+  "bench_ns": 9.3849
  },
  {
   "build": "icx-O2",
@@ -6698,7 +8130,7 @@
    "publish": 733.015,
    "teardown": 7
   },
-  "bench_ns": 82.2129
+  "bench_ns": 84.5233
  },
  {
   "build": "icx-O2",
@@ -6746,7 +8178,7 @@
    "publish": 1565.015,
    "teardown": 21
   },
-  "bench_ns": 83.6788
+  "bench_ns": 88.9293
  },
  {
   "build": "icx-O2",
@@ -6780,7 +8212,7 @@
    "publish": 244.015,
    "teardown": 2
   },
-  "bench_ns": 9.6097
+  "bench_ns": 9.6017
  },
  {
   "build": "icx-O2",
@@ -6828,7 +8260,7 @@
    "publish": 1565.015,
    "teardown": 21
   },
-  "bench_ns": 83.3866
+  "bench_ns": 88.9103
  },
  {
   "build": "icx-O2",
@@ -6862,7 +8294,7 @@
    "publish": 244.015,
    "teardown": 2
   },
-  "bench_ns": 9.7657
+  "bench_ns": 9.67
  },
  {
   "build": "icx-O2",
@@ -6896,7 +8328,489 @@
    "publish": 242.015,
    "teardown": 2
   },
-  "bench_ns": 9.5797
+  "bench_ns": 9.5031
+ },
+ {
+  "build": "icx-O2",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "handwritten",
+  "path": {
+   "instructions": 38,
+   "direct_calls": 3,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 139510,
+   "data": 2816,
+   "bss": 2872,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 53.015,
+   "teardown": 2
+  },
+  "bench_ns": 4.9624
+ },
+ {
+  "build": "icx-O2",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "route_dynamic",
+  "path": {
+   "instructions": 25,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 140702,
+   "data": 3072,
+   "bss": 3000,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 416,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct app::Sample,0>::filter(struct app::Sample const & __ptr64) __ptr64",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct app::Sample>::`vftable'",
+   "const sub0::Subscribe<struct app::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct app::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct app::Sample,0> `RTTI Type Descriptor'",
+   "private: static struct sub0::detail::Table<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> > sub0::detail::BrokerImpl<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> >::global_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 39,
+   "publish": 76.015,
+   "teardown": 72
+  },
+  "bench_ns": 5.415
+ },
+ {
+  "build": "icx-O2",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "route_static",
+  "path": {
+   "instructions": 38,
+   "direct_calls": 3,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 139510,
+   "data": 2816,
+   "bss": 2872,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 53.015,
+   "teardown": 2
+  },
+  "bench_ns": 5.1665
+ },
+ {
+  "build": "icx-O2",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "route_static_out_of_line",
+  "path": {
+   "instructions": 42,
+   "direct_calls": 4,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@SampleRoute@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 139562,
+   "data": 2816,
+   "bss": 2872,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 57.015,
+   "teardown": 2
+  },
+  "bench_ns": 5.6509
+ },
+ {
+  "build": "icx-O2",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "today_dynamic",
+  "path": {
+   "instructions": 25,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 140702,
+   "data": 3072,
+   "bss": 3000,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 416,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct app::Sample,0>::filter(struct app::Sample const & __ptr64) __ptr64",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct app::Sample>::`vftable'",
+   "const sub0::Subscribe<struct app::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct app::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct app::Sample,0> `RTTI Type Descriptor'",
+   "private: static struct sub0::detail::Table<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> > sub0::detail::BrokerImpl<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> >::global_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 39,
+   "publish": 76.015,
+   "teardown": 72
+  },
+  "bench_ns": 5.1882
+ },
+ {
+  "build": "icx-O2",
+  "case": "cross_file",
+  "form": "observable",
+  "variant": "today_static",
+  "path": {
+   "instructions": 38,
+   "direct_calls": 3,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 139510,
+   "data": 2816,
+   "bss": 2872,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=3262170576 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 53.015,
+   "teardown": 2
+  },
+  "bench_ns": 5.2186
+ },
+ {
+  "build": "icx-O2",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "handwritten",
+  "path": {
+   "instructions": 21,
+   "direct_calls": 3,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 139478,
+   "data": 2816,
+   "bss": 2872,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 28.015,
+   "teardown": 2
+  },
+  "bench_ns": 1.4539
+ },
+ {
+  "build": "icx-O2",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "route_dynamic",
+  "path": {
+   "instructions": 25,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 140670,
+   "data": 3072,
+   "bss": 3000,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 416,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct app::Sample,0>::filter(struct app::Sample const & __ptr64) __ptr64",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct app::Sample>::`vftable'",
+   "const sub0::Subscribe<struct app::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct app::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct app::Sample,0> `RTTI Type Descriptor'",
+   "private: static struct sub0::detail::Table<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> > sub0::detail::BrokerImpl<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> >::global_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 39,
+   "publish": 51.015,
+   "teardown": 72
+  },
+  "bench_ns": 2.8115
+ },
+ {
+  "build": "icx-O2",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "route_static",
+  "path": {
+   "instructions": 21,
+   "direct_calls": 3,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 139478,
+   "data": 2816,
+   "bss": 2872,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 28.015,
+   "teardown": 2
+  },
+  "bench_ns": 1.3907
+ },
+ {
+  "build": "icx-O2",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "route_static_out_of_line",
+  "path": {
+   "instructions": 25,
+   "direct_calls": 4,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@SampleRoute@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 139530,
+   "data": 2816,
+   "bss": 2872,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 32.015,
+   "teardown": 2
+  },
+  "bench_ns": 1.4444
+ },
+ {
+  "build": "icx-O2",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "today_dynamic",
+  "path": {
+   "instructions": 25,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 140670,
+   "data": 3072,
+   "bss": 3000,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 416,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct app::Sample,0>::filter(struct app::Sample const & __ptr64) __ptr64",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct app::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct app::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct app::Sample>::`vftable'",
+   "const sub0::Subscribe<struct app::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct app::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct app::Sample,0> `RTTI Type Descriptor'",
+   "private: static struct sub0::detail::Table<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> > sub0::detail::BrokerImpl<struct app::Sample,struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock> >::global_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 39,
+   "publish": 51.015,
+   "teardown": 72
+  },
+  "bench_ns": 2.7202
+ },
+ {
+  "build": "icx-O2",
+  "case": "cross_file",
+  "form": "removable",
+  "variant": "today_static",
+  "path": {
+   "instructions": 21,
+   "direct_calls": 3,
+   "indirect_calls": 0,
+   "functions": [
+    "collapse_publish",
+    "?receive@Logger@app@@QEAAXAEBUSample@2@@Z",
+    "?receive@Controller@app@@QEAAXAEBUSample@2@@Z"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 139478,
+   "data": 2816,
+   "bss": 2872,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 0,
+  "retained_sub0": [],
+  "dependencies": [
+   "operator delete",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 5,
+   "publish": 28.015,
+   "teardown": 2
+  },
+  "bench_ns": 1.3432
  },
  {
   "build": "icx-O2",
@@ -6930,7 +8844,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.6628
+  "bench_ns": 1.6397
  },
  {
   "build": "icx-O2",
@@ -6964,7 +8878,7 @@
    "publish": 26.015,
    "teardown": 2
   },
-  "bench_ns": 1.6272
+  "bench_ns": 1.6301
  },
  {
   "build": "icx-O2",
@@ -7026,7 +8940,7 @@
    "publish": 41.015,
    "teardown": 21
   },
-  "bench_ns": 1.8036
+  "bench_ns": 1.8482
  },
  {
   "build": "icx-O2",
@@ -7060,7 +8974,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.6488
+  "bench_ns": 1.6659
  },
  {
   "build": "icx-O2",
@@ -7123,7 +9037,7 @@
    "publish": 48.015,
    "teardown": 21
   },
-  "bench_ns": 1.846
+  "bench_ns": 1.8472
  },
  {
   "build": "icx-O2",
@@ -7159,7 +9073,7 @@
    "publish": 25.015,
    "teardown": 2
   },
-  "bench_ns": 1.6284
+  "bench_ns": 1.6898
  },
  {
   "build": "icx-O2",
@@ -7211,7 +9125,7 @@
    "publish": 26.015,
    "teardown": 7
   },
-  "bench_ns": 1.6703
+  "bench_ns": 1.6253
  },
  {
   "build": "icx-O2",
@@ -7259,7 +9173,7 @@
    "publish": 40.015,
    "teardown": 21
   },
-  "bench_ns": 1.8729
+  "bench_ns": 1.8802
  },
  {
   "build": "icx-O2",
@@ -7293,7 +9207,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.697
+  "bench_ns": 1.6465
  },
  {
   "build": "icx-O2",
@@ -7327,7 +9241,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.6741
+  "bench_ns": 1.6622
  },
  {
   "build": "icx-O2",
@@ -7375,7 +9289,7 @@
    "publish": 40.015,
    "teardown": 21
   },
-  "bench_ns": 1.8831
+  "bench_ns": 1.9038
  },
  {
   "build": "icx-O2",
@@ -7409,7 +9323,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.6054
+  "bench_ns": 1.6418
  },
  {
   "build": "icx-O2",
@@ -7443,7 +9357,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.3804
+  "bench_ns": 1.3942
  },
  {
   "build": "icx-O2",
@@ -7477,7 +9391,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.4679
+  "bench_ns": 1.5078
  },
  {
   "build": "icx-O2",
@@ -7539,7 +9453,7 @@
    "publish": 32.015,
    "teardown": 21
   },
-  "bench_ns": 1.5077
+  "bench_ns": 1.4621
  },
  {
   "build": "icx-O2",
@@ -7573,7 +9487,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.4025
+  "bench_ns": 1.3758
  },
  {
   "build": "icx-O2",
@@ -7636,7 +9550,7 @@
    "publish": 39.015,
    "teardown": 21
   },
-  "bench_ns": 1.5933
+  "bench_ns": 1.5276
  },
  {
   "build": "icx-O2",
@@ -7672,7 +9586,7 @@
    "publish": 16.015,
    "teardown": 2
   },
-  "bench_ns": 1.4322
+  "bench_ns": 1.579
  },
  {
   "build": "icx-O2",
@@ -7724,7 +9638,7 @@
    "publish": 19.015,
    "teardown": 7
   },
-  "bench_ns": 1.2424
+  "bench_ns": 1.2771
  },
  {
   "build": "icx-O2",
@@ -7772,7 +9686,7 @@
    "publish": 32.015,
    "teardown": 21
   },
-  "bench_ns": 1.467
+  "bench_ns": 1.5104
  },
  {
   "build": "icx-O2",
@@ -7806,7 +9720,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.4343
+  "bench_ns": 1.4224
  },
  {
   "build": "icx-O2",
@@ -7840,7 +9754,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.3735
+  "bench_ns": 1.4056
  },
  {
   "build": "icx-O2",
@@ -7922,7 +9836,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.4416
+  "bench_ns": 1.2156
  },
  {
   "build": "icx-O2",
@@ -7956,7 +9870,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.6713
+  "bench_ns": 3.6718
  },
  {
   "build": "icx-O2",
@@ -7992,7 +9906,7 @@
    "publish": 54.015,
    "teardown": 2
   },
-  "bench_ns": 4.6867
+  "bench_ns": 4.6926
  },
  {
   "build": "icx-O2",
@@ -8102,7 +10016,7 @@
    "publish": 105.015,
    "teardown": 88
   },
-  "bench_ns": 7.0579
+  "bench_ns": 7.1855
  },
  {
   "build": "icx-O2",
@@ -8136,7 +10050,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.6685
+  "bench_ns": 3.6683
  },
  {
   "build": "icx-O2",
@@ -8248,7 +10162,7 @@
    "publish": 124.015,
    "teardown": 88
   },
-  "bench_ns": 7.1624
+  "bench_ns": 7.347
  },
  {
   "build": "icx-O2",
@@ -8285,7 +10199,7 @@
    "publish": 59.015,
    "teardown": 2
   },
-  "bench_ns": 5.6726
+  "bench_ns": 5.7187
  },
  {
   "build": "icx-O2",
@@ -8360,7 +10274,7 @@
    "publish": 51.015,
    "teardown": 22
   },
-  "bench_ns": 3.7069
+  "bench_ns": 4.3881
  },
  {
   "build": "icx-O2",
@@ -8426,7 +10340,7 @@
    "publish": 103.015,
    "teardown": 88
   },
-  "bench_ns": 7.1173
+  "bench_ns": 7.2443
  },
  {
   "build": "icx-O2",
@@ -8460,7 +10374,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.6821
+  "bench_ns": 3.6948
  },
  {
   "build": "icx-O2",
@@ -8494,7 +10408,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.6738
+  "bench_ns": 3.6912
  },
  {
   "build": "icx-O2",
@@ -8533,7 +10447,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.6684
+  "bench_ns": 3.6868
  },
  {
   "build": "icx-O2",
@@ -8599,7 +10513,7 @@
    "publish": 103.015,
    "teardown": 88
   },
-  "bench_ns": 7.1254
+  "bench_ns": 7.2255
  },
  {
   "build": "icx-O2",
@@ -8633,7 +10547,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.6677
+  "bench_ns": 3.6193
  },
  {
   "build": "icx-O2",
@@ -8667,7 +10581,7 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.4578
+  "bench_ns": 1.462
  },
  {
   "build": "icx-O2",
@@ -8702,7 +10616,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.2668
+  "bench_ns": 1.2862
  },
  {
   "build": "icx-O2",
@@ -8812,7 +10726,7 @@
    "publish": 72.015,
    "teardown": 88
   },
-  "bench_ns": 2.8231
+  "bench_ns": 2.9549
  },
  {
   "build": "icx-O2",
@@ -8846,7 +10760,7 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.509
+  "bench_ns": 1.4554
  },
  {
   "build": "icx-O2",
@@ -8958,7 +10872,7 @@
    "publish": 91.015,
    "teardown": 88
   },
-  "bench_ns": 4.1041
+  "bench_ns": 3.7594
  },
  {
   "build": "icx-O2",
@@ -8995,7 +10909,7 @@
    "publish": 27.015,
    "teardown": 2
   },
-  "bench_ns": 1.8363
+  "bench_ns": 1.79
  },
  {
   "build": "icx-O2",
@@ -9070,7 +10984,7 @@
    "publish": 27.015,
    "teardown": 22
   },
-  "bench_ns": 1.4638
+  "bench_ns": 1.4737
  },
  {
   "build": "icx-O2",
@@ -9136,7 +11050,7 @@
    "publish": 71.015,
    "teardown": 88
   },
-  "bench_ns": 2.938
+  "bench_ns": 2.8264
  },
  {
   "build": "icx-O2",
@@ -9170,7 +11084,7 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.4508
+  "bench_ns": 1.4489
  },
  {
   "build": "icx-O2",
@@ -9204,7 +11118,7 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.4713
+  "bench_ns": 1.4486
  },
  {
   "build": "icx-O2",
@@ -9243,7 +11157,7 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.6834
+  "bench_ns": 1.3765
  },
  {
   "build": "icx-O2",
@@ -9309,7 +11223,7 @@
    "publish": 71.015,
    "teardown": 88
   },
-  "bench_ns": 2.8529
+  "bench_ns": 2.8104
  },
  {
   "build": "icx-O2",
@@ -9343,6 +11257,6 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.5188
+  "bench_ns": 1.4595
  }
 ]

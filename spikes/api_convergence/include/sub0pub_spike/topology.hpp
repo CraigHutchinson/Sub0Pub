@@ -20,7 +20,9 @@
  *  same selection into sub0::Subscribe / sub0::Publish / sub0::publish themselves.
  */
 
+#include <atomic>
 #include <cassert>
+#include <cstdint>
 #include <type_traits>
 
 #include "sub0pub/broker.hpp"
@@ -100,6 +102,20 @@ namespace sub0::spike
         {
             // An error here: include the definition of every receiver this type's StaticTo<> names
             static_assert(((sizeof(*Bound) > 0) && ...));
+        }
+
+        /** Rejects a bound receiver that subscribes to Data but cannot receive it.
+         *  Without `override` nothing else checks a static receiver's signature: capability routing would skip a
+         *  `receive(Data&)` or a misspelt overload without a diagnostic (DESIGN.md K14).
+         * @tparam Base  The Subscribe<Data> base a subscriber of Data derives from.
+         * @tparam Data  The message type being published.
+         */
+        template<class Base, class Data>
+        static constexpr void requireHandlers() noexcept
+        {
+            static_assert(((!std::is_base_of_v<Base, sub0::detail::wiring::receiver_t<std::remove_pointer_t<decltype(Bound)>>>
+                            || handles_v<std::remove_pointer_t<decltype(Bound)>, Data>) && ...),
+                          "sub0pub: a receiver listed in StaticTo<> derives from Subscribe<Data> but has no receive(const Data&)");
         }
     };
 
@@ -234,6 +250,34 @@ namespace sub0::spike
     {
     };
 
+    namespace detail
+    {
+        /** The topology each translation unit published Data with; shared by all of them, whatever they resolved. */
+        template<class Data>
+        struct TopologyRegistry
+        {
+            inline static std::atomic<uint32_t> fingerprint{0};
+        };
+
+        /** Debug-build report of a message type published with different topologies in different translation units.
+         *  A unit that misses a StaticTo<> publishes to a broker nobody subscribes to: the message is lost without
+         *  any other symptom, and the existing configuration check does not see it (no broker is involved on the
+         *  static side). Compiled out unless SUB0PUB_CHECK_CONFIG.
+         * @tparam Topology  The topology this translation unit resolved. A template parameter, so that two units
+         *                   which disagree instantiate two functions and the linker cannot merge them into one.
+         */
+        template<class Data, class Topology>
+        void checkTopology() noexcept
+        {
+#if SUB0PUB_CHECK_CONFIG
+            constexpr uint32_t mine = utility::typeHash<Topology>() | 1U; // never 0, which marks "unseen"
+            uint32_t seen = 0;
+            if (!TopologyRegistry<Data>::fingerprint.compare_exchange_strong(seen, mine, std::memory_order_relaxed) && seen != mine)
+                SUB0PUB_CONFIG_MISMATCH("sub0pub: a message type was published with different topologies in different translation units");
+#endif
+        }
+    }
+
     /** Publishes data along its type's topology: direct calls to bound receivers, the runtime broker, or both.
      * @param from  A publisher deriving from Publish<Data>.
      * @param data  The message; receivers see it by const reference for the duration of the call.
@@ -243,9 +287,11 @@ namespace sub0::spike
     {
         using Topology = topology_t<Data>;
         [[maybe_unused]] const Publish<Data>& publisher = from; // From must publish Data in every topology
+        detail::checkTopology<Data, Topology>();
         if constexpr (Topology::cHasStatic)
         {
             Topology::requireComplete();
+            Topology::template requireHandlers<Subscribe<Data>, Data>();
             Topology::publish(data);
         }
         if constexpr (Topology::cHasDynamic)

@@ -28,8 +28,9 @@ The other two candidates are useful as what they already are: explicit wiring re
 type-erased port remains the tool for a library boundary. Neither converges the two models.
 
 **GCC, callgrind and Cortex-M33 were not available on the machine these were measured on** (MSVC 19.51, clang 22,
-Intel icx 2026.1, all x64 Windows). The typed route also has open design questions that measurement does not settle;
-they are listed under [Open questions](#open-questions). It should not move into `include/` before both are closed.
+Intel icx 2026.1, all x64 Windows). The typed route also has seven design decisions that measurement does not
+settle; [DECISIONS.md](DECISIONS.md) works through each with compiled examples. It should not move into `include/`
+before both are closed.
 
 ## The problem
 
@@ -147,9 +148,13 @@ line), and `bridged` (the display called directly, the audit log still subscribi
 For: the client diff and the measurements below. Publishers remain ordinary classes. The granularity is the type,
 which is where "known hot" is decided. Using a dynamic-only feature (`disconnect()`, `trySubscribe()`, `cancel()`)
 on a statically routed type is a compile error, so the compiler lists what a promotion has to resolve.
-Against: see [Open questions](#open-questions). In short: one topology per message type for the whole program; a
-build contract that every translation unit sees it; publishers of a static type must see the receivers'
-definitions; and `receive()` must be declared without `override`.
+Against: one topology per message type for the whole program; a build contract that every translation unit sees
+it; publishers of a static type must see the receivers' definitions; and `receive()` must be declared without
+`override`. [DECISIONS.md](DECISIONS.md) takes each in turn.
+
+Three checks keep a promotion from failing silently: a listed receiver that subscribes to the type must be able to
+receive it (compile time); a subscriber must be listed in its type's `StaticTo` (debug builds); and every
+translation unit must publish a type with the same topology (debug builds).
 
 ## Measurements
 
@@ -204,16 +209,18 @@ subscribed type and the retained vtables, not instructions.
 Case `one_receiver` shows the same pattern (12 / 17 / 17 for hand-written, today's static and the typed route's
 static build; 34 / 40 / 40 for today's dynamic and the typed route's dynamic build).
 
-Case `cross_file` ([`results/shootout-cross-file-2026-10.md`](results/shootout-cross-file-2026-10.md)) puts the
-receivers' `receive()` bodies in another translation unit and names the receiver objects, with external linkage, in
+Case `cross_file` puts the receivers' `receive()` bodies in another translation unit and names the receiver objects, with external linkage, in
 a header both units include, as a project topology header would. Without link-time optimisation the typed route's
 static build equals hand-written code on every criterion on all three compilers (39 / 53 / 53 instructions). With
 MSVC `/LTCG` it equals today's static API (19 instructions; both are 8 B of RAM above hand-written code, the
-difference docs/EVIDENCE.md already records). Its dynamic build equals today's in all four builds.
+difference docs/EVIDENCE.md already records). Its dynamic build equals today's in all four builds. Routing the type
+through an out-of-line function instead, so that publishers need not see the receivers at all, costs +7 / +4 / +4
+instructions per publication without link-time optimisation and nothing with it
+([decision 3](DECISIONS.md#3-what-a-publisher-has-to-see)).
 
-Wall-clock time agrees, within its noise: on `station` the three static builds and hand-written code run at 2.7 /
-3.7 / 3.7 ns per publication, and today's dynamic and the typed route's dynamic build at 7.9 and 7.7 / 7.1 and 7.3 /
-7.1 and 7.1 ns.
+Wall-clock time agrees, within its noise (this run shared the machine with other builds): on `station`,
+hand-written code and the static builds run at 2.8 to 2.9 / 3.7 to 4.0 / 3.6 to 3.7 ns per publication; today's
+dynamic API at 8.2 / 8.4 / 7.2 ns and the typed route's dynamic build at 7.9 / 7.3 / 7.2 ns.
 
 ### Vectorisation and aliasing
 
@@ -222,13 +229,13 @@ into a receiver that accumulates `value * gain`.
 
 | Variant | clang (default / AVX2) | MSVC | icx | Instructions per burst | ns per burst |
 |---|---|---|---|---|---|
-| hand-written direct call | vectorised, width 4×2 / 8×4 | not vectorised (reason 1102) | vectorised | 201 / 136 / 250 | 8.5 / 5.3 / 9.6 |
-| today's static | the same | the same | the same | 205 / 136 / 250 ³ | 8.6 / 5.2 / 9.6 |
-| **typed route, static** | the same; alias-blocked loads 0 (hand-written: 1) | the same | the same | 205 / 136 / 250 ³ | 8.6 / 5.2 / 9.6 |
+| hand-written direct call | vectorised, width 4×2 / 8×4 | not vectorised (reason 1102) | vectorised | 201 / 136 / 250 | 8.4 / 5.2 / 11.8 |
+| today's static | the same | the same | the same | 205 / 136 / 250 ³ | 8.6 / 5.2 / 9.5 |
+| **typed route, static** | the same; alias-blocked loads 0 (hand-written: 1) | the same | the same | 205 / 136 / 250 ³ | 8.8 / 5.8 / 10.4 |
 | hand-written, runtime-bound address | not vectorised: cannot identify array bounds; alias-blocked loads 7 | not vectorised (reason 1200) | vectorised | 417 / 373 / 248 | 81 / 15 / 9.6 |
-| today's `wire(...)` | the same as hand-written runtime-bound | the same | the same | 417 / 373 / 248 | 81 / 15 / 9.4 |
-| today's dynamic, and the typed route's dynamic build | not vectorised: the loop body is opaque | not vectorised (reason 1200) | not vectorised | 1369 / 1573 / 1571 | 96 and 95 / 84 and 83 / 83 and 84 |
-| typed route, bridged | vectorised, width 4×2 / 8×4; alias-blocked loads 22 | not vectorised (reason 1200) | not vectorised | 732 / 149 / 739 | 91 / 5.4 / 105 |
+| today's `wire(...)` | the same as hand-written runtime-bound | the same | the same | 417 / 373 / 248 | 82 / 15 / 10.6 |
+| today's dynamic, and the typed route's dynamic build | not vectorised: the loop body is opaque | not vectorised (reason 1200) | not vectorised | 1369 / 1573 / 1571 | 95 and 95 / 89 and 92 / 84 and 83 |
+| typed route, bridged | vectorised, width 4×2 / 8×4; alias-blocked loads 22 | not vectorised (reason 1200) | not vectorised | 732 / 149 / 739 | 90 / 6.2 / 103 |
 
 Instructions and ns are MSVC / clang-cl / icx.
 
@@ -239,7 +246,7 @@ Two things follow. A statically routed burst is the caller's own loop again and 
 *storage*, not just static types, that buys this: when the receiver's address is a run-time value (`wire`, or
 hand-written code that stores a pointer), clang and MSVC cannot prove the receiver's state does not alias the data
 being published, so the running total goes through memory on every sample and the loop stays scalar: on MSVC the
-burst takes 81 ns against 8.6. That is a reason for the typed route to bind addresses as template arguments. It is
+burst takes about 81 ns against under 9. That is a reason for the typed route to bind addresses as template arguments. It is
 also a reason not to use `StaticFirst` on a burst path: of the three compilers only clang still vectorises the loop
 there.
 
@@ -275,37 +282,22 @@ run.
 
 ## Open questions
 
-Measurement does not settle these. Each needs a decision before the typed route is an in-library proposal.
+Measurement does not settle these. Each needs a decision before the typed route is an in-library proposal, and
+[DECISIONS.md](DECISIONS.md) works through each with compiled examples, the options and their costs.
 
-1. **One topology per message type, program-wide.** The same granularity as Global storage. Two stations in one
-   program cannot route `Reading` differently; that needs `Scoped` types or explicit wiring. Is that acceptable as
-   the documented boundary between the two levels?
-2. **The build contract gains a behavioural failure mode.** Every translation unit must see a type's topology
-   (already true of any per-type configuration, K6). A unit that misses a `StaticTo` would publish to a broker
-   nobody subscribes to. A project header set by the build system prevents it; the debug-build configuration check
-   should also fingerprint the topology. Is link-time detection needed first?
-3. **Publishers of a static type must see the receivers' definitions** (a compile error otherwise, not a silent
-   miss: verified). This is inherent to inlining, and it couples a hot type's publishers to its receivers' headers
-   at compile time. An out-of-line route defined in the composition unit would decouple them at the price of a call
-   without LTO. Not spiked: in the `cross_file` case the publisher still sees the receivers' declarations.
-4. **`override`.** A receiver that is to be promotable declares `receive()` without it, which loses the compiler's
-   signature check in dynamic builds (and trips `-Wsuggest-override`). The alternative keeps the virtual in static
-   builds: no edit, identical publish path, but a vptr per subscribed type and the vtables. Which is the default?
-5. **Semantics that still differ**, and should be documented rather than hidden: delivery is in bound order rather
-   than registration order; a receiver not listed in `StaticTo` is never called (a debug assertion reports it;
-   should a unit test that constructs one alone be allowed to?); cancellation is `cancel()` on the broker and a
-   `bool` result with `publishCancelable` on wiring, and is not converged at all; `filter()` is a configuration
-   opt-in on the broker and a capability on wiring.
-6. **`StaticFirst`.** Useful as a migration step, but it costs 9 to 21 instructions per publication over `StaticTo`
-   for an empty runtime side and, on MSVC and icx, stops a burst vectorising. The spike registers and then disconnects a bound
-   receiver at construction; an in-library form would decide before registering. Is it worth shipping, given that
-   `StaticTo` per type covers most promotions?
-7. **Header layering.** `sub0::publish` lives in the broker area and would call into wiring. STYLE_GUIDE.md says an
-   area's entry header must not reach another area, so the route needs to be a bridge header, or the rule needs an
-   exception.
-8. **Evidence still to collect:** the shootout on GCC with callgrind and on Cortex-M33 (`-Os`, image only), which
-   is where the existing budgets live; compile-time A/B once the code is in `include/`; and a hardware-event VTune
-   run, which needs elevation.
+| # | Decision | In one line |
+|---|---|---|
+| [1](DECISIONS.md#1-one-topology-per-message-type) | One topology per message type, program-wide | The granularity of Global storage; `Tagged` or explicit wiring for a second instance |
+| [2](DECISIONS.md#2-where-the-topology-lives-and-what-happens-when-a-unit-misses-it) | Where the topology lives, and catching a unit that misses it | A missed unit loses messages silently in release builds; the spike now reports it in debug builds |
+| [3](DECISIONS.md#3-what-a-publisher-has-to-see) | What a publisher has to see | The receivers' definitions (a compile error otherwise), or an out-of-line route at +4 to +7 instructions without LTO |
+| [4](DECISIONS.md#4-override) | `receive()` without `override` | A mismatched signature is a compile error in both builds without it; keeping the virtual costs RAM instead |
+| [5](DECISIONS.md#5-semantics-that-still-differ) | Semantics that still differ | Delivery order, the closed set of receivers, cancellation and `filter()` |
+| [6](DECISIONS.md#6-staticfirst) | Whether to ship `StaticFirst` | +9 to +21 instructions per publication, and no burst vectorisation on MSVC and icx |
+| [7](DECISIONS.md#7-header-layering) | Header layering | The broker area can follow a topology without including wiring |
+
+**Evidence still to collect:** the shootout on GCC with callgrind and on Cortex-M33 (`-Os`, image only), which is
+where the existing budgets live; compile-time A/B once the code is in `include/`; and a hardware-event VTune run,
+which needs elevation.
 
 An in-library change would touch the public API (`Subscribe`, `Publish`, `SubscribeAll`, `publish()`, the
 configuration options), so it owes a `MIGRATION.md` entry, a decision row and limitations in `docs/DESIGN.md`,
@@ -315,6 +307,7 @@ tests, and collapse cases with recorded budgets.
 
 | Path | Contents |
 |---|---|
+| `DECISIONS.md` | the open design decisions, each with compiled examples |
 | `include/sub0pub_spike/` | the candidate layers: `topology.hpp` (typed route), `broker_bus.hpp`, `subscription.hpp` |
 | `examples/<candidate>/` | one station per candidate; `mode/<mode>/` is all that differs between its builds |
 | `examples/earlier/` | the first round of spikes, kept for reference (below) |
