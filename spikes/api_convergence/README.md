@@ -28,7 +28,7 @@ The other two candidates are useful as what they already are: explicit wiring re
 type-erased port remains the tool for a library boundary. Neither converges the two models.
 
 **GCC, callgrind and Cortex-M33 were not available on the machine these were measured on** (MSVC 19.51, clang 22,
-Intel icx 2026.1, all x64 Windows). The typed route also has seven design decisions that measurement does not
+Intel icx 2026.1, all x64 Windows). The typed route also has eight design decisions that measurement does not
 settle; [DECISIONS.md](DECISIONS.md) works through each with compiled examples. It should not move into `include/`
 before both are closed.
 
@@ -294,6 +294,7 @@ Measurement does not settle these. Each needs a decision before the typed route 
 | [5](DECISIONS.md#5-semantics-that-still-differ) | Semantics that still differ | Delivery order, the closed set of receivers, cancellation and `filter()` |
 | [6](DECISIONS.md#6-staticfirst) | Whether to ship `StaticFirst` | +9 to +21 instructions per publication, and no burst vectorisation on MSVC and icx |
 | [7](DECISIONS.md#7-header-layering) | Header layering | The broker area can follow a topology without including wiring |
+| [8](DECISIONS.md#8-configuring-a-type-without-the-preprocessor) | Configuring a type without the preprocessor | `SUB0PUB_CONFIGURE` is sugar for a specialisation that can be written directly; a project-level list is a possible refinement |
 
 **Evidence still to collect:** the shootout on GCC with callgrind and on Cortex-M33 (`-Os`, image only), which is
 where the existing budgets live; compile-time A/B once the code is in `include/`; and a hardware-event VTune run,

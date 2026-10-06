@@ -1,6 +1,6 @@
 # Design decisions for the typed route, by example
 
-The typed route ([README.md](README.md)) measures well. What it still needs is seven decisions that measurement
+The typed route ([README.md](README.md)) measures well. What it still needs is eight decisions that measurement
 cannot make. This document gives each one a concrete example: the code a user would write, what happens today in
 the spike, the options with their code, and which way I lean and why.
 
@@ -35,6 +35,7 @@ public:
 | [5](#5-semantics-that-still-differ) | Which differences in meaning are documented, and which are closed? | Document order and the closed set; converge `filter()`; leave cancellation separate |
 | [6](#6-staticfirst) | Ship `StaticFirst` (bound receivers, then the broker)? | Not in the first version |
 | [7](#7-header-layering) | How does the broker area follow a topology without including wiring? | By detecting a member of the configuration: no include is needed |
+| [8](#8-configuring-a-type-without-the-preprocessor) | Can a type be configured without `SUB0PUB_CONFIGURE`? | Yes: a hand specialisation with a one-line helper; a project-level list is worth a spike |
 
 ---
 
@@ -511,6 +512,99 @@ would no longer be the converged spelling.
 
 **Lean: A.** One consequence to check when it is built: `tests/headers` compiles each header alone, and
 `broker/*.hpp` must still pass without the bridge present, which the duck-typed detection gives.
+
+---
+
+## 8. Configuring a type without the preprocessor
+
+**The question.** `SUB0PUB_CONFIGURE(Type, ...)` is the only spelling here that needs the preprocessor, and a
+topology is written with it. Can C++23 itself say the same thing?
+
+Probed on MSVC 19.51 and clang-cl 22 by a separate agent session (14 candidate spellings, each compiled and run
+for a topology over not-yet-defined receivers, for `int`, declared late, declared twice and declared inside a user
+namespace). I re-compiled the first two results below; the rest are that session's findings. GCC was not available.
+
+**What the macro is.** Sugar for one explicit specialisation, which a user can already write by hand:
+
+```cpp
+SUB0PUB_CONFIGURE(Reading, sub0::spike::StaticTo<&display, &audit>);
+
+template<> struct sub0::configure<Reading> { using type = sub0::config<sub0::spike::StaticTo<&display, &audit>>; };
+```
+
+**Options.**
+
+*A. The hand specialisation, shortened by a one-line helper base.* No change to how configuration resolves:
+
+```cpp
+namespace sub0 { template<class... Options> struct configured_with { using type = config<Options...>; }; }   // the helper
+
+template<> struct sub0::configure<Reading> : sub0::configured_with<sub0::spike::StaticTo<&display, &audit>> {};
+template<> struct sub0::configure<int>     : sub0::configured_with<sub0::Capacity<32>> {};
+```
+
+Works on both compilers, with `&display` still an incomplete `extern` object, and for `int`. Declared after the
+type's first use it is a hard error ("explicit specialization after instantiation"), which is the behaviour to
+want. It shares the macro's one restriction: it must be at global scope or inside `namespace sub0 { }`. Inside
+`namespace app`:
+
+```text
+error C2888: 'sub0::configure<app::Reading>': symbol cannot be defined within namespace 'app'
+warning: class template specialization of 'configure' not in a namespace enclosing 'sub0' is a Microsoft extension
+```
+
+*B. The spellings that already need no macro.* The member alias and the ADL declaration both accept a topology:
+
+```cpp
+struct Reading { int celsius; using sub0_config = sub0::config<sub0::spike::StaticTo<&display, &audit>>; };
+
+sub0::config<sub0::spike::StaticTo<&display, &audit>> sub0_config(Reading*);     // in Reading's own namespace
+```
+
+The member alias cannot be late and cannot apply to `int`. The ADL form has a hazard the probes confirmed:
+declared in the wrong namespace, or after the type's first use, it is **silently ignored** and the type falls back
+to the default. For a topology that is the silent mis-route of [decision 2](#2-where-the-topology-lives-and-what-happens-when-a-unit-misses-it).
+Both also put the receivers' names next to the message type.
+
+*C. One list in the project header.* The header the build system names carries a single alias that maps types to
+options, found by a pack search during resolution:
+
+```cpp
+struct Reading;
+class Display;
+extern Display display;
+
+struct ProjectDefaults : sub0::with<sub0::Builtin>
+{
+    using sub0_types = sub0::configs<
+        sub0::For<Reading, sub0::spike::StaticTo<&display>>,
+        sub0::For<int, sub0::Capacity<32>>>;
+};
+#define SUB0PUB_DEFAULT_CONFIG ProjectDefaults
+```
+
+Compiled and run by the agent session against a copy of the resolution machinery, not against `config.hpp` itself.
+Note that it does not remove the preprocessor from the build: the project default is still selected by
+`SUB0PUB_DEFAULT_CONFIG`, and the header by a `-D` flag. It removes it from each per-type declaration.
+It is the one candidate that can live in any namespace and can never be late, and it needs only forward
+declarations, so it does not include any message or receiver header. It needs a change to `config_t` resolution (a
+fourth source, counted in the "configured in exactly one place" check), a light header for the option types that
+`config.hpp` can include before the project header, and its compile-time cost is unmeasured. It is still a central
+list, which decision D1 rejected; what the probe shows is that the include dependency behind that objection is
+avoidable, not the need to edit the list.
+
+| | A: hand specialisation + helper | B: member alias / ADL | C: project list |
+|---|---|---|---|
+| Works for a topology, for `int` | yes, yes | yes, no | yes, yes |
+| Outside the global namespace | no | member: in the type; ADL: the type's namespace only | any |
+| Declared late | compile error | member: cannot be; ADL: silently ignored | cannot be |
+| Change to `config.hpp` | one helper | none | resolution, plus an earlier header for options |
+
+**Lean: yes, it is expressible, and A is the form to document.** It replaces the macro one for one, with the same
+rules and the same loud failure when misplaced, so the macro can stay as optional sugar or be retired. None of the
+candidates is both as short as the macro and as hard to get wrong. C is the more interesting refinement for
+topologies specifically, because it would also settle where the topology lives (decision 2); it deserves its own
+spike against the real `config.hpp`, with a compile-time measurement, before it is a proposal.
 
 ---
 
