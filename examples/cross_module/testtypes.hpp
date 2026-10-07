@@ -50,11 +50,11 @@ class ReadingAccumulator : public sub0::Subscribe<float>
     , public sub0::Subscribe<int>
 {
 public:
-    void receive( const float& data ) noexcept override
+    void receive( const float& data ) noexcept
     {
         total += data;
     }
-    void receive( const int& data ) noexcept override
+    void receive( const int& data ) noexcept
     {
         total += data;
     }

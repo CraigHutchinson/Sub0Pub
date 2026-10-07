@@ -1,4 +1,4 @@
-/** Sub0Pub: BrokerPort<T>: runtime subscribers behind a static wiring, through the runtime broker
+/** Sub0Pub: BrokerPort<T>: runtime subscribers behind an explicit wiring, through the runtime broker
  * @remark Part of Sub0Pub (https://github.com/BareCpper/Sub0Pub), MIT License: see LICENSE.md.
  *         Included by the umbrella header <sub0pub/sub0pub.hpp>.
  */

@@ -1,4 +1,4 @@
-/** Sub0Pub: Static wiring internals: capability detection and delivery to bound receivers
+/** Sub0Pub: Wiring internals: capability detection and delivery to bound receivers
  * @remark Part of Sub0Pub (https://github.com/BareCpper/Sub0Pub), MIT License: see LICENSE.md.
  *         Included by the umbrella header <sub0pub/sub0pub.hpp>.
  */
