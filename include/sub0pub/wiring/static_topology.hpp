@@ -5,6 +5,7 @@
 #ifndef CROG_SUB0PUB_WIRING_STATIC_TOPOLOGY_HPP
 #define CROG_SUB0PUB_WIRING_STATIC_TOPOLOGY_HPP
 
+#include "sub0pub/audit.hpp"
 #include "sub0pub/config.hpp"
 #include "sub0pub/wiring/capability.hpp"
 #include "sub0pub/wiring/wire.hpp"
@@ -68,10 +69,24 @@ namespace sub0
             static SUB0PUB_FORCE_INLINE void publish(const Data& data) noexcept
             {
                 requireBindings<Data>();
+#if SUB0PUB_AUDIT
+                (auditBound<Data>(Bound, audit::boundSignature<Bound>()), ...);
+#endif
                 StaticWiring<Bound...>::publish(data);
             }
 
         private:
+#if SUB0PUB_AUDIT
+            /// Record, for the audit, that this publication is delivered to a bound receiver that handles Data
+            template<class Data, class Binding>
+            static void auditBound(Binding* binding, const char* objectSignature) noexcept
+            {
+                if constexpr (handles_v<Binding, Data>)
+                    audit::Ledger<Data>::bound(&wiring::receiver(*binding),
+                                               audit::typeSignature<wiring::receiver_t<Binding>>(), objectSignature);
+            }
+#endif
+
             /// The compile-time checks of one publication; none leaves code behind
             template<class Data>
             static constexpr void requireBindings() noexcept

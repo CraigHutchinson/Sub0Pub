@@ -31,6 +31,12 @@ ctest --preset default -R Sub0Pub_Example_
 | A message type wired to one fixed receiver | [static_addresses.cpp](static_addresses.cpp) |
 | A fixed controller with diagnostic probes that come and go beside it | [dynamic_diagnostics.cpp](dynamic_diagnostics.cpp) |
 
+Not sure whether a type's receivers are fixed, or why a message is not arriving? Let a run tell you:
+
+| Need | Source |
+|---|---|
+| Find publications nobody received, receivers never called, and types ready for `StaticTo` | [audit_findings.cpp](audit_findings.cpp) |
+
 ## 3. Explicit wiring: the cases a message type cannot express
 
 | Need | Source |
@@ -51,7 +57,7 @@ ctest --preset default -R Sub0Pub_Example_
 | Inspect message layouts before exchanging raw bytes | [layout_check](layout_check/main.cpp) |
 | Investigate a shared-library / DLL boundary (currently disabled) | [cross_module](cross_module/main.cpp), [status](cross_module/README.md) |
 
-The focused recipes and both `promote_to_static` builds return a failure code when their checks fail, including
+The focused recipes (including `audit_findings`) and both `promote_to_static` builds return a failure code when their checks fail, including
 with `NDEBUG`. The minimal example also checks its result; the other enabled introductory examples print their story.
 These are teaching examples, not performance evidence; cross-module (DLL) use is not supported yet.
 See [the design](../docs/DESIGN.md) for the decisions behind the tiers, and [migration](../MIGRATION.md) for v1 users.

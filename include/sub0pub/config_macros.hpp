@@ -162,18 +162,34 @@
 #define SUB0PUB_DOMAIN_LIFETIME(what) do { assert(!(what)); std::abort(); } while(false)
 #endif
 
+/** Record what a run publishes and delivers, and report it (sub0pub/audit.hpp)
+ * An audit build keeps a ledger per message type and reports, at exit and through sub0::auditReport(), the
+ * publications that reached nobody, the subscribers that were never called, refused subscriptions, subscribers a
+ * StaticTo list forgot, and which brokered types had receivers that never changed (candidates for StaticTo).
+ * Default: disabled, and then none of it exists. It is a property of the whole program: define it for every
+ * translation unit, from the build system. It needs RTTI to name runtime subscribers, and is not for release builds:
+ * every publication, delivery and subscription takes a process-wide lock.
+ * While it is enabled the two run-time checks below default to off, so that a run completes and the audit reports
+ * everything they would have stopped at; SUB0PUB_AUDIT_PRINT(line) and SUB0PUB_AUDIT_EXIT(findings) say where the
+ * report goes and what follows it (sub0pub/audit.hpp).
+ */
+#ifndef SUB0PUB_AUDIT
+#define SUB0PUB_AUDIT false
+#endif
+
 /** Detect a publication that reaches no receiver
  * Publishing a Data type that nobody is subscribed to is almost always a mistake: a publisher that starts before
  * its subscribers, a subscriber that was never constructed, a translation unit that does not see a type's
  * configuration. With this check enabled such a publication calls SUB0PUB_NO_RECEIVERS(what).
- * Default: enabled in debug builds (SUB0PUB_ASSERT and no NDEBUG), disabled in release builds. Define it true to
+ * Default: enabled in debug builds (SUB0PUB_ASSERT and no NDEBUG), disabled in release builds and in an audit build
+ * (SUB0PUB_AUDIT), which reports such publications instead of stopping at the first. Define it true to
  * keep the check in release builds: it replaces the dispatch loop's own entry test, so a publication that has
  * receivers does not pay for it. One type can choose differently: sub0::AllowNoReceivers where an absent receiver
  * is expected (a diagnostic stream, a plug-in loaded at run time), sub0::ReportNoReceivers to check it in every build.
  * A statically wired type (sub0::StaticTo) is checked at compile time instead, whatever this is set to.
  */
 #ifndef SUB0PUB_NO_RECEIVERS_CHECK
-#if SUB0PUB_ASSERT && !defined(NDEBUG)
+#if SUB0PUB_ASSERT && !defined(NDEBUG) && !SUB0PUB_AUDIT
 #define SUB0PUB_NO_RECEIVERS_CHECK true
 #else
 #define SUB0PUB_NO_RECEIVERS_CHECK false
@@ -192,12 +208,13 @@
 /** Detect a subscriber of a statically wired type that the type's sub0::StaticTo list does not name
  * Such a subscriber is never called: the list is the whole set of receivers. With this check enabled its
  * construction calls SUB0PUB_UNLISTED_RECEIVER(what).
- * Default: enabled in debug builds (SUB0PUB_ASSERT and no NDEBUG). Every translation unit that constructs
- * subscribers of a type must agree on it. A unit test that constructs one receiver on its own, outside the list its
- * type names, switches it off or overrides the action.
+ * Default: enabled in debug builds (SUB0PUB_ASSERT and no NDEBUG), but not in an audit build (SUB0PUB_AUDIT), which
+ * reports such a subscriber instead. Every translation unit that constructs subscribers of a type must agree on it.
+ * A unit test that constructs one receiver on its own, outside the list its type names, switches it off or
+ * overrides the action.
  */
 #ifndef SUB0PUB_UNLISTED_CHECK
-#if SUB0PUB_ASSERT && !defined(NDEBUG)
+#if SUB0PUB_ASSERT && !defined(NDEBUG) && !SUB0PUB_AUDIT
 #define SUB0PUB_UNLISTED_CHECK true
 #else
 #define SUB0PUB_UNLISTED_CHECK false

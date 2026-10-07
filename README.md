@@ -61,7 +61,9 @@ flowchart LR
 | 3 | A fixed core, plus receivers that come and go. | `sub0::StaticFirst<&a>` | The broker's cost stays on every publication. |
 
 A publication that reaches no receiver is treated as a mistake: a debug build reports it, and a `StaticTo` list
-nobody can receive from does not compile. A type for which that is expected says `sub0::AllowNoReceivers`.
+nobody can receive from does not compile. A type for which that is expected says `sub0::AllowNoReceivers`. An
+[audit build](docs/USAGE.md#finding-wiring-mistakes-the-audit-build) reports every such mistake a run makes, and
+which message types are ready to name their receivers.
 
 See [basic pub/sub](examples/basic_pubsub/main.cpp) for the subscriber lifecycle,
 [promote to static](examples/promote_to_static/main.cpp) for one application built both ways from one source, and

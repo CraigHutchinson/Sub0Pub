@@ -5,6 +5,7 @@
 #ifndef CROG_SUB0PUB_BROKER_SUBSCRIBE_HPP
 #define CROG_SUB0PUB_BROKER_SUBSCRIBE_HPP
 
+#include "sub0pub/audit.hpp"
 #include "sub0pub/broker/domain.hpp"
 #include "sub0pub/utility/type_info.hpp"
 #include "sub0pub/utility/streams.hpp"
@@ -14,6 +15,15 @@
 
 namespace sub0
 {
+#if SUB0PUB_AUDIT
+    namespace detail
+    {
+        /// Names, for the audit, the runtime subscribers of Data that it has not named yet (defined below)
+        template<class Data>
+        void auditLearn() noexcept;
+    }
+#endif
+
     /** Base type for an object that subscribes to some strong-typed Data
      * @tparam  Data  Type that will be received from publishers of corresponding type
      *
@@ -89,6 +99,12 @@ namespace sub0
             // The library broker records the registration under its table lock; an application broker cannot
             if constexpr (!std::is_same_v<Broker, detail::BrokerImpl<Data, Config>>)
                 subscribed_.store(result == SubscribeResult::Subscribed);
+#if SUB0PUB_AUDIT
+            if (result == SubscribeResult::Subscribed)
+                detail::audit::Ledger<Data>::joined(this, Config::capacity, &detail::auditLearn<Data>);
+            else if (result == SubscribeResult::CapacityExceeded)
+                detail::audit::Ledger<Data>::refused(Config::capacity);
+#endif
             return result;
         }
 
@@ -96,6 +112,9 @@ namespace sub0
         void disconnect() noexcept
         {
             const bool wasSubscribed = subscribed_.exchange(false);
+#if SUB0PUB_AUDIT
+            detail::audit::Ledger<Data>::left(this, wasSubscribed);
+#endif
             // Concurrent: always, so a subscriber already detached by Domain::close() still waits out a callback in
             // progress on another thread. Single-threaded: close() already made it safe; nothing left to do.
             if (detail::cConcurrent<Config> || wasSubscribed)
@@ -132,7 +151,13 @@ namespace sub0
         }
 
         /// For bindings (Route): publish into this subscriber's table with an ingress origin
-        void injectFrom(const void* origin, const Data& data) const noexcept { broker_.publish(data, origin, nullptr); }
+        void injectFrom(const void* origin, const Data& data) const noexcept
+        {
+#if SUB0PUB_AUDIT
+            detail::audit::Ledger<Data>::published(nullptr, 0U, Config::noReceivers == NoReceivers::Allow);
+#endif
+            broker_.publish(data, origin, nullptr);
+        }
 
     private:
         /// Whether this subscriber is one of the receivers its type's StaticFirst list calls directly
@@ -165,7 +190,7 @@ namespace sub0
     class Subscribe<Data>
     {
     public:
-#if SUB0PUB_TYPEIDNAME || SUB0PUB_UNLISTED_CHECK || SUB0PUB_CHECK_CONFIG
+#if SUB0PUB_TYPEIDNAME || SUB0PUB_UNLISTED_CHECK || SUB0PUB_CHECK_CONFIG || SUB0PUB_AUDIT
         /** @param[in] typeId, typeName  Optional unique identity of Data for inter-process streams (SUB0PUB_TYPEIDNAME) */
         Subscribe(
 #if SUB0PUB_TYPEIDNAME
@@ -181,6 +206,10 @@ namespace sub0
             // An incomplete-type error here: include sub0pub/sub0pub.hpp (or sub0pub/wiring/static_topology.hpp)
             if (!detail::topology_t<Data>::binds(this))
                 SUB0PUB_UNLISTED_RECEIVER("sub0pub: a subscriber of a statically wired Data type is not in the type's StaticTo list, so it is never called");
+#endif
+#if SUB0PUB_AUDIT
+            if (!detail::topology_t<Data>::binds(this))
+                detail::audit::Ledger<Data>::unlisted(this);
 #endif
         }
 #else
@@ -199,11 +228,23 @@ namespace sub0
         ~Subscribe() = default;
     };
 
+#if SUB0PUB_AUDIT
+    template<class Data>
+    void detail::auditLearn() noexcept
+    {
+        audit::Ledger<Data>::learn([](const void* subscriber) noexcept
+                                   { return audit::dynamicType(static_cast<const Subscribe<Data>*>(subscriber)); });
+    }
+#endif
+
     namespace kit
     {
         template<class Data>
         void deliver(Subscribe<Data>* s, const Data& data) noexcept
         {
+#if SUB0PUB_AUDIT
+            detail::audit::Ledger<Data>::delivered(s, detail::audit::dynamicType(s));
+#endif
             if constexpr (config_t<Data>::filter)
                 if (!s->filter(data))
                     return;
@@ -223,6 +264,9 @@ namespace sub0
             if constexpr (MayBeCleared)
                 if (s == nullptr)
                     return;
+#if SUB0PUB_AUDIT
+            detail::audit::Ledger<Data>::delivered(s, detail::audit::dynamicType(s));
+#endif
             if constexpr (config_t<Data>::filter)
             {
                 if (!s->filter(data))
