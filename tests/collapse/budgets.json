@@ -1227,7 +1227,7 @@
    "teardown": 15,
    "path": 2,
    "indirect_calls": 0,
-   "text": 1616,
+   "text": 1612,
    "ram": 208,
    "init_array": 0,
    "added_deps": []
@@ -1249,7 +1249,7 @@
    "teardown": 15,
    "path": 2,
    "indirect_calls": 0,
-   "text": 1584,
+   "text": 1580,
    "ram": 208,
    "init_array": 0,
    "added_deps": []
@@ -1271,7 +1271,7 @@
    "teardown": 18,
    "path": 2,
    "indirect_calls": 0,
-   "text": 1717,
+   "text": 1713,
    "ram": 200,
    "init_array": 0,
    "added_deps": []
@@ -1293,7 +1293,7 @@
    "teardown": 18,
    "path": 2,
    "indirect_calls": 0,
-   "text": 1699,
+   "text": 1695,
    "ram": 200,
    "init_array": 0,
    "added_deps": []
@@ -1315,7 +1315,7 @@
    "teardown": 9,
    "path": 2,
    "indirect_calls": 0,
-   "text": 1744,
+   "text": 1740,
    "ram": 208,
    "init_array": 0,
    "added_deps": []
@@ -1337,7 +1337,7 @@
    "teardown": 9,
    "path": 2,
    "indirect_calls": 0,
-   "text": 1712,
+   "text": 1708,
    "ram": 208,
    "init_array": 0,
    "added_deps": []
