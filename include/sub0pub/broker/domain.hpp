@@ -44,8 +44,8 @@ namespace sub0
         }
 
     private:
-        template<class> friend class Subscribe;
-        template<class> friend class Publish;
+        template<class, bool> friend class Subscribe;
+        template<class, bool> friend class Publish;
         typename BrokerT::TableT table_;
     };
 } // END: sub0

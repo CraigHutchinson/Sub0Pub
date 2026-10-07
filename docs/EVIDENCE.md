@@ -27,6 +27,8 @@ support.
 | `sub0_b2_*` (B2) | `StaticWiring<&...>`: static storage |
 | `sub0_b3_*` (B3) | `Sink<T>`: a type-erased port |
 | `sub0_bridge_*` | a static wiring with a `DynamicPort` (`slots`) or `BrokerPort` (`broker`) for runtime subscribers |
+| `sub0_typed_static` | `StaticTo` on the message type: the receivers and publisher of `sub0pub_virtual` (`Subscribe`, `Publish`, `publish()`), delivered by direct calls |
+| `sub0_typed_first` | `StaticFirst` on the message type: the listed receivers by direct calls, then the runtime broker |
 | `sub0_dynamic_*` | the runtime broker with a `Domain` or `Route` |
 | `sub0pub_virtual`, `sub0pub_virtual_lean` | the runtime broker through `Subscribe`/`Publish`, default and leanest macros |
 

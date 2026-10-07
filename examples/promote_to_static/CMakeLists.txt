@@ -1,0 +1,10 @@
+# One application source, two builds: the message types' configuration decides how they are delivered
+find_package(Threads REQUIRED)
+foreach(form brokered wired)
+    add_executable(Sub0Pub_Example_promote_to_static_${form} main.cpp station.hpp)
+    target_link_libraries(Sub0Pub_Example_promote_to_static_${form} PRIVATE Sub0Pub::Sub0Pub Threads::Threads)
+    if(SUB0PUB_BUILD_TESTING AND NOT IS_SUBPROJECT)
+        add_test(NAME Sub0Pub_Example_promote_to_static_${form} COMMAND Sub0Pub_Example_promote_to_static_${form})
+    endif()
+endforeach()
+target_compile_definitions(Sub0Pub_Example_promote_to_static_wired PRIVATE STATION_WIRED=1)

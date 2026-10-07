@@ -35,10 +35,10 @@ Any commit that changes the public API surface in `include/sub0pub/` (the umbrel
 - `sub0::Subscribe`, `sub0::Publish`, `sub0::SubscribeAll`
 - `sub0::ForwardSubscribe`, `sub0::ForwardPublish`, `sub0::ForwardSubscribeAll`, `sub0::ForwardPublishAll`
 - `sub0::StreamSerializer`, `sub0::StreamDeserializer`
-- Free functions: `sub0::publish()`, `sub0::cancel()`
+- Free functions: `sub0::publish()`, `sub0::cancel()`, `sub0::receiverCount()`
 - Configuration macros: `SUB0PUB_*`
 - `sub0::IPublish`, `sub0::Buffer`, `sub0::DefaultSerialisation`
-- Per-type configuration: `sub0::config`, `sub0::config_t`, `sub0::configure`, `sub0::with`, `sub0::Builtin`, the options (`Capacity`, `Snapshot`, `Direct`, `DirectChecked`, `ThreadLocalContext`, `StaticContext`, `NoContext`, `LockWith`, `NoFilter`, `Scoped`, `Implementation`), `sub0::Domain`, `sub0::Route`, `sub0::Tagged`, `sub0::SubscribeResult`, `sub0::SendResult`, `sub0::PublishReport`, `sub0::kit`
+- Per-type configuration: `sub0::config`, `sub0::config_t`, `sub0::configure`, `sub0::with`, `sub0::Builtin`, the options (`Capacity`, `Snapshot`, `Direct`, `DirectChecked`, `ThreadLocalContext`, `StaticContext`, `NoContext`, `LockWith`, `NoFilter`, `Scoped`, `Implementation`, `StaticTo`, `StaticFirst`, `AllowNoReceivers`, `ReportNoReceivers`), `sub0::Domain`, `sub0::Route`, `sub0::Tagged`, `sub0::SubscribeResult`, `sub0::SendResult`, `sub0::PublishReport`, `sub0::kit`
 - Static wiring: `sub0::wire`, `sub0::Wiring`, `sub0::StaticWiring`, `sub0::Sink`, `sub0::Publisher`, `sub0::Forward`, `sub0::StaticForward`, `sub0::DynamicPort`, `sub0::BrokerPort`, `sub0::handles_v`
 
 ### Style

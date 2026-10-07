@@ -7,6 +7,90 @@ For runnable static, dynamic and mixed-path migration recipes, see [examples](ex
 
 ---
 
+## Changes since v2.0
+
+These apply to code already on v2. Each says what to do.
+
+### A publication that reaches no receiver is reported
+
+Publishing a `Data` type that nobody is subscribed to used to be a silent no-op. It is almost always a mistake (a
+publisher that starts before its subscribers, a subscriber that was never constructed, a translation unit that does
+not see a type's configuration), so it is now detected: `SUB0PUB_NO_RECEIVERS_CHECK` is on in debug builds and calls
+`SUB0PUB_NO_RECEIVERS(what)`, whose default asserts and then aborts. Release builds are unchanged unless you define
+the check `true`; it replaces the dispatch loop's own entry test, so a publication that has receivers does not pay
+for it.
+
+| | Every type | One type |
+|---|---|---|
+| Report an unheard publication in every build | `SUB0PUB_NO_RECEIVERS_CHECK=true` | `sub0::ReportNoReceivers` |
+| Never report it | `SUB0PUB_NO_RECEIVERS_CHECK=false` | `sub0::AllowNoReceivers` |
+
+A closed `Domain` still drops a publication without a report: its session has ended.
+
+**Action:** Build in debug and run. Where a publication is reported:
+- if a receiver should have been there, fix the order in which the publisher and its subscribers are created;
+- if an absent receiver is expected for that type (a diagnostic stream, a plug-in loaded at run time), say so on
+  the type: `using sub0_config = sub0::config<sub0::AllowNoReceivers>;`. A call site can still ask how many
+  receivers there are with `sub0::receiverCount<Data>(publisher)` and decide for itself;
+- to keep the old behaviour everywhere, define `SUB0PUB_NO_RECEIVERS_CHECK=false`.
+
+### A Data type can name its receivers: `StaticTo` and `StaticFirst` (new)
+
+A type's configuration can now say that it is delivered to fixed receivers by direct calls:
+
+```cpp
+class Display;
+extern Display display;
+struct Reading { int celsius; using sub0_config = sub0::config<sub0::StaticTo<&display>>; };
+```
+
+`Subscribe<Reading>`, `Publish<Reading>`, `SubscribeAll` and `sub0::publish()` follow it, so the code that
+subscribes and publishes is the code you already have. For a `StaticTo` type `Subscribe` is an empty base and
+`Publish` an empty handle: no subscription table, no registration, no virtual call. `StaticFirst<&a>` calls the
+listed receivers directly and then publishes through the runtime broker to whoever subscribed at run time.
+
+**Action:** None; it is opt-in per type. To move an existing type onto direct calls:
+- give its receivers static storage, declare them before the type, and add the option beside the type;
+- remove `override` from the `receive()` of that type's subscribers: the base has no virtual function to override.
+  A `receive()` that does not accept `const Data&` is still a compile error, in both forms;
+- include the receivers' definitions in every translation unit that publishes the type (a compile error tells you);
+- `disconnect()`, `trySubscribe()`, `isSubscribed()`, `cancel()`, `Route`, `Domain` and publish reports need a
+  subscription table and do not compile for a `StaticTo` type; a `filter()` needs the type's `sub0::Filter`, as it
+  does on the broker, and the signature the broker calls (`bool filter(const Data&) noexcept`, not `const`), so that
+  it filters the same way if the type returns to the broker.
+
+Delivery is in the order of the list, where the broker delivers in the order subscribers registered. A subscriber
+the list does not name is never called: `SUB0PUB_UNLISTED_CHECK` (debug builds) reports its construction through
+`SUB0PUB_UNLISTED_RECEIVER(what)`. A list in which nobody can receive the type is a compile error unless the type is
+also `sub0::AllowNoReceivers`. Which form to use, and when the explicit `wire()` level is the right one instead:
+[docs/USAGE.md](docs/USAGE.md).
+
+### `Subscribe` and `Publish` have a second, defaulted template parameter
+
+`sub0::Subscribe<Data>` and `sub0::Publish<Data>` are now `Subscribe<Data, bool Wired>` and
+`Publish<Data, bool Wired>`, where the second argument is derived from the type's configuration and is never
+written. Everything that names `Subscribe<Data>` or `Publish<Data>` is unaffected.
+
+**Action:** Only if you forward-declare either template yourself (include `sub0pub/config.hpp`, which declares
+them), or pass one as a template template argument of the form `template<class> class`.
+
+### `SubscribeAll` packs empty bases on the MSVC ABI
+
+`SubscribeAll` is declared with `SUB0PUB_EMPTY_BASES` (`__declspec(empty_bases)` on the MSVC ABI, nothing elsewhere),
+so that a receiver of statically wired types is as small as a class without the bases. The layout of a class whose
+`Subscribe` bases are all runtime subscribers does not change: none of them is empty.
+
+**Action:** None.
+
+### The configuration fingerprint covers the topology and the no-receivers policy
+
+`SUB0PUB_CHECK_CONFIG` now also reports a type that one translation unit wires statically and another does not, at
+the construction of the second unit's first subscriber or publisher of that type.
+
+**Action:** None.
+
+---
+
 ## Build Requirements
 
 | | v1 | v2 |
@@ -141,7 +225,9 @@ The options are:
 - `LockWith<L>`, which also selects `Snapshot` and `ThreadLocalContext`;
 - `Filter` or `NoFilter`;
 - `Scoped`, with `Domain<Data>` sessions;
-- `Implementation<Broker>`, for an application-defined broker.
+- `Implementation<Broker>`, for an application-defined broker;
+- `StaticTo<&...>` or `StaticFirst<&...>`, which wire the type to fixed receivers (since v2.0, above);
+- `AllowNoReceivers` or `ReportNoReceivers` (since v2.0, above).
 
 `Route<Data, Transport>` binds a transport endpoint to a table. `sub0::publish(from, data, report)` reports what each route accepted. Invalid combinations are compile errors.
 
@@ -320,6 +406,9 @@ Without snapshot dispatch, a `receive()` that subscribes or unsubscribes (or des
 - `SUB0PUB_CHECK_CONFIG`: the debug check for a type configured differently in two translation units (default: on without `NDEBUG`).
 - `SUB0PUB_CONFIG_MISMATCH(what)`: the action when that check fails (default: assert, then abort).
 - `SUB0PUB_DOMAIN_LIFETIME(what)`: the action when a `Domain` is destroyed while handles are still bound to it (default: assert, then abort).
+- `SUB0PUB_NO_RECEIVERS_CHECK`, `SUB0PUB_NO_RECEIVERS(what)`: the check for a publication that reaches no receiver, and its action (since v2.0; default: on without `NDEBUG`; assert, then abort).
+- `SUB0PUB_UNLISTED_CHECK`, `SUB0PUB_UNLISTED_RECEIVER(what)`: the check for a subscriber that its type's `StaticTo` list does not name, and its action (since v2.0; default: on without `NDEBUG`; assert, then abort).
+- `SUB0PUB_EMPTY_BASES` (internal): the packed empty-base layout on the MSVC ABI.
 
 The `SUB0PUB_*` policy macros must agree in every translation unit that uses a type. Setting them differently in one translation unit is only valid for types local to it.
 

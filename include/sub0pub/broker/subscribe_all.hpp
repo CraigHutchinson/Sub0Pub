@@ -13,10 +13,13 @@
 namespace sub0
 {
     /**  Subscribe to many
+    * @remark Each Data type keeps its own topology: a receiver may be called directly for one type (StaticTo) and
+    *         subscribe at run time for another. The class asks for the packed empty-base layout, so a receiver
+    *         of statically wired types only is as small as a class without these bases.
     * @todo Specialisation on std::tuple exists and could cause unexpected expansion if this was a desired type being published!
     */
     template< typename... Datas >
-    class SubscribeAll : public Subscribe<Datas>...
+    class SUB0PUB_EMPTY_BASES SubscribeAll : public Subscribe<Datas>...
     {
     public:
         static constexpr size_t Count = sizeof...(Datas);
@@ -25,7 +28,7 @@ namespace sub0
     /**  Subscribe to many defined by std::tuple type list
     */
     template<typename... Datas>
-    class SubscribeAll<std::tuple<Datas...>> : public Subscribe<Datas>...
+    class SUB0PUB_EMPTY_BASES SubscribeAll<std::tuple<Datas...>> : public Subscribe<Datas>...
     {
     public:
         static constexpr size_t Count = sizeof...(Datas);

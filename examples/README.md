@@ -17,6 +17,7 @@ ctest --preset default -R Sub0Pub_Example_
 | One publisher sends several message types | [multi_type](multi_type/main.cpp) |
 | Different receivers accept different message values | [filtering](filtering/main.cpp) |
 | A primary handler claims a command before a fallback | [cancellation](cancellation/main.cpp) |
+| One application built twice: runtime subscription, then direct calls, by one line per message type | [promote_to_static](promote_to_static/main.cpp) |
 | Wire known local receivers directly | [local_wiring.cpp](local_wiring.cpp) |
 | Hide the receiver-list type behind a `Sink` | [sink_output.cpp](sink_output.cpp) |
 | Encode static receiver addresses in the wiring type | [static_addresses.cpp](static_addresses.cpp) |

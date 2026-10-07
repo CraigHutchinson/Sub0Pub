@@ -67,11 +67,13 @@ observes at run time.
 | Filter | `Filter`, `NoFilter` | `NoFilter` | `Subscribe<T>::filter()`: one virtual call per subscriber per publish |
 | Lock | `LockWith<L>` (any `lock()`/`unlock()` type) | none | concurrent publishers and cross-thread teardown; requires `Snapshot` and `ThreadLocalContext` |
 | Storage | global, `Scoped` | global | `Domain<T>` instances: isolated sessions of one type, with `close()` |
+| Topology | `StaticTo<&...>`, `StaticFirst<&...>` | brokered | direct calls to receivers with static storage, instead of (`StaticTo`) or before (`StaticFirst`) the subscription table; `StaticTo` gives up everything that needs the table (K27) |
+| No receivers | `AllowNoReceivers`, `ReportNoReceivers` | reported in debug builds | whether a publication that reaches nobody is a failure; free for a publication that has receivers |
 | Capacity | `Capacity<N>` | `SUB0PUB_MAX_SUBSCRIPTIONS` (8) | RAM only: the table is sized per type |
 | Implementation | `Implementation<Broker>` | the library broker | a custom broker for a special case (for example one subscriber, one pointer of RAM) |
 
 Every option that costs something is opt-in, and using a feature without opting in is caught: `cancel()`, routes,
-publish reports and `filter()` do not compile without their option; invalid combinations (a lock without Snapshot,
+publish reports and `filter()` do not compile without their option, on the broker and in a `StaticTo` list alike; invalid combinations (a lock without Snapshot,
 Snapshot without a context, a lock with `StaticContext`, `Domain<T>` for a non-scoped type) are compile errors; table
 changes during a Direct dispatch are reported by the debug-build check. [MIGRATION.md](../MIGRATION.md) lists the
 opt-in for each v1 behaviour.
@@ -88,6 +90,8 @@ opt-in for each v1 behaviour.
 | D6 | Publisher spelling | the `StaticWiring` alias, the CRTP `Publisher` mixin, or `Sink<T>` | a CTAD factory (Clang +4 instructions, +24 B); C++23 deducing this (GCC 13 rejects it, and it costs the same as the mixin) |
 | D7 | Lifetime | `Subscribe<T>` and `Publish<T>` have protected, non-virtual destructors; locked types register with `trySubscribe()` after construction; disconnect during a dispatch is safe under Snapshot; `Domain::close()` detaches, rejects and quiesces | a virtual destructor (a vptr per object and an `operator delete` link dependency on small targets); registration in the base constructor for concurrent types (another thread could dispatch into a half-built object) |
 | D8 | Teardown under concurrency | a sequentially consistent handshake: `disconnect()` waits only for a callback running on another thread | hazard pointers and epochs: cheaper only because they drop self-disconnect, nested-publish and thread-count safety, and they drop publications past their bounds in release builds |
+| D10 | Where a type's topology lives | On the type, as a configuration option (`StaticTo`, `StaticFirst`), so `Subscribe<T>`, `Publish<T>` and `publish()` are written once and follow it; one topology per type, and `Tagged` makes a second type where a variation is needed | a topology chosen by each publisher or use site (sites can silently disagree, and a receiver cannot know which publisher will call it); a project-wide topology header that every unit must include (intrusive, build-system dependent, and a unit that misses it brokers the type silently); a second receiver and publisher vocabulary for wired types (the rewrite that kept applications on the broker) |
+| D11 | A publication that reaches no receiver | A failure unless the type allows it: reported at run time on the broker (`SUB0PUB_NO_RECEIVERS_CHECK`, on in debug builds like the other contract checks), rejected at compile time for a `StaticTo` list; `AllowNoReceivers` opts a type out and `receiverCount()` lets a call site decide for itself | a silent no-op (it hides a publisher that starts before its subscribers, and a unit that does not see a type's configuration); a separate count before every dispatch (the check takes the place of the loop's own entry test instead, so a publication with receivers does not pay for it) |
 | D9 | Language standard | C++23 is the contract; use concepts/requires where they simplify constraints | retaining C++17 compatibility scaffolding; adopting poorly supported features without toolchain and equal-work evidence (see "Language baseline" below) |
 
 ## Contracts
@@ -98,6 +102,12 @@ opt-in for each v1 behaviour.
   `trySubscribe()` at the end of the most-derived constructor. A full table is reported
   (`SubscribeResult::CapacityExceeded`), never overrun.
 - **Domains** must outlive the handles bound to them.
+- **A type's topology.** A `StaticTo` or `StaticFirst` list borrows the receivers it names: they have static storage,
+  and publishing before one is constructed or after it is destroyed is an ordering error of the application, as it is
+  for `StaticWiring`. Delivery is in the order of the list; the runtime subscribers of a `StaticFirst` type follow in
+  registration order. A subscriber that a `StaticTo` list does not name is never called (K29).
+- **Unheard publications.** A publication that reaches no receiver is reported unless its type is configured with
+  `AllowNoReceivers`. A closed `Domain` drops a publication without a report: its session has ended.
 - **Wirings add no synchronisation.** Concurrent publishers on one wiring need stable bindings and thread-safe
   receivers. `DynamicPort` is single-threaded: adding, removing and publishing must not overlap.
 - **Transports.** `Forward` ignores send results; `Route` records them. Neither means remote delivery. Split horizon
@@ -132,6 +142,12 @@ refer to them.
 | K23 | Clang does not propagate `Wiring` bindings held inside an aggregate as it does a struct of pointers | publish +3 to +5, RAM +24 B (Clang only) | open |
 | K24 | Cancellation combined with `filter()` is not byte-identical to hand-written code | Cortex-M33 +4 path instructions, +12 B; GCC +3 | open (small) |
 | K25 | `Publish<T>` has a protected destructor, so a publisher is always a derived class | one line per publisher type | a library-provided final handle type |
+| K27 | A `StaticTo` type has no subscription table: `isSubscribed()`, `trySubscribe()`, `disconnect()`, `cancel()`, `Domain`, `Route` and publish reports do not compile for it | a type that needs one stays on the broker, uses `StaticFirst`, or uses explicit wiring (`publishCancelable`, `Forward`) | a static meaning for the queries (membership of the list), and cancellation that reads the same on both paths |
+| K28 | A translation unit that publishes a `StaticTo` or `StaticFirst` type needs the definition of every receiver the list names (a compile error otherwise) | publishers depend on the receivers' headers at compile time; nothing at run time | an out-of-line delivery function per type, which trades the dependency for one call where LTO is off |
+| K29 | A subscriber that its type's `StaticTo` list does not name is never called, and only the debug-build check (`SUB0PUB_UNLISTED_CHECK`) reports it, when it is constructed | a missed delivery in a release build | a link-time diagnostic |
+| K30 | The receivers a `StaticFirst` list names are broker subscribers by type: each keeps its virtual table and subscription state, although it is called directly and never registered | MSVC x64, two listed receivers: +112 B RAM and +416 B text against `StaticWiring` with a `BrokerPort` and plain receivers; the publish path is equal | explicit wiring with a `BrokerPort`, where that matters |
+| K31 | The no-receivers report is a run-time check for brokered types, on by default only in debug builds | a release build still publishes to nobody silently unless `SUB0PUB_NO_RECEIVERS_CHECK` or `ReportNoReceivers` says otherwise | none planned: the default follows the library's other contract checks |
+| K32 | Topology belongs to the type, not to a publisher: a publisher cannot choose another delivery (a queue, an asynchronous fan-out) for a type it publishes from a hot loop | a second type, through `Tagged<Payload, Tag>` | publisher-side topology, when a real case needs it |
 | K26 | Under `Direct` dispatch, a table change during that table's own dispatch is detected only by the debug-build check | a release build may skip a subscriber or call one added during it | opt in with `Snapshot` for types that change their table from their own callbacks |
 
 Not yet measured: throughput under lock contention and teardown latency, embedded stack use (Snapshot copies the
