@@ -3,7 +3,8 @@
 This document tracks all breaking changes between Sub0Pub v1 and v2. Update this document with any commit that introduces a migration-relevant change.
 
 For runnable static, dynamic and mixed-path migration recipes, see [examples](examples/README.md).
-[docs/DESIGN.md](docs/DESIGN.md) explains when to use static wiring, the runtime broker, or both.
+[docs/USAGE.md](docs/USAGE.md) explains which delivery to choose: the runtime broker, a message type that names its
+receivers, or explicit wiring.
 
 ---
 
@@ -244,7 +245,7 @@ struct Logger final : sub0::Subscribe<Sample>
 {
     Logger() noexcept { trySubscribe(); }
     ~Logger() { disconnect(); }
-    void receive(const Sample&) noexcept override;
+    void receive(const Sample&) noexcept;
 };
 ```
 
@@ -293,13 +294,13 @@ Every translation unit must resolve the same configuration for a type: resolving
 
 **Action:** None for the mechanism itself; see "The default is the cheapest dispatch" below for what the default now includes. Options and what each costs: [docs/DESIGN.md](docs/DESIGN.md#per-type-configuration-of-the-runtime-broker).
 
-### Static wiring (new)
+### Explicit wiring (new)
 
-`sub0::wire(a, b, logger)` and `sub0::StaticWiring<&a, &b, &logger>` bind receivers at the application's composition point. Receivers are plain classes with a non-virtual `receive(const T&)`; each delivery is a direct call, measured equal to hand-written code. The rest of the static wiring API:
+`sub0::wire(a, b, logger)` and `sub0::StaticWiring<&a, &b, &logger>` bind receivers at the application's composition point, for the cases a message type cannot express with `StaticTo` (above; [docs/USAGE.md](docs/USAGE.md)). Receivers are plain classes with a non-virtual `receive(const T&)`; each delivery is a direct call, measured equal to hand-written code. The rest of the static wiring API:
 - `publishCancelable()` stops at a receiver whose `bool receive()` returns `false`;
 - `Sink<T>` is a type-erased port for non-template publishers;
 - `Forward<Transport>` and `StaticForward<&transport>` are transport endpoints, with split horizon through `publishFrom()`;
-- `BrokerPort<T>` brings runtime subscribers into a static wiring;
+- `BrokerPort<T>` brings runtime subscribers into an explicit wiring;
 - `handles_v<R, T>` asserts that a receiver handles a message.
 
 v2.0 also had a `Publisher<Derived, Out>` mixin and a `DynamicPort<T, N>`; both were removed afterwards (above).
@@ -318,7 +319,7 @@ it asserts on overflow when assertions are enabled, and otherwise drops the new 
 
 `include/sub0pub/sub0pub.hpp` was a single 3,200-line file. It is now an umbrella header over one header per
 responsibility, grouped in `utility/`, `broker/`, `wiring/` and `ipc/`, with an entry header per area:
-`sub0pub/broker.hpp` (runtime broker), `sub0pub/wiring.hpp` (static wiring, no broker), `sub0pub/ipc.hpp` (IPC
+`sub0pub/broker.hpp` (runtime broker), `sub0pub/wiring.hpp` (explicit wiring, no broker), `sub0pub/ipc.hpp` (IPC
 serialisation, no broker), and the bridges `sub0pub/wiring/broker_port.hpp` and `sub0pub/ipc/forward.hpp`. The
 `SUB0PUB_*` defaults live in `sub0pub/config_macros.hpp`. No name, namespace or behaviour changed: the generated
 code is identical (collapse evidence, `tests/collapse/budgets.json`).

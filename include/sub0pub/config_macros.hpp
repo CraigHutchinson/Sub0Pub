@@ -193,8 +193,8 @@
  * Such a subscriber is never called: the list is the whole set of receivers. With this check enabled its
  * construction calls SUB0PUB_UNLISTED_RECEIVER(what).
  * Default: enabled in debug builds (SUB0PUB_ASSERT and no NDEBUG). Every translation unit that constructs
- * subscribers of a type must agree on it. A unit test that constructs one receiver on its own, under a project's
- * static wiring, switches it off or overrides the action.
+ * subscribers of a type must agree on it. A unit test that constructs one receiver on its own, outside the list its
+ * type names, switches it off or overrides the action.
  */
 #ifndef SUB0PUB_UNLISTED_CHECK
 #if SUB0PUB_ASSERT && !defined(NDEBUG)

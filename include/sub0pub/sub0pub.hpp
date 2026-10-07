@@ -31,7 +31,7 @@
  *   sub0pub/config.hpp         per-Data policy (capacity, dispatch, context, lock, filter, storage) and its resolution
  *   sub0pub/broker.hpp         the runtime broker: Subscribe, Publish, SubscribeAll, Domain, Route, publish(), cancel()
  *   sub0pub/wiring.hpp         explicit wiring: wire(), StaticWiring, Sink, Forward
- *   sub0pub/wiring/broker_port.hpp   BrokerPort: static wiring to the runtime broker
+ *   sub0pub/wiring/broker_port.hpp   BrokerPort: an explicit wiring to the runtime broker
  *   sub0pub/wiring/static_topology.hpp  StaticTo / StaticFirst: a Data type's configuration wired to fixed receivers
  *   sub0pub/ipc.hpp            IPC serialisation: StreamSerializer, StreamDeserializer, DefaultSerialisation
  *   sub0pub/ipc/forward.hpp    ForwardSubscribe/ForwardPublish: the runtime broker to IPC

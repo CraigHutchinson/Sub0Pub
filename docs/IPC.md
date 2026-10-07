@@ -6,7 +6,8 @@ transport.
 
 ## Transport bridges
 
-- `Forward<Transport>` and `StaticForward<&transport>` attach a transport endpoint to direct wiring.
+- `Forward<Transport>` and `StaticForward<&transport>` attach a transport endpoint to an explicit wiring
+  ([usage](USAGE.md#explicit-wiring-when-the-type-cannot-decide)).
 - `Route<T, Transport>` attaches a transport to the runtime broker and can report the transport's `SendResult` in a
   `PublishReport`.
 - `publishFrom(transport, message)` and the corresponding route injection path provide split-horizon behavior: a
