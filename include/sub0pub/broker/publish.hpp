@@ -21,7 +21,7 @@ namespace sub0
      * @remark Topology: this is the form for a type the runtime broker delivers, alone or after the receivers a
      *         StaticFirst list names. For a StaticTo type Publish<Data> is the specialisation below.
      */
-    template<class Data, bool Wired>
+    template<class Data>
     class Publish
     {
         using Config = config_t<Data>;
@@ -114,7 +114,8 @@ namespace sub0
      * @remark cancel() and publish reports need the runtime broker and do not exist here.
      */
     template<class Data>
-    class Publish<Data, true>
+        requires detail::cWired<Data>
+    class Publish<Data>
     {
     public:
 #if SUB0PUB_TYPEIDNAME || SUB0PUB_CHECK_CONFIG

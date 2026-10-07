@@ -39,7 +39,7 @@ namespace sub0
      * @remark The destructor is protected and non-virtual: a subscriber is destroyed as its own type, never through a
      *         Subscribe<Data>* (no vtable destructor slots, no operator delete dependency on small targets).
      */
-    template<class Data, bool Wired>
+    template<class Data>
     class Subscribe : public detail::SubscriberInterface<Data, config_t<Data>::filter>
     {
         using Config = config_t<Data>;
@@ -161,7 +161,8 @@ namespace sub0
      * @remark A subscriber the list does not name is never called; SUB0PUB_UNLISTED_CHECK reports its construction.
      */
     template<class Data>
-    class Subscribe<Data, true>
+        requires detail::cWired<Data>
+    class Subscribe<Data>
     {
     public:
 #if SUB0PUB_TYPEIDNAME || SUB0PUB_UNLISTED_CHECK || SUB0PUB_CHECK_CONFIG

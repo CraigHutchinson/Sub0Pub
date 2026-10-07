@@ -131,15 +131,6 @@ The header now holds `Sink<T>` alone.
 
 **Action:** Only if you included that header directly rather than `sub0pub/wiring.hpp` or `sub0pub/sub0pub.hpp`.
 
-### `Subscribe` and `Publish` have a second, defaulted template parameter
-
-`sub0::Subscribe<Data>` and `sub0::Publish<Data>` are now `Subscribe<Data, bool Wired>` and
-`Publish<Data, bool Wired>`, where the second argument is derived from the type's configuration and is never
-written. Everything that names `Subscribe<Data>` or `Publish<Data>` is unaffected.
-
-**Action:** Only if you forward-declare either template yourself (include `sub0pub/config.hpp`, which declares
-them), or pass one as a template template argument of the form `template<class> class`.
-
 ### `SubscribeAll` packs empty bases on the MSVC ABI
 
 `SubscribeAll` is declared with `SUB0PUB_EMPTY_BASES` (`__declspec(empty_bases)` on the MSVC ABI, nothing elsewhere),

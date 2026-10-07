@@ -314,9 +314,10 @@ namespace sub0
     }
 
     /// Subscribe<Data> and Publish<Data> take the form their type's topology calls for: a runtime subscriber and a
-    /// broker handle, or, for a StaticTo type, an empty base and an empty handle. The second argument is never written.
-    template<class Data, bool Wired = detail::cWired<Data>> class Subscribe;
-    template<class Data, bool Wired = detail::cWired<Data>> class Publish;
+    /// broker handle, or, for a StaticTo type, an empty base and an empty handle (a constrained specialisation of each,
+    /// so the brokered classes are the same templates, with the same names, as without the option).
+    template<class Data> class Subscribe;
+    template<class Data> class Publish;
     template<class Data> class Domain;
 } // END: sub0
 
