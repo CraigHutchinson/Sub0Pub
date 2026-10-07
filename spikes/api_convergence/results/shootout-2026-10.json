@@ -31,7 +31,7 @@
    "publish": 201.01,
    "teardown": 2
   },
-  "bench_ns": 8.3547
+  "bench_ns": 8.3114
  },
  {
   "build": "msvc-O2",
@@ -66,7 +66,7 @@
    "publish": 417.01,
    "teardown": 2
   },
-  "bench_ns": 81.0175
+  "bench_ns": 80.0574
  },
  {
   "build": "msvc-O2",
@@ -119,7 +119,7 @@
    "publish": 732.01,
    "teardown": 11
   },
-  "bench_ns": 89.8045
+  "bench_ns": 83.2651
  },
  {
   "build": "msvc-O2",
@@ -168,7 +168,7 @@
    "publish": 1369.01,
    "teardown": 25
   },
-  "bench_ns": 94.5554
+  "bench_ns": 91.365
  },
  {
   "build": "msvc-O2",
@@ -203,7 +203,7 @@
    "publish": 205.01,
    "teardown": 2
   },
-  "bench_ns": 8.7601
+  "bench_ns": 8.5899
  },
  {
   "build": "msvc-O2",
@@ -252,7 +252,7 @@
    "publish": 1369.01,
    "teardown": 25
   },
-  "bench_ns": 95.233
+  "bench_ns": 92.3994
  },
  {
   "build": "msvc-O2",
@@ -289,7 +289,7 @@
    "publish": 205.01,
    "teardown": 2
   },
-  "bench_ns": 8.6064
+  "bench_ns": 8.6617
  },
  {
   "build": "msvc-O2",
@@ -326,7 +326,7 @@
    "publish": 417.01,
    "teardown": 2
   },
-  "bench_ns": 82.4312
+  "bench_ns": 59.5478
  },
  {
   "build": "msvc-O2",
@@ -360,7 +360,7 @@
    "publish": 198.01,
    "teardown": 2
   },
-  "bench_ns": 8.1367
+  "bench_ns": 8.1941
  },
  {
   "build": "msvc-O2",
@@ -395,7 +395,7 @@
    "publish": 411.01,
    "teardown": 2
   },
-  "bench_ns": 80.9259
+  "bench_ns": 78.4991
  },
  {
   "build": "msvc-O2",
@@ -448,7 +448,7 @@
    "publish": 790.01,
    "teardown": 11
   },
-  "bench_ns": 84.6197
+  "bench_ns": 83.3875
  },
  {
   "build": "msvc-O2",
@@ -497,7 +497,7 @@
    "publish": 1366.01,
    "teardown": 25
   },
-  "bench_ns": 99.2795
+  "bench_ns": 94.5087
  },
  {
   "build": "msvc-O2",
@@ -532,7 +532,7 @@
    "publish": 199.01,
    "teardown": 2
   },
-  "bench_ns": 9.2693
+  "bench_ns": 8.3664
  },
  {
   "build": "msvc-O2",
@@ -581,7 +581,7 @@
    "publish": 1366.01,
    "teardown": 25
   },
-  "bench_ns": 103.8475
+  "bench_ns": 94.6552
  },
  {
   "build": "msvc-O2",
@@ -618,7 +618,7 @@
    "publish": 199.01,
    "teardown": 2
   },
-  "bench_ns": 8.425
+  "bench_ns": 8.3183
  },
  {
   "build": "msvc-O2",
@@ -655,7 +655,7 @@
    "publish": 411.01,
    "teardown": 2
   },
-  "bench_ns": 80.0437
+  "bench_ns": 79.7732
  },
  {
   "build": "msvc-O2",
@@ -691,7 +691,7 @@
    "publish": 39.01,
    "teardown": 2
   },
-  "bench_ns": 5.2854
+  "bench_ns": 4.9931
  },
  {
   "build": "msvc-O2",
@@ -740,7 +740,7 @@
    "publish": 63.01,
    "teardown": 96
   },
-  "bench_ns": 5.5289
+  "bench_ns": 5.4396
  },
  {
   "build": "msvc-O2",
@@ -776,7 +776,7 @@
    "publish": 39.01,
    "teardown": 2
   },
-  "bench_ns": 5.2858
+  "bench_ns": 5.3483
  },
  {
   "build": "msvc-O2",
@@ -813,7 +813,7 @@
    "publish": 46.01,
    "teardown": 2
   },
-  "bench_ns": 5.7309
+  "bench_ns": 5.2486
  },
  {
   "build": "msvc-O2",
@@ -862,7 +862,7 @@
    "publish": 63.01,
    "teardown": 96
   },
-  "bench_ns": 6.4802
+  "bench_ns": 5.6121
  },
  {
   "build": "msvc-O2",
@@ -898,7 +898,7 @@
    "publish": 39.01,
    "teardown": 2
   },
-  "bench_ns": 5.2668
+  "bench_ns": 5.1553
  },
  {
   "build": "msvc-O2",
@@ -934,7 +934,7 @@
    "publish": 24.01,
    "teardown": 2
   },
-  "bench_ns": 1.4384
+  "bench_ns": 1.5189
  },
  {
   "build": "msvc-O2",
@@ -983,7 +983,7 @@
    "publish": 48.01,
    "teardown": 96
   },
-  "bench_ns": 3.6388
+  "bench_ns": 3.5917
  },
  {
   "build": "msvc-O2",
@@ -1019,7 +1019,7 @@
    "publish": 24.01,
    "teardown": 2
   },
-  "bench_ns": 1.4328
+  "bench_ns": 1.5486
  },
  {
   "build": "msvc-O2",
@@ -1056,7 +1056,7 @@
    "publish": 31.01,
    "teardown": 2
   },
-  "bench_ns": 1.4337
+  "bench_ns": 1.4611
  },
  {
   "build": "msvc-O2",
@@ -1105,7 +1105,7 @@
    "publish": 48.01,
    "teardown": 96
   },
-  "bench_ns": 4.3675
+  "bench_ns": 3.5858
  },
  {
   "build": "msvc-O2",
@@ -1141,7 +1141,7 @@
    "publish": 24.01,
    "teardown": 2
   },
-  "bench_ns": 1.8041
+  "bench_ns": 1.4833
  },
  {
   "build": "msvc-O2",
@@ -1175,7 +1175,7 @@
    "publish": 12.01,
    "teardown": 2
   },
-  "bench_ns": 1.7946
+  "bench_ns": 1.7551
  },
  {
   "build": "msvc-O2",
@@ -1209,7 +1209,7 @@
    "publish": 22.01,
    "teardown": 2
   },
-  "bench_ns": 1.8764
+  "bench_ns": 1.7973
  },
  {
   "build": "msvc-O2",
@@ -1272,7 +1272,7 @@
    "publish": 35.01,
    "teardown": 25
   },
-  "bench_ns": 2.013
+  "bench_ns": 1.8899
  },
  {
   "build": "msvc-O2",
@@ -1306,7 +1306,109 @@
    "publish": 12.01,
    "teardown": 2
   },
-  "bench_ns": 1.8244
+  "bench_ns": 1.7458
+ },
+ {
+  "build": "msvc-O2",
+  "case": "one_receiver",
+  "form": "observable",
+  "variant": "empty_check_off",
+  "path": {
+   "instructions": 21,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 139822,
+   "data": 3024,
+   "bss": 2968,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 584,
+  "retained_sub0": [
+   "protected: __cdecl sub0::Subscribe<struct `anonymous namespace'::Sample>::~Subscribe<struct `anonymous namespace'::Sample>(void) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=1687924188 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 17,
+   "publish": 33.01,
+   "teardown": 25
+  },
+  "bench_ns": 1.8171
+ },
+ {
+  "build": "msvc-O2",
+  "case": "one_receiver",
+  "form": "observable",
+  "variant": "empty_check_on",
+  "path": {
+   "instructions": 22,
+   "direct_calls": 1,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": [
+    "abort"
+   ]
+  },
+  "sections": {
+   "text": 139846,
+   "data": 3024,
+   "bss": 2968,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 584,
+  "retained_sub0": [
+   "protected: __cdecl sub0::Subscribe<struct `anonymous namespace'::Sample>::~Subscribe<struct `anonymous namespace'::Sample>(void) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=1687924188 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 17,
+   "publish": 33.01,
+   "teardown": 25
+  },
+  "bench_ns": 1.9234
  },
  {
   "build": "msvc-O2",
@@ -1370,7 +1472,7 @@
    "publish": 45.01,
    "teardown": 25
   },
-  "bench_ns": 2.416
+  "bench_ns": 1.9055
  },
  {
   "build": "msvc-O2",
@@ -1406,7 +1508,7 @@
    "publish": 22.01,
    "teardown": 2
   },
-  "bench_ns": 1.8363
+  "bench_ns": 1.8071
  },
  {
   "build": "msvc-O2",
@@ -1459,7 +1561,7 @@
    "publish": 23.01,
    "teardown": 11
   },
-  "bench_ns": 1.878
+  "bench_ns": 1.8181
  },
  {
   "build": "msvc-O2",
@@ -1508,7 +1610,7 @@
    "publish": 34.01,
    "teardown": 25
   },
-  "bench_ns": 2.4748
+  "bench_ns": 1.9594
  },
  {
   "build": "msvc-O2",
@@ -1542,7 +1644,7 @@
    "publish": 12.01,
    "teardown": 2
   },
-  "bench_ns": 1.7474
+  "bench_ns": 1.7489
  },
  {
   "build": "msvc-O2",
@@ -1581,7 +1683,7 @@
    "publish": 12.01,
    "teardown": 2
   },
-  "bench_ns": 2.0022
+  "bench_ns": 1.7545
  },
  {
   "build": "msvc-O2",
@@ -1630,7 +1732,7 @@
    "publish": 34.01,
    "teardown": 25
   },
-  "bench_ns": 2.3958
+  "bench_ns": 1.8668
  },
  {
   "build": "msvc-O2",
@@ -1664,7 +1766,7 @@
    "publish": 12.01,
    "teardown": 2
   },
-  "bench_ns": 1.7528
+  "bench_ns": 1.7846
  },
  {
   "build": "msvc-O2",
@@ -1698,7 +1800,7 @@
    "publish": 8.01,
    "teardown": 2
   },
-  "bench_ns": 1.5354
+  "bench_ns": 1.1827
  },
  {
   "build": "msvc-O2",
@@ -1732,7 +1834,7 @@
    "publish": 16.01,
    "teardown": 2
   },
-  "bench_ns": 1.4982
+  "bench_ns": 1.3988
  },
  {
   "build": "msvc-O2",
@@ -1795,7 +1897,7 @@
    "publish": 29.01,
    "teardown": 25
   },
-  "bench_ns": 1.4054
+  "bench_ns": 1.4448
  },
  {
   "build": "msvc-O2",
@@ -1829,7 +1931,109 @@
    "publish": 8.01,
    "teardown": 2
   },
-  "bench_ns": 1.3652
+  "bench_ns": 1.3835
+ },
+ {
+  "build": "msvc-O2",
+  "case": "one_receiver",
+  "form": "removable",
+  "variant": "empty_check_off",
+  "path": {
+   "instructions": 21,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 139806,
+   "data": 3024,
+   "bss": 2968,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 584,
+  "retained_sub0": [
+   "protected: __cdecl sub0::Subscribe<struct `anonymous namespace'::Sample>::~Subscribe<struct `anonymous namespace'::Sample>(void) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 17,
+   "publish": 28.01,
+   "teardown": 25
+  },
+  "bench_ns": 1.4042
+ },
+ {
+  "build": "msvc-O2",
+  "case": "one_receiver",
+  "form": "removable",
+  "variant": "empty_check_on",
+  "path": {
+   "instructions": 22,
+   "direct_calls": 1,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": [
+    "abort"
+   ]
+  },
+  "sections": {
+   "text": 139830,
+   "data": 3024,
+   "bss": 2968,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 584,
+  "retained_sub0": [
+   "protected: __cdecl sub0::Subscribe<struct `anonymous namespace'::Sample>::~Subscribe<struct `anonymous namespace'::Sample>(void) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 17,
+   "publish": 28.01,
+   "teardown": 25
+  },
+  "bench_ns": 1.3547
  },
  {
   "build": "msvc-O2",
@@ -1893,7 +2097,7 @@
    "publish": 39.01,
    "teardown": 25
   },
-  "bench_ns": 1.9582
+  "bench_ns": 1.878
  },
  {
   "build": "msvc-O2",
@@ -1929,7 +2133,7 @@
    "publish": 16.01,
    "teardown": 2
   },
-  "bench_ns": 1.6766
+  "bench_ns": 1.3628
  },
  {
   "build": "msvc-O2",
@@ -1982,7 +2186,7 @@
    "publish": 20.01,
    "teardown": 11
   },
-  "bench_ns": 1.4565
+  "bench_ns": 1.395
  },
  {
   "build": "msvc-O2",
@@ -2031,7 +2235,7 @@
    "publish": 29.01,
    "teardown": 25
   },
-  "bench_ns": 1.4781
+  "bench_ns": 1.4995
  },
  {
   "build": "msvc-O2",
@@ -2065,7 +2269,7 @@
    "publish": 8.01,
    "teardown": 2
   },
-  "bench_ns": 1.3989
+  "bench_ns": 1.3418
  },
  {
   "build": "msvc-O2",
@@ -2104,7 +2308,7 @@
    "publish": 8.01,
    "teardown": 2
   },
-  "bench_ns": 1.4034
+  "bench_ns": 1.4018
  },
  {
   "build": "msvc-O2",
@@ -2153,7 +2357,7 @@
    "publish": 29.01,
    "teardown": 25
   },
-  "bench_ns": 1.6005
+  "bench_ns": 1.5196
  },
  {
   "build": "msvc-O2",
@@ -2187,7 +2391,7 @@
    "publish": 8.01,
    "teardown": 2
   },
-  "bench_ns": 1.4436
+  "bench_ns": 1.3784
  },
  {
   "build": "msvc-O2",
@@ -2221,7 +2425,7 @@
    "publish": 21.01,
    "teardown": 2
   },
-  "bench_ns": 2.8568
+  "bench_ns": 2.7359
  },
  {
   "build": "msvc-O2",
@@ -2255,7 +2459,7 @@
    "publish": 46.01,
    "teardown": 2
   },
-  "bench_ns": 6.3889
+  "bench_ns": 6.0909
  },
  {
   "build": "msvc-O2",
@@ -2367,7 +2571,7 @@
    "publish": 84.01,
    "teardown": 116
   },
-  "bench_ns": 8.469
+  "bench_ns": 7.7545
  },
  {
   "build": "msvc-O2",
@@ -2401,7 +2605,149 @@
    "publish": 21.01,
    "teardown": 2
   },
-  "bench_ns": 2.7766
+  "bench_ns": 2.7125
+ },
+ {
+  "build": "msvc-O2",
+  "case": "station",
+  "form": "observable",
+  "variant": "empty_check_off",
+  "path": {
+   "instructions": 37,
+   "direct_calls": 0,
+   "indirect_calls": 2,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 140946,
+   "data": 3280,
+   "bss": 3096,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 1392,
+  "retained_sub0": [
+   "protected: __cdecl sub0::Subscribe<struct `anonymous namespace'::Command>::~Subscribe<struct `anonymous namespace'::Command>(void) __ptr64",
+   "protected: __cdecl sub0::Subscribe<struct `anonymous namespace'::Sample>::~Subscribe<struct `anonymous namespace'::Sample>(void) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::filter(struct `anonymous namespace'::Command const & __ptr64) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`vftable'",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Command> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Command> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=2740849272 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 54,
+   "publish": 80.01,
+   "teardown": 116
+  },
+  "bench_ns": 7.7911
+ },
+ {
+  "build": "msvc-O2",
+  "case": "station",
+  "form": "observable",
+  "variant": "empty_check_on",
+  "path": {
+   "instructions": 40,
+   "direct_calls": 2,
+   "indirect_calls": 2,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": [
+    "abort"
+   ]
+  },
+  "sections": {
+   "text": 141078,
+   "data": 3280,
+   "bss": 3096,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 1392,
+  "retained_sub0": [
+   "protected: __cdecl sub0::Subscribe<struct `anonymous namespace'::Command>::~Subscribe<struct `anonymous namespace'::Command>(void) __ptr64",
+   "protected: __cdecl sub0::Subscribe<struct `anonymous namespace'::Sample>::~Subscribe<struct `anonymous namespace'::Sample>(void) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::filter(struct `anonymous namespace'::Command const & __ptr64) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`vftable'",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Command> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Command> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=2740849272 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 54,
+   "publish": 80.01,
+   "teardown": 116
+  },
+  "bench_ns": 7.677
  },
  {
   "build": "msvc-O2",
@@ -2515,7 +2861,7 @@
    "publish": 110.01,
    "teardown": 116
   },
-  "bench_ns": 8.314
+  "bench_ns": 7.8819
  },
  {
   "build": "msvc-O2",
@@ -2552,7 +2898,7 @@
    "publish": 47.01,
    "teardown": 2
   },
-  "bench_ns": 6.748
+  "bench_ns": 6.2699
  },
  {
   "build": "msvc-O2",
@@ -2635,7 +2981,7 @@
    "publish": 42.01,
    "teardown": 47
   },
-  "bench_ns": 4.1048
+  "bench_ns": 4.0472
  },
  {
   "build": "msvc-O2",
@@ -2703,7 +3049,7 @@
    "publish": 83.01,
    "teardown": 116
   },
-  "bench_ns": 7.9344
+  "bench_ns": 7.7624
  },
  {
   "build": "msvc-O2",
@@ -2737,7 +3083,7 @@
    "publish": 21.01,
    "teardown": 2
   },
-  "bench_ns": 2.7942
+  "bench_ns": 2.7193
  },
  {
   "build": "msvc-O2",
@@ -2771,7 +3117,7 @@
    "publish": 21.01,
    "teardown": 2
   },
-  "bench_ns": 2.7655
+  "bench_ns": 2.6939
  },
  {
   "build": "msvc-O2",
@@ -2819,7 +3165,7 @@
    "publish": 21.01,
    "teardown": 2
   },
-  "bench_ns": 2.7216
+  "bench_ns": 2.7153
  },
  {
   "build": "msvc-O2",
@@ -2887,7 +3233,7 @@
    "publish": 83.01,
    "teardown": 116
   },
-  "bench_ns": 8.2119
+  "bench_ns": 7.8322
  },
  {
   "build": "msvc-O2",
@@ -2921,7 +3267,7 @@
    "publish": 21.01,
    "teardown": 2
   },
-  "bench_ns": 2.7576
+  "bench_ns": 2.7334
  },
  {
   "build": "msvc-O2",
@@ -2955,7 +3301,7 @@
    "publish": 9.01,
    "teardown": 2
   },
-  "bench_ns": 1.496
+  "bench_ns": 1.4788
  },
  {
   "build": "msvc-O2",
@@ -2989,7 +3335,7 @@
    "publish": 27.01,
    "teardown": 2
   },
-  "bench_ns": 1.7845
+  "bench_ns": 1.6032
  },
  {
   "build": "msvc-O2",
@@ -3101,7 +3447,7 @@
    "publish": 66.01,
    "teardown": 116
   },
-  "bench_ns": 4.7278
+  "bench_ns": 4.8024
  },
  {
   "build": "msvc-O2",
@@ -3135,7 +3481,149 @@
    "publish": 9.01,
    "teardown": 2
   },
-  "bench_ns": 1.6049
+  "bench_ns": 1.458
+ },
+ {
+  "build": "msvc-O2",
+  "case": "station",
+  "form": "removable",
+  "variant": "empty_check_off",
+  "path": {
+   "instructions": 37,
+   "direct_calls": 0,
+   "indirect_calls": 2,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 140882,
+   "data": 3280,
+   "bss": 3096,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 1392,
+  "retained_sub0": [
+   "protected: __cdecl sub0::Subscribe<struct `anonymous namespace'::Command>::~Subscribe<struct `anonymous namespace'::Command>(void) __ptr64",
+   "protected: __cdecl sub0::Subscribe<struct `anonymous namespace'::Sample>::~Subscribe<struct `anonymous namespace'::Sample>(void) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::filter(struct `anonymous namespace'::Command const & __ptr64) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`vftable'",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Command> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Command> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 54,
+   "publish": 62.01,
+   "teardown": 116
+  },
+  "bench_ns": 3.0112
+ },
+ {
+  "build": "msvc-O2",
+  "case": "station",
+  "form": "removable",
+  "variant": "empty_check_on",
+  "path": {
+   "instructions": 40,
+   "direct_calls": 2,
+   "indirect_calls": 2,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": [
+    "abort"
+   ]
+  },
+  "sections": {
+   "text": 141014,
+   "data": 3280,
+   "bss": 3096,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 1392,
+  "retained_sub0": [
+   "protected: __cdecl sub0::Subscribe<struct `anonymous namespace'::Command>::~Subscribe<struct `anonymous namespace'::Command>(void) __ptr64",
+   "protected: __cdecl sub0::Subscribe<struct `anonymous namespace'::Sample>::~Subscribe<struct `anonymous namespace'::Sample>(void) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::filter(struct `anonymous namespace'::Command const & __ptr64) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`vftable'",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Command> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Command> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 54,
+   "publish": 62.01,
+   "teardown": 116
+  },
+  "bench_ns": 3.1142
  },
  {
   "build": "msvc-O2",
@@ -3249,7 +3737,7 @@
    "publish": 92.01,
    "teardown": 116
   },
-  "bench_ns": 5.4773
+  "bench_ns": 5.8262
  },
  {
   "build": "msvc-O2",
@@ -3286,7 +3774,7 @@
    "publish": 28.01,
    "teardown": 2
   },
-  "bench_ns": 1.6858
+  "bench_ns": 1.6629
  },
  {
   "build": "msvc-O2",
@@ -3369,7 +3857,7 @@
    "publish": 29.01,
    "teardown": 47
   },
-  "bench_ns": 1.4727
+  "bench_ns": 1.4562
  },
  {
   "build": "msvc-O2",
@@ -3437,7 +3925,7 @@
    "publish": 65.01,
    "teardown": 116
   },
-  "bench_ns": 4.8466
+  "bench_ns": 4.8207
  },
  {
   "build": "msvc-O2",
@@ -3471,7 +3959,7 @@
    "publish": 9.01,
    "teardown": 2
   },
-  "bench_ns": 1.6188
+  "bench_ns": 1.4693
  },
  {
   "build": "msvc-O2",
@@ -3505,7 +3993,7 @@
    "publish": 9.01,
    "teardown": 2
   },
-  "bench_ns": 1.3979
+  "bench_ns": 1.4866
  },
  {
   "build": "msvc-O2",
@@ -3553,7 +4041,7 @@
    "publish": 9.01,
    "teardown": 2
   },
-  "bench_ns": 1.185
+  "bench_ns": 1.5425
  },
  {
   "build": "msvc-O2",
@@ -3621,7 +4109,7 @@
    "publish": 65.01,
    "teardown": 116
   },
-  "bench_ns": 4.7691
+  "bench_ns": 4.5161
  },
  {
   "build": "msvc-O2",
@@ -3655,7 +4143,7 @@
    "publish": 9.01,
    "teardown": 2
   },
-  "bench_ns": 1.2665
+  "bench_ns": 1.5583
  },
  {
   "build": "msvc-O2-lto",
@@ -3689,7 +4177,7 @@
    "publish": 19.01,
    "teardown": 2
   },
-  "bench_ns": 2.6901
+  "bench_ns": 2.3856
  },
  {
   "build": "msvc-O2-lto",
@@ -3737,7 +4225,7 @@
    "publish": 63.01,
    "teardown": 75
   },
-  "bench_ns": 5.4768
+  "bench_ns": 5.8368
  },
  {
   "build": "msvc-O2-lto",
@@ -3771,7 +4259,7 @@
    "publish": 19.01,
    "teardown": 2
   },
-  "bench_ns": 2.4489
+  "bench_ns": 2.2428
  },
  {
   "build": "msvc-O2-lto",
@@ -3805,7 +4293,7 @@
    "publish": 19.01,
    "teardown": 2
   },
-  "bench_ns": 1.8713
+  "bench_ns": 2.5878
  },
  {
   "build": "msvc-O2-lto",
@@ -3853,7 +4341,7 @@
    "publish": 63.01,
    "teardown": 75
   },
-  "bench_ns": 5.5573
+  "bench_ns": 5.5346
  },
  {
   "build": "msvc-O2-lto",
@@ -3887,7 +4375,7 @@
    "publish": 19.01,
    "teardown": 2
   },
-  "bench_ns": 2.5718
+  "bench_ns": 2.07
  },
  {
   "build": "msvc-O2-lto",
@@ -3921,7 +4409,7 @@
    "publish": 9.01,
    "teardown": 2
   },
-  "bench_ns": 1.4489
+  "bench_ns": 0.8751
  },
  {
   "build": "msvc-O2-lto",
@@ -3969,7 +4457,7 @@
    "publish": 48.01,
    "teardown": 75
   },
-  "bench_ns": 3.8645
+  "bench_ns": 4.2215
  },
  {
   "build": "msvc-O2-lto",
@@ -4003,7 +4491,7 @@
    "publish": 9.01,
    "teardown": 2
   },
-  "bench_ns": 1.4638
+  "bench_ns": 1.0444
  },
  {
   "build": "msvc-O2-lto",
@@ -4037,7 +4525,7 @@
    "publish": 9.01,
    "teardown": 2
   },
-  "bench_ns": 1.533
+  "bench_ns": 1.2515
  },
  {
   "build": "msvc-O2-lto",
@@ -4085,7 +4573,7 @@
    "publish": 48.01,
    "teardown": 75
   },
-  "bench_ns": 3.4772
+  "bench_ns": 3.7461
  },
  {
   "build": "msvc-O2-lto",
@@ -4119,7 +4607,7 @@
    "publish": 9.01,
    "teardown": 2
   },
-  "bench_ns": 1.4344
+  "bench_ns": 1.2274
  },
  {
   "build": "clangcl-O2",
@@ -4153,7 +4641,7 @@
    "publish": 136.015,
    "teardown": 2
   },
-  "bench_ns": 5.1652
+  "bench_ns": 6.1096
  },
  {
   "build": "clangcl-O2",
@@ -4187,7 +4675,7 @@
    "publish": 373.015,
    "teardown": 2
   },
-  "bench_ns": 15.4609
+  "bench_ns": 17.2717
  },
  {
   "build": "clangcl-O2",
@@ -4239,7 +4727,7 @@
    "publish": 149.015,
    "teardown": 12
   },
-  "bench_ns": 6.2331
+  "bench_ns": 5.5391
  },
  {
   "build": "clangcl-O2",
@@ -4287,7 +4775,7 @@
    "publish": 1573.015,
    "teardown": 28
   },
-  "bench_ns": 91.5897
+  "bench_ns": 103.0218
  },
  {
   "build": "clangcl-O2",
@@ -4321,7 +4809,7 @@
    "publish": 136.015,
    "teardown": 2
   },
-  "bench_ns": 5.8135
+  "bench_ns": 6.1501
  },
  {
   "build": "clangcl-O2",
@@ -4369,7 +4857,7 @@
    "publish": 1573.015,
    "teardown": 28
   },
-  "bench_ns": 88.6645
+  "bench_ns": 93.8905
  },
  {
   "build": "clangcl-O2",
@@ -4403,7 +4891,7 @@
    "publish": 136.015,
    "teardown": 2
   },
-  "bench_ns": 5.2047
+  "bench_ns": 5.8038
  },
  {
   "build": "clangcl-O2",
@@ -4437,7 +4925,7 @@
    "publish": 373.015,
    "teardown": 2
   },
-  "bench_ns": 15.188
+  "bench_ns": 16.3184
  },
  {
   "build": "clangcl-O2",
@@ -4471,7 +4959,7 @@
    "publish": 129.015,
    "teardown": 2
   },
-  "bench_ns": 5.0441
+  "bench_ns": 5.9877
  },
  {
   "build": "clangcl-O2",
@@ -4505,7 +4993,7 @@
    "publish": 367.015,
    "teardown": 2
   },
-  "bench_ns": 15.2249
+  "bench_ns": 16.349
  },
  {
   "build": "clangcl-O2",
@@ -4557,7 +5045,7 @@
    "publish": 142.015,
    "teardown": 12
   },
-  "bench_ns": 5.8581
+  "bench_ns": 5.7039
  },
  {
   "build": "clangcl-O2",
@@ -4605,7 +5093,7 @@
    "publish": 1567.015,
    "teardown": 28
   },
-  "bench_ns": 93.8767
+  "bench_ns": 99.0651
  },
  {
   "build": "clangcl-O2",
@@ -4639,7 +5127,7 @@
    "publish": 129.015,
    "teardown": 2
   },
-  "bench_ns": 5.3522
+  "bench_ns": 5.3562
  },
  {
   "build": "clangcl-O2",
@@ -4687,7 +5175,7 @@
    "publish": 1567.015,
    "teardown": 28
   },
-  "bench_ns": 85.6882
+  "bench_ns": 100.7478
  },
  {
   "build": "clangcl-O2",
@@ -4721,7 +5209,7 @@
    "publish": 129.015,
    "teardown": 2
   },
-  "bench_ns": 5.2041
+  "bench_ns": 5.6845
  },
  {
   "build": "clangcl-O2",
@@ -4755,7 +5243,7 @@
    "publish": 367.015,
    "teardown": 2
   },
-  "bench_ns": 15.2743
+  "bench_ns": 16.1929
  },
  {
   "build": "clangcl-O2",
@@ -4791,7 +5279,7 @@
    "publish": 53.015,
    "teardown": 2
   },
-  "bench_ns": 4.5052
+  "bench_ns": 2.4001
  },
  {
   "build": "clangcl-O2",
@@ -4839,7 +5327,7 @@
    "publish": 76.015,
    "teardown": 89
   },
-  "bench_ns": 5.7095
+  "bench_ns": 3.5034
  },
  {
   "build": "clangcl-O2",
@@ -4875,7 +5363,7 @@
    "publish": 53.015,
    "teardown": 2
   },
-  "bench_ns": 4.9906
+  "bench_ns": 3.0185
  },
  {
   "build": "clangcl-O2",
@@ -4912,7 +5400,7 @@
    "publish": 57.015,
    "teardown": 2
   },
-  "bench_ns": 4.9246
+  "bench_ns": 2.8434
  },
  {
   "build": "clangcl-O2",
@@ -4960,7 +5448,7 @@
    "publish": 76.015,
    "teardown": 89
   },
-  "bench_ns": 5.5254
+  "bench_ns": 3.9249
  },
  {
   "build": "clangcl-O2",
@@ -4996,7 +5484,7 @@
    "publish": 53.015,
    "teardown": 2
   },
-  "bench_ns": 4.9553
+  "bench_ns": 2.4024
  },
  {
   "build": "clangcl-O2",
@@ -5032,7 +5520,7 @@
    "publish": 28.015,
    "teardown": 2
   },
-  "bench_ns": 1.4287
+  "bench_ns": 1.6281
  },
  {
   "build": "clangcl-O2",
@@ -5080,7 +5568,7 @@
    "publish": 51.015,
    "teardown": 89
   },
-  "bench_ns": 2.7932
+  "bench_ns": 3.3329
  },
  {
   "build": "clangcl-O2",
@@ -5116,7 +5604,7 @@
    "publish": 28.015,
    "teardown": 2
   },
-  "bench_ns": 1.4363
+  "bench_ns": 2.0209
  },
  {
   "build": "clangcl-O2",
@@ -5153,7 +5641,7 @@
    "publish": 32.015,
    "teardown": 2
   },
-  "bench_ns": 1.424
+  "bench_ns": 2.4683
  },
  {
   "build": "clangcl-O2",
@@ -5201,7 +5689,7 @@
    "publish": 51.015,
    "teardown": 89
   },
-  "bench_ns": 2.724
+  "bench_ns": 3.7562
  },
  {
   "build": "clangcl-O2",
@@ -5237,7 +5725,7 @@
    "publish": 28.015,
    "teardown": 2
   },
-  "bench_ns": 1.3557
+  "bench_ns": 2.0398
  },
  {
   "build": "clangcl-O2",
@@ -5271,7 +5759,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.6546
+  "bench_ns": 0.9306
  },
  {
   "build": "clangcl-O2",
@@ -5306,7 +5794,7 @@
    "publish": 25.015,
    "teardown": 2
   },
-  "bench_ns": 1.6903
+  "bench_ns": 1.6037
  },
  {
   "build": "clangcl-O2",
@@ -5368,7 +5856,7 @@
    "publish": 41.015,
    "teardown": 28
   },
-  "bench_ns": 1.7888
+  "bench_ns": 2.4175
  },
  {
   "build": "clangcl-O2",
@@ -5402,7 +5890,107 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.6765
+  "bench_ns": 0.9605
+ },
+ {
+  "build": "clangcl-O2",
+  "case": "one_receiver",
+  "form": "observable",
+  "variant": "empty_check_off",
+  "path": {
+   "instructions": 26,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 144448,
+   "data": 3037,
+   "bss": 2940,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 432,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=1687924188 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 15,
+   "publish": 41.015,
+   "teardown": 28
+  },
+  "bench_ns": 2.029
+ },
+ {
+  "build": "clangcl-O2",
+  "case": "one_receiver",
+  "form": "observable",
+  "variant": "empty_check_on",
+  "path": {
+   "instructions": 27,
+   "direct_calls": 1,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": [
+    "abort"
+   ]
+  },
+  "sections": {
+   "text": 144464,
+   "data": 3037,
+   "bss": 2940,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 432,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=1687924188 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 15,
+   "publish": 41.015,
+   "teardown": 28
+  },
+  "bench_ns": 2.0693
  },
  {
   "build": "clangcl-O2",
@@ -5466,7 +6054,7 @@
    "publish": 48.015,
    "teardown": 28
   },
-  "bench_ns": 1.8189
+  "bench_ns": 3.361
  },
  {
   "build": "clangcl-O2",
@@ -5503,7 +6091,7 @@
    "publish": 25.015,
    "teardown": 2
   },
-  "bench_ns": 1.9706
+  "bench_ns": 1.8571
  },
  {
   "build": "clangcl-O2",
@@ -5555,7 +6143,7 @@
    "publish": 26.015,
    "teardown": 12
   },
-  "bench_ns": 1.7361
+  "bench_ns": 1.3135
  },
  {
   "build": "clangcl-O2",
@@ -5603,7 +6191,7 @@
    "publish": 40.015,
    "teardown": 28
   },
-  "bench_ns": 1.9251
+  "bench_ns": 2.039
  },
  {
   "build": "clangcl-O2",
@@ -5637,7 +6225,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.6502
+  "bench_ns": 1.2987
  },
  {
   "build": "clangcl-O2",
@@ -5671,7 +6259,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.661
+  "bench_ns": 0.8888
  },
  {
   "build": "clangcl-O2",
@@ -5719,7 +6307,7 @@
    "publish": 40.015,
    "teardown": 28
   },
-  "bench_ns": 1.9714
+  "bench_ns": 2.3135
  },
  {
   "build": "clangcl-O2",
@@ -5753,7 +6341,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.837
+  "bench_ns": 0.8963
  },
  {
   "build": "clangcl-O2",
@@ -5787,7 +6375,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.4138
+  "bench_ns": 0.7765
  },
  {
   "build": "clangcl-O2",
@@ -5821,7 +6409,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.4061
+  "bench_ns": 0.6574
  },
  {
   "build": "clangcl-O2",
@@ -5883,7 +6471,7 @@
    "publish": 32.015,
    "teardown": 28
   },
-  "bench_ns": 1.494
+  "bench_ns": 1.8171
  },
  {
   "build": "clangcl-O2",
@@ -5917,7 +6505,107 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.4383
+  "bench_ns": 0.6724
+ },
+ {
+  "build": "clangcl-O2",
+  "case": "one_receiver",
+  "form": "removable",
+  "variant": "empty_check_off",
+  "path": {
+   "instructions": 26,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 144432,
+   "data": 3037,
+   "bss": 2940,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 432,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 15,
+   "publish": 33.015,
+   "teardown": 28
+  },
+  "bench_ns": 1.7832
+ },
+ {
+  "build": "clangcl-O2",
+  "case": "one_receiver",
+  "form": "removable",
+  "variant": "empty_check_on",
+  "path": {
+   "instructions": 27,
+   "direct_calls": 1,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": [
+    "abort"
+   ]
+  },
+  "sections": {
+   "text": 144448,
+   "data": 3037,
+   "bss": 2940,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 432,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 15,
+   "publish": 33.015,
+   "teardown": 28
+  },
+  "bench_ns": 1.8617
  },
  {
   "build": "clangcl-O2",
@@ -5981,7 +6669,7 @@
    "publish": 39.015,
    "teardown": 28
   },
-  "bench_ns": 1.6896
+  "bench_ns": 2.7243
  },
  {
   "build": "clangcl-O2",
@@ -6015,7 +6703,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.3873
+  "bench_ns": 0.7514
  },
  {
   "build": "clangcl-O2",
@@ -6067,7 +6755,7 @@
    "publish": 19.015,
    "teardown": 12
   },
-  "bench_ns": 1.3971
+  "bench_ns": 1.1479
  },
  {
   "build": "clangcl-O2",
@@ -6115,7 +6803,7 @@
    "publish": 32.015,
    "teardown": 28
   },
-  "bench_ns": 1.4949
+  "bench_ns": 1.8096
  },
  {
   "build": "clangcl-O2",
@@ -6149,7 +6837,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.2433
+  "bench_ns": 0.6737
  },
  {
   "build": "clangcl-O2",
@@ -6183,7 +6871,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.5881
+  "bench_ns": 0.8219
  },
  {
   "build": "clangcl-O2",
@@ -6231,7 +6919,7 @@
    "publish": 32.015,
    "teardown": 28
   },
-  "bench_ns": 1.4012
+  "bench_ns": 2.0629
  },
  {
   "build": "clangcl-O2",
@@ -6265,7 +6953,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.0498
+  "bench_ns": 0.7775
  },
  {
   "build": "clangcl-O2",
@@ -6299,7 +6987,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.7943
+  "bench_ns": 3.2768
  },
  {
   "build": "clangcl-O2",
@@ -6335,7 +7023,7 @@
    "publish": 58.015,
    "teardown": 2
   },
-  "bench_ns": 6.2808
+  "bench_ns": 4.3107
  },
  {
   "build": "clangcl-O2",
@@ -6445,7 +7133,7 @@
    "publish": 104.015,
    "teardown": 107
   },
-  "bench_ns": 7.2316
+  "bench_ns": 5.2079
  },
  {
   "build": "clangcl-O2",
@@ -6479,7 +7167,145 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.668
+  "bench_ns": 3.282
+ },
+ {
+  "build": "clangcl-O2",
+  "case": "station",
+  "form": "observable",
+  "variant": "empty_check_off",
+  "path": {
+   "instructions": 46,
+   "direct_calls": 0,
+   "indirect_calls": 2,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 146576,
+   "data": 3293,
+   "bss": 3068,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 1048,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::filter(struct `anonymous namespace'::Command const & __ptr64) __ptr64",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Command> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Command> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=2740849272 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 56,
+   "publish": 107.015,
+   "teardown": 110
+  },
+  "bench_ns": 5.0967
+ },
+ {
+  "build": "clangcl-O2",
+  "case": "station",
+  "form": "observable",
+  "variant": "empty_check_on",
+  "path": {
+   "instructions": 47,
+   "direct_calls": 1,
+   "indirect_calls": 2,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": [
+    "abort"
+   ]
+  },
+  "sections": {
+   "text": 146592,
+   "data": 3293,
+   "bss": 3068,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 1048,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::filter(struct `anonymous namespace'::Command const & __ptr64) __ptr64",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Command> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Command> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=2740849272 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 56,
+   "publish": 107.015,
+   "teardown": 110
+  },
+  "bench_ns": 5.3181
  },
  {
   "build": "clangcl-O2",
@@ -6593,7 +7419,7 @@
    "publish": 123.015,
    "teardown": 107
   },
-  "bench_ns": 7.7489
+  "bench_ns": 6.8571
  },
  {
   "build": "clangcl-O2",
@@ -6632,7 +7458,7 @@
    "publish": 58.015,
    "teardown": 2
   },
-  "bench_ns": 5.6611
+  "bench_ns": 3.4443
  },
  {
   "build": "clangcl-O2",
@@ -6707,7 +7533,7 @@
    "publish": 51.015,
    "teardown": 32
   },
-  "bench_ns": 3.6766
+  "bench_ns": 3.7822
  },
  {
   "build": "clangcl-O2",
@@ -6773,7 +7599,7 @@
    "publish": 103.015,
    "teardown": 107
   },
-  "bench_ns": 7.3183
+  "bench_ns": 5.0507
  },
  {
   "build": "clangcl-O2",
@@ -6807,7 +7633,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.9536
+  "bench_ns": 3.2795
  },
  {
   "build": "clangcl-O2",
@@ -6841,7 +7667,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.6766
+  "bench_ns": 3.5415
  },
  {
   "build": "clangcl-O2",
@@ -6880,7 +7706,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.6736
+  "bench_ns": 3.3549
  },
  {
   "build": "clangcl-O2",
@@ -6946,7 +7772,7 @@
    "publish": 103.015,
    "teardown": 107
   },
-  "bench_ns": 8.3723
+  "bench_ns": 5.2217
  },
  {
   "build": "clangcl-O2",
@@ -6980,7 +7806,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.6704
+  "bench_ns": 3.448
  },
  {
   "build": "clangcl-O2",
@@ -7014,7 +7840,7 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.4416
+  "bench_ns": 0.7604
  },
  {
   "build": "clangcl-O2",
@@ -7049,7 +7875,7 @@
    "publish": 18.015,
    "teardown": 2
   },
-  "bench_ns": 1.4209
+  "bench_ns": 1.5454
  },
  {
   "build": "clangcl-O2",
@@ -7159,7 +7985,7 @@
    "publish": 72.015,
    "teardown": 107
   },
-  "bench_ns": 2.7733
+  "bench_ns": 5.6981
  },
  {
   "build": "clangcl-O2",
@@ -7193,7 +8019,145 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.5398
+  "bench_ns": 0.9317
+ },
+ {
+  "build": "clangcl-O2",
+  "case": "station",
+  "form": "removable",
+  "variant": "empty_check_off",
+  "path": {
+   "instructions": 46,
+   "direct_calls": 0,
+   "indirect_calls": 2,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 146504,
+   "data": 3293,
+   "bss": 3068,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 1048,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::filter(struct `anonymous namespace'::Command const & __ptr64) __ptr64",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Command> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Command> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 56,
+   "publish": 75.015,
+   "teardown": 110
+  },
+  "bench_ns": 4.6594
+ },
+ {
+  "build": "clangcl-O2",
+  "case": "station",
+  "form": "removable",
+  "variant": "empty_check_on",
+  "path": {
+   "instructions": 47,
+   "direct_calls": 1,
+   "indirect_calls": 2,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": [
+    "abort"
+   ]
+  },
+  "sections": {
+   "text": 146520,
+   "data": 3293,
+   "bss": 3068,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 1048,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::filter(struct `anonymous namespace'::Command const & __ptr64) __ptr64",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Command> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Command> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 56,
+   "publish": 75.015,
+   "teardown": 110
+  },
+  "bench_ns": 4.5272
  },
  {
   "build": "clangcl-O2",
@@ -7307,7 +8271,7 @@
    "publish": 91.015,
    "teardown": 107
   },
-  "bench_ns": 3.6564
+  "bench_ns": 5.956
  },
  {
   "build": "clangcl-O2",
@@ -7344,7 +8308,7 @@
    "publish": 18.015,
    "teardown": 2
   },
-  "bench_ns": 1.4104
+  "bench_ns": 1.5117
  },
  {
   "build": "clangcl-O2",
@@ -7419,7 +8383,7 @@
    "publish": 27.015,
    "teardown": 32
   },
-  "bench_ns": 1.4416
+  "bench_ns": 1.5522
  },
  {
   "build": "clangcl-O2",
@@ -7485,7 +8449,7 @@
    "publish": 71.015,
    "teardown": 107
   },
-  "bench_ns": 3.3293
+  "bench_ns": 4.4414
  },
  {
   "build": "clangcl-O2",
@@ -7519,7 +8483,7 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.4456
+  "bench_ns": 0.7755
  },
  {
   "build": "clangcl-O2",
@@ -7553,7 +8517,7 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.003
+  "bench_ns": 0.7557
  },
  {
   "build": "clangcl-O2",
@@ -7592,7 +8556,7 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.4386
+  "bench_ns": 0.7568
  },
  {
   "build": "clangcl-O2",
@@ -7658,7 +8622,7 @@
    "publish": 71.015,
    "teardown": 107
   },
-  "bench_ns": 2.74
+  "bench_ns": 4.977
  },
  {
   "build": "clangcl-O2",
@@ -7692,7 +8656,7 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.4439
+  "bench_ns": 0.7595
  },
  {
   "build": "icx-O2",
@@ -7726,7 +8690,7 @@
    "publish": 250.015,
    "teardown": 2
   },
-  "bench_ns": 11.8123
+  "bench_ns": 14.2309
  },
  {
   "build": "icx-O2",
@@ -7760,7 +8724,7 @@
    "publish": 248.015,
    "teardown": 2
   },
-  "bench_ns": 9.6244
+  "bench_ns": 14.6101
  },
  {
   "build": "icx-O2",
@@ -7812,7 +8776,7 @@
    "publish": 739.015,
    "teardown": 7
   },
-  "bench_ns": 103.2543
+  "bench_ns": 29.7094
  },
  {
   "build": "icx-O2",
@@ -7860,7 +8824,7 @@
    "publish": 1571.015,
    "teardown": 21
   },
-  "bench_ns": 82.8455
+  "bench_ns": 137.0327
  },
  {
   "build": "icx-O2",
@@ -7894,7 +8858,7 @@
    "publish": 250.015,
    "teardown": 2
   },
-  "bench_ns": 10.3992
+  "bench_ns": 14.6115
  },
  {
   "build": "icx-O2",
@@ -7942,7 +8906,7 @@
    "publish": 1571.015,
    "teardown": 21
   },
-  "bench_ns": 83.8223
+  "bench_ns": 138.2545
  },
  {
   "build": "icx-O2",
@@ -7976,7 +8940,7 @@
    "publish": 250.015,
    "teardown": 2
   },
-  "bench_ns": 9.4455
+  "bench_ns": 14.5861
  },
  {
   "build": "icx-O2",
@@ -8010,7 +8974,7 @@
    "publish": 248.015,
    "teardown": 2
   },
-  "bench_ns": 10.5526
+  "bench_ns": 14.0036
  },
  {
   "build": "icx-O2",
@@ -8044,7 +9008,7 @@
    "publish": 244.015,
    "teardown": 2
   },
-  "bench_ns": 9.6303
+  "bench_ns": 14.2055
  },
  {
   "build": "icx-O2",
@@ -8078,7 +9042,7 @@
    "publish": 242.015,
    "teardown": 2
   },
-  "bench_ns": 9.3849
+  "bench_ns": 14.4099
  },
  {
   "build": "icx-O2",
@@ -8130,7 +9094,7 @@
    "publish": 733.015,
    "teardown": 7
   },
-  "bench_ns": 84.5233
+  "bench_ns": 47.9563
  },
  {
   "build": "icx-O2",
@@ -8178,7 +9142,7 @@
    "publish": 1565.015,
    "teardown": 21
   },
-  "bench_ns": 88.9293
+  "bench_ns": 139.263
  },
  {
   "build": "icx-O2",
@@ -8212,7 +9176,7 @@
    "publish": 244.015,
    "teardown": 2
   },
-  "bench_ns": 9.6017
+  "bench_ns": 14.4576
  },
  {
   "build": "icx-O2",
@@ -8260,7 +9224,7 @@
    "publish": 1565.015,
    "teardown": 21
   },
-  "bench_ns": 88.9103
+  "bench_ns": 138.7726
  },
  {
   "build": "icx-O2",
@@ -8294,7 +9258,7 @@
    "publish": 244.015,
    "teardown": 2
   },
-  "bench_ns": 9.67
+  "bench_ns": 15.2874
  },
  {
   "build": "icx-O2",
@@ -8328,7 +9292,7 @@
    "publish": 242.015,
    "teardown": 2
   },
-  "bench_ns": 9.5031
+  "bench_ns": 15.3908
  },
  {
   "build": "icx-O2",
@@ -8364,7 +9328,7 @@
    "publish": 53.015,
    "teardown": 2
   },
-  "bench_ns": 4.9624
+  "bench_ns": 2.8414
  },
  {
   "build": "icx-O2",
@@ -8412,7 +9376,7 @@
    "publish": 76.015,
    "teardown": 72
   },
-  "bench_ns": 5.415
+  "bench_ns": 3.9913
  },
  {
   "build": "icx-O2",
@@ -8448,7 +9412,7 @@
    "publish": 53.015,
    "teardown": 2
   },
-  "bench_ns": 5.1665
+  "bench_ns": 2.8387
  },
  {
   "build": "icx-O2",
@@ -8485,7 +9449,7 @@
    "publish": 57.015,
    "teardown": 2
   },
-  "bench_ns": 5.6509
+  "bench_ns": 3.4364
  },
  {
   "build": "icx-O2",
@@ -8533,7 +9497,7 @@
    "publish": 76.015,
    "teardown": 72
   },
-  "bench_ns": 5.1882
+  "bench_ns": 3.8417
  },
  {
   "build": "icx-O2",
@@ -8569,7 +9533,7 @@
    "publish": 53.015,
    "teardown": 2
   },
-  "bench_ns": 5.2186
+  "bench_ns": 2.7735
  },
  {
   "build": "icx-O2",
@@ -8605,7 +9569,7 @@
    "publish": 28.015,
    "teardown": 2
   },
-  "bench_ns": 1.4539
+  "bench_ns": 2.3531
  },
  {
   "build": "icx-O2",
@@ -8653,7 +9617,7 @@
    "publish": 51.015,
    "teardown": 72
   },
-  "bench_ns": 2.8115
+  "bench_ns": 4.7681
  },
  {
   "build": "icx-O2",
@@ -8689,7 +9653,7 @@
    "publish": 28.015,
    "teardown": 2
   },
-  "bench_ns": 1.3907
+  "bench_ns": 2.2768
  },
  {
   "build": "icx-O2",
@@ -8726,7 +9690,7 @@
    "publish": 32.015,
    "teardown": 2
   },
-  "bench_ns": 1.4444
+  "bench_ns": 2.2346
  },
  {
   "build": "icx-O2",
@@ -8774,7 +9738,7 @@
    "publish": 51.015,
    "teardown": 72
   },
-  "bench_ns": 2.7202
+  "bench_ns": 4.1073
  },
  {
   "build": "icx-O2",
@@ -8810,7 +9774,7 @@
    "publish": 28.015,
    "teardown": 2
   },
-  "bench_ns": 1.3432
+  "bench_ns": 2.2715
  },
  {
   "build": "icx-O2",
@@ -8844,7 +9808,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.6397
+  "bench_ns": 1.0295
  },
  {
   "build": "icx-O2",
@@ -8878,7 +9842,7 @@
    "publish": 26.015,
    "teardown": 2
   },
-  "bench_ns": 1.6301
+  "bench_ns": 1.9551
  },
  {
   "build": "icx-O2",
@@ -8940,7 +9904,7 @@
    "publish": 41.015,
    "teardown": 21
   },
-  "bench_ns": 1.8482
+  "bench_ns": 2.3218
  },
  {
   "build": "icx-O2",
@@ -8974,7 +9938,107 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.6659
+  "bench_ns": 1.0297
+ },
+ {
+  "build": "icx-O2",
+  "case": "one_receiver",
+  "form": "observable",
+  "variant": "empty_check_off",
+  "path": {
+   "instructions": 26,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 140126,
+   "data": 3008,
+   "bss": 2952,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 424,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=1687924188 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 15,
+   "publish": 41.015,
+   "teardown": 21
+  },
+  "bench_ns": 2.3255
+ },
+ {
+  "build": "icx-O2",
+  "case": "one_receiver",
+  "form": "observable",
+  "variant": "empty_check_on",
+  "path": {
+   "instructions": 27,
+   "direct_calls": 1,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": [
+    "abort"
+   ]
+  },
+  "sections": {
+   "text": 140166,
+   "data": 3008,
+   "bss": 2952,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 424,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=1687924188 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 15,
+   "publish": 41.015,
+   "teardown": 21
+  },
+  "bench_ns": 2.2636
  },
  {
   "build": "icx-O2",
@@ -9037,7 +10101,7 @@
    "publish": 48.015,
    "teardown": 21
   },
-  "bench_ns": 1.8472
+  "bench_ns": 3.1428
  },
  {
   "build": "icx-O2",
@@ -9073,7 +10137,7 @@
    "publish": 25.015,
    "teardown": 2
   },
-  "bench_ns": 1.6898
+  "bench_ns": 1.8063
  },
  {
   "build": "icx-O2",
@@ -9125,7 +10189,7 @@
    "publish": 26.015,
    "teardown": 7
   },
-  "bench_ns": 1.6253
+  "bench_ns": 1.382
  },
  {
   "build": "icx-O2",
@@ -9173,7 +10237,7 @@
    "publish": 40.015,
    "teardown": 21
   },
-  "bench_ns": 1.8802
+  "bench_ns": 2.2787
  },
  {
   "build": "icx-O2",
@@ -9207,7 +10271,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.6465
+  "bench_ns": 1.0065
  },
  {
   "build": "icx-O2",
@@ -9241,7 +10305,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.6622
+  "bench_ns": 1.0083
  },
  {
   "build": "icx-O2",
@@ -9289,7 +10353,7 @@
    "publish": 40.015,
    "teardown": 21
   },
-  "bench_ns": 1.9038
+  "bench_ns": 2.2741
  },
  {
   "build": "icx-O2",
@@ -9323,7 +10387,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.6418
+  "bench_ns": 1.0302
  },
  {
   "build": "icx-O2",
@@ -9357,7 +10421,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.3942
+  "bench_ns": 0.7544
  },
  {
   "build": "icx-O2",
@@ -9391,7 +10455,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.5078
+  "bench_ns": 1.5466
  },
  {
   "build": "icx-O2",
@@ -9453,7 +10517,7 @@
    "publish": 32.015,
    "teardown": 21
   },
-  "bench_ns": 1.4621
+  "bench_ns": 2.1019
  },
  {
   "build": "icx-O2",
@@ -9487,7 +10551,107 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.3758
+  "bench_ns": 0.7553
+ },
+ {
+  "build": "icx-O2",
+  "case": "one_receiver",
+  "form": "removable",
+  "variant": "empty_check_off",
+  "path": {
+   "instructions": 26,
+   "direct_calls": 0,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 140110,
+   "data": 3008,
+   "bss": 2952,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 424,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 15,
+   "publish": 33.015,
+   "teardown": 21
+  },
+  "bench_ns": 2.0362
+ },
+ {
+  "build": "icx-O2",
+  "case": "one_receiver",
+  "form": "removable",
+  "variant": "empty_check_on",
+  "path": {
+   "instructions": 27,
+   "direct_calls": 1,
+   "indirect_calls": 1,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": [
+    "abort"
+   ]
+  },
+  "sections": {
+   "text": 140150,
+   "data": 3008,
+   "bss": 2952,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 424,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 15,
+   "publish": 33.015,
+   "teardown": 21
+  },
+  "bench_ns": 2.0684
  },
  {
   "build": "icx-O2",
@@ -9550,7 +10714,7 @@
    "publish": 39.015,
    "teardown": 21
   },
-  "bench_ns": 1.5276
+  "bench_ns": 2.3089
  },
  {
   "build": "icx-O2",
@@ -9586,7 +10750,7 @@
    "publish": 16.015,
    "teardown": 2
   },
-  "bench_ns": 1.579
+  "bench_ns": 1.508
  },
  {
   "build": "icx-O2",
@@ -9638,7 +10802,7 @@
    "publish": 19.015,
    "teardown": 7
   },
-  "bench_ns": 1.2771
+  "bench_ns": 1.2921
  },
  {
   "build": "icx-O2",
@@ -9686,7 +10850,7 @@
    "publish": 32.015,
    "teardown": 21
   },
-  "bench_ns": 1.5104
+  "bench_ns": 2.0655
  },
  {
   "build": "icx-O2",
@@ -9720,7 +10884,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.4224
+  "bench_ns": 0.7562
  },
  {
   "build": "icx-O2",
@@ -9754,7 +10918,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.4056
+  "bench_ns": 0.7747
  },
  {
   "build": "icx-O2",
@@ -9802,7 +10966,7 @@
    "publish": 32.015,
    "teardown": 21
   },
-  "bench_ns": 1.505
+  "bench_ns": 2.0125
  },
  {
   "build": "icx-O2",
@@ -9836,7 +11000,7 @@
    "publish": 8.015,
    "teardown": 2
   },
-  "bench_ns": 1.2156
+  "bench_ns": 0.7585
  },
  {
   "build": "icx-O2",
@@ -9870,7 +11034,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.6718
+  "bench_ns": 3.2829
  },
  {
   "build": "icx-O2",
@@ -9906,7 +11070,7 @@
    "publish": 54.015,
    "teardown": 2
   },
-  "bench_ns": 4.6926
+  "bench_ns": 3.3528
  },
  {
   "build": "icx-O2",
@@ -10016,7 +11180,7 @@
    "publish": 105.015,
    "teardown": 88
   },
-  "bench_ns": 7.1855
+  "bench_ns": 5.0953
  },
  {
   "build": "icx-O2",
@@ -10050,7 +11214,145 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.6683
+  "bench_ns": 3.3545
+ },
+ {
+  "build": "icx-O2",
+  "case": "station",
+  "form": "observable",
+  "variant": "empty_check_off",
+  "path": {
+   "instructions": 46,
+   "direct_calls": 0,
+   "indirect_calls": 2,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 141594,
+   "data": 3264,
+   "bss": 3080,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 1040,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::filter(struct `anonymous namespace'::Command const & __ptr64) __ptr64",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Command> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Command> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=2740849272 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 56,
+   "publish": 107.015,
+   "teardown": 90
+  },
+  "bench_ns": 5.0764
+ },
+ {
+  "build": "icx-O2",
+  "case": "station",
+  "form": "observable",
+  "variant": "empty_check_on",
+  "path": {
+   "instructions": 47,
+   "direct_calls": 1,
+   "indirect_calls": 2,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": [
+    "abort"
+   ]
+  },
+  "sections": {
+   "text": 141634,
+   "data": 3264,
+   "bss": 3080,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 1040,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::filter(struct `anonymous namespace'::Command const & __ptr64) __ptr64",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Command> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Command> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=2740849272 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 56,
+   "publish": 107.015,
+   "teardown": 90
+  },
+  "bench_ns": 5.1369
  },
  {
   "build": "icx-O2",
@@ -10162,7 +11464,7 @@
    "publish": 124.015,
    "teardown": 88
   },
-  "bench_ns": 7.347
+  "bench_ns": 6.9819
  },
  {
   "build": "icx-O2",
@@ -10199,7 +11501,7 @@
    "publish": 59.015,
    "teardown": 2
   },
-  "bench_ns": 5.7187
+  "bench_ns": 3.3614
  },
  {
   "build": "icx-O2",
@@ -10274,7 +11576,7 @@
    "publish": 51.015,
    "teardown": 22
   },
-  "bench_ns": 4.3881
+  "bench_ns": 2.9883
  },
  {
   "build": "icx-O2",
@@ -10340,7 +11642,7 @@
    "publish": 103.015,
    "teardown": 88
   },
-  "bench_ns": 7.2443
+  "bench_ns": 4.7146
  },
  {
   "build": "icx-O2",
@@ -10374,7 +11676,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.6948
+  "bench_ns": 3.3639
  },
  {
   "build": "icx-O2",
@@ -10408,7 +11710,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.6912
+  "bench_ns": 3.2786
  },
  {
   "build": "icx-O2",
@@ -10447,7 +11749,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.6868
+  "bench_ns": 3.3627
  },
  {
   "build": "icx-O2",
@@ -10513,7 +11815,7 @@
    "publish": 103.015,
    "teardown": 88
   },
-  "bench_ns": 7.2255
+  "bench_ns": 5.0623
  },
  {
   "build": "icx-O2",
@@ -10547,7 +11849,7 @@
    "publish": 33.015,
    "teardown": 2
   },
-  "bench_ns": 3.6193
+  "bench_ns": 3.3145
  },
  {
   "build": "icx-O2",
@@ -10581,7 +11883,7 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.462
+  "bench_ns": 0.7753
  },
  {
   "build": "icx-O2",
@@ -10616,7 +11918,7 @@
    "publish": 17.015,
    "teardown": 2
   },
-  "bench_ns": 1.2862
+  "bench_ns": 1.5479
  },
  {
   "build": "icx-O2",
@@ -10726,7 +12028,7 @@
    "publish": 72.015,
    "teardown": 88
   },
-  "bench_ns": 2.9549
+  "bench_ns": 4.2752
  },
  {
   "build": "icx-O2",
@@ -10760,7 +12062,145 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.4554
+  "bench_ns": 0.7584
+ },
+ {
+  "build": "icx-O2",
+  "case": "station",
+  "form": "removable",
+  "variant": "empty_check_off",
+  "path": {
+   "instructions": 46,
+   "direct_calls": 0,
+   "indirect_calls": 2,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": []
+  },
+  "sections": {
+   "text": 141530,
+   "data": 3264,
+   "bss": 3080,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 1040,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::filter(struct `anonymous namespace'::Command const & __ptr64) __ptr64",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Command> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Command> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 56,
+   "publish": 75.015,
+   "teardown": 90
+  },
+  "bench_ns": 4.6835
+ },
+ {
+  "build": "icx-O2",
+  "case": "station",
+  "form": "removable",
+  "variant": "empty_check_on",
+  "path": {
+   "instructions": 47,
+   "direct_calls": 1,
+   "indirect_calls": 2,
+   "functions": [
+    "collapse_publish"
+   ],
+   "external": [
+    "abort"
+   ]
+  },
+  "sections": {
+   "text": 141570,
+   "data": 3264,
+   "bss": 3080,
+   "init_array": 0
+  },
+  "retained_sub0_bytes": 1040,
+  "retained_sub0": [
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::filter(struct `anonymous namespace'::Sample const & __ptr64) __ptr64",
+   "public: virtual void __cdecl sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::filter(struct `anonymous namespace'::Command const & __ptr64) __ptr64",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "const `anonymous namespace'::Controller::`vftable'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Sample>'}",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Array'",
+   "sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Class Hierarchy Descriptor'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Array'",
+   "sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0>::`RTTI Base Class Descriptor at (16,-1,0,64)'",
+   "const `anonymous namespace'::Controller::`RTTI Complete Object Locator'{for `sub0::Subscribe<struct `anonymous namespace'::Command>'}",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`vftable'",
+   "const sub0::Subscribe<struct `anonymous namespace'::Command>::`RTTI Complete Object Locator'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'",
+   "class sub0::Subscribe<struct `anonymous namespace'::Command> `RTTI Type Descriptor'",
+   "class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0> `RTTI Type Descriptor'",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_",
+   "private: static unsigned int sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::count_",
+   "private: static class sub0::Subscribe<struct `anonymous namespace'::Command> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_"
+  ],
+  "dependencies": [
+   "operator delete",
+   "pure virtual",
+   "atexit"
+  ],
+  "checksum": "state=0 args=1000 io=0 publishes=1000",
+  "instr": {
+   "setup": 56,
+   "publish": 75.015,
+   "teardown": 90
+  },
+  "bench_ns": 3.667
  },
  {
   "build": "icx-O2",
@@ -10872,7 +12312,7 @@
    "publish": 91.015,
    "teardown": 88
   },
-  "bench_ns": 3.7594
+  "bench_ns": 5.404
  },
  {
   "build": "icx-O2",
@@ -10909,7 +12349,7 @@
    "publish": 27.015,
    "teardown": 2
   },
-  "bench_ns": 1.79
+  "bench_ns": 2.2741
  },
  {
   "build": "icx-O2",
@@ -10984,7 +12424,7 @@
    "publish": 27.015,
    "teardown": 22
   },
-  "bench_ns": 1.4737
+  "bench_ns": 1.5113
  },
  {
   "build": "icx-O2",
@@ -11050,7 +12490,7 @@
    "publish": 71.015,
    "teardown": 88
   },
-  "bench_ns": 2.8264
+  "bench_ns": 5.2916
  },
  {
   "build": "icx-O2",
@@ -11084,7 +12524,7 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.4489
+  "bench_ns": 0.8219
  },
  {
   "build": "icx-O2",
@@ -11118,7 +12558,7 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.4486
+  "bench_ns": 0.8159
  },
  {
   "build": "icx-O2",
@@ -11157,7 +12597,7 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.3765
+  "bench_ns": 0.7812
  },
  {
   "build": "icx-O2",
@@ -11223,7 +12663,7 @@
    "publish": 71.015,
    "teardown": 88
   },
-  "bench_ns": 2.8104
+  "bench_ns": 4.5388
  },
  {
   "build": "icx-O2",
@@ -11257,6 +12697,6 @@
    "publish": 9.015,
    "teardown": 2
   },
-  "bench_ns": 1.4595
+  "bench_ns": 0.7796
  }
 ]

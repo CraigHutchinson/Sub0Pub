@@ -617,6 +617,8 @@ Final-link evidence per case, build and form; every variant is compared with `ha
 | handwritten_erased | ok | 22.0 (+10.0) | 9 (+6) | 2 (+0) | 9 (+3) | 0/1 | 151398 (+12476) | 5720 (+32) | 0 | - | reference; FAIL: publish instr, setup instr, publish path, no extra indirect calls, no extra RAM |
 | bus_dynamic (vs today_dynamic) | ok | 35.0 (+1.0) | 16 (+0) | 25 (+0) | 20 (+0) | 0/1 | 140006 (+224) | 6200 (+192) | 1256 | - | FAIL: no extra RAM, no Sub0Pub retained |
 | bus_static | ok | 12.0 (+0.0) | 3 (+0) | 2 (+0) | 6 (+0) | 0/0 | 138922 (+0) | 5688 (+0) | 0 | - | PASS |
+| empty_check_off (vs today_dynamic) | ok | 33.0 (-1.0) | 17 (+1) | 25 (+0) | 21 (+1) | 0/1 | 139822 (+40) | 5992 (-16) | 584 | - | FAIL: setup instr, no Sub0Pub retained |
+| empty_check_on (vs today_dynamic) | ok | 33.0 (-1.0) | 17 (+1) | 25 (+0) | 22 (+2) | 1/1 | 139846 (+64) | 5992 (-16) | 584 | - | FAIL: setup instr, no Sub0Pub retained |
 | port_dynamic (vs today_dynamic) | ok | 45.0 (+11.0) | 20 (+4) | 25 (+0) | 9 (-11) | 0/1 | 152354 (+12572) | 6216 (+208) | 1336 | - | FAIL: publish instr, setup instr, no extra RAM, no Sub0Pub retained |
 | port_static (vs handwritten_erased) | ok | 22.0 (+0.0) | 9 (+0) | 2 (+0) | 9 (+0) | 0/1 | 151398 (+0) | 5720 (+0) | 32 | - | PASS |
 | route_bridged | ok | 23.0 (+11.0) | 32 (+29) | 11 (+9) | 23 (+17) | 0/1 | 139998 (+1076) | 6104 (+416) | 792 | pure virtual | FAIL: publish instr, setup instr, teardown instr, publish path, no extra indirect calls, no extra RAM, no Sub0Pub retained, no extra dependencies |
@@ -634,6 +636,8 @@ Final-link evidence per case, build and form; every variant is compared with `ha
 | handwritten_erased | ok | 16.0 (+8.0) | 9 (+6) | 2 (+0) | 9 (+7) | 0/1 | 151382 (+12476) | 5720 (+32) | 0 | - | reference; FAIL: publish instr, setup instr, publish path, no extra indirect calls, no extra RAM |
 | bus_dynamic (vs today_dynamic) | ok | 29.0 (+0.0) | 16 (+0) | 25 (+0) | 20 (+0) | 0/1 | 139990 (+224) | 6200 (+192) | 1240 | - | FAIL: no extra RAM, no Sub0Pub retained |
 | bus_static | ok | 8.0 (+0.0) | 3 (+0) | 2 (+0) | 2 (+0) | 0/0 | 138906 (+0) | 5688 (+0) | 0 | - | PASS |
+| empty_check_off (vs today_dynamic) | ok | 28.0 (-1.0) | 17 (+1) | 25 (+0) | 21 (+1) | 0/1 | 139806 (+40) | 5992 (-16) | 584 | - | FAIL: setup instr, no Sub0Pub retained |
+| empty_check_on (vs today_dynamic) | ok | 28.0 (-1.0) | 17 (+1) | 25 (+0) | 22 (+2) | 1/1 | 139830 (+64) | 5992 (-16) | 584 | - | FAIL: setup instr, no Sub0Pub retained |
 | port_dynamic (vs today_dynamic) | ok | 39.0 (+10.0) | 20 (+4) | 25 (+0) | 9 (-11) | 0/1 | 152338 (+12572) | 6216 (+208) | 1320 | - | FAIL: publish instr, setup instr, no extra RAM, no Sub0Pub retained |
 | port_static (vs handwritten_erased) | ok | 16.0 (+0.0) | 9 (+0) | 2 (+0) | 9 (+0) | 0/1 | 151382 (+0) | 5720 (+0) | 16 | - | PASS |
 | route_bridged | ok | 20.0 (+12.0) | 32 (+29) | 11 (+9) | 20 (+18) | 0/1 | 139966 (+1060) | 6104 (+416) | 792 | pure virtual | FAIL: publish instr, setup instr, teardown instr, publish path, no extra indirect calls, no extra RAM, no Sub0Pub retained, no extra dependencies |
@@ -672,6 +676,32 @@ Final-link evidence per case, build and form; every variant is compared with `ha
 <details><summary>msvc-O2: largest symbols added by bus_static (bytes)</summary>
 
 - 8 `class collapse::Slot<struct `anonymous namespace'::Controller> `anonymous namespace'::controller`
+
+</details>
+
+<details><summary>msvc-O2: largest symbols added by empty_check_off (bytes)</summary>
+
+- 1196 `__volatile_metadata`
+- 112 `protected: __cdecl sub0::Subscribe<struct `anonymous namespace'::Sample>::~Subscribe<struct `anonymous namespace'::Sample>(void) __ptr64`
+- 96 `collapse_publish`
+- 88 `class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'`
+- 64 `private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_`
+- 64 `class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'`
+- 48 `struct `anonymous namespace'::Controller `RTTI Type Descriptor'`
+- 40 `const `anonymous namespace'::Controller::`RTTI Complete Object Locator'`
+
+</details>
+
+<details><summary>msvc-O2: largest symbols added by empty_check_on (bytes)</summary>
+
+- 616 `raise`
+- 276 `__acrt_fp_strflt_to_string`
+- 112 `protected: __cdecl sub0::Subscribe<struct `anonymous namespace'::Sample>::~Subscribe<struct `anonymous namespace'::Sample>(void) __ptr64`
+- 96 `collapse_publish`
+- 88 `class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'`
+- 64 `private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_`
+- 64 `class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'`
+- 48 `struct `anonymous namespace'::Controller `RTTI Type Descriptor'`
 
 </details>
 
@@ -769,6 +799,8 @@ Final-link evidence per case, build and form; every variant is compared with `ha
 | handwritten_erased | ok | 25.0 (+8.0) | 7 (+4) | 2 (+0) | 19 (+8) | 1/0 | 143568 (+84) | 5701 (+16) | 0 | - | reference; FAIL: publish instr, setup instr, publish path, no extra RAM |
 | bus_dynamic (vs today_dynamic) | ok | 41.0 (+1.0) | 17 (+2) | 28 (+0) | 25 (+0) | 0/1 | 144672 (+192) | 6169 (+192) | 1024 | - | FAIL: setup instr, no extra RAM, no Sub0Pub retained |
 | bus_static | ok | 17.0 (+0.0) | 3 (+0) | 2 (+0) | 11 (+0) | 0/0 | 143484 (+0) | 5685 (+0) | 0 | - | PASS |
+| empty_check_off (vs today_dynamic) | ok | 41.0 (+1.0) | 15 (+0) | 28 (+0) | 26 (+1) | 0/1 | 144448 (-32) | 5977 (+0) | 432 | - | PASS |
+| empty_check_on (vs today_dynamic) | ok | 41.0 (+1.0) | 15 (+0) | 28 (+0) | 27 (+2) | 1/1 | 144464 (-16) | 5977 (+0) | 432 | - | PASS |
 | port_dynamic (vs today_dynamic) | ok | 48.0 (+8.0) | 19 (+4) | 28 (+0) | 32 (+7) | 1/1 | 144742 (+262) | 6185 (+208) | 1104 | - | FAIL: publish instr, setup instr, publish path, no extra RAM, no Sub0Pub retained |
 | port_static (vs handwritten_erased) | ok | 25.0 (+0.0) | 7 (+0) | 2 (+0) | 19 (+0) | 1/0 | 143581 (+13) | 5701 (+0) | 32 | - | FAIL: no Sub0Pub retained |
 | route_bridged | ok | 26.0 (+9.0) | 28 (+25) | 12 (+10) | 32 (+21) | 0/1 | 145188 (+1704) | 6041 (+356) | 584 | pure virtual | FAIL: publish instr, setup instr, teardown instr, publish path, no extra indirect calls, no extra RAM, no Sub0Pub retained, no extra dependencies |
@@ -786,6 +818,8 @@ Final-link evidence per case, build and form; every variant is compared with `ha
 | handwritten_erased | ok | 8.0 (+0.0) | 7 (+5) | 2 (+0) | 2 (+0) | 0/0 | 143484 (+32) | 5701 (+16) | 0 | - | reference; FAIL: setup instr, no extra RAM |
 | bus_dynamic (vs today_dynamic) | ok | 32.0 (+0.0) | 17 (+2) | 28 (+0) | 25 (+0) | 0/1 | 144656 (+192) | 6169 (+192) | 1008 | - | FAIL: setup instr, no extra RAM, no Sub0Pub retained |
 | bus_static | ok | 8.0 (+0.0) | 2 (+0) | 2 (+0) | 2 (+0) | 0/0 | 143452 (+0) | 5685 (+0) | 0 | - | PASS |
+| empty_check_off (vs today_dynamic) | ok | 33.0 (+1.0) | 15 (+0) | 28 (+0) | 26 (+1) | 0/1 | 144432 (-32) | 5977 (+0) | 432 | - | PASS |
+| empty_check_on (vs today_dynamic) | ok | 33.0 (+1.0) | 15 (+0) | 28 (+0) | 27 (+2) | 1/1 | 144448 (-16) | 5977 (+0) | 432 | - | PASS |
 | port_dynamic (vs today_dynamic) | ok | 39.0 (+7.0) | 19 (+4) | 28 (+0) | 32 (+7) | 1/1 | 144726 (+262) | 6185 (+208) | 1088 | - | FAIL: publish instr, setup instr, publish path, no extra RAM, no Sub0Pub retained |
 | port_static (vs handwritten_erased) | ok | 8.0 (+0.0) | 7 (+0) | 2 (+0) | 2 (+0) | 0/0 | 143484 (+0) | 5701 (+0) | 0 | - | PASS |
 | route_bridged | ok | 19.0 (+11.0) | 28 (+26) | 12 (+10) | 25 (+23) | 0/1 | 145140 (+1688) | 6041 (+356) | 584 | pure virtual | FAIL: publish instr, setup instr, teardown instr, publish path, no extra indirect calls, no extra RAM, no Sub0Pub retained, no extra dependencies |
@@ -823,6 +857,32 @@ Final-link evidence per case, build and form; every variant is compared with `ha
 <details><summary>clangcl-O2: largest symbols added by bus_static (bytes)</summary>
 
 - 8 `?controller@?A0x93F297C7@@3V?$Slot@UController@?A0x93F297C7@@@collapse@@A.0`
+
+</details>
+
+<details><summary>clangcl-O2: largest symbols added by empty_check_off (bytes)</summary>
+
+- 176 `std::bad_exception::`RTTI Base Class Descriptor at (0,-1,0,64)'`
+- 88 `class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'`
+- 64 `private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_`
+- 64 `class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'`
+- 48 `struct `anonymous namespace'::Controller `RTTI Type Descriptor'`
+- 32 `public: virtual void __cdecl `anonymous namespace'::Controller::receive(struct `anonymous namespace'::Sample const & __ptr64) __ptr64`
+- 32 `const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'`
+- 32 ``anonymous namespace'::Controller::`RTTI Base Class Descriptor at (0,-1,0,64)'`
+
+</details>
+
+<details><summary>clangcl-O2: largest symbols added by empty_check_on (bytes)</summary>
+
+- 100 `abort`
+- 88 `class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'`
+- 64 `__except_validate_context_record`
+- 64 `private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_`
+- 64 `class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'`
+- 48 `struct `anonymous namespace'::Controller `RTTI Type Descriptor'`
+- 32 `public: virtual void __cdecl `anonymous namespace'::Controller::receive(struct `anonymous namespace'::Sample const & __ptr64) __ptr64`
+- 32 `const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'`
 
 </details>
 
@@ -914,6 +974,8 @@ Final-link evidence per case, build and form; every variant is compared with `ha
 | handwritten_erased | ok | 26.0 (+9.0) | 9 (+6) | 2 (+0) | 10 (-1) | 0/1 | 139478 (+100) | 5704 (+16) | 0 | - | reference; FAIL: publish instr, setup instr, no extra indirect calls, no extra RAM |
 | bus_dynamic (vs today_dynamic) | ok | 41.0 (+1.0) | 17 (+2) | 21 (+0) | 25 (+0) | 0/1 | 140254 (+144) | 6232 (+272) | 1024 | - | FAIL: setup instr, no extra RAM, no Sub0Pub retained |
 | bus_static | ok | 17.0 (+0.0) | 3 (+0) | 2 (+0) | 11 (+0) | 0/0 | 139378 (+0) | 5688 (+0) | 0 | - | PASS |
+| empty_check_off (vs today_dynamic) | ok | 41.0 (+1.0) | 15 (+0) | 21 (+0) | 26 (+1) | 0/1 | 140126 (+16) | 5960 (+0) | 424 | - | FAIL: no Sub0Pub retained |
+| empty_check_on (vs today_dynamic) | ok | 41.0 (+1.0) | 15 (+0) | 21 (+0) | 27 (+2) | 1/1 | 140166 (+56) | 5960 (+0) | 424 | - | FAIL: no Sub0Pub retained |
 | port_dynamic (vs today_dynamic) | ok | 48.0 (+8.0) | 21 (+6) | 21 (+0) | 9 (-16) | 0/1 | 140338 (+228) | 6248 (+288) | 1104 | - | FAIL: publish instr, setup instr, no extra RAM, no Sub0Pub retained |
 | port_static (vs handwritten_erased) | ok | 25.0 (-1.0) | 9 (+0) | 2 (+0) | 9 (-1) | 0/1 | 139478 (+0) | 5704 (+0) | 32 | - | PASS |
 | route_bridged | ok | 26.0 (+9.0) | 22 (+19) | 7 (+5) | 32 (+21) | 0/1 | 140350 (+972) | 6088 (+400) | 584 | pure virtual | FAIL: publish instr, setup instr, teardown instr, publish path, no extra indirect calls, no extra RAM, no Sub0Pub retained, no extra dependencies |
@@ -931,6 +993,8 @@ Final-link evidence per case, build and form; every variant is compared with `ha
 | handwritten_erased | ok | 17.0 (+9.0) | 9 (+7) | 2 (+0) | 10 (+8) | 0/1 | 139462 (+116) | 5704 (+32) | 0 | - | reference; FAIL: publish instr, setup instr, publish path, no extra indirect calls, no extra RAM |
 | bus_dynamic (vs today_dynamic) | ok | 32.0 (+0.0) | 17 (+2) | 21 (+0) | 25 (+0) | 0/1 | 140238 (+144) | 6232 (+272) | 1008 | - | FAIL: setup instr, no extra RAM, no Sub0Pub retained |
 | bus_static | ok | 8.0 (+0.0) | 2 (+0) | 2 (+0) | 2 (+0) | 0/0 | 139346 (+0) | 5672 (+0) | 0 | - | PASS |
+| empty_check_off (vs today_dynamic) | ok | 33.0 (+1.0) | 15 (+0) | 21 (+0) | 26 (+1) | 0/1 | 140110 (+16) | 5960 (+0) | 424 | - | FAIL: no Sub0Pub retained |
+| empty_check_on (vs today_dynamic) | ok | 33.0 (+1.0) | 15 (+0) | 21 (+0) | 27 (+2) | 1/1 | 140150 (+56) | 5960 (+0) | 424 | - | FAIL: no Sub0Pub retained |
 | port_dynamic (vs today_dynamic) | ok | 39.0 (+7.0) | 21 (+6) | 21 (+0) | 9 (-16) | 0/1 | 140322 (+228) | 6248 (+288) | 1088 | - | FAIL: publish instr, setup instr, no extra RAM, no Sub0Pub retained |
 | port_static (vs handwritten_erased) | ok | 16.0 (-1.0) | 9 (+0) | 2 (+0) | 9 (-1) | 0/1 | 139462 (+0) | 5704 (+0) | 16 | - | PASS |
 | route_bridged | ok | 19.0 (+11.0) | 22 (+20) | 7 (+5) | 25 (+23) | 0/1 | 140302 (+956) | 6088 (+416) | 584 | pure virtual | FAIL: publish instr, setup instr, teardown instr, publish path, no extra indirect calls, no extra RAM, no Sub0Pub retained, no extra dependencies |
@@ -967,6 +1031,32 @@ Final-link evidence per case, build and form; every variant is compared with `ha
 <details><summary>icx-O2: largest symbols added by bus_static (bytes)</summary>
 
 - 8 `?controller@?A0x93F297C7@@3V?$Slot@UController@?A0x93F297C7@@@collapse@@A.0`
+
+</details>
+
+<details><summary>icx-O2: largest symbols added by empty_check_off (bytes)</summary>
+
+- 1212 `__volatile_metadata`
+- 144 `collapse_teardown`
+- 88 `class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'`
+- 64 `private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_`
+- 64 `class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'`
+- 48 `struct `anonymous namespace'::Controller `RTTI Type Descriptor'`
+- 32 `public: virtual void __cdecl `anonymous namespace'::Controller::receive(struct `anonymous namespace'::Sample const & __ptr64) __ptr64`
+- 32 `const sub0::Subscribe<struct `anonymous namespace'::Sample>::`RTTI Complete Object Locator'`
+
+</details>
+
+<details><summary>icx-O2: largest symbols added by empty_check_on (bytes)</summary>
+
+- 616 `raise`
+- 276 `__acrt_fp_strflt_to_string`
+- 144 `collapse_teardown`
+- 88 `class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'`
+- 64 `private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_`
+- 64 `class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'`
+- 48 `struct `anonymous namespace'::Controller `RTTI Type Descriptor'`
+- 44 `$unwind$?write_double_translated_ansi_nolock@@YA?AUwrite_result@?A0x17268360@@HQEBDIAEAV__crt_cached_ptd_host@@@Z`
 
 </details>
 
@@ -1060,6 +1150,8 @@ Final-link evidence per case, build and form; every variant is compared with `ha
 | handwritten_erased | ok | 46.0 (+25.0) | 16 (+13) | 2 (+0) | 17 (+2) | 0/2 | 151558 (+12604) | 5752 (+64) | 0 | - | reference; FAIL: publish instr, setup instr, no extra indirect calls, no extra RAM |
 | bus_dynamic (vs today_dynamic) | ok | 84.0 (+1.0) | 56 (+0) | 116 (+0) | 34 (+0) | 0/2 | 141714 (+752) | 7160 (+768) | 3624 | - | FAIL: no extra RAM, no Sub0Pub retained |
 | bus_static | ok | 21.0 (+0.0) | 3 (+0) | 2 (+0) | 15 (+0) | 0/0 | 138954 (+0) | 5688 (+0) | 0 | - | PASS |
+| empty_check_off (vs today_dynamic) | ok | 80.0 (-3.0) | 54 (-2) | 116 (+0) | 37 (+3) | 0/2 | 140946 (-16) | 6376 (-16) | 1392 | - | FAIL: publish path |
+| empty_check_on (vs today_dynamic) | ok | 80.0 (-3.0) | 54 (-2) | 116 (+0) | 40 (+6) | 2/2 | 141078 (+116) | 6376 (-16) | 1392 | - | FAIL: publish path, no Sub0Pub retained |
 | port_dynamic (vs today_dynamic) | ok | 110.0 (+27.0) | 63 (+7) | 116 (+0) | 18 (-16) | 0/2 | 154314 (+13352) | 7192 (+800) | 3784 | - | FAIL: publish instr, setup instr, no extra RAM, no Sub0Pub retained |
 | port_static (vs handwritten_erased) | ok | 47.0 (+1.0) | 16 (+0) | 2 (+0) | 18 (+1) | 0/2 | 151558 (+0) | 5752 (+0) | 112 | - | PASS |
 | route_bridged | ok | 42.0 (+21.0) | 182 (+179) | 47 (+45) | 48 (+33) | 0/2 | 141846 (+2892) | 6584 (+896) | 2376 | pure virtual | FAIL: publish instr, setup instr, teardown instr, publish path, no extra indirect calls, no extra RAM, no Sub0Pub retained, no extra dependencies |
@@ -1078,6 +1170,8 @@ Final-link evidence per case, build and form; every variant is compared with `ha
 | handwritten_erased | ok | 27.0 (+18.0) | 16 (+13) | 2 (+0) | 17 (+14) | 0/2 | 151478 (+12572) | 5752 (+64) | 0 | - | reference; FAIL: publish instr, setup instr, publish path, no extra indirect calls, no extra RAM |
 | bus_dynamic (vs today_dynamic) | ok | 66.0 (+1.0) | 56 (+0) | 116 (+0) | 34 (+0) | 0/2 | 141650 (+752) | 7160 (+768) | 3560 | - | FAIL: no extra RAM, no Sub0Pub retained |
 | bus_static | ok | 9.0 (+0.0) | 3 (+0) | 2 (+0) | 3 (+0) | 0/0 | 138906 (+0) | 5688 (+0) | 0 | - | PASS |
+| empty_check_off (vs today_dynamic) | ok | 62.0 (-3.0) | 54 (-2) | 116 (+0) | 37 (+3) | 0/2 | 140882 (-16) | 6376 (-16) | 1392 | - | FAIL: publish path |
+| empty_check_on (vs today_dynamic) | ok | 62.0 (-3.0) | 54 (-2) | 116 (+0) | 40 (+6) | 2/2 | 141014 (+116) | 6376 (-16) | 1392 | - | FAIL: publish path, no Sub0Pub retained |
 | port_dynamic (vs today_dynamic) | ok | 92.0 (+27.0) | 63 (+7) | 116 (+0) | 18 (-16) | 0/2 | 154250 (+13352) | 7192 (+800) | 3720 | - | FAIL: publish instr, setup instr, no extra RAM, no Sub0Pub retained |
 | port_static (vs handwritten_erased) | ok | 28.0 (+1.0) | 16 (+0) | 2 (+0) | 18 (+1) | 0/2 | 151478 (+0) | 5752 (+0) | 32 | - | PASS |
 | route_bridged | ok | 29.0 (+20.0) | 182 (+179) | 47 (+45) | 35 (+32) | 0/2 | 141734 (+2828) | 6584 (+896) | 2376 | pure virtual | FAIL: publish instr, setup instr, teardown instr, publish path, no extra indirect calls, no extra RAM, no Sub0Pub retained, no extra dependencies |
@@ -1117,6 +1211,32 @@ Final-link evidence per case, build and form; every variant is compared with `ha
 <details><summary>msvc-O2: largest symbols added by bus_static (bytes)</summary>
 
 - 8 `class collapse::Slot<struct `anonymous namespace'::Logger> `anonymous namespace'::logger`
+
+</details>
+
+<details><summary>msvc-O2: largest symbols added by empty_check_off (bytes)</summary>
+
+- 144 `collapse_publish`
+- 112 `protected: __cdecl sub0::Subscribe<struct `anonymous namespace'::Sample>::~Subscribe<struct `anonymous namespace'::Sample>(void) __ptr64`
+- 112 `protected: __cdecl sub0::Subscribe<struct `anonymous namespace'::Command>::~Subscribe<struct `anonymous namespace'::Command>(void) __ptr64`
+- 88 `class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'`
+- 88 `class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0> `RTTI Type Descriptor'`
+- 72 `class sub0::Subscribe<struct `anonymous namespace'::Command> `RTTI Type Descriptor'`
+- 64 `private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_`
+- 64 `private: static class sub0::Subscribe<struct `anonymous namespace'::Command> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_`
+
+</details>
+
+<details><summary>msvc-O2: largest symbols added by empty_check_on (bytes)</summary>
+
+- 616 `raise`
+- 276 `__acrt_fp_strflt_to_string`
+- 160 `collapse_publish`
+- 112 `protected: __cdecl sub0::Subscribe<struct `anonymous namespace'::Sample>::~Subscribe<struct `anonymous namespace'::Sample>(void) __ptr64`
+- 112 `protected: __cdecl sub0::Subscribe<struct `anonymous namespace'::Command>::~Subscribe<struct `anonymous namespace'::Command>(void) __ptr64`
+- 88 `class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'`
+- 88 `class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0> `RTTI Type Descriptor'`
+- 72 `class sub0::Subscribe<struct `anonymous namespace'::Command> `RTTI Type Descriptor'`
 
 </details>
 
@@ -1227,6 +1347,8 @@ Final-link evidence per case, build and form; every variant is compared with `ha
 | handwritten_erased | ok | 58.0 (+25.0) | 12 (+9) | 2 (+0) | 52 (+25) | 2/0 | 143728 (+196) | 5733 (+48) | 0 | - | reference; FAIL: publish instr, setup instr, publish path, no extra RAM |
 | bus_dynamic (vs today_dynamic) | ok | 104.0 (+1.0) | 59 (+4) | 107 (+0) | 44 (+0) | 0/2 | 147312 (+576) | 7209 (+864) | 3064 | - | FAIL: setup instr, no extra RAM, no Sub0Pub retained |
 | bus_static | ok | 33.0 (+0.0) | 3 (+0) | 2 (+0) | 27 (+0) | 0/0 | 143532 (+0) | 5685 (+0) | 0 | - | PASS |
+| empty_check_off (vs today_dynamic) | ok | 107.0 (+4.0) | 56 (+1) | 110 (+3) | 46 (+2) | 0/2 | 146576 (-160) | 6361 (+16) | 1048 | - | FAIL: publish instr, setup instr, teardown instr, no extra RAM |
+| empty_check_on (vs today_dynamic) | ok | 107.0 (+4.0) | 56 (+1) | 110 (+3) | 47 (+3) | 1/2 | 146592 (-144) | 6361 (+16) | 1048 | - | FAIL: publish instr, setup instr, teardown instr, publish path, no extra RAM |
 | port_dynamic (vs today_dynamic) | ok | 123.0 (+20.0) | 62 (+7) | 107 (+0) | 63 (+19) | 2/2 | 147458 (+722) | 7225 (+880) | 3224 | - | FAIL: publish instr, setup instr, publish path, no extra RAM, no Sub0Pub retained |
 | port_static (vs handwritten_erased) | ok | 58.0 (+0.0) | 12 (+0) | 2 (+0) | 52 (+0) | 2/0 | 143743 (+15) | 5733 (+0) | 128 | - | FAIL: no Sub0Pub retained |
 | route_bridged | ok | 51.0 (+18.0) | 92 (+89) | 32 (+30) | 70 (+43) | 0/2 | 149220 (+5688) | 6537 (+852) | 1384 | pure virtual | FAIL: publish instr, setup instr, teardown instr, publish path, no extra indirect calls, no extra RAM, no Sub0Pub retained, no extra dependencies |
@@ -1245,6 +1367,8 @@ Final-link evidence per case, build and form; every variant is compared with `ha
 | handwritten_erased | ok | 18.0 (+9.0) | 12 (+9) | 2 (+0) | 12 (+9) | 1/0 | 143584 (+132) | 5733 (+48) | 0 | - | reference; FAIL: publish instr, setup instr, publish path, no extra RAM |
 | bus_dynamic (vs today_dynamic) | ok | 72.0 (+1.0) | 59 (+4) | 107 (+0) | 44 (+0) | 0/2 | 147224 (+560) | 7209 (+864) | 2984 | - | FAIL: setup instr, no extra RAM, no Sub0Pub retained |
 | bus_static | ok | 9.0 (+0.0) | 3 (+0) | 2 (+0) | 3 (+0) | 0/0 | 143452 (+0) | 5685 (+0) | 0 | - | PASS |
+| empty_check_off (vs today_dynamic) | ok | 75.0 (+4.0) | 56 (+1) | 110 (+3) | 46 (+2) | 0/2 | 146504 (-160) | 6361 (+16) | 1048 | - | FAIL: publish instr, setup instr, teardown instr, no extra RAM |
+| empty_check_on (vs today_dynamic) | ok | 75.0 (+4.0) | 56 (+1) | 110 (+3) | 47 (+3) | 1/2 | 146520 (-144) | 6361 (+16) | 1048 | - | FAIL: publish instr, setup instr, teardown instr, publish path, no extra RAM |
 | port_dynamic (vs today_dynamic) | ok | 91.0 (+20.0) | 62 (+7) | 107 (+0) | 63 (+19) | 2/2 | 147378 (+714) | 7225 (+880) | 3144 | - | FAIL: publish instr, setup instr, publish path, no extra RAM, no Sub0Pub retained |
 | port_static (vs handwritten_erased) | ok | 18.0 (+0.0) | 12 (+0) | 2 (+0) | 12 (+0) | 1/0 | 143590 (+6) | 5733 (+0) | 16 | - | FAIL: no Sub0Pub retained |
 | route_bridged | ok | 27.0 (+18.0) | 92 (+89) | 32 (+30) | 45 (+42) | 0/2 | 149092 (+5640) | 6537 (+852) | 1384 | pure virtual | FAIL: publish instr, setup instr, teardown instr, publish path, no extra indirect calls, no extra RAM, no Sub0Pub retained, no extra dependencies |
@@ -1284,6 +1408,32 @@ Final-link evidence per case, build and form; every variant is compared with `ha
 <details><summary>clangcl-O2: largest symbols added by bus_static (bytes)</summary>
 
 - 8 `?logger@?A0xE056B48A@@3V?$Slot@ULogger@?A0xE056B48A@@@collapse@@A.0`
+
+</details>
+
+<details><summary>clangcl-O2: largest symbols added by empty_check_off (bytes)</summary>
+
+- 96 `class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'`
+- 96 `class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0> `RTTI Type Descriptor'`
+- 64 `private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_`
+- 64 `private: static class sub0::Subscribe<struct `anonymous namespace'::Command> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_`
+- 64 `class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'`
+- 64 `class sub0::Subscribe<struct `anonymous namespace'::Command> `RTTI Type Descriptor'`
+- 48 `struct `anonymous namespace'::Logger `RTTI Type Descriptor'`
+- 48 `struct `anonymous namespace'::Controller `RTTI Type Descriptor'`
+
+</details>
+
+<details><summary>clangcl-O2: largest symbols added by empty_check_on (bytes)</summary>
+
+- 100 `abort`
+- 96 `class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'`
+- 96 `class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0> `RTTI Type Descriptor'`
+- 64 `__except_validate_context_record`
+- 64 `private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_`
+- 64 `private: static class sub0::Subscribe<struct `anonymous namespace'::Command> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_`
+- 64 `class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'`
+- 64 `class sub0::Subscribe<struct `anonymous namespace'::Command> `RTTI Type Descriptor'`
 
 </details>
 
@@ -1394,6 +1544,8 @@ Final-link evidence per case, build and form; every variant is compared with `ha
 | handwritten_erased | ok | 54.0 (+21.0) | 12 (+9) | 2 (+0) | 48 (+21) | 2/0 | 139606 (+180) | 5736 (+48) | 0 | - | reference; FAIL: publish instr, setup instr, publish path, no extra RAM |
 | bus_dynamic (vs today_dynamic) | ok | 105.0 (+2.0) | 59 (+4) | 88 (+0) | 44 (+0) | 0/2 | 142074 (+544) | 7272 (+928) | 3064 | - | FAIL: setup instr, no extra RAM, no Sub0Pub retained |
 | bus_static | ok | 33.0 (+0.0) | 3 (+0) | 2 (+0) | 27 (+0) | 0/0 | 139426 (+0) | 5688 (+0) | 0 | - | PASS |
+| empty_check_off (vs today_dynamic) | ok | 107.0 (+4.0) | 56 (+1) | 90 (+2) | 46 (+2) | 0/2 | 141594 (+64) | 6344 (+0) | 1040 | - | FAIL: publish instr, setup instr, teardown instr, no Sub0Pub retained |
+| empty_check_on (vs today_dynamic) | ok | 107.0 (+4.0) | 56 (+1) | 90 (+2) | 47 (+3) | 1/2 | 141634 (+104) | 6344 (+0) | 1040 | - | FAIL: publish instr, setup instr, teardown instr, publish path, no Sub0Pub retained |
 | port_dynamic (vs today_dynamic) | ok | 124.0 (+21.0) | 66 (+11) | 88 (+0) | 17 (-27) | 0/2 | 142242 (+712) | 7304 (+960) | 3224 | - | FAIL: publish instr, setup instr, no extra RAM, no Sub0Pub retained |
 | port_static (vs handwritten_erased) | ok | 59.0 (+5.0) | 16 (+4) | 2 (+0) | 17 (-31) | 0/2 | 139654 (+48) | 5752 (+16) | 128 | - | FAIL: publish instr, setup instr, no extra indirect calls, no extra RAM, no Sub0Pub retained |
 | route_bridged | ok | 51.0 (+18.0) | 82 (+79) | 22 (+20) | 70 (+43) | 0/2 | 141994 (+2568) | 6536 (+848) | 1384 | pure virtual | FAIL: publish instr, setup instr, teardown instr, publish path, no extra indirect calls, no extra RAM, no Sub0Pub retained, no extra dependencies |
@@ -1412,6 +1564,8 @@ Final-link evidence per case, build and form; every variant is compared with `ha
 | handwritten_erased | ok | 17.0 (+8.0) | 12 (+9) | 2 (+0) | 11 (+8) | 1/0 | 139478 (+132) | 5736 (+48) | 0 | - | reference; FAIL: publish instr, setup instr, publish path, no extra RAM |
 | bus_dynamic (vs today_dynamic) | ok | 72.0 (+1.0) | 59 (+4) | 88 (+0) | 44 (+0) | 0/2 | 141994 (+528) | 7272 (+928) | 2984 | - | FAIL: setup instr, no extra RAM, no Sub0Pub retained |
 | bus_static | ok | 9.0 (+0.0) | 3 (+0) | 2 (+0) | 3 (+0) | 0/0 | 139346 (+0) | 5688 (+0) | 0 | - | PASS |
+| empty_check_off (vs today_dynamic) | ok | 75.0 (+4.0) | 56 (+1) | 90 (+2) | 46 (+2) | 0/2 | 141530 (+64) | 6344 (+0) | 1040 | - | FAIL: publish instr, setup instr, teardown instr, no Sub0Pub retained |
+| empty_check_on (vs today_dynamic) | ok | 75.0 (+4.0) | 56 (+1) | 90 (+2) | 47 (+3) | 1/2 | 141570 (+104) | 6344 (+0) | 1040 | - | FAIL: publish instr, setup instr, teardown instr, publish path, no Sub0Pub retained |
 | port_dynamic (vs today_dynamic) | ok | 91.0 (+20.0) | 66 (+11) | 88 (+0) | 17 (-27) | 0/2 | 142162 (+696) | 7304 (+960) | 3144 | - | FAIL: publish instr, setup instr, no extra RAM, no Sub0Pub retained |
 | port_static (vs handwritten_erased) | ok | 27.0 (+10.0) | 16 (+4) | 2 (+0) | 17 (+6) | 0/2 | 139558 (+80) | 5752 (+16) | 32 | - | FAIL: publish instr, setup instr, publish path, no extra indirect calls, no extra RAM, no Sub0Pub retained |
 | route_bridged | ok | 27.0 (+18.0) | 82 (+79) | 22 (+20) | 45 (+42) | 0/2 | 141866 (+2520) | 6536 (+848) | 1384 | pure virtual | FAIL: publish instr, setup instr, teardown instr, publish path, no extra indirect calls, no extra RAM, no Sub0Pub retained, no extra dependencies |
@@ -1451,6 +1605,32 @@ Final-link evidence per case, build and form; every variant is compared with `ha
 <details><summary>icx-O2: largest symbols added by bus_static (bytes)</summary>
 
 - 8 `?logger@?A0xE056B48A@@3V?$Slot@ULogger@?A0xE056B48A@@@collapse@@A.0`
+
+</details>
+
+<details><summary>icx-O2: largest symbols added by empty_check_off (bytes)</summary>
+
+- 544 `collapse_teardown`
+- 96 `class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'`
+- 96 `class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0> `RTTI Type Descriptor'`
+- 64 `private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_`
+- 64 `private: static class sub0::Subscribe<struct `anonymous namespace'::Command> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::SilentBroker> >,0>::entries_`
+- 64 `class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'`
+- 64 `class sub0::Subscribe<struct `anonymous namespace'::Command> `RTTI Type Descriptor'`
+- 48 `struct `anonymous namespace'::Logger `RTTI Type Descriptor'`
+
+</details>
+
+<details><summary>icx-O2: largest symbols added by empty_check_on (bytes)</summary>
+
+- 616 `raise`
+- 544 `collapse_teardown`
+- 276 `__acrt_fp_strflt_to_string`
+- 96 `class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Sample,0> `RTTI Type Descriptor'`
+- 96 `class sub0::detail::SubscriberInterface<struct `anonymous namespace'::Command,0> `RTTI Type Descriptor'`
+- 64 `private: static class sub0::Subscribe<struct `anonymous namespace'::Sample> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Sample,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_`
+- 64 `private: static class sub0::Subscribe<struct `anonymous namespace'::Command> * __ptr64 * sub0::spike::detail::DirectBroker<struct `anonymous namespace'::Command,struct sub0::with<struct sub0::detail::BuiltinT<8,1,2,0,struct sub0::NoLock>,struct sub0::Implementation<sub0::spike::ReportingBroker> >,1>::entries_`
+- 64 `class sub0::Subscribe<struct `anonymous namespace'::Sample> `RTTI Type Descriptor'`
 
 </details>
 
@@ -1588,6 +1768,8 @@ Each cell: instructions per publication (delta), then the deltas of the static p
 | handwritten_erased | handwritten | ! 22.0 (+10.0); path +3; indirect +1; RAM +32; text +12476 | - | ! 25.0 (+8.0); path +8; indirect +0; RAM +16; text +84 | ! 26.0 (+9.0); path -1; indirect +1; RAM +16; text +100 |
 | bus_dynamic | today_dynamic | ! 35.0 (+1.0); path +0; indirect +0; RAM +192; text +224 | - | ! 41.0 (+1.0); path +0; indirect +0; RAM +192; text +192 | ! 41.0 (+1.0); path +0; indirect +0; RAM +272; text +144 |
 | bus_static | handwritten | = 12.0 (+0.0); path +0; indirect +0; RAM +0; text +0 | - | = 17.0 (+0.0); path +0; indirect +0; RAM +0; text +0 | = 17.0 (+0.0); path +0; indirect +0; RAM +0; text +0 |
+| empty_check_off | today_dynamic | ! 33.0 (-1.0); path +1; indirect +0; RAM -16; text +40 | - | = 41.0 (+1.0); path +1; indirect +0; RAM +0; text -32 | ! 41.0 (+1.0); path +1; indirect +0; RAM +0; text +16 |
+| empty_check_on | today_dynamic | ! 33.0 (-1.0); path +2; indirect +0; RAM -16; text +64 | - | = 41.0 (+1.0); path +2; indirect +0; RAM +0; text -16 | ! 41.0 (+1.0); path +2; indirect +0; RAM +0; text +56 |
 | port_dynamic | today_dynamic | ! 45.0 (+11.0); path -11; indirect +0; RAM +208; text +12572 | - | ! 48.0 (+8.0); path +7; indirect +0; RAM +208; text +262 | ! 48.0 (+8.0); path -16; indirect +0; RAM +288; text +228 |
 | port_static | handwritten_erased | = 22.0 (+0.0); path +0; indirect +0; RAM +0; text +0 | - | ! 25.0 (+0.0); path +0; indirect +0; RAM +0; text +13 | = 25.0 (-1.0); path -1; indirect +0; RAM +0; text +0 |
 | route_bridged | handwritten | ! 23.0 (+11.0); path +17; indirect +1; RAM +416; text +1076 | - | ! 26.0 (+9.0); path +21; indirect +1; RAM +356; text +1704 | ! 26.0 (+9.0); path +21; indirect +1; RAM +400; text +972 |
@@ -1605,6 +1787,8 @@ Each cell: instructions per publication (delta), then the deltas of the static p
 | handwritten_erased | handwritten | ! 46.0 (+25.0); path +2; indirect +2; RAM +64; text +12604 | - | ! 58.0 (+25.0); path +25; indirect +0; RAM +48; text +196 | ! 54.0 (+21.0); path +21; indirect +0; RAM +48; text +180 |
 | bus_dynamic | today_dynamic | ! 84.0 (+1.0); path +0; indirect +0; RAM +768; text +752 | - | ! 104.0 (+1.0); path +0; indirect +0; RAM +864; text +576 | ! 105.0 (+2.0); path +0; indirect +0; RAM +928; text +544 |
 | bus_static | handwritten | = 21.0 (+0.0); path +0; indirect +0; RAM +0; text +0 | - | = 33.0 (+0.0); path +0; indirect +0; RAM +0; text +0 | = 33.0 (+0.0); path +0; indirect +0; RAM +0; text +0 |
+| empty_check_off | today_dynamic | ! 80.0 (-3.0); path +3; indirect +0; RAM -16; text -16 | - | ! 107.0 (+4.0); path +2; indirect +0; RAM +16; text -160 | ! 107.0 (+4.0); path +2; indirect +0; RAM +0; text +64 |
+| empty_check_on | today_dynamic | ! 80.0 (-3.0); path +6; indirect +0; RAM -16; text +116 | - | ! 107.0 (+4.0); path +3; indirect +0; RAM +16; text -144 | ! 107.0 (+4.0); path +3; indirect +0; RAM +0; text +104 |
 | port_dynamic | today_dynamic | ! 110.0 (+27.0); path -16; indirect +0; RAM +800; text +13352 | - | ! 123.0 (+20.0); path +19; indirect +0; RAM +880; text +722 | ! 124.0 (+21.0); path -27; indirect +0; RAM +960; text +712 |
 | port_static | handwritten_erased | = 47.0 (+1.0); path +1; indirect +0; RAM +0; text +0 | - | ! 58.0 (+0.0); path +0; indirect +0; RAM +0; text +15 | ! 59.0 (+5.0); path -31; indirect +2; RAM +16; text +48 |
 | route_bridged | handwritten | ! 42.0 (+21.0); path +33; indirect +2; RAM +896; text +2892 | - | ! 51.0 (+18.0); path +43; indirect +2; RAM +852; text +5688 | ! 51.0 (+18.0); path +43; indirect +2; RAM +848; text +2568 |
@@ -1623,57 +1807,61 @@ Best of 9 epochs of 5,000,000 publications, ns per publication. Machine- and noi
 
 | variant | msvc-O2 | msvc-O2-lto | clangcl-O2 | icx-O2 |
 |---|---|---|---|---|
-| handwritten | 8.35 | - | 5.17 | 11.81 |
-| handwritten_runtime | 81.02 | - | 15.46 | 9.62 |
-| route_bridged | 89.80 | - | 6.23 | 103.25 |
-| route_dynamic | 94.56 | - | 91.59 | 82.85 |
-| route_static | 8.76 | - | 5.81 | 10.40 |
-| today_dynamic | 95.23 | - | 88.66 | 83.82 |
-| today_static | 8.61 | - | 5.20 | 9.45 |
-| today_wire | 82.43 | - | 15.19 | 10.55 |
+| handwritten | 8.31 | - | 6.11 | 14.23 |
+| handwritten_runtime | 80.06 | - | 17.27 | 14.61 |
+| route_bridged | 83.27 | - | 5.54 | 29.71 |
+| route_dynamic | 91.36 | - | 103.02 | 137.03 |
+| route_static | 8.59 | - | 6.15 | 14.61 |
+| today_dynamic | 92.40 | - | 93.89 | 138.25 |
+| today_static | 8.66 | - | 5.80 | 14.59 |
+| today_wire | 59.55 | - | 16.32 | 14.00 |
 
 ### cross_file
 
 | variant | msvc-O2 | msvc-O2-lto | clangcl-O2 | icx-O2 |
 |---|---|---|---|---|
-| handwritten | 5.29 | 2.69 | 4.51 | 4.96 |
-| route_dynamic | 5.53 | 5.48 | 5.71 | 5.42 |
-| route_static | 5.29 | 2.45 | 4.99 | 5.17 |
-| route_static_out_of_line | 5.73 | 1.87 | 4.92 | 5.65 |
-| today_dynamic | 6.48 | 5.56 | 5.53 | 5.19 |
-| today_static | 5.27 | 2.57 | 4.96 | 5.22 |
+| handwritten | 4.99 | 2.39 | 2.40 | 2.84 |
+| route_dynamic | 5.44 | 5.84 | 3.50 | 3.99 |
+| route_static | 5.35 | 2.24 | 3.02 | 2.84 |
+| route_static_out_of_line | 5.25 | 2.59 | 2.84 | 3.44 |
+| today_dynamic | 5.61 | 5.53 | 3.92 | 3.84 |
+| today_static | 5.16 | 2.07 | 2.40 | 2.77 |
 
 ### one_receiver
 
 | variant | msvc-O2 | msvc-O2-lto | clangcl-O2 | icx-O2 |
 |---|---|---|---|---|
-| handwritten | 1.79 | - | 1.65 | 1.64 |
-| handwritten_erased | 1.88 | - | 1.69 | 1.63 |
-| bus_dynamic | 2.01 | - | 1.79 | 1.85 |
-| bus_static | 1.82 | - | 1.68 | 1.67 |
-| port_dynamic | 2.42 | - | 1.82 | 1.85 |
-| port_static | 1.84 | - | 1.97 | 1.69 |
-| route_bridged | 1.88 | - | 1.74 | 1.63 |
-| route_dynamic | 2.47 | - | 1.93 | 1.88 |
-| route_static | 1.75 | - | 1.65 | 1.65 |
-| route_static_virtual | 2.00 | - | 1.66 | 1.66 |
-| today_dynamic | 2.40 | - | 1.97 | 1.90 |
-| today_static | 1.75 | - | 1.84 | 1.64 |
+| handwritten | 1.76 | - | 0.93 | 1.03 |
+| handwritten_erased | 1.80 | - | 1.60 | 1.96 |
+| bus_dynamic | 1.89 | - | 2.42 | 2.32 |
+| bus_static | 1.75 | - | 0.96 | 1.03 |
+| empty_check_off | 1.82 | - | 2.03 | 2.33 |
+| empty_check_on | 1.92 | - | 2.07 | 2.26 |
+| port_dynamic | 1.91 | - | 3.36 | 3.14 |
+| port_static | 1.81 | - | 1.86 | 1.81 |
+| route_bridged | 1.82 | - | 1.31 | 1.38 |
+| route_dynamic | 1.96 | - | 2.04 | 2.28 |
+| route_static | 1.75 | - | 1.30 | 1.01 |
+| route_static_virtual | 1.75 | - | 0.89 | 1.01 |
+| today_dynamic | 1.87 | - | 2.31 | 2.27 |
+| today_static | 1.78 | - | 0.90 | 1.03 |
 
 ### station
 
 | variant | msvc-O2 | msvc-O2-lto | clangcl-O2 | icx-O2 |
 |---|---|---|---|---|
-| handwritten | 2.86 | - | 3.79 | 3.67 |
-| handwritten_erased | 6.39 | - | 6.28 | 4.69 |
-| bus_dynamic | 8.47 | - | 7.23 | 7.19 |
-| bus_static | 2.78 | - | 3.67 | 3.67 |
-| port_dynamic | 8.31 | - | 7.75 | 7.35 |
-| port_static | 6.75 | - | 5.66 | 5.72 |
-| route_bridged | 4.10 | - | 3.68 | 4.39 |
-| route_dynamic | 7.93 | - | 7.32 | 7.24 |
-| route_static | 2.79 | - | 3.95 | 3.69 |
-| route_static_empty_bases | 2.77 | - | 3.68 | 3.69 |
-| route_static_virtual | 2.72 | - | 3.67 | 3.69 |
-| today_dynamic | 8.21 | - | 8.37 | 7.23 |
-| today_static | 2.76 | - | 3.67 | 3.62 |
+| handwritten | 2.74 | - | 3.28 | 3.28 |
+| handwritten_erased | 6.09 | - | 4.31 | 3.35 |
+| bus_dynamic | 7.75 | - | 5.21 | 5.10 |
+| bus_static | 2.71 | - | 3.28 | 3.35 |
+| empty_check_off | 7.79 | - | 5.10 | 5.08 |
+| empty_check_on | 7.68 | - | 5.32 | 5.14 |
+| port_dynamic | 7.88 | - | 6.86 | 6.98 |
+| port_static | 6.27 | - | 3.44 | 3.36 |
+| route_bridged | 4.05 | - | 3.78 | 2.99 |
+| route_dynamic | 7.76 | - | 5.05 | 4.71 |
+| route_static | 2.72 | - | 3.28 | 3.36 |
+| route_static_empty_bases | 2.69 | - | 3.54 | 3.28 |
+| route_static_virtual | 2.72 | - | 3.35 | 3.36 |
+| today_dynamic | 7.83 | - | 5.22 | 5.06 |
+| today_static | 2.73 | - | 3.45 | 3.31 |

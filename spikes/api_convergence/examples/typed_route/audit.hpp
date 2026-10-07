@@ -4,9 +4,7 @@
  * Demonstrates: one receiver of two message types whose topologies may differ. In the hot_path build its
  * Reading side is a direct call and its Alarm side is a runtime subscription.
  */
-#include "topology.hpp"
-
-#include "messages.hpp"
+#include "station_types.hpp"
 
 class Audit final : public sub0::spike::SubscribeAll<Reading, Alarm>
 {

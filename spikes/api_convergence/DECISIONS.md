@@ -1,17 +1,40 @@
 # Design decisions for the typed route, by example
 
-The typed route ([README.md](README.md)) measures well. What it still needs is eight decisions that measurement
-cannot make. This document gives each one a concrete example: the code a user would write, what happens today in
-the spike, the options with their code, and which way I lean and why.
+The typed route ([README.md](README.md)) measures well. What it needed beyond measurement was a set of design
+decisions. This document gives each one a concrete example (the code a user writes, what the spike does with it,
+the options and their costs) and records where it now stands.
+
+**Status as of 2026-10-07**, after the owner's review. "Decided" items are settled for the first in-library
+version; "deferred" ones are deliberately left open until that version exists.
+
+| # | Decision | Status | Direction |
+|---|---|---|---|
+| [1](#1-one-topology-per-message-type) | One topology per message type, program-wide | **Decided** | The type decides. `Tagged` makes a new type where the configuration must vary |
+| [2](#2-where-the-configuration-lives-and-publishing-to-nobody) | Where the configuration lives; a unit that misses it | **Decided** | Next to the type by default. `SUB0PUB_CONFIGURE` only for types that cannot be edited. Publishing to no receiver is a failure by default |
+| [3](#3-what-a-publisher-has-to-see) | What a publisher has to see | Deferred | Inline is the normal form; the out-of-line route is a pattern users may apply. Revisit on a production sample |
+| [4](#4-override) | `receive()` without `override` | **Decided** | No `override` |
+| [5a](#5a-delivery-order) | Delivery order differs | **Decided** | Document it, with an example |
+| [5b](#5b-the-set-of-receivers-is-closed) | A receiver left out of the list | **Direction set** | Safe by default with an opt-out; publishers can ask how many receivers a type has |
+| [5c](#5c-features-that-exist-only-on-the-broker) | Broker-only members on a wired type | Deferred | Some may get a static meaning (`isSubscribed()` as a wiring check) |
+| [5d](#5d-cancellation) | Cancellation | Deferred | Until after the first convergence API lands |
+| [5e](#5e-filter) | `filter()` | **Decided** | An opt-in per type in both models |
+| [6](#6-staticfirst-and-a-guided-route-from-dynamic-to-static) | `StaticFirst`, and migrating from dynamic | **Direction set** | A user convenience; add a mode that reports the observed wiring so the move to static can be guided |
+| [7](#7-header-layering) | Header layering | Deferred | No hard decision now |
+| [8](#8-configuring-a-type-without-the-preprocessor) | Configuring without the preprocessor | Deferred | No hard decision now |
 
 Every compiler message and program output quoted here was produced by compiling and running the snippet shown
 against this branch (MSVC 19.51 and clang-cl 22; messages trimmed to their first lines). Costs are from
-[`results/`](results/). "The spike" means [`include/sub0pub_spike/topology.hpp`](include/sub0pub_spike/topology.hpp).
+[`results/`](results/); where a table cites a case, the measured source is that case's variant, which may spell
+the same configuration with `SUB0PUB_CONFIGURE`. "The spike" means [`include/sub0pub_spike/`](include/sub0pub_spike/).
 
 The running example is the station in [`examples/typed_route`](examples/typed_route/):
 
 ```cpp
-struct Reading { int celsius; };
+struct Reading
+{
+    int celsius;
+    using sub0_config = sub0::config<sub0::spike::StaticTo<&display, &audit>>;   // omit, and Reading is brokered
+};
 
 class Display final : public sub0::spike::Subscribe<Reading>
 {
@@ -26,42 +49,25 @@ public:
 };
 ```
 
-| # | Decision | I lean towards |
-|---|---|---|
-| [1](#1-one-topology-per-message-type) | Is one topology per message type, program-wide, the right boundary? | Yes; `Tagged` and explicit wiring cover the rest |
-| [2](#2-where-the-topology-lives-and-what-happens-when-a-unit-misses-it) | Where does the topology line live, and how is a unit that misses it caught? | A project header set by the build system, plus the debug check added here |
-| [3](#3-what-a-publisher-has-to-see) | Must a publisher's translation unit see the receivers? | Inline by default; an out-of-line route as the documented way to decouple |
-| [4](#4-override) | `receive()` without `override`, or keep it virtual in static builds? | Without `override`; the two checks it gave are replaced |
-| [5](#5-semantics-that-still-differ) | Which differences in meaning are documented, and which are closed? | Document order and the closed set; converge `filter()`; leave cancellation separate |
-| [6](#6-staticfirst) | Ship `StaticFirst` (bound receivers, then the broker)? | Not in the first version |
-| [7](#7-header-layering) | How does the broker area follow a topology without including wiring? | By detecting a member of the configuration: no include is needed |
-| [8](#8-configuring-a-type-without-the-preprocessor) | Can a type be configured without `SUB0PUB_CONFIGURE`? | Yes: a hand specialisation with a one-line helper; a project-level list is worth a spike |
-
 ---
 
 ## 1. One topology per message type
 
-**The question.** `SUB0PUB_CONFIGURE(Reading, StaticTo<&display, &audit>)` routes *every* `Reading` in the program
-to those two objects. That is the granularity of the runtime broker's default storage (one table per type), but it
-means two stations in one program cannot wire `Reading` differently.
+**Decided: the type decides.** A message type has one topology for the whole program, as it has one subscription
+table under the broker's default storage. Where the configuration has to vary, `Tagged` makes a distinct type.
 
-**Example.** A second station is added:
+**Example.** A second station cannot route `Reading` differently:
 
 ```cpp
 Display displayA, displayB;
-SUB0PUB_CONFIGURE(Reading, sub0::spike::StaticTo<&displayA>);   // there can be only one
+struct Reading { int celsius; using sub0_config = sub0::config<sub0::spike::StaticTo<&displayA>>; };
 
 Thermometer a, b;
 a.measure(20);   // -> displayA
-b.measure(30);   // -> displayA as well; displayB is never called
+b.measure(30);   // -> displayA as well; displayB is never called (and a debug build says so: 5b)
 ```
 
-`displayB` is a subscriber of `Reading` that the topology does not list, so a debug build stops at its constructor
-([decision 5](#5-semantics-that-still-differ)); a release build delivers nothing to it.
-
-**Options.**
-
-*A. Accept it, and give each station its own message type with `Tagged`.* This compiles and behaves today:
+With `Tagged`, each station has its own type and its own topology. This compiles and runs today:
 
 ```cpp
 template<class Station> class Display;
@@ -88,40 +94,70 @@ public:
 A: 1 readings, last 20; B: 2 readings, last 31
 ```
 
-The price is that the participants become templates on the station, and the payload is reached through `.value`.
+The participants become templates on the station, and the payload is reached through `.value`. Explicit wiring
+(`wire`, `StaticWiring` with a `Thermometer<Bus>`) remains for a publisher that must be handed its output.
 
-*B. Accept it, and use explicit wiring for the multi-instance case.* `wire(displayB)` or `StaticWiring<&displayB>`
-with a `Thermometer<Bus>`: today's static API, unchanged. The price is that this station's publisher is written
-in the other style; the typed route's `Thermometer` cannot be handed a wiring.
-
-*C. Allow a topology per publisher instance.* That is a wiring object held by the publisher, which is option B
-under another name, and it would put a member back into `Publish<T>`.
-
-**Lean: accept the boundary (A and B as the documented escapes).** It mirrors the rule the broker already has
-(`Scoped` + `Domain` when one table per type is not enough), and most programs have one of each message type.
+**Noted for later.** A topology chosen by the *publisher* could carry weight once a publisher in a hot loop needs
+queued or asynchronous fan-out: that is a property of the sending side, not of the type. Nothing here depends on
+it, and nothing here rules it out; it is the first thing to reconsider when queued delivery is designed.
 
 ---
 
-## 2. Where the topology lives, and what happens when a unit misses it
+## 2. Where the configuration lives, and publishing to nobody
 
-**The question.** A topology is a per-type configuration, so every translation unit that publishes or subscribes
-the type must see it (the contract docs/DESIGN.md records as K6). For the existing options a violation is undefined
-behaviour that usually goes unnoticed. For a topology it has a visible consequence, and I measured it.
+**Decided:**
 
-**Example.** `main.cpp` includes the project's `topology.hpp`; `legacy_sensor.cpp` was never updated and does not:
+- **Configuration next to the type is the default**: the member alias, or the declaration found by
+  argument-dependent lookup. Nothing is forced on the build system and no extra header has to be included.
+- **`SUB0PUB_CONFIGURE` is for a type that cannot be edited**, and is documented with its limitation.
+- **A publication that reaches no receiver is a reported failure by default**, with an explicit way to allow it.
+
+### The three spellings
+
+Yes: `SUB0PUB_CONFIGURE` exists for a type whose definition is not yours to change (`config.hpp`: "Configure a
+Data type you cannot modify"). The member alias and the ADL declaration give exactly the same result; they are
+more intrusive only in that they sit in the type's own header. That is also their advantage: the configuration is
+part of the type, so every translation unit that can name the type agrees on it.
+
+```cpp
+struct Reading                                                         // member alias
+{
+    int celsius;
+    using sub0_config = sub0::config<sub0::spike::StaticTo<&display, &audit>>;
+};
+
+struct Reading { int celsius; };                                       // ADL declaration, beside the type
+sub0::config<sub0::spike::StaticTo<&display, &audit>> sub0_config(Reading*);
+
+#include "vendor/messages.hpp"                                         // a type that is not yours
+SUB0PUB_CONFIGURE(Reading, sub0::spike::StaticTo<&display, &audit>);
+```
+
+The station example now uses each where it belongs: the member alias (`static`, `bridged`), the ADL declaration
+(`hot_path`) and, for a header that stands for someone else's, `SUB0PUB_CONFIGURE` (`foreign`).
+
+Two things to know about the default:
+
+- The ADL declaration must be in the type's own namespace and precede the type's first use. Anywhere else it is
+  ignored without a diagnostic. Written beside the type it cannot go wrong; that is the only place to put it.
+- A message type that names its receivers depends on their *declarations* (`class Display; extern Display display;`),
+  not their definitions. This is the trade made by putting the topology with the type; `wire.hpp`'s principle that
+  "messages never list receivers" still holds for the explicit wiring API, where it was stated.
+
+### The limitation of `SUB0PUB_CONFIGURE`
+
+Because the configuration is no longer part of the type, a translation unit can see the type without it:
 
 ```cpp
 // topology.hpp
-class Display;
-extern Display display;
+#include "vendor/messages.hpp"
 SUB0PUB_CONFIGURE(Reading, sub0::spike::StaticTo<&display>);
-#include "display.hpp"
 
 // main.cpp: includes topology.hpp
 thermometer.measure(20);    // a direct call to display.receive()
 legacyMeasure(21);
 
-// legacy_sensor.cpp: does not; for this unit Reading is brokered
+// legacy_sensor.cpp: includes vendor/messages.hpp only; for this unit Reading is brokered
 void legacyMeasure(int celsius) noexcept
 {
     LegacySensor sensor;                      // derives from Publish<Reading>
@@ -129,139 +165,168 @@ void legacyMeasure(int celsius) noexcept
 }
 ```
 
-It compiles and links without a warning. In a release build:
+It compiles and links without a warning, and in a release build the message is lost:
 
 ```text
 display received 1 of 2
 ```
 
-The existing `SUB0PUB_CHECK_CONFIG` debug check does not see it either (the same output with the check on),
-because the static side never constructs a broker for it to compare.
+The existing `SUB0PUB_CHECK_CONFIG` debug check does not see it, because the static side never constructs a broker
+for it to compare. Two things in the spike now catch it. The debug-build topology check reports the first
+disagreeing publication. And the rule below catches it in a release build as well.
 
-**What I added.** The spike now records, in debug builds, the topology each unit publishes a type with, and
-reports the first disagreement. With it, the same program in a debug build stops at `legacyMeasure(21)`:
+### Publishing to nobody is a failure by default
 
-```text
-Assertion failed: sub0pub: a message type was published with different topologies in different translation units
-```
-
-It is compiled out of release builds (`SUB0PUB_CHECK_CONFIG` is false), so it costs the static path nothing. One
-detail is worth knowing if this moves in-library: the first version of the check did not fire. The two units each
-instantiated the same inline function with a different body, and the linker kept one copy. The topology has to be
-a template parameter of the checking function, as the configuration is of the existing `checkConfig`.
-
-**Options for where the line lives.**
-
-*A. A project header given to every unit by the build system.* Every unit then agrees by construction. Two ways:
-
-- a compiler force-include (`/FIstation_topology.hpp`, or `-include station_topology.hpp`), which needs nothing
-  from the library (not exercised here: the examples include the header explicitly);
-- a library include point, as `SUB0PUB_CONFIG_HEADER` is for the project default:
-
-  ```cmake
-  target_compile_definitions(station PRIVATE SUB0PUB_TOPOLOGY_HEADER="station_topology.hpp")
-  ```
-
-  The existing include point cannot be reused: `config.hpp` reads it before `SUB0PUB_CONFIGURE` and
-  `sub0::config` exist, so a topology header needs a second one, after the configuration vocabulary is complete.
-
-*B. Next to the message type*, as the member alias or the ADL declaration:
+**What the rule is.** `publish()` of a type that currently has no receiver is reported, unless the type says that
+is expected. A call site that wants to decide for itself asks first, or uses a publish that returns the count.
 
 ```cpp
-struct Reading
+struct Diagnostics                                           // receivers are optional: a plug-in, a debug console
 {
-    int celsius;
-    using sub0_config = sub0::config<sub0::spike::StaticTo<&display, &audit>>;
+    int code;
+    using sub0_config = sub0::config<sub0::spike::AllowNoReceivers>;
 };
+
+if (sub0::spike::tryPublish(*this, Reading{celsius}) == 0U)  // the call site decides
+    log("no display attached yet");
+
+if (sub0::spike::receiverCount<Reading>() != 0U)             // or asks first
+    sub0::spike::publish(*this, buildExpensiveReading());
 ```
 
-Also agrees by construction, but the message now names its receivers. `wire.hpp` states the opposite principle
-("Messages never list receivers") and decision D1 rejected a central registry for the same dependency reason.
+**How it works in each model, and what it costs.**
 
-*C. An explicit include in each source*, which is what the examples here do for want of the include point. This is
-the form that fails as shown above.
-
-**Options for catching a miss.**
-
-| Option | Catches | Cost |
+| | When it is decided | Cost |
 |---|---|---|
-| The debug check above | the first publish from a disagreeing unit, at run time, in debug builds | none in release |
-| Link-time detection: each unit references a symbol named after the topology it resolved, defined once | every disagreement, at link time | not spiked; the reference must survive optimisation, so likely a pointer of RAM per unit, or debug-only |
-| Nothing beyond the build contract | nothing | none |
+| `StaticTo<>` type | compile time: the list is a constant | none |
+| Brokered type | at each publication: is the table empty? | none on a publication that has receivers (below) |
 
-**Lean: A, plus the debug check.** Link-time detection is worth a spike of its own only if a release-build miss is
-judged unacceptable, since option A makes the miss hard to construct.
+For a wired type, a list in which no receiver can take the message does not compile:
+
+```text
+error C2338: static assertion failed: 'sub0pub: no receiver listed in this type's StaticTo<> can receive it, so the
+             publication would reach nobody; list a receiver, or configure the type with AllowNoReceivers'
+```
+
+`StaticTo<>` with `AllowNoReceivers` compiles to nothing, which is a deliberate way to compile a message out, and
+`receiverCount<Reading>()` is a constant that a `static_assert` can test.
+
+For a brokered type the check belongs in the broker's publish. The library broker is untouched in this branch, so
+the spike measures it with a stand-in broker of its own (`no_receivers.hpp`, through the public
+`Implementation<>` option) built in two forms that differ only in the check:
+
+| Instructions per publication (MSVC / clang-cl / icx) | one receiver | station: two types, four deliveries |
+|---|---|---|
+| library broker | 34 / 40 / 40 | 83 / 103 / 103 |
+| stand-in, no check | 33 / 41 / 41 | 80 / 107 / 107 |
+| stand-in, reporting an empty publication | 33 / 41 / 41 | 80 / 107 / 107 |
+
+The check replaces the dispatch loop's own entry test, so a publication with receivers executes the same
+instructions with or without it, on all three compilers. It adds 16 to 132 bytes of image for the cold path. (My
+first version cost MSVC three instructions per publication; writing the loop as test-then-do-while removed them.)
+
+Behaviour, from a small program:
+
+```text
+with a display: delivered 1, receiverCount 1
+display gone: receiverCount 0, tryPublish reached 0
+sub0pub: a message was published and no receiver is subscribed to its type          <- publish(): reported
+```
+
+and, with `AllowNoReceivers` on the type, the last line is instead `publish to nobody returned normally`.
+
+**How it aligns with the rest.**
+
+- *It closes the `SUB0PUB_CONFIGURE` limitation in release builds.* A unit that missed the configuration publishes
+  into an empty table, which is now the reported case. The two-file program above, with the rule as the project
+  default, stops at the stray publication instead of losing the message:
+
+  ```text
+  display received 1; now the unit that missed the topology publishes
+  sub0pub: a message was published and no receiver is subscribed to its type
+  ```
+
+- *It gives dynamic linkage an honest spelling.* A type whose receivers arrive with a module loaded at run time is
+  exactly a type for which "nobody yet" is normal: it says so with `AllowNoReceivers`, or its publishers use
+  `tryPublish()` and act on the count.
+- *It does not replace the "not listed" check of 5b.* If a wired type has three receivers and a fourth was left out
+  of the list, publications still reach three; only the per-receiver check sees the fourth.
+- *It does not see a mis-route that still reaches somebody*, for example a `StaticFirst` type whose stray unit
+  publishes into a broker that other subscribers did join.
+
+**What adopting it changes, and one point to confirm.**
+
+- It is a behaviour change. Today a publication with no subscriber is a silent no-op, and it is not rare: a
+  publisher that starts before its subscribers, a last publication after they are destroyed, a diagnostic stream
+  nobody is watching. The baseline's "publish, 0 subscribers" scenario and the `zero_receivers` collapse case
+  measure exactly that. Each such type needs `AllowNoReceivers`, and `MIGRATION.md` needs the entry.
+- In-library it needs three small things in the broker: the check in `BrokerImpl::publish`, a way to read the
+  receiver count, and a publish that returns it. The spike has all three, in the stand-in only.
+- **To confirm: what "reported" does in a release build.** The spike follows the library's other contract
+  violations: a hook macro whose default asserts in a debug build and aborts in a release build. Aborting a release
+  build because a subscriber was constructed late is severe. The alternatives are to report only in debug builds by
+  default (as `SUB0PUB_REENTRANT_CHECK` does), or to keep the check in release with a default that counts rather
+  than aborts. The check itself is free either way; this is only about the default action.
 
 ---
 
 ## 3. What a publisher has to see
 
-**The question.** A direct call can only be inlined into a publisher that can see the receiver's definition. So a
-publisher of a statically routed type depends, at compile time, on every receiver of that type.
+**Deferred.** The inline form is the normal one: it is what the compiler is told, explicitly, and it is equal to
+hand-written code. The out-of-line route moves the dependency rather than removing it, but it is a workable
+decoupling mechanism that users can apply themselves. Link-time optimisation is the real fix. This is to be
+revisited when the typed route is integrated into a production-style sample.
 
-**Example.** The station's topology header ends by including the receivers, so that `thermometer.cpp` gets them:
+**Example.** A publisher of a statically routed type must see its receivers' definitions, which is why the
+station's types header ends by including them:
 
 ```cpp
-SUB0PUB_CONFIGURE(Reading, sub0::spike::StaticTo<&display, &audit>);
+struct Reading { int celsius; using sub0_config = sub0::config<sub0::spike::StaticTo<&display, &audit>>; };
 
 #include "audit.hpp"
 #include "display.hpp"
 ```
 
-Leave those two includes out and the publisher's unit does not compile. This is deliberate: without the check the
-compiler would find no `receive()` on an incomplete type and silently deliver nothing.
+Leave those includes out and the publisher's unit does not compile; without the check the compiler would find no
+`receive()` on an incomplete type and silently deliver nothing.
 
 ```text
 topology.hpp: error C2027: use of undefined type 'Audit'
 topology.hpp: error: invalid application of 'sizeof' to an incomplete type 'Audit'
 ```
 
-**Options.**
-
-*A. Inline (the spike's form above).* Equal to hand-written code, including across translation units: in the
-`cross_file` case, with `receive()` defined in another unit, it is 39 / 53 / 53 instructions per publication
-(MSVC / clang-cl / icx), the same as hand-written direct calls. The price is the include dependency: touching a
-receiver's header recompiles every publisher of that type.
-
-*B. An out-of-line route.* The type is routed to one small object whose `receive()` is defined in the unit that
-composes the application. This already works with the spike as it is (variant `route_static_out_of_line`):
+**The two forms, measured** (case `cross_file`: `receive()` defined in another translation unit):
 
 ```cpp
-// what a publisher sees
+// B: what a publisher sees
 struct ReadingRoute { void receive(const Reading& reading) noexcept; };
 inline ReadingRoute readingRoute;
-SUB0PUB_CONFIGURE(Reading, sub0::spike::StaticTo<&readingRoute>);
+struct Reading { int celsius; using sub0_config = sub0::config<sub0::spike::StaticTo<&readingRoute>>; };
 
-// station.cpp: the one place that lists the receivers
+// B: station.cpp, the one place that lists the receivers
 void ReadingRoute::receive(const Reading& reading) noexcept
 {
     sub0::StaticWiring<&display, &audit>::publish(reading);
 }
 ```
 
-| `cross_file`, instructions per publication | MSVC | MSVC `/LTCG` | clang-cl | icx |
+| Instructions per publication | MSVC | MSVC `/LTCG` | clang-cl | icx |
 |---|---|---|---|---|
-| hand-written, and option A | 39 | 19 | 53 | 53 |
-| option B | 46 (+7) | 19 (+0) | 57 (+4) | 57 (+4) |
+| hand-written, and A (inline) | 39 | 19 | 53 | 53 |
+| B (out-of-line route) | 46 (+7) | 19 (+0) | 57 (+4) | 57 (+4) |
 
-One call that link-time optimisation removes. Two things are not solved by doing it by hand: the receivers still
-derive from `Subscribe<Reading>` but are no longer in the type's `StaticTo` list, so the debug "not listed"
-assertion would fire for them; and nothing ties the route to the type. An in-library form would be an option of
-its own, say `StaticVia<&route>`, that knows the route stands for the receivers.
-
-*C. Rely on LTO and keep one form.* Then a build without LTO silently pays for every static type.
-
-**Lean: A as the default, B as a documented option for types whose receivers change often.** B needs the small
-in-library design noted above before it is more than a pattern.
+Done by hand, B leaves two loose ends for an in-library form: the receivers behind the route derive from
+`Subscribe<Reading>` but are not in the type's list, so the "not listed" check would fire for them; and nothing
+ties the route to the type.
 
 ---
 
 ## 4. `override`
 
-**The question.** `Subscribe<Reading>` has a virtual `receive` when `Reading` is brokered and no virtual at all
-when it is `StaticTo`. A receiver that is to work in both cannot say `override`.
+**Decided: `receive()` is declared without `override`.**
 
-**What `override` protects against, and whether that is lost.** The mistake it catches is a signature that does
+`Subscribe<Reading>` has a virtual `receive` when `Reading` is brokered and none when it is `StaticTo`, so a
+receiver that works in both cannot say `override`. The mistake `override` guarded against is a signature that does
 not match:
 
 ```cpp
@@ -272,84 +337,59 @@ public:
 };
 ```
 
-*In a dynamic build it is still a compile error*, because the base's `receive` is pure virtual:
+It is a compile error in both builds without the keyword. Brokered, because the base's `receive` is pure virtual:
 
 ```text
 error C2259: 'Display': cannot instantiate abstract class
-note: 'void sub0::detail::SubscriberInterface<Data,false>::receive(const Data &) noexcept': is abstract
-
 error: variable type 'Display' is an abstract class
-warning: 'Display::receive' hides overloaded virtual function [-Woverloaded-virtual]
 ```
 
-*In a static build it was not.* Capability routing found no `receive(const Reading&)`, skipped the receiver, and
-the program ran:
-
-```text
-display received 0 of 1
-```
-
-That is limitation K14, and it would have made a promotion to `StaticTo` able to drop a receiver silently. **The
-spike now rejects it**: a receiver that is listed in a type's `StaticTo` and derives from `Subscribe` of that type
-must be able to receive it.
+Wired, because the spike requires a listed receiver that derives from `Subscribe` of the type to be able to
+receive it. (Before that check it compiled and delivered `0 of 1`: limitation K14.)
 
 ```text
 error C2338: static assertion failed: 'sub0pub: a receiver listed in StaticTo<> derives from Subscribe<Data>
              but has no receive(const Data&)'
 ```
 
-So both builds now reject the mistake without `override`. What remains is style: a project that enables
-`-Wsuggest-override` gets, in dynamic builds,
+What remains is style: a project that enables `-Wsuggest-override` is warned in dynamic builds
+(`'receive' overrides a member function but is not marked 'override'`); `/W4` and `-Wall -Wextra -Wpedantic` are
+silent.
 
-```text
-warning: 'receive' overrides a member function but is not marked 'override' [-Wsuggest-override]
-```
-
-(`/W4` and `-Wall -Wextra -Wpedantic` are silent.)
-
-**Options.**
-
-*A. No `override` (the spike's default).* One edit per receiver when existing broker code is first made promotable:
-delete the keyword. Zero cost in every build.
-
-*B. Keep `receive` virtual in static builds*, so existing `override` receivers compile untouched
-(`SUB0PUB_SPIKE_STATIC_VIRTUAL`). The publish path is unchanged when the receiver is `final`. The cost is a vptr
-per subscribed type and the retained vtables: for the station's three receivers, RAM +384 / +144 / +128 B and
-text +936 / +239 / +304 B (MSVC / clang-cl / icx). A receiver that is *not* `final` would be called through its
-vtable unless the compiler can prove its type; that case is not measured.
-
-*C. A macro*, `void receive(const Reading&) noexcept SUB0PUB_OVERRIDE;`. It cannot work: whether the keyword is
-valid depends on the message type, which a macro cannot see.
-
-**Lean: A.** B's only remaining purpose is a migration with no edits at all, and it gives up the "no RAM" property
-that is the point of static storage on small targets. It could be offered as a project-wide opt-in for exactly
-that migration.
+The alternative that was set aside keeps `receive` virtual in static builds so `override` receivers compile
+untouched (`SUB0PUB_SPIKE_STATIC_VIRTUAL`). The publish path is unchanged for a `final` receiver, but it costs a
+vptr per subscribed type and the retained vtables: for the station's three receivers, RAM +384 / +144 / +128 B and
+text +936 / +239 / +304 B (MSVC / clang-cl / icx). The knob stays in the spike as the measurement behind this
+decision.
 
 ---
 
 ## 5. Semantics that still differ
 
-These are differences in meaning between a brokered type and a wired one. Converging the spelling must not hide
-them. For each: is it documented, or closed?
+Differences in meaning between a brokered type and a wired one. Converging the spelling must not hide them.
 
 ### 5a. Delivery order
+
+**Decided: document it, with this example.**
 
 ```cpp
 Audit audit;          // constructed first
 Display display;
-SUB0PUB_CONFIGURE(Reading, sub0::spike::StaticTo<&display, &audit>);   // static build only
+struct Reading { int celsius; using sub0_config = sub0::config<sub0::spike::StaticTo<&display, &audit>>; };   // static build only
 ```
 
 ```text
-dynamic:  audit display        (registration order = construction order)
-static:   display audit        (the order of the list)
+brokered:  audit display        registration order, which is construction order
+wired:     display audit        the order of the list
 ```
 
-A program whose receivers depend on each other's side effects changes behaviour when promoted. **Lean: document
-it**, and recommend listing receivers in construction order when order matters. The static order is at least
-visible in one line; the dynamic one is spread over the program.
+A program whose receivers depend on each other's side effects changes behaviour when a type is promoted. List
+receivers in construction order where order matters. The wired order is at least written in one line; the
+brokered one is spread over the program. The station example's header states it.
 
 ### 5b. The set of receivers is closed
+
+**Direction: safe by default, with an opt-out; and give publishers a way to ask.**
 
 ```cpp
 Display display;      // listed in StaticTo<&display>
@@ -362,16 +402,21 @@ Release build: `display 1 spare 0`. Debug build, at `spare`'s constructor:
 Assertion failed: sub0pub: this subscriber is not listed in its type's StaticTo<>
 ```
 
-The awkward case is a unit test that constructs one `Display` on its own while the project's static topology is in
-force: it trips the assertion although nothing is wrong. **Options:** keep the assertion and have such tests build
-without the topology header (they then exercise the same class as a broker subscriber); make it a hook like
-`SUB0PUB_REENTRANT_VIOLATION` so a test build can count instead of abort; or drop it. **Lean: keep it, as an
-overridable hook.** The silent alternative is the worst failure this design has.
+- *Safe by default.* The check is on in debug builds.
+- *Opt-out.* It is now a hook, `SUB0PUB_SPIKE_UNLISTED_RECEIVER(what)`, like the library's other violation hooks. A
+  unit test that constructs one `Display` on its own under the project's static topology can make it count or log
+  instead of abort, or switch the check off for that build (`SUB0PUB_SPIKE_CHECK_BOUND`).
+- *Asking.* `receiverCount<T>()` is the number of receivers a publication of `T` reaches now: a constant for a
+  wired type (usable in a `static_assert`), the table's count for a brokered one. `tryPublish()` returns it for
+  one publication. Both are in the spike (decision 2).
+
+Not yet done: a release-build form of the "not listed" check, which would need a registration step the static
+path does not otherwise have.
 
 ### 5c. Features that exist only on the broker
 
-Using one on a statically routed type is a compile error, which is the behaviour I would keep: the compiler lists
-what a promotion has to resolve.
+**Deferred.** Using one on a statically routed type is a compile error today, which lists what a promotion has to
+resolve:
 
 ```cpp
 display.disconnect();
@@ -381,18 +426,19 @@ display.disconnect();
 error C2039: 'disconnect': is not a member of 'Display'
 ```
 
-The same is true of `trySubscribe()`, `isSubscribed()` and `sub0::cancel()`. The message could be better: an
-in-library form can declare these members deleted with a reason, so the error says "Reading is StaticTo: its
-receivers are fixed".
+The same is true of `trySubscribe()`, `isSubscribed()` and `sub0::cancel()`. For later consideration: some of
+these have a sensible static meaning. `isSubscribed()` could answer "is this object in its type's list?", which
+makes it a validity check of the static wiring and keeps code that asserts on it portable across both models. The
+spike already computes that answer for the 5b check.
 
 `Route`, `Domain` and publish reports are not covered by the spike. `Route` derives from `sub0::Subscribe`
 directly, not from the spike's alias, so here it would compile for a `StaticTo` type, register with a broker that
 is never published to, and send nothing. In-library, where `Subscribe<T>` itself follows the topology, it has to
-be made an error like the others.
+be made an error, or given a meaning, like the others.
 
 ### 5d. Cancellation
 
-The two models stop a publication in different ways, and the typed route converges neither:
+**Deferred until after the first convergence API lands.** The two models stop a publication in different ways:
 
 ```cpp
 // broker: needs a publish context (SUB0PUB_CANCEL or sub0::ThreadLocalContext)
@@ -402,16 +448,16 @@ void receive(const Reading& reading) noexcept override { if (reading.celsius > 9
 bool receive(const Reading& reading) noexcept { return reading.celsius <= 90; }
 ```
 
-On a `StaticTo` type the first form does not compile (`cancel()` needs the broker), and the second is silently
-ignored, because the spike's `publish()` calls `StaticWiring::publish`, not `publishCancelable` (limitation K19).
-
-**Options:** (A) leave cancellation out of the converged API and document it as a reason to stay on one model for
-that type; (B) converge on the `bool` form, which means the broker's virtual `receive` returns `bool` for types
-that opt in, a breaking change to `Subscribe<T>`; (C) converge on `cancel()`, which decision D5 already rejected
-for static wiring on measured cost (thread-local state, +14 path instructions on Cortex-M33). **Lean: A now**, and
-make the ignored `bool` a compile error on a `StaticTo` type so it cannot be missed.
+On a `StaticTo` type the first form does not compile, and the second is silently ignored, because the spike's
+`publish()` calls `StaticWiring::publish`, not `publishCancelable` (limitation K19). Until this is taken up, a
+type that needs cancellation stays on one model. A small step that could land with the first version without
+prejudging the design: make a `bool`-returning `receive` on a `StaticTo` type a compile error, so it cannot be
+ignored unnoticed.
 
 ### 5e. `filter()`
+
+**Decided: an opt-in per type, in both models**, as it always should have been, and as cancellation is: a feature
+the type's configuration has to ask for before it is even considered.
 
 ```cpp
 class Display final : public sub0::spike::Subscribe<Reading>
@@ -424,29 +470,32 @@ public:
 
 | Configuration of `Reading` | Result |
 |---|---|
-| default (brokered) | `error C2555: 'Display::filter': overriding virtual function return type differs` : filters are opt-in |
-| `sub0::Filter` (brokered) | works: `-5` is filtered |
-| `StaticTo<&display>` | works, although the type never opted in |
-| `sub0::Filter` + `StaticTo<&display>` | works |
+| default, brokered | `error C2555: 'Display::filter': overriding virtual function return type differs` |
+| `sub0::Filter`, brokered | works: `-5` is filtered |
+| `StaticTo<&display>` | `error C2338: a receiver listed in StaticTo<> declares filter(), but its message type is not configured with sub0::Filter` |
+| `sub0::Filter` + `StaticTo<&display>` | works: `-5` is filtered |
 
-So it converges when the type opts in, and the static build is more permissive than the dynamic one. **Lean: close
-it**: on a `StaticTo` type, honour `filter()` only if the type's configuration has `Filter`, and reject a receiver
-that declares one otherwise, as the broker does. Then the same source is accepted or rejected in both builds.
+The third row is new. Before it, a wired type honoured `filter()` whether or not the type had opted in, so the
+static build was more permissive than the dynamic one. Now one source is accepted or rejected alike.
 
 ---
 
-## 6. `StaticFirst`
+## 6. `StaticFirst`, and a guided route from dynamic to static
 
-**The question.** `StaticFirst<&display>` calls the display directly and then publishes through the broker, so
-other receivers can still subscribe at run time. It is the "promote one known receiver" step. Is it worth shipping?
+**Direction:** `StaticFirst` is a user convenience and stays one; how much of an application is loaded dynamically
+is the user's to know, not ours. What would help more is tooling: let users write free and easy dynamic binding,
+then show them, from a run, the wiring they actually had, so the move to static is retrospective and
+semi-automatic.
 
-**Example.** The `bridged` station: one line, and the audit log keeps subscribing as before.
+### `StaticFirst` as it stands
+
+One line promotes a known receiver while the type stays open:
 
 ```cpp
-SUB0PUB_CONFIGURE(Reading, sub0::spike::StaticFirst<&display>);
+struct Reading { int celsius; using sub0_config = sub0::config<sub0::spike::StaticFirst<&display>>; };
 ```
 
-**What it costs**, against `StaticTo` with the same receivers and nobody subscribed at run time:
+Against `StaticTo` with the same receivers and nobody subscribed at run time:
 
 | | MSVC | clang-cl | icx |
 |---|---|---|---|
@@ -455,33 +504,68 @@ SUB0PUB_CONFIGURE(Reading, sub0::spike::StaticFirst<&display>);
 | `batch`, a burst of 64: instructions | 732 against 205 | 149 against 136 | 739 against 250 |
 | `batch`: is the burst still vectorised? | no | yes | no |
 
-It also keeps the broker's table, vtables and registration code in the image (RAM +350 to +420 B for one type),
-and it is the one mode in which a bound receiver's `receive()` stays virtual, so a receiver that is not `final`
-may be called through its vtable.
+It keeps the broker's table and registration code in the image (RAM +350 to +420 B for one type), and it is the
+one mode in which a bound receiver's `receive()` stays virtual. Its documentation should say not to use it on a
+burst path. The spike registers and then disconnects a bound receiver; an in-library form would decide first.
 
-**The alternative it competes with** is two types, or simply listing the receiver:
+### The wiring report (proof of concept)
+
+`RecordWiring` ([`wiring_report.hpp`](include/sub0pub_spike/wiring_report.hpp)) is a diagnostic broker selected
+like any other option. The application runs as it was written, over runtime subscription, and at exit prints what
+it observed: per type, the receivers in delivery order, the deliveries each took, and whether the set ever changed
+while the type was being published.
 
 ```cpp
-SUB0PUB_CONFIGURE(Reading, sub0::spike::StaticTo<&display, &audit>);   // if audit is in fact always there
+struct Reading { int celsius; using sub0_config = sub0::config<sub0::spike::RecordWiring>; };
 ```
 
-and, when the open set is real, leaving the type dynamic.
+The station's `report` build (clang-cl):
 
-**Lean: not in the first version.** `StaticTo` per type covers the promotions that pay, and `StaticFirst` has the
-most surprising cost profile of anything here. If it ships later, it should decide before registering a bound
-receiver (the spike registers and then disconnects, which costs 182 against 56 setup instructions on MSVC), and
-its documentation should say plainly not to use it on a burst path.
+```text
+sub0pub wiring report (message types configured with RecordWiring)
+  struct Reading: 3 publications
+    1. class Display at 00007FF6E4D382E8: 3 deliveries
+    2. class Audit at 00007FF6E4D38300: 3 deliveries
+    the set never changed: a candidate for StaticTo<> listing these 2 objects in this order, if they have static storage
+  struct Alarm: 1 publications
+    1. class Audit at 00007FF6E4D38310: 1 deliveries
+    the set never changed: a candidate for StaticTo<> listing these 1 objects in this order, if they have static storage
+```
+
+That is the `static` build's configuration, read off a run. And a type that should stay brokered says so:
+
+```text
+  struct Reading: 3 publications
+    1. class Display at 00007FF779F9D0D0: 3 deliveries
+    2. class Logger at 000000AA2979FB50: 1 deliveries, joined after publication 1, left after publication 2
+    receivers joined or left while it was being published: keep it brokered
+```
+
+**What it is not yet.**
+
+- It reports one run. A plug-in that loads on the tenth run was not seen; a tool would merge reports.
+- It names receiver *types* and addresses, not the objects' names, which are what a `StaticTo` list needs. Getting
+  from an address to `display` needs debug symbols or a name supplied by the user. It also cannot tell whether an
+  object has static storage (the second example's `Logger` is on the stack, as its address shows).
+- MSVC 19.51 names a receiver by its `Subscribe<T>` base when the unit that publishes cannot see the receiver's
+  class, which is the station's layout; clang-cl names it in every layout. I reproduced that without Sub0Pub: it
+  is `typeid` through a pointer to a class-template base. Order and addresses are right on both.
+- It stands in for the default configuration only, and prints to standard output at exit.
+
+**What the fuller tool would be:** the same recording as a configuration of the library broker rather than a
+stand-in; publishers recorded as well as receivers; the report written in a form a script can merge across runs
+and turn into the configuration lines, with the unheard-publication count from decision 2 beside each type.
 
 ---
 
 ## 7. Header layering
 
-**The question.** STYLE_GUIDE.md: "An area's entry header must not reach another area; bridges between areas get
-their own header." `sub0::publish()` and `sub0::Subscribe<T>` are in the broker area, and a statically routed
-publish is wiring.
+**Deferred: no hard decision now.** Recorded for when it is taken up.
 
-**It does not need an include.** The spike's `publish()` finds the topology by asking the type's configuration
-whether it has one, and then calls a member of it:
+STYLE_GUIDE.md: "An area's entry header must not reach another area; bridges between areas get their own header."
+`sub0::publish()` and `sub0::Subscribe<T>` are in the broker area, and a statically routed publish is wiring. It
+does not need an include: the spike finds the topology by asking the type's configuration whether it has one, and
+then calls a member of it.
 
 ```cpp
 template<class Config>
@@ -492,49 +576,32 @@ if constexpr (Topology::cHasStatic)
     Topology::publish(data);            // a dependent call: resolved where publish() is instantiated
 ```
 
-Nothing there names `StaticWiring`. The broker headers would only need: "if this type's configuration has a
-`topology`, `Subscribe<T>` is an empty class and `publish()` calls `topology::publish`". The header that *defines*
-`StaticTo` is the one that includes wiring, and that is a bridge header in the sense the rule intends, like the
-existing `sub0pub/wiring/broker_port.hpp`:
+Nothing there names `StaticWiring`. The header that *defines* `StaticTo` is the one that includes wiring, and that
+is a bridge header in the sense the rule intends, like the existing `sub0pub/wiring/broker_port.hpp`:
 
 ```text
 sub0pub/config.hpp            options and resolution; knows nothing of topologies
 sub0pub/broker/*.hpp          Subscribe / Publish / publish: follow Config::topology if it exists
 sub0pub/wiring/*.hpp          StaticWiring: unchanged
-sub0pub/wiring/static_to.hpp  StaticTo<&...> : the bridge; includes wiring, is included by the umbrella
-                              and by a project's topology header
+sub0pub/wiring/static_to.hpp  StaticTo<&...> : the bridge; includes wiring
 ```
 
-**Options:** (A) the above; (B) let `broker/publish.hpp` include `wiring/capability.hpp` and amend the rule;
-(C) keep `sub0::publish` broker-only and give the converged entry points new names in a bridge header, as the
-spike does with `sub0::spike::`. C keeps the areas apart at the price of the main result: existing broker code
-would no longer be the converged spelling.
-
-**Lean: A.** One consequence to check when it is built: `tests/headers` compiles each header alone, and
-`broker/*.hpp` must still pass without the bridge present, which the duck-typed detection gives.
+The alternatives are to let `broker/publish.hpp` include `wiring/capability.hpp` and amend the rule, or to keep
+`sub0::publish` broker-only and give the converged entry points new names, which gives up the main result:
+existing broker code would no longer be the converged spelling.
 
 ---
 
 ## 8. Configuring a type without the preprocessor
 
-**The question.** `SUB0PUB_CONFIGURE(Type, ...)` is the only spelling here that needs the preprocessor, and a
-topology is written with it. Can C++23 itself say the same thing?
+**Deferred: no hard decision now.** Decision 2 narrows it: with configuration next to the type as the default,
+`SUB0PUB_CONFIGURE` is already confined to types that cannot be edited.
 
-Probed on MSVC 19.51 and clang-cl 22 by a separate agent session (14 candidate spellings, each compiled and run
-for a topology over not-yet-defined receivers, for `int`, declared late, declared twice and declared inside a user
-namespace). I re-compiled the first two results below; the rest are that session's findings. GCC was not available.
+Probed on MSVC 19.51 and clang-cl 22 by a separate agent session (14 candidate spellings); I re-compiled the first
+form below.
 
-**What the macro is.** Sugar for one explicit specialisation, which a user can already write by hand:
-
-```cpp
-SUB0PUB_CONFIGURE(Reading, sub0::spike::StaticTo<&display, &audit>);
-
-template<> struct sub0::configure<Reading> { using type = sub0::config<sub0::spike::StaticTo<&display, &audit>>; };
-```
-
-**Options.**
-
-*A. The hand specialisation, shortened by a one-line helper base.* No change to how configuration resolves:
+The macro is sugar for one explicit specialisation, which can be written directly and shortened by a one-line
+helper base, with no change to how configuration resolves:
 
 ```cpp
 namespace sub0 { template<class... Options> struct configured_with { using type = config<Options...>; }; }   // the helper
@@ -543,78 +610,35 @@ template<> struct sub0::configure<Reading> : sub0::configured_with<sub0::spike::
 template<> struct sub0::configure<int>     : sub0::configured_with<sub0::Capacity<32>> {};
 ```
 
-Works on both compilers, with `&display` still an incomplete `extern` object, and for `int`. Declared after the
-type's first use it is a hard error ("explicit specialization after instantiation"), which is the behaviour to
-want. It shares the macro's one restriction: it must be at global scope or inside `namespace sub0 { }`. Inside
-`namespace app`:
+It works on both compilers, with `&display` still an incomplete `extern` object, and for `int`. Declared after the
+type's first use it is a hard error, which is the behaviour to want. Like the macro it must be at global scope or
+inside `namespace sub0 { }`:
 
 ```text
 error C2888: 'sub0::configure<app::Reading>': symbol cannot be defined within namespace 'app'
 warning: class template specialization of 'configure' not in a namespace enclosing 'sub0' is a Microsoft extension
 ```
 
-*B. The spellings that already need no macro.* The member alias and the ADL declaration both accept a topology:
-
-```cpp
-struct Reading { int celsius; using sub0_config = sub0::config<sub0::spike::StaticTo<&display, &audit>>; };
-
-sub0::config<sub0::spike::StaticTo<&display, &audit>> sub0_config(Reading*);     // in Reading's own namespace
-```
-
-The member alias cannot be late and cannot apply to `int`. The ADL form has a hazard the probes confirmed:
-declared in the wrong namespace, or after the type's first use, it is **silently ignored** and the type falls back
-to the default. For a topology that is the silent mis-route of [decision 2](#2-where-the-topology-lives-and-what-happens-when-a-unit-misses-it).
-Both also put the receivers' names next to the message type.
-
-*C. One list in the project header.* The header the build system names carries a single alias that maps types to
-options, found by a pack search during resolution:
-
-```cpp
-struct Reading;
-class Display;
-extern Display display;
-
-struct ProjectDefaults : sub0::with<sub0::Builtin>
-{
-    using sub0_types = sub0::configs<
-        sub0::For<Reading, sub0::spike::StaticTo<&display>>,
-        sub0::For<int, sub0::Capacity<32>>>;
-};
-#define SUB0PUB_DEFAULT_CONFIG ProjectDefaults
-```
-
-Compiled and run by the agent session against a copy of the resolution machinery, not against `config.hpp` itself.
-Note that it does not remove the preprocessor from the build: the project default is still selected by
-`SUB0PUB_DEFAULT_CONFIG`, and the header by a `-D` flag. It removes it from each per-type declaration.
-It is the one candidate that can live in any namespace and can never be late, and it needs only forward
-declarations, so it does not include any message or receiver header. It needs a change to `config_t` resolution (a
-fourth source, counted in the "configured in exactly one place" check), a light header for the option types that
-`config.hpp` can include before the project header, and its compile-time cost is unmeasured. It is still a central
-list, which decision D1 rejected; what the probe shows is that the include dependency behind that objection is
-avoidable, not the need to edit the list.
-
-| | A: hand specialisation + helper | B: member alias / ADL | C: project list |
-|---|---|---|---|
-| Works for a topology, for `int` | yes, yes | yes, no | yes, yes |
-| Outside the global namespace | no | member: in the type; ADL: the type's namespace only | any |
-| Declared late | compile error | member: cannot be; ADL: silently ignored | cannot be |
-| Change to `config.hpp` | one helper | none | resolution, plus an earlier header for options |
-
-**Lean: yes, it is expressible, and A is the form to document.** It replaces the macro one for one, with the same
-rules and the same loud failure when misplaced, so the macro can stay as optional sugar or be retired. None of the
-candidates is both as short as the macro and as hard to get wrong. C is the more interesting refinement for
-topologies specifically, because it would also settle where the topology lives (decision 2); it deserves its own
-spike against the real `config.hpp`, with a compile-time measurement, before it is a proposal.
+The other candidate worth keeping in view is one list in a project header, found by a pack search during
+resolution. It can live in any namespace and can never be declared late, and it needs only forward declarations.
+It needs a change to `config_t` resolution, was run against a copy of that machinery rather than `config.hpp`
+itself, and its compile-time cost is unmeasured. It is also the build-system-level mechanism that decision 2 set
+aside as the default, so it would be an addition for the cannot-edit case, not a replacement.
 
 ---
 
-## What changed in the spike while writing this
+## What changed in the spike while working through these
 
-Three checks were added to `topology.hpp` because the examples above exposed the gaps. None changes generated code
-in a release build; the recorded results were regenerated afterwards.
+None of it changes generated code for a publication that has receivers; the recorded results were regenerated
+afterwards.
 
-| Check | Catches | When |
-|---|---|---|
-| a listed receiver that derives from `Subscribe<T>` must have `receive(const T&)` | a mismatched signature silently skipped (decision 4) | compile time |
-| the topology a unit publishes a type with must match every other unit's | a unit that missed the topology header (decision 2) | debug builds, at the publish |
-| (already there) a subscriber must be listed in its type's `StaticTo` | a receiver left out of the list (decision 5b) | debug builds, at construction |
+| Change | Decision | Catches or provides | When |
+|---|---|---|---|
+| a listed receiver that derives from `Subscribe<T>` must have `receive(const T&)` | 4 | a mismatched signature silently skipped | compile time |
+| a listed receiver may declare `filter()` only if the type has `sub0::Filter` | 5e | a filter honoured without the type's opt-in | compile time |
+| a `StaticTo<>` list must contain a receiver of the type, unless `AllowNoReceivers` | 2 | a publication that can reach nobody | compile time |
+| `ReportNoReceivers` (stand-in broker), `AllowNoReceivers`, `tryPublish()`, `receiverCount<T>()` | 2, 5b | a brokered publication that reaches nobody; the count on request | run time; free when there are receivers |
+| the topology a unit publishes a type with must match every other unit's | 2 | a unit that missed a `SUB0PUB_CONFIGURE` | debug builds |
+| a subscriber must be listed in its type's `StaticTo`; now an overridable hook | 5b | a receiver left out of the list | debug builds |
+| `RecordWiring` | 6 | the wiring a run actually had | a diagnostic mode |
+| the station example configures each type beside its definition | 2 | | |

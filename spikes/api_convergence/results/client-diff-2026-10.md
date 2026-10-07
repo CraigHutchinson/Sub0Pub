@@ -8,6 +8,8 @@ Lines of code that differ between a candidate's `dynamic` build and each other b
 | bus_parameter | dynamic -> wired | 6 | 3 | compose.hpp | 0 | 46 |
 | port_member | dynamic -> static | 5 | 1 | compose.hpp | 0 | 48 |
 | status_quo | dynamic -> static | 12 | 17 | compose.hpp, participants.hpp | 20 | 7 |
-| typed_route | dynamic -> bridged | 0 | 5 | topology.hpp | 0 | 55 |
-| typed_route | dynamic -> hot_path | 0 | 8 | topology.hpp | 0 | 55 |
-| typed_route | dynamic -> static | 0 | 9 | topology.hpp | 0 | 55 |
+| typed_route | dynamic -> bridged | 0 | 4 | station_types.hpp | 0 | 52 |
+| typed_route | dynamic -> foreign | 9 | 9 | station_types.hpp | 0 | 52 |
+| typed_route | dynamic -> hot_path | 0 | 7 | station_types.hpp | 0 | 52 |
+| typed_route | dynamic -> report | 1 | 3 | station_types.hpp | 0 | 52 |
+| typed_route | dynamic -> static | 0 | 8 | station_types.hpp | 0 | 52 |

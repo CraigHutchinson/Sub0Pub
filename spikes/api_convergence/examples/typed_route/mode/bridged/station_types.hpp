@@ -1,5 +1,5 @@
 #pragma once
-/** Station topology: bridged (see ../../main.cpp).
+/** The station's message types: bridged (see ../../main.cpp).
  *
  * Demonstrates: promoting one known receiver while the type stays open. The display is called directly; the
  * audit log, and anything else that subscribes at run time, still receives Reading through the runtime broker.
@@ -7,11 +7,20 @@
  */
 #include "sub0pub_spike/topology.hpp"
 
-#include "messages.hpp"
-
 class Display;
 extern Display display;
 
-SUB0PUB_CONFIGURE(Reading, sub0::spike::StaticFirst<&display>);
+struct Reading
+{
+    int celsius;
+    using sub0_config = sub0::config<sub0::spike::StaticFirst<&display>>;
+};
+
+struct Alarm
+{
+    int celsius;
+};
+
+inline constexpr int cOverheatCelsius = 90; ///< A Reading at or above this also raises an Alarm
 
 #include "display.hpp"

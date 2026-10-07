@@ -14,9 +14,9 @@ measurements are in [`results/`](results/).
 
 One candidate, the **typed route**, meets the goal on everything measured here:
 
-- A message type's delivery becomes one more axis of its per-type configuration. Participants are written once, in
-  the runtime broker's spelling. Switching a type to direct calls adds 5 to 9 lines in one topology header and
-  changes no line of any publisher or receiver.
+- A message type's delivery becomes one more axis of its per-type configuration, written next to the type.
+  Participants are written once, in the runtime broker's spelling. Switching a type to direct calls adds 4 to 8
+  lines beside the message types and changes no line of any publisher or receiver.
 - Its dynamic build is the current API by construction (the same types), and measures identical to it on every
   metric, on three compilers.
 - Its static build equals hand-written direct calls on instructions per publication, publish path, RAM and image in
@@ -28,9 +28,11 @@ The other two candidates are useful as what they already are: explicit wiring re
 type-erased port remains the tool for a library boundary. Neither converges the two models.
 
 **GCC, callgrind and Cortex-M33 were not available on the machine these were measured on** (MSVC 19.51, clang 22,
-Intel icx 2026.1, all x64 Windows). The typed route also has eight design decisions that measurement does not
-settle; [DECISIONS.md](DECISIONS.md) works through each with compiled examples. It should not move into `include/`
-before both are closed.
+Intel icx 2026.1, all x64 Windows). That evidence is still owed before the typed route moves into `include/`.
+
+The design decisions that measurement could not settle are worked through, each with compiled examples, in
+[DECISIONS.md](DECISIONS.md). Six are decided or have a direction as of 2026-10-07; the rest are deliberately
+deferred until a first in-library version exists.
 
 ## The problem
 
@@ -118,7 +120,7 @@ void Thermometer::measure(int celsius) noexcept
 }
 ```
 
-With nothing else, every type is brokered. A topology header then says otherwise, per type:
+With nothing else, every type is brokered. A type says otherwise next to its own definition:
 
 ```cpp
 class Display;
@@ -126,15 +128,18 @@ class Audit;
 extern Display display;
 extern Audit audit;
 
-SUB0PUB_CONFIGURE(Reading, sub0::spike::StaticTo<&display, &audit>);   // direct calls, in this order
-SUB0PUB_CONFIGURE(Alarm, sub0::spike::StaticTo<&audit>);
-
-#include "audit.hpp"
-#include "display.hpp"
+struct Reading
+{
+    int celsius;
+    using sub0_config = sub0::config<sub0::spike::StaticTo<&display, &audit>>;   // direct calls, in this order
+};
 ```
 
-`StaticTo` is a configuration option like `Capacity` or `Snapshot`, so it resolves through the existing chain
-(member alias, ADL, `SUB0PUB_CONFIGURE`, project header). `Subscribe<T>`, `Publish<T>` and `publish()` follow it:
+`StaticTo` is a configuration option like `Capacity` or `Snapshot`, so it resolves through the existing chain. The
+member alias and the declaration found by argument-dependent lookup are the default spellings, because they make
+the configuration part of the type; `SUB0PUB_CONFIGURE` is for a type that cannot be edited
+([decision 2](DECISIONS.md#2-where-the-configuration-lives-and-publishing-to-nobody)). `Subscribe<T>`, `Publish<T>`
+and `publish()` follow the topology:
 
 | Topology of `T` | `Subscribe<T>` is | `publish(from, T{})` is |
 |---|---|---|
@@ -142,19 +147,30 @@ SUB0PUB_CONFIGURE(Alarm, sub0::spike::StaticTo<&audit>);
 | `StaticTo<&a, &b>` | an empty class: no vtable, no registration | `StaticWiring<&a, &b>::publish` |
 | `StaticFirst<&a>` | `sub0::Subscribe<T>`, not registered for the bound `a` | the direct calls, then `sub0::publish` |
 
-The station builds four ways from the same sources: `dynamic`, `static`, `hot_path` (only `Reading` wired; one
-line), and `bridged` (the display called directly, the audit log still subscribing at run time).
+The station builds six ways from the same sources; only `mode/<mode>/station_types.hpp` differs:
+
+| Build | Configuration |
+|---|---|
+| `dynamic` | none: both types brokered |
+| `static` | a member alias on each type |
+| `hot_path` | an ADL declaration beside `Reading` only; `Alarm` stays brokered |
+| `bridged` | `StaticFirst`: the display called directly, the audit log still subscribing at run time |
+| `foreign` | `SUB0PUB_CONFIGURE`, for message types in a header that stands for someone else's |
+| `report` | brokered, with `RecordWiring`: at exit it prints the wiring it observed, as a candidate `StaticTo` list |
 
 For: the client diff and the measurements below. Publishers remain ordinary classes. The granularity is the type,
 which is where "known hot" is decided. Using a dynamic-only feature (`disconnect()`, `trySubscribe()`, `cancel()`)
 on a statically routed type is a compile error, so the compiler lists what a promotion has to resolve.
-Against: one topology per message type for the whole program; a build contract that every translation unit sees
-it; publishers of a static type must see the receivers' definitions; and `receive()` must be declared without
-`override`. [DECISIONS.md](DECISIONS.md) takes each in turn.
+Against: one topology per message type for the whole program; a message type that names its receivers depends on
+their declarations; publishers of a static type must see the receivers' definitions; and `receive()` is declared
+without `override`.
 
-Three checks keep a promotion from failing silently: a listed receiver that subscribes to the type must be able to
-receive it (compile time); a subscriber must be listed in its type's `StaticTo` (debug builds); and every
-translation unit must publish a type with the same topology (debug builds).
+A promotion cannot fail silently. At compile time: a listed receiver that subscribes to the type must be able to
+receive it; a `filter()` needs the type's `sub0::Filter`; a list that nobody in it can receive from is rejected.
+In debug builds: a subscriber left out of its type's list, and a translation unit that publishes a type with a
+different topology, are reported. And a publication that reaches no receiver at all is a failure by default, for
+brokered types too, at no cost to a publication that has receivers
+([decision 2](DECISIONS.md#2-where-the-configuration-lives-and-publishing-to-nobody)).
 
 ## Measurements
 
@@ -172,9 +188,14 @@ every variant: compare a variant with its reference, within a compiler.
 | bus parameter | dynamic → static | 7 | 5 | `compose.hpp` | 0 |
 | bus parameter | dynamic → wired | 6 | 3 | `compose.hpp` | 0 |
 | port member | dynamic → static | 5 | 1 | `compose.hpp` | 0 |
-| typed route | dynamic → static | 0 | 9 | `topology.hpp` | 0 |
-| typed route | dynamic → hot path | 0 | 8 | `topology.hpp` | 0 |
-| typed route | dynamic → bridged | 0 | 5 | `topology.hpp` | 0 |
+| typed route | dynamic → static | 0 | 8 | `station_types.hpp` | 0 |
+| typed route | dynamic → hot path | 0 | 7 | `station_types.hpp` | 0 |
+| typed route | dynamic → bridged | 0 | 4 | `station_types.hpp` | 0 |
+| typed route | dynamic → report | 1 | 3 | `station_types.hpp` | 0 |
+
+The typed route's added lines are the receivers' forward declarations, one configuration line per type, and the
+includes that give publishers the receivers' definitions. (Its `foreign` build shows 9 removed and 9 added only
+because it takes the message types from another header instead of defining them.)
 
 Bus parameter and port member reach zero participant edits only because their participants were written in the
 static style from the start; code written for today's broker has to be rewritten once to get there. The typed
@@ -210,7 +231,7 @@ Case `one_receiver` shows the same pattern (12 / 17 / 17 for hand-written, today
 static build; 34 / 40 / 40 for today's dynamic and the typed route's dynamic build).
 
 Case `cross_file` puts the receivers' `receive()` bodies in another translation unit and names the receiver objects, with external linkage, in
-a header both units include, as a project topology header would. Without link-time optimisation the typed route's
+a header both units include, as a shared types header does. Without link-time optimisation the typed route's
 static build equals hand-written code on every criterion on all three compilers (39 / 53 / 53 instructions). With
 MSVC `/LTCG` it equals today's static API (19 instructions; both are 8 B of RAM above hand-written code, the
 difference docs/EVIDENCE.md already records). Its dynamic build equals today's in all four builds. Routing the type
@@ -218,26 +239,33 @@ through an out-of-line function instead, so that publishers need not see the rec
 instructions per publication without link-time optimisation and nothing with it
 ([decision 3](DECISIONS.md#3-what-a-publisher-has-to-see)).
 
-Wall-clock time agrees, within its noise (this run shared the machine with other builds): on `station`,
-hand-written code and the static builds run at 2.8 to 2.9 / 3.7 to 4.0 / 3.6 to 3.7 ns per publication; today's
-dynamic API at 8.2 / 8.4 / 7.2 ns and the typed route's dynamic build at 7.9 / 7.3 / 7.2 ns.
+Reporting a brokered publication that reaches no receiver (the default of
+[decision 2](DECISIONS.md#2-where-the-configuration-lives-and-publishing-to-nobody)) costs a publication that has
+receivers nothing: a stand-in broker with and without the check executes 33 / 41 / 41 instructions on
+`one_receiver` and 80 / 107 / 107 on `station` either way (the library broker: 34 / 40 / 40 and 83 / 103 / 103),
+for 16 to 132 bytes of image.
+
+Wall-clock time is in the report as a supplement and agrees in direction: on `station` with MSVC the static builds
+run at hand-written speed, about 2.7 ns per publication, against about 7.8 ns for both dynamic builds. The timing
+columns vary by tens of percent between runs (the recorded one shared the machine with other builds), which is why
+instruction counts are the comparison of record.
 
 ### Vectorisation and aliasing
 
 [`results/vectorize-batch-2026-10.md`](results/vectorize-batch-2026-10.md). Case `batch`: a burst of 64 samples
 into a receiver that accumulates `value * gain`.
 
-| Variant | clang (default / AVX2) | MSVC | icx | Instructions per burst | ns per burst |
-|---|---|---|---|---|---|
-| hand-written direct call | vectorised, width 4×2 / 8×4 | not vectorised (reason 1102) | vectorised | 201 / 136 / 250 | 8.4 / 5.2 / 11.8 |
-| today's static | the same | the same | the same | 205 / 136 / 250 ³ | 8.6 / 5.2 / 9.5 |
-| **typed route, static** | the same; alias-blocked loads 0 (hand-written: 1) | the same | the same | 205 / 136 / 250 ³ | 8.8 / 5.8 / 10.4 |
-| hand-written, runtime-bound address | not vectorised: cannot identify array bounds; alias-blocked loads 7 | not vectorised (reason 1200) | vectorised | 417 / 373 / 248 | 81 / 15 / 9.6 |
-| today's `wire(...)` | the same as hand-written runtime-bound | the same | the same | 417 / 373 / 248 | 82 / 15 / 10.6 |
-| today's dynamic, and the typed route's dynamic build | not vectorised: the loop body is opaque | not vectorised (reason 1200) | not vectorised | 1369 / 1573 / 1571 | 95 and 95 / 89 and 92 / 84 and 83 |
-| typed route, bridged | vectorised, width 4×2 / 8×4; alias-blocked loads 22 | not vectorised (reason 1200) | not vectorised | 732 / 149 / 739 | 90 / 6.2 / 103 |
+| Variant | clang (default / AVX2) | MSVC | icx | Instructions per burst |
+|---|---|---|---|---|
+| hand-written direct call | vectorised, width 4×2 / 8×4 | not vectorised (reason 1102) | vectorised | 201 / 136 / 250 |
+| today's static | the same | the same | the same | 205 / 136 / 250 ³ |
+| **typed route, static** | the same; alias-blocked loads 0 (hand-written: 1) | the same | the same | 205 / 136 / 250 ³ |
+| hand-written, runtime-bound address | not vectorised: cannot identify array bounds; alias-blocked loads 7 | not vectorised (reason 1200) | vectorised | 417 / 373 / 248 |
+| today's `wire(...)` | the same as hand-written runtime-bound | the same | the same | 417 / 373 / 248 |
+| today's dynamic, and the typed route's dynamic build | not vectorised: the loop body is opaque | not vectorised (reason 1200) | not vectorised | 1369 / 1573 / 1571 |
+| typed route, bridged | vectorised, width 4×2 / 8×4; alias-blocked loads 22 | not vectorised (reason 1200) | not vectorised | 732 / 149 / 739 |
 
-Instructions and ns are MSVC / clang-cl / icx.
+Instructions are MSVC / clang-cl / icx.
 
 ³ MSVC leaves the publisher's burst function out of line in both (one call, +4 instructions); the typed route
 equals today's static API there.
@@ -246,7 +274,7 @@ Two things follow. A statically routed burst is the caller's own loop again and 
 *storage*, not just static types, that buys this: when the receiver's address is a run-time value (`wire`, or
 hand-written code that stores a pointer), clang and MSVC cannot prove the receiver's state does not alias the data
 being published, so the running total goes through memory on every sample and the loop stays scalar: on MSVC the
-burst takes about 81 ns against under 9. That is a reason for the typed route to bind addresses as template arguments. It is
+runtime-bound burst takes 60 to 80 ns against under 9. That is a reason for the typed route to bind addresses as template arguments. It is
 also a reason not to use `StaticFirst` on a burst path: of the three compilers only clang still vectorises the loop
 there.
 
@@ -267,8 +295,8 @@ run.
 
 ## Recommendation
 
-1. **Take the typed route forward as the converged API**: `StaticTo` (and, with the reservations below,
-   `StaticFirst`) as per-type configuration options, with `Subscribe<T>`, `Publish<T>`, `SubscribeAll` and
+1. **Take the typed route forward as the converged API**: `StaticTo` (and `StaticFirst`, as a convenience) as
+   per-type configuration options written next to the type, with `Subscribe<T>`, `Publish<T>`, `SubscribeAll` and
    `publish()` following the type's topology. It is the only candidate where existing broker code is already the
    converged spelling, and the only one whose dynamic build cannot regress, because it is the same code.
 2. **Keep explicit wiring as the lower-level lever**, unchanged: `StaticWiring`, `wire`, `Publisher`, `Sink`. It
@@ -280,36 +308,43 @@ run.
 4. `BrokerBus` (the broker as a wiring for any type) is a small, separable convenience for the explicit-wiring API;
    decide it on its own merits.
 
-## Open questions
+## Decisions
 
-Measurement does not settle these. Each needs a decision before the typed route is an in-library proposal, and
-[DECISIONS.md](DECISIONS.md) works through each with compiled examples, the options and their costs.
+[DECISIONS.md](DECISIONS.md) works through each with compiled examples, the options and their costs. Where they
+stand after the owner's review of 2026-10-07:
 
-| # | Decision | In one line |
+| # | Decision | Status |
 |---|---|---|
-| [1](DECISIONS.md#1-one-topology-per-message-type) | One topology per message type, program-wide | The granularity of Global storage; `Tagged` or explicit wiring for a second instance |
-| [2](DECISIONS.md#2-where-the-topology-lives-and-what-happens-when-a-unit-misses-it) | Where the topology lives, and catching a unit that misses it | A missed unit loses messages silently in release builds; the spike now reports it in debug builds |
-| [3](DECISIONS.md#3-what-a-publisher-has-to-see) | What a publisher has to see | The receivers' definitions (a compile error otherwise), or an out-of-line route at +4 to +7 instructions without LTO |
-| [4](DECISIONS.md#4-override) | `receive()` without `override` | A mismatched signature is a compile error in both builds without it; keeping the virtual costs RAM instead |
-| [5](DECISIONS.md#5-semantics-that-still-differ) | Semantics that still differ | Delivery order, the closed set of receivers, cancellation and `filter()` |
-| [6](DECISIONS.md#6-staticfirst) | Whether to ship `StaticFirst` | +9 to +21 instructions per publication, and no burst vectorisation on MSVC and icx |
-| [7](DECISIONS.md#7-header-layering) | Header layering | The broker area can follow a topology without including wiring |
-| [8](DECISIONS.md#8-configuring-a-type-without-the-preprocessor) | Configuring a type without the preprocessor | `SUB0PUB_CONFIGURE` is sugar for a specialisation that can be written directly; a project-level list is a possible refinement |
+| [1](DECISIONS.md#1-one-topology-per-message-type) | One topology per message type | **Decided:** the type decides; `Tagged` where it must vary |
+| [2](DECISIONS.md#2-where-the-configuration-lives-and-publishing-to-nobody) | Where the configuration lives | **Decided:** next to the type; `SUB0PUB_CONFIGURE` only for types that cannot be edited; publishing to nobody is a failure by default |
+| [3](DECISIONS.md#3-what-a-publisher-has-to-see) | What a publisher has to see | Deferred to a production sample; the out-of-line route is a pattern users may apply (+4 to +7 instructions without LTO) |
+| [4](DECISIONS.md#4-override) | `receive()` without `override` | **Decided:** no `override` |
+| [5a](DECISIONS.md#5a-delivery-order) | Delivery order | **Decided:** documented |
+| [5b](DECISIONS.md#5b-the-set-of-receivers-is-closed) | A receiver left out of the list | **Direction set:** safe by default with an opt-out; `receiverCount()` and `tryPublish()` for publishers |
+| [5c](DECISIONS.md#5c-features-that-exist-only-on-the-broker) | Broker-only members on a wired type | Deferred |
+| [5d](DECISIONS.md#5d-cancellation) | Cancellation | Deferred until after the first convergence API lands |
+| [5e](DECISIONS.md#5e-filter) | `filter()` | **Decided:** an opt-in per type in both models |
+| [6](DECISIONS.md#6-staticfirst-and-a-guided-route-from-dynamic-to-static) | `StaticFirst`; migrating from dynamic | **Direction set:** a convenience; a wiring report guides the move (proof of concept here) |
+| [7](DECISIONS.md#7-header-layering) | Header layering | Deferred |
+| [8](DECISIONS.md#8-configuring-a-type-without-the-preprocessor) | Configuring without the preprocessor | Deferred |
+
+One point in decision 2 is waiting for confirmation: what a reported empty publication does in a release build by
+default (abort, as the library's other violation hooks do, or only count).
 
 **Evidence still to collect:** the shootout on GCC with callgrind and on Cortex-M33 (`-Os`, image only), which is
 where the existing budgets live; compile-time A/B once the code is in `include/`; and a hardware-event VTune run,
 which needs elevation.
 
 An in-library change would touch the public API (`Subscribe`, `Publish`, `SubscribeAll`, `publish()`, the
-configuration options), so it owes a `MIGRATION.md` entry, a decision row and limitations in `docs/DESIGN.md`,
-tests, and collapse cases with recorded budgets.
+configuration options, and the broker's behaviour on an empty publication), so it owes a `MIGRATION.md` entry, a
+decision row and limitations in `docs/DESIGN.md`, tests, and collapse cases with recorded budgets.
 
 ## Layout
 
 | Path | Contents |
 |---|---|
-| `DECISIONS.md` | the open design decisions, each with compiled examples |
-| `include/sub0pub_spike/` | the candidate layers: `topology.hpp` (typed route), `broker_bus.hpp`, `subscription.hpp` |
+| `DECISIONS.md` | the design decisions, each with compiled examples, and where each stands |
+| `include/sub0pub_spike/` | `topology.hpp` (typed route), `no_receivers.hpp` (reporting an empty publication), `wiring_report.hpp` (the observed wiring at exit); `broker_bus.hpp` and `subscription.hpp` (the other candidates) |
 | `examples/<candidate>/` | one station per candidate; `mode/<mode>/` is all that differs between its builds |
 | `examples/earlier/` | the first round of spikes, kept for reference (below) |
 | `cases/<case>/` | shootout variants, in the collapse-evidence harness contract |

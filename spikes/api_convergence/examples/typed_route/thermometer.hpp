@@ -4,9 +4,7 @@
  * Demonstrates: a publisher that is an ordinary class, declared here and defined in thermometer.cpp, with no
  * template parameter for its output and no knowledge of who receives.
  */
-#include "topology.hpp"
-
-#include "messages.hpp"
+#include "station_types.hpp"
 
 class Thermometer final : public sub0::spike::Publish<Reading>, public sub0::spike::Publish<Alarm>
 {

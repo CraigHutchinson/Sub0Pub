@@ -39,7 +39,7 @@ endfunction()
 convergence_station(status_quo MODES dynamic static)
 convergence_station(bus_parameter MODES dynamic static wired)
 convergence_station(port_member MODES dynamic static)
-convergence_station(typed_route MODES dynamic static hot_path bridged SOURCES thermometer.cpp)
+convergence_station(typed_route MODES dynamic static hot_path bridged foreign report SOURCES thermometer.cpp)
 
 # The first round of spikes, kept for reference: member-bound subscriptions, a member-owned wiring and a
 # preprocessor-selected flow. README.md says what superseded each.

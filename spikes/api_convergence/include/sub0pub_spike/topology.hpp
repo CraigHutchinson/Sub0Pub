@@ -22,7 +22,9 @@
 
 #include <atomic>
 #include <cassert>
+#include <cstddef>
 #include <cstdint>
+#include <cstdlib>
 #include <type_traits>
 
 #include "sub0pub/broker.hpp"
@@ -37,6 +39,15 @@
 #else
 #define SUB0PUB_SPIKE_CHECK_BOUND false
 #endif
+#endif
+
+/** Action when a subscriber of a StaticTo type is constructed without being listed (see SUB0PUB_SPIKE_CHECK_BOUND).
+ * @param what  Null-terminated description of the violation
+ * Default asserts, then aborts. Override to count or log instead, for example in a unit test that constructs a
+ * receiver on its own; if it returns, construction continues and the receiver is simply never called.
+ */
+#ifndef SUB0PUB_SPIKE_UNLISTED_RECEIVER
+#define SUB0PUB_SPIKE_UNLISTED_RECEIVER(what) do { assert(!(what)); std::abort(); } while(false)
 #endif
 
 /** Experiment knob: a StaticTo subscriber base keeps a virtual receive(), so existing `override` receivers compile
@@ -94,6 +105,26 @@ namespace sub0::spike
         {
             return (detail::isBound(Bound, subscriber) || ...);
         }
+
+        /** Rejects a bound receiver that declares filter() for a type that has not opted in to filtering.
+         *  The runtime broker rejects such a subscriber unless the type is configured with sub0::Filter; a wired type
+         *  follows the same rule, so one source is accepted or rejected alike whichever way the type is delivered.
+         * @tparam Data           The message type being published.
+         * @tparam FilterEnabled  Whether Data's configuration has sub0::Filter.
+         */
+        template<class Data, bool FilterEnabled>
+        static constexpr void requireFilterOptIn() noexcept
+        {
+            static_assert(FilterEnabled || !(sub0::detail::wiring::HasFilter<
+                              sub0::detail::wiring::receiver_t<std::remove_pointer_t<decltype(Bound)>>, Data> || ...),
+                          "sub0pub: a receiver listed in StaticTo<> declares filter(), but its message type is not configured "
+                          "with sub0::Filter");
+        }
+
+        /** The number of bound receivers that receive Data: a constant of the program. */
+        template<class Data>
+        static constexpr uint32_t cReceivers =
+            (uint32_t(handles_v<std::remove_pointer_t<decltype(Bound)>, Data>) + ... + uint32_t(0));
 
         /** Rejects a translation unit that publishes without the bound receivers' definitions.
          *  Capability routing would otherwise find no receive() on an incomplete type and silently deliver nothing.
@@ -157,8 +188,26 @@ namespace sub0::spike
         };
     };
 
+    /** Configuration option: publishing this message type to no receiver at all is expected, not a failure.
+     *  By default a publication that reaches nobody is reported: at compile time for StaticTo<>, at run time by a
+     *  broker that checks (sub0pub_spike/no_receivers.hpp). Use this for a type whose receivers are optional: a
+     *  diagnostic stream, a plug-in loaded at run time, a message compiled out with an empty StaticTo<>.
+     */
+    struct AllowNoReceivers
+    {
+        template<class Base>
+        struct apply : Base
+        {
+            static constexpr bool allowNoReceivers = true;
+        };
+    };
+
     namespace detail
     {
+        /// Whether a configuration opted out of the no-receivers report
+        template<class Config>
+        constexpr bool allowsNoReceivers = requires { requires Config::allowNoReceivers; };
+
         template<class Config>
         struct TopologyOf
         {
@@ -187,7 +236,8 @@ namespace sub0::spike
 #if SUB0PUB_SPIKE_CHECK_BOUND
             StaticSubscribe() noexcept
             {
-                assert(topology_t<Data>::binds(this) && "sub0pub: this subscriber is not listed in its type's StaticTo<>");
+                if (!topology_t<Data>::binds(this))
+                    SUB0PUB_SPIKE_UNLISTED_RECEIVER("sub0pub: this subscriber is not listed in its type's StaticTo<>");
             }
 #else
             StaticSubscribe() = default; // trivial, so a receiver stays as cheap to construct as a plain class
@@ -278,6 +328,18 @@ namespace sub0::spike
         }
     }
 
+    namespace detail
+    {
+        /** The compile-time checks every publication to bound receivers makes; none leaves code behind. */
+        template<class Data, class Topology>
+        constexpr void requireStatic() noexcept
+        {
+            Topology::requireComplete();
+            Topology::template requireHandlers<Subscribe<Data>, Data>();
+            Topology::template requireFilterOptIn<Data, config_t<Data>::filter>();
+        }
+    }
+
     /** Publishes data along its type's topology: direct calls to bound receivers, the runtime broker, or both.
      * @param from  A publisher deriving from Publish<Data>.
      * @param data  The message; receivers see it by const reference for the duration of the call.
@@ -290,11 +352,65 @@ namespace sub0::spike
         detail::checkTopology<Data, Topology>();
         if constexpr (Topology::cHasStatic)
         {
-            Topology::requireComplete();
-            Topology::template requireHandlers<Subscribe<Data>, Data>();
+            detail::requireStatic<Data, Topology>();
+            // A publication that can reach nobody is a failure unless the type says otherwise. With only static
+            // receivers that is known here, so it costs nothing at run time.
+            static_assert(Topology::cHasDynamic || detail::allowsNoReceivers<config_t<Data>> || Topology::template cReceivers<Data> > 0,
+                          "sub0pub: no receiver listed in this type's StaticTo<> can receive it, so the publication would "
+                          "reach nobody; list a receiver, or configure the type with AllowNoReceivers");
             Topology::publish(data);
         }
         if constexpr (Topology::cHasDynamic)
             sub0::publish(from, data);
+    }
+
+    /** The number of receivers a publication of Data reaches at this moment.
+     *  A constant for a StaticTo type. For a brokered type it reads the subscription table, which the library
+     *  broker does not expose yet: in this spike it needs a broker with receivers() (sub0pub_spike/no_receivers.hpp).
+     * @return Bound receivers that receive Data, plus runtime subscribers of Data.
+     */
+    template<class Data>
+    [[nodiscard]] constexpr uint32_t receiverCount() noexcept
+    {
+        using Topology = topology_t<Data>;
+        uint32_t count = 0;
+        if constexpr (Topology::cHasStatic)
+            count += Topology::template cReceivers<Data>;
+        if constexpr (Topology::cHasDynamic)
+        {
+            static_assert(requires { sub0::detail::BrokerFor<Data>::receivers(); },
+                          "sub0pub spike: receiverCount() of a brokered type needs a broker that exposes receivers()");
+            count += sub0::detail::BrokerFor<Data>::receivers();
+        }
+        return count;
+    }
+
+    /** Publishes data and returns how many receivers it reached, without reporting when that is none.
+     *  For a call site that treats "nobody is listening" as its own decision: it checks the result and warns,
+     *  retries or ignores, whatever the type's default would have done.
+     * @param from  A publisher deriving from Publish<Data>.
+     * @param data  The message.
+     * @return The number of receivers called.
+     */
+    template<class From, class Data>
+    [[nodiscard]] SUB0PUB_FORCE_INLINE uint32_t tryPublish(From& from, const Data& data) noexcept
+    {
+        using Topology = topology_t<Data>;
+        [[maybe_unused]] const Publish<Data>& publisher = from;
+        detail::checkTopology<Data, Topology>();
+        uint32_t reached = 0;
+        if constexpr (Topology::cHasStatic)
+        {
+            detail::requireStatic<Data, Topology>();
+            Topology::publish(data);
+            reached += Topology::template cReceivers<Data>;
+        }
+        if constexpr (Topology::cHasDynamic)
+        {
+            static_assert(requires(const sub0::detail::BrokerFor<Data>& broker) { broker.publishCounted(data); },
+                          "sub0pub spike: tryPublish() of a brokered type needs a broker with publishCounted()");
+            reached += sub0::detail::BrokerFor<Data>().publishCounted(data);
+        }
+        return reached;
     }
 } // namespace sub0::spike
