@@ -26,7 +26,7 @@ class TemperatureDisplay : public sub0::Subscribe<float> {
 public:
     TemperatureDisplay(const char* label) : label_(label) {}
 
-    void receive(const float& celsius) noexcept override {
+    void receive(const float& celsius) noexcept {
         std::printf("  [%s] Temperature: %.1f C\n", label_, celsius);
     }
 };

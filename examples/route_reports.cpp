@@ -38,7 +38,7 @@ struct SubscribedTemperatureDisplay final : sub0::Subscribe<TemperatureReading>
 {
     using Subscribe::Subscribe;
     unsigned readingsReceived = 0;
-    void receive(const TemperatureReading&) noexcept override { ++readingsReceived; }
+    void receive(const TemperatureReading&) noexcept { ++readingsReceived; }
 };
 
 struct TemperatureSensor final : sub0::Publish<TemperatureReading>

@@ -27,10 +27,10 @@ public:
 // Only receives warnings and errors (level >= 2)
 class AlertDisplay : public sub0::Subscribe<LogEntry> {
 public:
-    bool filter(const LogEntry& entry) noexcept override {
+    bool filter(const LogEntry& entry) noexcept {
         return entry.level >= 2;
     }
-    void receive(const LogEntry& entry) noexcept override {
+    void receive(const LogEntry& entry) noexcept {
         std::printf("  [ALERT] level=%d: %s\n", entry.level, entry.msg);
     }
 };
@@ -38,7 +38,7 @@ public:
 // Receives everything
 class FileLog : public sub0::Subscribe<LogEntry> {
 public:
-    void receive(const LogEntry& entry) noexcept override {
+    void receive(const LogEntry& entry) noexcept {
         std::printf("  [FILE]  level=%d: %s\n", entry.level, entry.msg);
     }
 };
@@ -46,10 +46,10 @@ public:
 // Only receives debug messages
 class DebugConsole : public sub0::Subscribe<LogEntry> {
 public:
-    bool filter(const LogEntry& entry) noexcept override {
+    bool filter(const LogEntry& entry) noexcept {
         return entry.level == 0;
     }
-    void receive(const LogEntry& entry) noexcept override {
+    void receive(const LogEntry& entry) noexcept {
         std::printf("  [DEBUG] %s\n", entry.msg);
     }
 };

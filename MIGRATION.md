@@ -65,6 +65,72 @@ the list does not name is never called: `SUB0PUB_UNLISTED_CHECK` (debug builds) 
 also `sub0::AllowNoReceivers`. Which form to use, and when the explicit `wire()` level is the right one instead:
 [docs/USAGE.md](docs/USAGE.md).
 
+### `Publisher<Derived, Out>` removed
+
+The CRTP mixin gave a publisher `this->publish(msg)` over a wiring it held. A publisher no longer needs to know
+its output at all: it derives from `Publish<T>` and its message type's configuration decides the delivery.
+
+**Action:** Prefer the type's configuration. Where a publisher must hold an explicit wiring (receivers without
+static storage, several wirings of one type), hold it as a member:
+
+```cpp
+// before
+template<class Out>
+struct Sensor : sub0::Publisher<Sensor<Out>, Out>
+{
+    using sub0::Publisher<Sensor<Out>, Out>::Publisher;
+    void measure(int v) noexcept { this->publish(Sample{v}); }
+};
+
+// after: the type decides (preferred)
+struct Sensor : sub0::Publish<Sample>
+{
+    void measure(int v) noexcept { sub0::publish(*this, Sample{v}); }
+};
+
+// after: an explicit wiring, held by value
+template<class Out>
+struct Sensor
+{
+    Out out;
+    void measure(int v) noexcept { out.publish(Sample{v}); }
+};
+```
+
+### `DynamicPort<T, N>` removed
+
+`DynamicPort` was a second, policy-free registry for runtime subscribers behind a static wiring. The runtime broker
+in its default configuration already measures at a hand-written registry's cost, and it has what `DynamicPort`
+lacked: a reported capacity, safe removal during delivery with `Snapshot`, a lock, sessions.
+
+**Action:** Subscribe runtime receivers with `Subscribe<T>`. Beside receivers with static storage, configure the
+type with `sub0::StaticFirst<&fixed>`; in an explicit wiring, bind a `BrokerPort<T>`:
+
+```cpp
+// before
+sub0::DynamicPort<Sample, 4> port;
+auto bus = sub0::wire(controller, port);
+port.add(&probe);                                    // struct Probe : sub0::DynamicPort<Sample, 4>::Receiver
+
+// after: the type decides (preferred; `controller` has static storage)
+struct Sample { int v; using sub0_config = sub0::config<sub0::Capacity<4>, sub0::StaticFirst<&controller>>; };
+Probe probe;                                         // struct Probe : sub0::Subscribe<Sample>
+
+// after: an explicit wiring
+sub0::BrokerPort<Sample> port;
+auto bus = sub0::wire(controller, port);
+Probe probe;                                         // struct Probe : sub0::Subscribe<Sample>
+```
+
+`tryAdd()` becoming `false` is `isSubscribed()` becoming `false`; `remove()` is `disconnect()`, or the end of the
+subscriber's lifetime.
+
+### `sub0pub/wiring/publisher.hpp` renamed to `sub0pub/wiring/sink.hpp`
+
+The header now holds `Sink<T>` alone.
+
+**Action:** Only if you included that header directly rather than `sub0pub/wiring.hpp` or `sub0pub/sub0pub.hpp`.
+
 ### `Subscribe` and `Publish` have a second, defaulted template parameter
 
 `sub0::Subscribe<Data>` and `sub0::Publish<Data>` are now `Subscribe<Data, bool Wired>` and
@@ -240,10 +306,11 @@ Every translation unit must resolve the same configuration for a type: resolving
 `sub0::wire(a, b, logger)` and `sub0::StaticWiring<&a, &b, &logger>` bind receivers at the application's composition point. Receivers are plain classes with a non-virtual `receive(const T&)`; each delivery is a direct call, measured equal to hand-written code. The rest of the static wiring API:
 - `publishCancelable()` stops at a receiver whose `bool receive()` returns `false`;
 - `Sink<T>` is a type-erased port for non-template publishers;
-- `Publisher<Derived, Out>` is a CRTP mixin;
 - `Forward<Transport>` and `StaticForward<&transport>` are transport endpoints, with split horizon through `publishFrom()`;
-- `DynamicPort<T, N>` and `BrokerPort<T>` bring runtime subscribers into a static wiring;
+- `BrokerPort<T>` brings runtime subscribers into a static wiring;
 - `handles_v<R, T>` asserts that a receiver handles a message.
+
+v2.0 also had a `Publisher<Derived, Out>` mixin and a `DynamicPort<T, N>`; both were removed afterwards (above).
 
 **Action:** None. Measured forms: [docs/EVIDENCE.md](docs/EVIDENCE.md).
 

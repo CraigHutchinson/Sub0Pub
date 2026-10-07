@@ -22,7 +22,7 @@ public:
 // A handler that "claims" commands by cancelling delivery to later subscribers
 class PrimaryHandler : public sub0::Subscribe<Command> {
 public:
-    void receive(const Command& cmd) noexcept override {
+    void receive(const Command& cmd) noexcept {
         if (cmd.id < 100) {
             std::printf("  [Primary] Handled command %d (cancelling further delivery)\n", cmd.id);
             cancel(); // Stop delivery to FallbackHandler
@@ -35,7 +35,7 @@ public:
 // A fallback handler that only sees commands not claimed by PrimaryHandler
 class FallbackHandler : public sub0::Subscribe<Command> {
 public:
-    void receive(const Command& cmd) noexcept override {
+    void receive(const Command& cmd) noexcept {
         std::printf("  [Fallback] Handling command %d\n", cmd.id);
     }
 };

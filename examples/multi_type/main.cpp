@@ -31,11 +31,11 @@ public:
 // A monitor that receives both types
 class Monitor : public sub0::SubscribeAll<SensorData, StatusCode> {
 public:
-    void receive(const SensorData& data) noexcept override {
+    void receive(const SensorData& data) noexcept {
         std::printf("  [Monitor] Sensor: temp=%.1f, humidity=%.1f\n",
                     data.temperature, data.humidity);
     }
-    void receive(const StatusCode& status) noexcept override {
+    void receive(const StatusCode& status) noexcept {
         std::printf("  [Monitor] Status: code=%d\n", status.code);
     }
 };
@@ -43,7 +43,7 @@ public:
 // A logger that only cares about status codes
 class StatusLogger : public sub0::Subscribe<StatusCode> {
 public:
-    void receive(const StatusCode& status) noexcept override {
+    void receive(const StatusCode& status) noexcept {
         std::printf("  [StatusLogger] Logged status code: %d\n", status.code);
     }
 };

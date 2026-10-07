@@ -330,17 +330,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "clang-O2/filters/observable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "clang-O2/filters/observable/sub0_b1_wire": {
    "publish": 2,
    "setup": 0,
@@ -393,17 +382,6 @@
    "indirect_calls": 2,
    "text": 2056,
    "ram": 288,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "clang-O2/filters/removable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -462,17 +440,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "clang-O2/large_payload/observable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "clang-O2/large_payload/observable/sub0_b1_wire": {
    "publish": 2,
    "setup": 0,
@@ -525,17 +492,6 @@
    "indirect_calls": 1,
    "text": 2096,
    "ram": 280,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "clang-O2/large_payload/removable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -594,17 +550,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "clang-O2/many_receivers/observable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "clang-O2/many_receivers/observable/sub0_b1_wire": {
    "publish": 2,
    "setup": 0,
@@ -657,17 +602,6 @@
    "indirect_calls": 1,
    "text": 14280,
    "ram": 776,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "clang-O2/many_receivers/removable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -726,17 +660,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "clang-O2/multi_receivers/observable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "clang-O2/multi_receivers/observable/sub0_b1_wire": {
    "publish": 2,
    "setup": 0,
@@ -789,17 +712,6 @@
    "indirect_calls": 1,
    "text": 2410,
    "ram": 288,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "clang-O2/multi_receivers/removable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -858,17 +770,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "clang-O2/multi_types/observable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "clang-O2/multi_types/observable/sub0_b1_wire": {
    "publish": 2,
    "setup": 0,
@@ -921,17 +822,6 @@
    "indirect_calls": 2,
    "text": 3775,
    "ram": 584,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "clang-O2/multi_types/removable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -1078,17 +968,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "clang-O2/one_receiver/observable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "clang-O2/one_receiver/observable/sub0_b1_wire": {
    "publish": 2,
    "setup": 0,
@@ -1141,17 +1020,6 @@
    "indirect_calls": 1,
    "text": 1272,
    "ram": 208,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "clang-O2/one_receiver/removable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -1210,28 +1078,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "clang-O2/publisher_ergonomics/observable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "clang-O2/publisher_ergonomics/removable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "clang-O2/static_dynamic_bridge/observable/sub0_bridge_broker": {
    "publish": 2,
    "setup": 7,
@@ -1240,17 +1086,6 @@
    "indirect_calls": 0,
    "text": 774,
    "ram": 104,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "clang-O2/static_dynamic_bridge/observable/sub0_bridge_slots": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 29,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -1265,17 +1100,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "clang-O2/static_dynamic_bridge/removable/sub0_bridge_slots": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 29,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "clang-O2/static_dynamic_bridge_churn/observable/sub0_bridge_broker": {
    "publish": 2.5,
    "setup": 10,
@@ -1284,17 +1108,6 @@
    "indirect_calls": 0,
    "text": 986,
    "ram": 104,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "clang-O2/static_dynamic_bridge_churn/observable/sub0_bridge_slots": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 29,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -1309,17 +1122,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "clang-O2/static_dynamic_bridge_churn/removable/sub0_bridge_slots": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 29,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "clang-O2/static_dynamic_bridge_empty/observable/sub0_bridge_broker": {
    "publish": 2,
    "setup": 3,
@@ -1331,17 +1133,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "clang-O2/static_dynamic_bridge_empty/observable/sub0_bridge_slots": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "clang-O2/static_dynamic_bridge_empty/removable/sub0_bridge_broker": {
    "publish": 2,
    "setup": 3,
@@ -1350,17 +1141,6 @@
    "indirect_calls": 0,
    "text": 322,
    "ram": 24,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "clang-O2/static_dynamic_bridge_empty/removable/sub0_bridge_slots": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -1584,17 +1364,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "clang-O2/two_domains/observable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "clang-O2/two_domains/observable/sub0_b1_one_publisher": {
    "publish": 3.0,
    "setup": 6,
@@ -1658,17 +1427,6 @@
    "indirect_calls": 2,
    "text": 3134,
    "ram": 424,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "clang-O2/two_domains/removable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -1738,17 +1496,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "clang-O2/zero_receivers/observable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "clang-O2/zero_receivers/observable/sub0_b1_wire": {
    "publish": 2,
    "setup": 0,
@@ -1794,17 +1541,6 @@
    "added_deps": []
   },
   "clang-O2/zero_receivers/observable/sub0pub_virtual_lean": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "clang-O2/zero_receivers/removable/sub0_b1_mixin": {
    "publish": 2,
    "setup": 0,
    "teardown": 0,
@@ -2110,14 +1846,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "cm33-gcc-Os/filters/observable/sub0_b1_mixin": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "cm33-gcc-Os/filters/observable/sub0_b1_wire": {
    "path": 2,
    "indirect_calls": 0,
@@ -2155,14 +1883,6 @@
    "indirect_calls": 2,
    "text": 544,
    "ram": 52,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "cm33-gcc-Os/filters/removable/sub0_b1_mixin": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -2206,14 +1926,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "cm33-gcc-Os/large_payload/observable/sub0_b1_mixin": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "cm33-gcc-Os/large_payload/observable/sub0_b1_wire": {
    "path": 2,
    "indirect_calls": 0,
@@ -2251,14 +1963,6 @@
    "indirect_calls": 1,
    "text": 496,
    "ram": 52,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "cm33-gcc-Os/large_payload/removable/sub0_b1_mixin": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -2302,14 +2006,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "cm33-gcc-Os/many_receivers/observable/sub0_b1_mixin": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "cm33-gcc-Os/many_receivers/observable/sub0_b1_wire": {
    "path": 2,
    "indirect_calls": 0,
@@ -2347,14 +2043,6 @@
    "indirect_calls": 0,
    "text": 568,
    "ram": 388,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "cm33-gcc-Os/many_receivers/removable/sub0_b1_mixin": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -2398,14 +2086,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "cm33-gcc-Os/multi_receivers/observable/sub0_b1_mixin": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "cm33-gcc-Os/multi_receivers/observable/sub0_b1_wire": {
    "path": 2,
    "indirect_calls": 0,
@@ -2443,14 +2123,6 @@
    "indirect_calls": 1,
    "text": 484,
    "ram": 60,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "cm33-gcc-Os/multi_receivers/removable/sub0_b1_mixin": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -2494,14 +2166,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "cm33-gcc-Os/multi_types/observable/sub0_b1_mixin": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "cm33-gcc-Os/multi_types/observable/sub0_b1_wire": {
    "path": 2,
    "indirect_calls": 0,
@@ -2539,14 +2203,6 @@
    "indirect_calls": 2,
    "text": 752,
    "ram": 104,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "cm33-gcc-Os/multi_types/removable/sub0_b1_mixin": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -2654,14 +2310,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "cm33-gcc-Os/one_receiver/observable/sub0_b1_mixin": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "cm33-gcc-Os/one_receiver/observable/sub0_b1_wire": {
    "path": 2,
    "indirect_calls": 0,
@@ -2699,14 +2347,6 @@
    "indirect_calls": 0,
    "text": 416,
    "ram": 44,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "cm33-gcc-Os/one_receiver/removable/sub0_b1_mixin": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -2750,35 +2390,11 @@
    "init_array": 0,
    "added_deps": []
   },
-  "cm33-gcc-Os/publisher_ergonomics/observable/sub0_b1_mixin": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "cm33-gcc-Os/publisher_ergonomics/removable/sub0_b1_mixin": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "cm33-gcc-Os/static_dynamic_bridge/observable/sub0_bridge_broker": {
    "path": 3,
    "indirect_calls": 0,
    "text": 1644,
    "ram": 116,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "cm33-gcc-Os/static_dynamic_bridge/observable/sub0_bridge_slots": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -2790,27 +2406,11 @@
    "init_array": 0,
    "added_deps": []
   },
-  "cm33-gcc-Os/static_dynamic_bridge/removable/sub0_bridge_slots": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "cm33-gcc-Os/static_dynamic_bridge_churn/observable/sub0_bridge_broker": {
    "path": 39,
    "indirect_calls": 0,
    "text": 1644,
    "ram": 124,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "cm33-gcc-Os/static_dynamic_bridge_churn/observable/sub0_bridge_slots": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -2822,14 +2422,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "cm33-gcc-Os/static_dynamic_bridge_churn/removable/sub0_bridge_slots": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "cm33-gcc-Os/static_dynamic_bridge_empty/observable/sub0_bridge_broker": {
    "path": 2,
    "indirect_calls": 0,
@@ -2838,27 +2430,11 @@
    "init_array": 0,
    "added_deps": []
   },
-  "cm33-gcc-Os/static_dynamic_bridge_empty/observable/sub0_bridge_slots": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "cm33-gcc-Os/static_dynamic_bridge_empty/removable/sub0_bridge_broker": {
    "path": 2,
    "indirect_calls": 0,
    "text": 1536,
    "ram": 108,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "cm33-gcc-Os/static_dynamic_bridge_empty/removable/sub0_bridge_slots": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -3026,14 +2602,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "cm33-gcc-Os/two_domains/observable/sub0_b1_mixin": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "cm33-gcc-Os/two_domains/observable/sub0_b1_one_publisher": {
    "path": 2,
    "indirect_calls": 0,
@@ -3079,14 +2647,6 @@
    "indirect_calls": 1,
    "text": 2232,
    "ram": 228,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "cm33-gcc-Os/two_domains/removable/sub0_b1_mixin": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -3138,14 +2698,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "cm33-gcc-Os/zero_receivers/observable/sub0_b1_mixin": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "cm33-gcc-Os/zero_receivers/observable/sub0_b1_wire": {
    "path": 2,
    "indirect_calls": 0,
@@ -3179,14 +2731,6 @@
    "added_deps": []
   },
   "cm33-gcc-Os/zero_receivers/observable/sub0pub_virtual_lean": {
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "cm33-gcc-Os/zero_receivers/removable/sub0_b1_mixin": {
    "path": 2,
    "indirect_calls": 0,
    "text": 0,
@@ -3564,17 +3108,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "gcc-O2/filters/observable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "gcc-O2/filters/observable/sub0_b1_wire": {
    "publish": 2,
    "setup": 0,
@@ -3627,17 +3160,6 @@
    "indirect_calls": 2,
    "text": 1742,
    "ram": 304,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "gcc-O2/filters/removable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -3696,17 +3218,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "gcc-O2/large_payload/observable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "gcc-O2/large_payload/observable/sub0_b1_wire": {
    "publish": 2,
    "setup": 0,
@@ -3759,17 +3270,6 @@
    "indirect_calls": 1,
    "text": 1609,
    "ram": 296,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "gcc-O2/large_payload/removable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -3828,17 +3328,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "gcc-O2/many_receivers/observable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "gcc-O2/many_receivers/observable/sub0_b1_wire": {
    "publish": 2,
    "setup": 0,
@@ -3891,17 +3380,6 @@
    "indirect_calls": 0,
    "text": 7545,
    "ram": 792,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "gcc-O2/many_receivers/removable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -3960,17 +3438,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "gcc-O2/multi_receivers/observable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "gcc-O2/multi_receivers/observable/sub0_b1_wire": {
    "publish": 2,
    "setup": 0,
@@ -4023,17 +3490,6 @@
    "indirect_calls": 1,
    "text": 1876,
    "ram": 304,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "gcc-O2/multi_receivers/removable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -4092,17 +3548,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "gcc-O2/multi_types/observable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "gcc-O2/multi_types/observable/sub0_b1_wire": {
    "publish": 2,
    "setup": 0,
@@ -4155,17 +3600,6 @@
    "indirect_calls": 2,
    "text": 3130,
    "ram": 608,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "gcc-O2/multi_types/removable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -4312,17 +3746,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "gcc-O2/one_receiver/observable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "gcc-O2/one_receiver/observable/sub0_b1_wire": {
    "publish": 2,
    "setup": 0,
@@ -4375,17 +3798,6 @@
    "indirect_calls": 0,
    "text": 1123,
    "ram": 224,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "gcc-O2/one_receiver/removable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -4444,28 +3856,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "gcc-O2/publisher_ergonomics/observable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "gcc-O2/publisher_ergonomics/removable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "gcc-O2/static_dynamic_bridge/observable/sub0_bridge_broker": {
    "publish": 2,
    "setup": 15,
@@ -4474,17 +3864,6 @@
    "indirect_calls": 0,
    "text": 943,
    "ram": 120,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "gcc-O2/static_dynamic_bridge/observable/sub0_bridge_slots": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 48,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -4499,17 +3878,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "gcc-O2/static_dynamic_bridge/removable/sub0_bridge_slots": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 48,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "gcc-O2/static_dynamic_bridge_churn/observable/sub0_bridge_broker": {
    "publish": 2,
    "setup": 22,
@@ -4518,17 +3886,6 @@
    "indirect_calls": 0,
    "text": 1155,
    "ram": 120,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "gcc-O2/static_dynamic_bridge_churn/observable/sub0_bridge_slots": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 15,
-   "indirect_calls": 0,
-   "text": 68,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -4543,17 +3900,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "gcc-O2/static_dynamic_bridge_churn/removable/sub0_bridge_slots": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 48,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "gcc-O2/static_dynamic_bridge_empty/observable/sub0_bridge_broker": {
    "publish": 2,
    "setup": 3,
@@ -4565,17 +3911,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "gcc-O2/static_dynamic_bridge_empty/observable/sub0_bridge_slots": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "gcc-O2/static_dynamic_bridge_empty/removable/sub0_bridge_broker": {
    "publish": 2,
    "setup": 3,
@@ -4584,17 +3919,6 @@
    "indirect_calls": 0,
    "text": 444,
    "ram": 24,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "gcc-O2/static_dynamic_bridge_empty/removable/sub0_bridge_slots": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -4818,17 +4142,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "gcc-O2/two_domains/observable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "gcc-O2/two_domains/observable/sub0_b1_one_publisher": {
    "publish": 2,
    "setup": 0,
@@ -4892,17 +4205,6 @@
    "indirect_calls": 2,
    "text": 2827,
    "ram": 496,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "gcc-O2/two_domains/removable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
    "init_array": 0,
    "added_deps": []
   },
@@ -4972,17 +4274,6 @@
    "init_array": 0,
    "added_deps": []
   },
-  "gcc-O2/zero_receivers/observable/sub0_b1_mixin": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
   "gcc-O2/zero_receivers/observable/sub0_b1_wire": {
    "publish": 2,
    "setup": 0,
@@ -5028,17 +4319,6 @@
    "added_deps": []
   },
   "gcc-O2/zero_receivers/observable/sub0pub_virtual_lean": {
-   "publish": 2,
-   "setup": 0,
-   "teardown": 0,
-   "path": 2,
-   "indirect_calls": 0,
-   "text": 0,
-   "ram": 0,
-   "init_array": 0,
-   "added_deps": []
-  },
-  "gcc-O2/zero_receivers/removable/sub0_b1_mixin": {
    "publish": 2,
    "setup": 0,
    "teardown": 0,

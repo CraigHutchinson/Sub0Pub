@@ -21,7 +21,7 @@ class RunningTotal final : public sub0::Subscribe<uint32_t>
 {
 public:
     uint32_t total = 0;
-    void receive(const uint32_t& amount) noexcept override { total += amount; }
+    void receive(const uint32_t& amount) noexcept { total += amount; }
 };
 
 int main()
