@@ -4,7 +4,8 @@ The typed route ([README.md](README.md)) measures well. What it needed beyond me
 decisions. This document gives each one a concrete example (the code a user writes, what the spike does with it,
 the options and their costs) and records where it now stands.
 
-**Status as of 2026-10-07**, after the owner's review. "Decided" items are settled for the first in-library
+**Status as of 2026-10-07**, after the owner's review. The [audit](#6-staticfirst-and-the-audit) added since then
+is one recording that answers, from a run, several of the questions below; each section says where. "Decided" items are settled for the first in-library
 version; "deferred" ones are deliberately left open until that version exists.
 
 | # | Decision | Status | Direction |
@@ -14,11 +15,11 @@ version; "deferred" ones are deliberately left open until that version exists.
 | [3](#3-what-a-publisher-has-to-see) | What a publisher has to see | Deferred | Inline is the normal form; the out-of-line route is a pattern users may apply. Revisit on a production sample |
 | [4](#4-override) | `receive()` without `override` | **Decided** | No `override` |
 | [5a](#5a-delivery-order) | Delivery order differs | **Decided** | Document it, with an example |
-| [5b](#5b-the-set-of-receivers-is-closed) | A receiver left out of the list | **Direction set** | Safe by default with an opt-out; publishers can ask how many receivers a type has |
+| [5b](#5b-the-set-of-receivers-is-closed) | A receiver left out of the list | **Direction set** | Safe by default with an opt-out; publishers can ask how many receivers a type has; the audit reports it |
 | [5c](#5c-features-that-exist-only-on-the-broker) | Broker-only members on a wired type | Deferred | Some may get a static meaning (`isSubscribed()` as a wiring check) |
 | [5d](#5d-cancellation) | Cancellation | Deferred | Until after the first convergence API lands |
 | [5e](#5e-filter) | `filter()` | **Decided** | An opt-in per type in both models |
-| [6](#6-staticfirst-and-a-guided-route-from-dynamic-to-static) | `StaticFirst`, and migrating from dynamic | **Direction set** | A user convenience; add a mode that reports the observed wiring so the move to static can be guided |
+| [6](#6-staticfirst-and-the-audit) | `StaticFirst`; the audit | **Direction set** | `StaticFirst` is a user convenience. One audit of a run reports unheard publications, unused receivers and the wiring a type could be given |
 | [7](#7-header-layering) | Header layering | Deferred | No hard decision now |
 | [8](#8-configuring-a-type-without-the-preprocessor) | Configuring without the preprocessor | Deferred | No hard decision now |
 
@@ -262,11 +263,14 @@ and, with `AllowNoReceivers` on the type, the last line is instead `publish to n
   measure exactly that. Each such type needs `AllowNoReceivers`, and `MIGRATION.md` needs the entry.
 - In-library it needs three small things in the broker: the check in `BrokerImpl::publish`, a way to read the
   receiver count, and a publish that returns it. The spike has all three, in the stand-in only.
-- **To confirm: what "reported" does in a release build.** The spike follows the library's other contract
-  violations: a hook macro whose default asserts in a debug build and aborts in a release build. Aborting a release
-  build because a subscriber was constructed late is severe. The alternatives are to report only in debug builds by
-  default (as `SUB0PUB_REENTRANT_CHECK` does), or to keep the check in release with a default that counts rather
-  than aborts. The check itself is free either way; this is only about the default action.
+- **To confirm: what "reported" does outside an audit build.** In an [audit build](#6-staticfirst-and-the-audit)
+  an empty publication is recorded against the publisher that made it, printed at exit and counted for a test:
+  nothing aborts. That gives the rule a place to report to, and it is where I would now put the default. What is
+  left to choose is the behaviour of an ordinary build. The spike's in-publish check follows the library's other
+  contract violations (a hook whose default asserts in a debug build and aborts in a release build), and aborting a
+  release build because a subscriber was constructed late is severe. With the audit available, my lean is: keep
+  the check and its hook for projects that want to stop at the first one, and make its default a debug-build
+  assertion only, as `SUB0PUB_REENTRANT_CHECK` is. The check itself is free either way.
 
 ---
 
@@ -410,8 +414,16 @@ Assertion failed: sub0pub: this subscriber is not listed in its type's StaticTo<
   wired type (usable in a `static_assert`), the table's count for a brokered one. `tryPublish()` returns it for
   one publication. Both are in the spike (decision 2).
 
-Not yet done: a release-build form of the "not listed" check, which would need a registration step the static
-path does not otherwise have.
+*The audit.* In an audit build the same condition is a finding instead of an abort, alongside its mirror image
+for a brokered type, a subscriber that never received anything:
+
+```text
+struct Status: a subscriber at 000000122AEFFA30 subscribes to it but is not in its StaticTo<> list, so it is never called
+struct Reading: class Logger at 000000122AEFF970 never received it: it subscribed after the last publication
+```
+
+Not done: a form of the "not listed" check for an ordinary release build, which would need a registration step
+the static path does not otherwise have. The audit is the release-build answer.
 
 ### 5c. Features that exist only on the broker
 
@@ -429,7 +441,8 @@ error C2039: 'disconnect': is not a member of 'Display'
 The same is true of `trySubscribe()`, `isSubscribed()` and `sub0::cancel()`. For later consideration: some of
 these have a sensible static meaning. `isSubscribed()` could answer "is this object in its type's list?", which
 makes it a validity check of the static wiring and keeps code that asserts on it portable across both models. The
-spike already computes that answer for the 5b check.
+spike already computes that answer for the 5b check, and the audit reports it for every subscriber at once, which
+may be the better place for a validity check than a member each caller has to remember to ask.
 
 `Route`, `Domain` and publish reports are not covered by the spike. `Route` derives from `sub0::Subscribe`
 directly, not from the spike's alias, so here it would compile for a `StaticTo` type, register with a broker that
@@ -480,12 +493,12 @@ static build was more permissive than the dynamic one. Now one source is accepte
 
 ---
 
-## 6. `StaticFirst`, and a guided route from dynamic to static
+## 6. `StaticFirst`, and the audit
 
 **Direction:** `StaticFirst` is a user convenience and stays one; how much of an application is loaded dynamically
-is the user's to know, not ours. What would help more is tooling: let users write free and easy dynamic binding,
-then show them, from a run, the wiring they actually had, so the move to static is retrospective and
-semi-automatic.
+is the user's to know, not ours. What helps more is tooling: let users write free and easy dynamic binding, then
+show them, from a run, what actually happened. One recording can carry most of the checks this document has been
+adding one at a time, so the audit is built as the single source of truth for them.
 
 ### `StaticFirst` as it stands
 
@@ -508,53 +521,126 @@ It keeps the broker's table and registration code in the image (RAM +350 to +420
 one mode in which a bound receiver's `receive()` stays virtual. Its documentation should say not to use it on a
 burst path. The spike registers and then disconnects a bound receiver; an in-library form would decide first.
 
-### The wiring report (proof of concept)
+### The audit
 
-`RecordWiring` ([`wiring_report.hpp`](include/sub0pub_spike/wiring_report.hpp)) is a diagnostic broker selected
-like any other option. The application runs as it was written, over runtime subscription, and at exit prints what
-it observed: per type, the receivers in delivery order, the deliveries each took, and whether the set ever changed
-while the type was being published.
+[`audit.hpp`](include/sub0pub_spike/audit.hpp). It is a build mode, not a source change: the program is compiled
+with one extra definition,
+
+```text
+-DSUB0PUB_CONFIG_HEADER="sub0pub_spike/audit_build.hpp"
+```
+
+and then keeps one ledger per message type, fed by both delivery paths (the runtime broker and a `StaticTo<>`
+list). At exit it prints its findings, then each type's publishers and receivers.
+
+**A clean program.** The station, built unchanged as an audit build, in its dynamic mode (MSVC):
+
+```text
+sub0pub audit: 0 findings
+  struct Reading: 3 publications; runtime table peaked at 2 of 8
+    published by class Thermometer: 3
+    1. class Display at 00007FF62D7E6408: 3 deliveries
+    2. class Audit at 00007FF62D7E63E0: 3 deliveries
+    the receivers never changed: a candidate for StaticTo<>, in this order, if they have static storage
+  struct Alarm: 1 publication; runtime table peaked at 1 of 8
+    published by class Thermometer: 1
+    1. class Audit at 00007FF62D7E63F0: 1 delivery
+    the receivers never changed: a candidate for StaticTo<>, in this order, if they have static storage
+```
+
+That is the guided route from dynamic to static: the list to write, in delivery order, read off a run. The same
+station in its static mode, where the audit names each listed receiver by the object in the list:
+
+```text
+sub0pub audit: 0 findings
+  struct Reading: 3 publications
+    published by class Thermometer: 3
+    1. display (class Display) at 00007FF64C7561C8: 3 deliveries, wired
+    2. audit (class Audit) at 00007FF64C7561C0: 3 deliveries, wired
+```
+
+**A program with mistakes.** [`examples/audit_findings`](examples/audit_findings/main.cpp) makes five, one per
+message type, none of which stops it:
 
 ```cpp
-struct Reading { int celsius; using sub0_config = sub0::config<sub0::spike::RecordWiring>; };
+thermometer.measure(95);    // 1. the Alarm is raised before any AuditLog exists
+AuditLog auditLog;
+thermometer.measure(20);
+Logger logger;              // 2. attached after the last Reading
+Console console;            // 3. waits for a Maintenance message that nothing publishes
+Listener first;
+Listener second;            // 4. Beacon's table holds one subscriber
+Panel spare;                // 5. not in Status's StaticTo<&panel>
 ```
-
-The station's `report` build (clang-cl):
 
 ```text
-sub0pub wiring report (message types configured with RecordWiring)
-  struct Reading: 3 publications
-    1. class Display at 00007FF6E4D382E8: 3 deliveries
-    2. class Audit at 00007FF6E4D38300: 3 deliveries
-    the set never changed: a candidate for StaticTo<> listing these 2 objects in this order, if they have static storage
-  struct Alarm: 1 publications
-    1. class Audit at 00007FF6E4D38310: 1 deliveries
-    the set never changed: a candidate for StaticTo<> listing these 1 objects in this order, if they have static storage
+sub0pub audit: 6 findings
+  struct Status: a subscriber at 000000122AEFFA30 subscribes to it but is not in its StaticTo<> list, so it is never called
+  struct Reading: class Logger at 000000122AEFF970 never received it: it subscribed after the last publication
+  struct Alarm: 1 of 1 publications reached no receiver; 1 by class Thermometer
+  struct Alarm: class AuditLog at 000000122AEFF960 never received it: it subscribed after the last publication
+  struct Maintenance: never published, although 1 receiver subscribed to it
+  struct Beacon: 1 subscription refused, the table of 1 was full
 ```
 
-That is the `static` build's configuration, read off a run. And a type that should stay brokered says so:
+The first mistake shows from both sides: a publication nobody received, attributed to its publisher, and a
+receiver that got nothing. The example's test passes when `auditFindings()` returns exactly six.
+
+**A unit that missed its configuration** (the `SUB0PUB_CONFIGURE` limitation of decision 2), as an audit build:
 
 ```text
-  struct Reading: 3 publications
-    1. class Display at 00007FF779F9D0D0: 3 deliveries
-    2. class Logger at 000000AA2979FB50: 1 deliveries, joined after publication 1, left after publication 2
-    receivers joined or left while it was being published: keep it brokered
+sub0pub audit: 2 findings
+  struct Reading: 1 of 2 publications reached no receiver; 1 by struct LegacySensor
+  struct Reading: published with different topologies in different translation units; one of them missed its configuration
+  struct Reading: 2 publications
+    published by struct Thermometer: 1
+    published by struct LegacySensor: 1
+    1. display (class Display) at 00007FF7193EED3C: 1 delivery, wired
 ```
 
-**What it is not yet.**
+It names the publisher at fault, which neither the debug assertion nor the in-publish check does.
+
+**Using it in a test or in CI.** `auditFindings()` returns the count so far, for an assertion at the end of a
+test. `SUB0PUB_SPIKE_AUDIT_EXIT(findings)` runs after the report at exit; defining it to exit non-zero fails any
+run that has a finding (verified: the program above then exits with the hook's status).
+
+**What it answers, and what that could retire.**
+
+| Question | Was | In the audit |
+|---|---|---|
+| Did a publication reach nobody? (2) | the in-publish check and its hook | a finding, with the publisher; not fatal |
+| Is a subscriber missing from its type's list? (5b) | a debug assertion at construction | a finding |
+| Was a receiver ever called? (K14, 5c) | not checked for a brokered type | a finding |
+| Did every unit agree on the topology? (2) | a debug assertion at the publication | a finding, with the publisher |
+| Is the subscription table big enough? | `SubscribeResult` at each call site | a finding, and the peak against the capacity |
+| Could this type be wired, and how? (6) | not available | the receivers in delivery order, and whether the set ever changed |
+| Who publishes this type? | not available | each publishing class and its count |
+
+The compile-time checks stay as they are; they need no run. The two debug assertions are what the audit could
+replace: they stop at the first problem and say nothing about who caused it, where the audit collects everything
+a run did. Whether to retire them or keep them as the cheap default is a choice to make once the audit is more
+than a spike.
+
+**Limits of the spike.**
 
 - It reports one run. A plug-in that loads on the tenth run was not seen; a tool would merge reports.
-- It names receiver *types* and addresses, not the objects' names, which are what a `StaticTo` list needs. Getting
-  from an address to `display` needs debug symbols or a name supplied by the user. It also cannot tell whether an
-  object has static storage (the second example's `Logger` is on the stack, as its address shows).
-- MSVC 19.51 names a receiver by its `Subscribe<T>` base when the unit that publishes cannot see the receiver's
-  class, which is the station's layout; clang-cl names it in every layout. I reproduced that without Sub0Pub: it
-  is `typeid` through a pointer to a class-template base. Order and addresses are right on both.
-- It stands in for the default configuration only, and prints to standard output at exit.
+- The brokered side stands in for the library broker's default configuration, through `Implementation<>`. A
+  program with a type that has a lock, a publish context or a `Domain` does not compile as an audit build, and a
+  project that already names a `SUB0PUB_CONFIG_HEADER` would have to include the audit's from it.
+- It is single-threaded and remembers 16 receivers and 8 publishing classes per type.
+- A brokered receiver is named from its first delivery, or when any subscriber next joins or leaves; one that is
+  created last and never called is reported by address only. A subscriber of a wired type that is not in the list
+  is always by address: its base class has no virtual function to ask.
+- Publishers are attributed by class, not by object, and only through the converged `publish()`. A publication
+  made with `sub0::publish()` directly is counted as unattributed. A class that derives from `Publish<T>` and
+  never publishes is not seen at all.
+- It cannot tell whether an object has static storage, so a candidate list still has to be checked for that.
+- It needs RTTI. (MSVC 19.51 evaluates `typeid(*p)` at compile time, naming the base, when `p`'s class is a
+  template specialisation not yet instantiated at that point; the audit requires the class's size first, which
+  makes it read the object. Worth knowing for any in-library form.)
 
-**What the fuller tool would be:** the same recording as a configuration of the library broker rather than a
-stand-in; publishers recorded as well as receivers; the report written in a form a script can merge across runs
-and turn into the configuration lines, with the unheard-publication count from decision 2 beside each type.
+**What the fuller tool would be:** the same ledger fed by the library broker itself, for every configuration;
+the report written in a form a script can merge across runs and turn into the configuration lines.
 
 ---
 
@@ -640,5 +726,5 @@ afterwards.
 | `ReportNoReceivers` (stand-in broker), `AllowNoReceivers`, `tryPublish()`, `receiverCount<T>()` | 2, 5b | a brokered publication that reaches nobody; the count on request | run time; free when there are receivers |
 | the topology a unit publishes a type with must match every other unit's | 2 | a unit that missed a `SUB0PUB_CONFIGURE` | debug builds |
 | a subscriber must be listed in its type's `StaticTo`; now an overridable hook | 5b | a receiver left out of the list | debug builds |
-| `RecordWiring` | 6 | the wiring a run actually had | a diagnostic mode |
+| the audit: one ledger per type, fed by the broker and by `StaticTo<>` | 2, 5b, 5c, 6 | unheard publications by publisher; receivers never called, not listed or refused; units that disagree; the wiring a type could be given | an audit build |
 | the station example configures each type beside its definition | 2 | | |

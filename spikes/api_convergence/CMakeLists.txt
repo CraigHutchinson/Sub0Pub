@@ -20,9 +20,13 @@ add_library(convergence_spike INTERFACE)
 target_include_directories(convergence_spike INTERFACE include examples/common)
 target_link_libraries(convergence_spike INTERFACE Sub0Pub::Sub0Pub Threads::Threads)
 
-# convergence_station(<candidate> MODES <mode>... [SOURCES <file>...]): one executable and test per mode
+# The one definition that makes a build an audit build
+set(CONVERGENCE_AUDIT_BUILD SUB0PUB_CONFIG_HEADER="sub0pub_spike/audit_build.hpp")
+
+# convergence_station(<candidate> MODES <mode>... [SOURCES <file>...] [AUDIT <mode>...]): one executable and test per
+# mode, and for each AUDIT mode a second build of the same sources as an audit build (include/sub0pub_spike/audit.hpp)
 function(convergence_station candidate)
-    cmake_parse_arguments(ARG "" "" "MODES;SOURCES" ${ARGN})
+    cmake_parse_arguments(ARG "" "" "MODES;SOURCES;AUDIT" ${ARGN})
     set(sources examples/${candidate}/main.cpp)
     foreach(source IN LISTS ARG_SOURCES)
         list(APPEND sources examples/${candidate}/${source})
@@ -34,12 +38,27 @@ function(convergence_station candidate)
         target_link_libraries(${target} PRIVATE convergence_spike)
         add_test(NAME ${target} COMMAND ${target})
     endforeach()
+    foreach(mode IN LISTS ARG_AUDIT)
+        set(target convergence_${candidate}_${mode}_audit)
+        add_executable(${target} ${sources})
+        target_include_directories(${target} PRIVATE examples/${candidate}/mode/${mode} examples/${candidate})
+        target_link_libraries(${target} PRIVATE convergence_spike)
+        target_compile_definitions(${target} PRIVATE ${CONVERGENCE_AUDIT_BUILD})
+        add_test(NAME ${target} COMMAND ${target})
+    endforeach()
 endfunction()
 
 convergence_station(status_quo MODES dynamic static)
 convergence_station(bus_parameter MODES dynamic static wired)
 convergence_station(port_member MODES dynamic static)
-convergence_station(typed_route MODES dynamic static hot_path bridged foreign report SOURCES thermometer.cpp)
+convergence_station(typed_route MODES dynamic static hot_path bridged foreign AUDIT dynamic static bridged
+                    SOURCES thermometer.cpp)
+
+# A station with deliberate wiring mistakes: the audit reports each, and the test checks the count
+add_executable(convergence_audit_findings examples/audit_findings/main.cpp)
+target_link_libraries(convergence_audit_findings PRIVATE convergence_spike)
+target_compile_definitions(convergence_audit_findings PRIVATE ${CONVERGENCE_AUDIT_BUILD})
+add_test(NAME convergence_audit_findings COMMAND convergence_audit_findings)
 
 # The first round of spikes, kept for reference: member-bound subscriptions, a member-owned wiring and a
 # preprocessor-selected flow. README.md says what superseded each.

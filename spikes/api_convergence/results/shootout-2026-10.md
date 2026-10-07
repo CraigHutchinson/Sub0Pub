@@ -1807,61 +1807,61 @@ Best of 9 epochs of 5,000,000 publications, ns per publication. Machine- and noi
 
 | variant | msvc-O2 | msvc-O2-lto | clangcl-O2 | icx-O2 |
 |---|---|---|---|---|
-| handwritten | 8.31 | - | 6.11 | 14.23 |
-| handwritten_runtime | 80.06 | - | 17.27 | 14.61 |
-| route_bridged | 83.27 | - | 5.54 | 29.71 |
-| route_dynamic | 91.36 | - | 103.02 | 137.03 |
-| route_static | 8.59 | - | 6.15 | 14.61 |
-| today_dynamic | 92.40 | - | 93.89 | 138.25 |
-| today_static | 8.66 | - | 5.80 | 14.59 |
-| today_wire | 59.55 | - | 16.32 | 14.00 |
+| handwritten | 11.86 | - | 8.28 | 14.61 |
+| handwritten_runtime | 25.08 | - | 18.89 | 14.46 |
+| route_bridged | 36.25 | - | 8.37 | 30.43 |
+| route_dynamic | 161.25 | - | 137.73 | 138.29 |
+| route_static | 13.00 | - | 8.29 | 14.58 |
+| today_dynamic | 161.65 | - | 139.47 | 133.18 |
+| today_static | 12.16 | - | 8.29 | 14.74 |
+| today_wire | 25.69 | - | 18.25 | 14.50 |
 
 ### cross_file
 
 | variant | msvc-O2 | msvc-O2-lto | clangcl-O2 | icx-O2 |
 |---|---|---|---|---|
-| handwritten | 4.99 | 2.39 | 2.40 | 2.84 |
-| route_dynamic | 5.44 | 5.84 | 3.50 | 3.99 |
-| route_static | 5.35 | 2.24 | 3.02 | 2.84 |
-| route_static_out_of_line | 5.25 | 2.59 | 2.84 | 3.44 |
-| today_dynamic | 5.61 | 5.53 | 3.92 | 3.84 |
-| today_static | 5.16 | 2.07 | 2.40 | 2.77 |
+| handwritten | 3.14 | 2.04 | 2.80 | 2.76 |
+| route_dynamic | 4.79 | 4.93 | 4.34 | 3.89 |
+| route_static | 3.07 | 2.04 | 2.78 | 2.78 |
+| route_static_out_of_line | 3.12 | 2.04 | 3.28 | 3.32 |
+| today_dynamic | 4.84 | 4.88 | 4.01 | 4.48 |
+| today_static | 3.06 | 2.03 | 2.76 | 2.76 |
 
 ### one_receiver
 
 | variant | msvc-O2 | msvc-O2-lto | clangcl-O2 | icx-O2 |
 |---|---|---|---|---|
-| handwritten | 1.76 | - | 0.93 | 1.03 |
-| handwritten_erased | 1.80 | - | 1.60 | 1.96 |
-| bus_dynamic | 1.89 | - | 2.42 | 2.32 |
-| bus_static | 1.75 | - | 0.96 | 1.03 |
-| empty_check_off | 1.82 | - | 2.03 | 2.33 |
-| empty_check_on | 1.92 | - | 2.07 | 2.26 |
-| port_dynamic | 1.91 | - | 3.36 | 3.14 |
-| port_static | 1.81 | - | 1.86 | 1.81 |
-| route_bridged | 1.82 | - | 1.31 | 1.38 |
-| route_dynamic | 1.96 | - | 2.04 | 2.28 |
-| route_static | 1.75 | - | 1.30 | 1.01 |
-| route_static_virtual | 1.75 | - | 0.89 | 1.01 |
-| today_dynamic | 1.87 | - | 2.31 | 2.27 |
-| today_static | 1.78 | - | 0.90 | 1.03 |
+| handwritten | 1.54 | - | 1.00 | 1.96 |
+| handwritten_erased | 1.91 | - | 1.76 | 2.18 |
+| bus_dynamic | 2.52 | - | 2.27 | 2.02 |
+| bus_static | 1.53 | - | 1.01 | 1.28 |
+| empty_check_off | 2.01 | - | 2.33 | 2.30 |
+| empty_check_on | 2.02 | - | 2.32 | 1.90 |
+| port_dynamic | 3.40 | - | 3.02 | 1.92 |
+| port_static | 2.08 | - | 1.77 | 2.05 |
+| route_bridged | 1.64 | - | 1.38 | 1.78 |
+| route_dynamic | 2.45 | - | 2.26 | 1.94 |
+| route_static | 1.54 | - | 1.00 | 1.59 |
+| route_static_virtual | 1.54 | - | 0.98 | 1.91 |
+| today_dynamic | 2.39 | - | 2.26 | 1.86 |
+| today_static | 1.53 | - | 1.00 | 1.78 |
 
 ### station
 
 | variant | msvc-O2 | msvc-O2-lto | clangcl-O2 | icx-O2 |
 |---|---|---|---|---|
-| handwritten | 2.74 | - | 3.28 | 3.28 |
-| handwritten_erased | 6.09 | - | 4.31 | 3.35 |
-| bus_dynamic | 7.75 | - | 5.21 | 5.10 |
-| bus_static | 2.71 | - | 3.28 | 3.35 |
-| empty_check_off | 7.79 | - | 5.10 | 5.08 |
-| empty_check_on | 7.68 | - | 5.32 | 5.14 |
-| port_dynamic | 7.88 | - | 6.86 | 6.98 |
-| port_static | 6.27 | - | 3.44 | 3.36 |
-| route_bridged | 4.05 | - | 3.78 | 2.99 |
-| route_dynamic | 7.76 | - | 5.05 | 4.71 |
-| route_static | 2.72 | - | 3.28 | 3.36 |
-| route_static_empty_bases | 2.69 | - | 3.54 | 3.28 |
-| route_static_virtual | 2.72 | - | 3.35 | 3.36 |
-| today_dynamic | 7.83 | - | 5.22 | 5.06 |
-| today_static | 2.73 | - | 3.45 | 3.31 |
+| handwritten | 2.36 | - | 3.27 | 3.69 |
+| handwritten_erased | 4.10 | - | 3.26 | 5.15 |
+| bus_dynamic | 7.67 | - | 5.29 | 7.24 |
+| bus_static | 2.36 | - | 3.19 | 3.67 |
+| empty_check_off | 5.09 | - | 5.05 | 7.32 |
+| empty_check_on | 5.82 | - | 5.03 | 7.89 |
+| port_dynamic | 8.24 | - | 6.68 | 7.17 |
+| port_static | 4.39 | - | 3.36 | 5.97 |
+| route_bridged | 2.71 | - | 3.26 | 4.08 |
+| route_dynamic | 7.52 | - | 4.97 | 7.41 |
+| route_static | 2.35 | - | 3.27 | 4.01 |
+| route_static_empty_bases | 2.30 | - | 3.27 | 3.96 |
+| route_static_virtual | 2.36 | - | 3.27 | 3.81 |
+| today_dynamic | 7.50 | - | 4.94 | 8.07 |
+| today_static | 2.35 | - | 3.26 | 3.67 |

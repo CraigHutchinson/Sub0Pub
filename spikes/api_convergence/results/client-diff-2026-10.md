@@ -11,5 +11,4 @@ Lines of code that differ between a candidate's `dynamic` build and each other b
 | typed_route | dynamic -> bridged | 0 | 4 | station_types.hpp | 0 | 52 |
 | typed_route | dynamic -> foreign | 9 | 9 | station_types.hpp | 0 | 52 |
 | typed_route | dynamic -> hot_path | 0 | 7 | station_types.hpp | 0 | 52 |
-| typed_route | dynamic -> report | 1 | 3 | station_types.hpp | 0 | 52 |
 | typed_route | dynamic -> static | 0 | 8 | station_types.hpp | 0 | 52 |

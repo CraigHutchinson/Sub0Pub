@@ -147,7 +147,7 @@ and `publish()` follow the topology:
 | `StaticTo<&a, &b>` | an empty class: no vtable, no registration | `StaticWiring<&a, &b>::publish` |
 | `StaticFirst<&a>` | `sub0::Subscribe<T>`, not registered for the bound `a` | the direct calls, then `sub0::publish` |
 
-The station builds six ways from the same sources; only `mode/<mode>/station_types.hpp` differs:
+The station builds five ways from the same sources; only `mode/<mode>/station_types.hpp` differs:
 
 | Build | Configuration |
 |---|---|
@@ -156,7 +156,9 @@ The station builds six ways from the same sources; only `mode/<mode>/station_typ
 | `hot_path` | an ADL declaration beside `Reading` only; `Alarm` stays brokered |
 | `bridged` | `StaticFirst`: the display called directly, the audit log still subscribing at run time |
 | `foreign` | `SUB0PUB_CONFIGURE`, for message types in a header that stands for someone else's |
-| `report` | brokered, with `RecordWiring`: at exit it prints the wiring it observed, as a candidate `StaticTo` list |
+
+Three of those (`dynamic`, `static`, `bridged`) are also built as audit builds, from the same sources with one
+extra compile definition: see [The audit](#the-audit).
 
 For: the client diff and the measurements below. Publishers remain ordinary classes. The granularity is the type,
 which is where "known hot" is decided. Using a dynamic-only feature (`disconnect()`, `trySubscribe()`, `cancel()`)
@@ -191,7 +193,6 @@ every variant: compare a variant with its reference, within a compiler.
 | typed route | dynamic → static | 0 | 8 | `station_types.hpp` | 0 |
 | typed route | dynamic → hot path | 0 | 7 | `station_types.hpp` | 0 |
 | typed route | dynamic → bridged | 0 | 4 | `station_types.hpp` | 0 |
-| typed route | dynamic → report | 1 | 3 | `station_types.hpp` | 0 |
 
 The typed route's added lines are the receivers' forward declarations, one configuration line per type, and the
 includes that give publishers the receivers' definitions. (Its `foreign` build shows 9 removed and 9 added only
@@ -293,6 +294,46 @@ sampling, MSVC build of `station`, about three seconds of publications per varia
 Hardware-event sampling, which would attribute indirect-branch mispredictions, needs an elevated prompt and was not
 run.
 
+## The audit
+
+[`audit.hpp`](include/sub0pub_spike/audit.hpp). Several of the checks above ask one question from different sides:
+did this publication reach anybody, was this receiver ever called, is this subscriber in its type's list, did every
+translation unit agree, could this type be wired. The audit answers them from one recording of a run. It is a
+build mode, not a source change:
+
+```text
+-DSUB0PUB_CONFIG_HEADER="sub0pub_spike/audit_build.hpp"
+```
+
+At exit it prints its findings and then, per message type, the publishing classes with their counts and the
+receivers in delivery order. The station, unchanged, as an audit build of its dynamic mode:
+
+```text
+sub0pub audit: 0 findings
+  struct Reading: 3 publications; runtime table peaked at 2 of 8
+    published by class Thermometer: 3
+    1. class Display at 00007FF62D7E6408: 3 deliveries
+    2. class Audit at 00007FF62D7E63E0: 3 deliveries
+    the receivers never changed: a candidate for StaticTo<>, in this order, if they have static storage
+```
+
+which is the list its static build is configured with. [`examples/audit_findings`](examples/audit_findings/main.cpp)
+is a station with five deliberate wiring mistakes, none of which stops it:
+
+```text
+sub0pub audit: 6 findings
+  struct Status: a subscriber at 000000122AEFFA30 subscribes to it but is not in its StaticTo<> list, so it is never called
+  struct Reading: class Logger at 000000122AEFF970 never received it: it subscribed after the last publication
+  struct Alarm: 1 of 1 publications reached no receiver; 1 by class Thermometer
+  struct Alarm: class AuditLog at 000000122AEFF960 never received it: it subscribed after the last publication
+  struct Maintenance: never published, although 1 receiver subscribed to it
+  struct Beacon: 1 subscription refused, the table of 1 was full
+```
+
+A test asks for the count with `auditFindings()`; a CI build can make any finding fail the run. It is a spike of
+the idea: the brokered side stands in for the library broker's default configuration only, and it reports one run.
+[Decision 6](DECISIONS.md#6-staticfirst-and-the-audit) has the rest, including what it could replace.
+
 ## Recommendation
 
 1. **Take the typed route forward as the converged API**: `StaticTo` (and `StaticFirst`, as a convenience) as
@@ -320,16 +361,17 @@ stand after the owner's review of 2026-10-07:
 | [3](DECISIONS.md#3-what-a-publisher-has-to-see) | What a publisher has to see | Deferred to a production sample; the out-of-line route is a pattern users may apply (+4 to +7 instructions without LTO) |
 | [4](DECISIONS.md#4-override) | `receive()` without `override` | **Decided:** no `override` |
 | [5a](DECISIONS.md#5a-delivery-order) | Delivery order | **Decided:** documented |
-| [5b](DECISIONS.md#5b-the-set-of-receivers-is-closed) | A receiver left out of the list | **Direction set:** safe by default with an opt-out; `receiverCount()` and `tryPublish()` for publishers |
+| [5b](DECISIONS.md#5b-the-set-of-receivers-is-closed) | A receiver left out of the list | **Direction set:** safe by default with an opt-out; `receiverCount()` and `tryPublish()` for publishers; a finding in the audit |
 | [5c](DECISIONS.md#5c-features-that-exist-only-on-the-broker) | Broker-only members on a wired type | Deferred |
 | [5d](DECISIONS.md#5d-cancellation) | Cancellation | Deferred until after the first convergence API lands |
 | [5e](DECISIONS.md#5e-filter) | `filter()` | **Decided:** an opt-in per type in both models |
-| [6](DECISIONS.md#6-staticfirst-and-a-guided-route-from-dynamic-to-static) | `StaticFirst`; migrating from dynamic | **Direction set:** a convenience; a wiring report guides the move (proof of concept here) |
+| [6](DECISIONS.md#6-staticfirst-and-the-audit) | `StaticFirst`; the audit | **Direction set:** `StaticFirst` is a convenience; the audit reports a run's unheard publications, unused receivers and candidate wiring |
 | [7](DECISIONS.md#7-header-layering) | Header layering | Deferred |
 | [8](DECISIONS.md#8-configuring-a-type-without-the-preprocessor) | Configuring without the preprocessor | Deferred |
 
-One point in decision 2 is waiting for confirmation: what a reported empty publication does in a release build by
-default (abort, as the library's other violation hooks do, or only count).
+One point in decision 2 is waiting for confirmation: what an ordinary (non-audit) build does by default when a
+publication reaches nobody. The audit records it without aborting; my lean for ordinary builds is a debug-build
+assertion only.
 
 **Evidence still to collect:** the shootout on GCC with callgrind and on Cortex-M33 (`-Os`, image only), which is
 where the existing budgets live; compile-time A/B once the code is in `include/`; and a hardware-event VTune run,
@@ -344,8 +386,9 @@ decision row and limitations in `docs/DESIGN.md`, tests, and collapse cases with
 | Path | Contents |
 |---|---|
 | `DECISIONS.md` | the design decisions, each with compiled examples, and where each stands |
-| `include/sub0pub_spike/` | `topology.hpp` (typed route), `no_receivers.hpp` (reporting an empty publication), `wiring_report.hpp` (the observed wiring at exit); `broker_bus.hpp` and `subscription.hpp` (the other candidates) |
+| `include/sub0pub_spike/` | `topology.hpp` (typed route), `no_receivers.hpp` (reporting an empty publication), `audit.hpp` and `audit_build.hpp` (the audit); `broker_bus.hpp` and `subscription.hpp` (the other candidates) |
 | `examples/<candidate>/` | one station per candidate; `mode/<mode>/` is all that differs between its builds |
+| `examples/audit_findings/` | a station with deliberate wiring mistakes, and the audit's report of them |
 | `examples/earlier/` | the first round of spikes, kept for reference (below) |
 | `cases/<case>/` | shootout variants, in the collapse-evidence harness contract |
 | `harness/driver.cpp` | the collapse driver plus an instruction counter and a benchmark mode |

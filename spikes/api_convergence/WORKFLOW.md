@@ -42,8 +42,13 @@ sources. Each executable runs the same flow and returns non-zero if a receiver m
 well: the runtime broker's re-entrancy and thread checks, and the typed route's "subscriber not listed in its
 `StaticTo`" assertion, are debug-build checks.
 
+Three of the typed route's builds are repeated as audit builds (`convergence_typed_route_<mode>_audit`), which
+record the run and print, at exit, each type's publishers and receivers and any finding
+([`include/sub0pub_spike/audit.hpp`](include/sub0pub_spike/audit.hpp)). `convergence_audit_findings` is a station
+with deliberate mistakes whose test checks the audit's count.
+
 **Criterion:** every test passes, in Release and Debug, on each compiler, with no warnings at `/W4` or
-`-Wall -Wextra -Wpedantic`.
+`-Wall -Wextra -Wpedantic`; the station's audit builds report no findings.
 
 ### 2. Client cost: what the user edits to switch mode
 

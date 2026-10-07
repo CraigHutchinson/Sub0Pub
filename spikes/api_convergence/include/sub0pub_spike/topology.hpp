@@ -29,6 +29,7 @@
 
 #include "sub0pub/broker.hpp"
 #include "sub0pub/wiring.hpp"
+#include "sub0pub_spike/audit.hpp"
 
 /** Debug check that every subscriber of a StaticTo type is one of its bound receivers.
  *  A subscriber left out of a static topology is otherwise silently never called (compare DESIGN.md K14).
@@ -68,6 +69,21 @@ namespace sub0::spike
 {
     namespace detail
     {
+        /// Audit build: one delivery to a listed receiver, keyed as its subscriber base would key itself
+        template<class Data, class Base, class Binding>
+        void auditBound(Binding* binding, const char* signature) noexcept
+        {
+            using Receiver = sub0::detail::wiring::receiver_t<Binding>;
+            if constexpr (handles_v<Binding, Data>)
+            {
+                Receiver& receiver = sub0::detail::wiring::receiver(*binding);
+                const void* key = &receiver;
+                if constexpr (std::is_base_of_v<Base, Receiver>)
+                    key = static_cast<const Base*>(&receiver);
+                AuditLedger<Data>::wired(key, typeid(Receiver), signature);
+            }
+        }
+
         /// Whether `subscriber` is the Base subobject of the receiver a wiring binding stands for.
         template<class Base, class Binding>
         bool isBound(Binding* binding, const Base* subscriber) noexcept
@@ -125,6 +141,15 @@ namespace sub0::spike
         template<class Data>
         static constexpr uint32_t cReceivers =
             (uint32_t(handles_v<std::remove_pointer_t<decltype(Bound)>, Data>) + ... + uint32_t(0));
+
+        /** Records, in an audit build, one publication's delivery to each listed receiver of Data.
+         * @tparam Base  The Subscribe<Data> base a subscriber of Data derives from.
+         */
+        template<class Data, class Base>
+        static void auditDeliveries() noexcept
+        {
+            (detail::auditBound<Data, Base>(Bound, detail::boundSignature<Bound>()), ...);
+        }
 
         /** Rejects a translation unit that publishes without the bound receivers' definitions.
          *  Capability routing would otherwise find no receive() on an incomplete type and silently deliver nothing.
@@ -233,7 +258,9 @@ namespace sub0::spike
         class StaticSubscribe
         {
         public:
-#if SUB0PUB_SPIKE_CHECK_BOUND
+#if SUB0PUB_SPIKE_AUDIT
+            StaticSubscribe() noexcept { AuditLedger<Data>::wiredSubscriber(this, topology_t<Data>::binds(this)); }
+#elif SUB0PUB_SPIKE_CHECK_BOUND
             StaticSubscribe() noexcept
             {
                 if (!topology_t<Data>::binds(this))
@@ -319,7 +346,9 @@ namespace sub0::spike
         template<class Data, class Topology>
         void checkTopology() noexcept
         {
-#if SUB0PUB_CHECK_CONFIG
+#if SUB0PUB_SPIKE_AUDIT
+            AuditLedger<Data>::topology(utility::typeHash<Topology>() | 1U);
+#elif SUB0PUB_CHECK_CONFIG
             constexpr uint32_t mine = utility::typeHash<Topology>() | 1U; // never 0, which marks "unseen"
             uint32_t seen = 0;
             if (!TopologyRegistry<Data>::fingerprint.compare_exchange_strong(seen, mine, std::memory_order_relaxed) && seen != mine)
@@ -340,6 +369,31 @@ namespace sub0::spike
         }
     }
 
+#if SUB0PUB_SPIKE_AUDIT
+    namespace detail
+    {
+        /** Audit build: records one publication of Data by a publisher of type From and how far it reaches. */
+        template<class From, class Data, class Topology>
+        void auditPublication() noexcept
+        {
+            uint32_t reached = 0;
+            if constexpr (Topology::cHasStatic)
+            {
+                Topology::template auditDeliveries<Data, Subscribe<Data>>();
+                reached += Topology::template cReceivers<Data>;
+            }
+            if constexpr (Topology::cHasDynamic)
+            {
+                if constexpr (requires { sub0::detail::BrokerFor<Data>::receivers(); })
+                    reached += sub0::detail::BrokerFor<Data>::receivers();
+                else
+                    reached = AuditLedger<Data>::cUnknown; // a broker the audit cannot ask
+            }
+            AuditLedger<Data>::published(&typeid(From), reached, allowsNoReceivers<config_t<Data>>);
+        }
+    }
+#endif
+
     /** Publishes data along its type's topology: direct calls to bound receivers, the runtime broker, or both.
      * @param from  A publisher deriving from Publish<Data>.
      * @param data  The message; receivers see it by const reference for the duration of the call.
@@ -350,6 +404,10 @@ namespace sub0::spike
         using Topology = topology_t<Data>;
         [[maybe_unused]] const Publish<Data>& publisher = from; // From must publish Data in every topology
         detail::checkTopology<Data, Topology>();
+#if SUB0PUB_SPIKE_AUDIT
+        detail::auditPublication<From, Data, Topology>();
+        const detail::AuditAccounted<Data> accounted;
+#endif
         if constexpr (Topology::cHasStatic)
         {
             detail::requireStatic<Data, Topology>();
@@ -398,6 +456,10 @@ namespace sub0::spike
         using Topology = topology_t<Data>;
         [[maybe_unused]] const Publish<Data>& publisher = from;
         detail::checkTopology<Data, Topology>();
+#if SUB0PUB_SPIKE_AUDIT
+        detail::auditPublication<From, Data, Topology>();
+        const detail::AuditAccounted<Data> accounted;
+#endif
         uint32_t reached = 0;
         if constexpr (Topology::cHasStatic)
         {
