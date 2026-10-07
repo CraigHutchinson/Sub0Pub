@@ -25,7 +25,8 @@ for it.
 | Report an unheard publication in every build | `SUB0PUB_NO_RECEIVERS_CHECK=true` | `sub0::ReportNoReceivers` |
 | Never report it | `SUB0PUB_NO_RECEIVERS_CHECK=false` | `sub0::AllowNoReceivers` |
 
-A closed `Domain` still drops a publication without a report: its session has ended.
+A closed `Domain` still drops a publication without a report: its session has ended. A `BrokerPort<T>` publishes
+into the broker like any publisher, so a wiring whose runtime side may be empty needs `AllowNoReceivers` on `T`.
 
 **Action:** Build in debug and run. Where a publication is reported:
 - if a receiver should have been there, fix the order in which the publisher and its subscribers are created;

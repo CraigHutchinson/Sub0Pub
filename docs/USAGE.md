@@ -137,7 +137,7 @@ wiring.publish(TemperatureReading{22});
 | Several wirings of one type, or receivers that cannot derive from `Subscribe` | `StaticWiring<&a, &b>`: static storage, the receiver list in the type | [static_link_forwarding](../examples/static_link_forwarding.cpp) |
 | A receiver stops the rest of a publication | the receiver returns `bool`; the publisher calls `publishCancelable(msg)` | [static_cancellation](../examples/static_cancellation.cpp) |
 | A transport is one of the receivers | `Forward<Transport>` or `StaticForward<&transport>`, and `publishFrom(...)` for ingress | [link_forwarding](../examples/link_forwarding.cpp) |
-| Runtime subscribers behind an explicit wiring | `BrokerPort<T>`, bound like any receiver | [scoped_diagnostics](../examples/scoped_diagnostics.cpp) |
+| Runtime subscribers behind an explicit wiring | `BrokerPort<T>`, bound like any receiver. Give the type `AllowNoReceivers` if the runtime side may be empty: the port cannot see the wiring's other receivers | [scoped_diagnostics](../examples/scoped_diagnostics.cpp) |
 | The publisher cannot name its wiring: a library, a non-template interface | `Sink<T>` wrapping a wiring: one indirect call | [sink_output](../examples/sink_output.cpp) |
 
 Explicit wiring routes by capability: a bound receiver without a matching `receive()` is skipped, silently. State
