@@ -2,7 +2,7 @@ name: Compile time A/B
 
 on:
   pull_request:
-    branches: [v2, main]
+    branches: [main]
   workflow_dispatch:
     inputs:
       baseline:
@@ -11,7 +11,7 @@ on:
       candidate:
         description: Candidate git ref (must exist in this repository)
         required: true
-        default: v2
+        default: main
 
 concurrency:
   group: compile-time-${{ github.event.pull_request.number || github.ref }}
@@ -40,11 +40,11 @@ jobs:
       - name: Publish timing summary
         if: always()
         run: |
-          for report in compile-time-*.md; do
+          for report in compile-time*.md; do
             if [ -f "$report" ]; then cat "$report" >> "$GITHUB_STEP_SUMMARY"; fi
           done
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: compile-time-ab
-          path: compile-time-*
+          path: compile-time*
