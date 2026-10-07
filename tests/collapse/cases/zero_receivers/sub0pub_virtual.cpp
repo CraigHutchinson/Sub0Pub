@@ -3,7 +3,7 @@
 #include "sub0pub/sub0pub.hpp"
 
 namespace {
-struct Sample { uint32_t value; };
+struct Sample { uint32_t value; using sub0_config = sub0::config<sub0::AllowNoReceivers>; }; // nobody subscribes, by design
 struct Sensor : sub0::Publish<Sample> {
     void send(uint32_t v) noexcept { sub0::publish(*this, Sample{v}); }
 };

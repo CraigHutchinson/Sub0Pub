@@ -5,7 +5,7 @@ Implementations:
   * v1.0          the v1.0 tag's include/sub0pub/ (read with `git archive`), default and ThreadSafe
   * v2 header     the current include/sub0pub/ (umbrella sub0pub.hpp), each dispatch policy
   * v2 config     per-type configurations of the current header (Section 2), selected options
-  * v2 wiring     static wiring of the current header (Section 4): StaticWiring, wire(), Sink<T>, DynamicPort
+  * v2 wiring     static wiring of the current header (Section 4): StaticWiring, wire(), Sink<T>
   * hand-written  direct calls and a virtual loop, the floor
 
 Metrics:

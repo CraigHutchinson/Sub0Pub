@@ -6,5 +6,5 @@ int useConfig();
 
 int main()
 {
-    return (useWiring() == 3 && useIpc() == 1 && useBroker() == 1 && useConfig() == 4) ? 0 : 1;
+    return (useWiring() == 2 && useIpc() == 1 && useBroker() == 1 && useConfig() == 4) ? 0 : 1;
 }

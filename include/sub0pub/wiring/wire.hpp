@@ -1,4 +1,4 @@
-/** Sub0Pub: Static wiring: Wiring and wire() (runtime addresses), StaticWiring (static storage), handles_v
+/** Sub0Pub: Explicit wiring: Wiring and wire() (runtime addresses), StaticWiring (static storage), handles_v
  * @remark Part of Sub0Pub (https://github.com/BareCpper/Sub0Pub), MIT License: see LICENSE.md.
  *         Included by the umbrella header <sub0pub/sub0pub.hpp>.
  */
@@ -20,6 +20,11 @@
 //   auto bus = sub0::wire(controllerA, controllerB, logger);             // runtime addresses, static types
 //   using Bus = sub0::StaticWiring<&controllerA, &controllerB, &logger>; // static storage: no RAM, fixed targets
 //   struct Sensor { sub0::Sink<Sample> out; ... };                       // non-template publisher: one indirect call
+//
+// This is the explicit level. Reach for it when a Data type cannot decide its own delivery: receivers without static
+// storage, several independent wirings of one type, a publication a receiver may stop (publishCancelable), or a
+// transport's ingress (publishFrom). Otherwise say it on the type (sub0::StaticTo, sub0pub/config.hpp) and write
+// publishers and receivers as for the runtime broker.
 //
 // Routing is by capability: publish(msg) calls, in bound order, every bound receiver that has receive(const T&).
 // A receiver whose receive() returns bool stops the rest of a publishCancelable() by returning false.

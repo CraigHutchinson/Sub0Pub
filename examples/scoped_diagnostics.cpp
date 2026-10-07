@@ -4,9 +4,10 @@
  * Demonstrates: BrokerPort, Scoped Domain, Snapshot and callback disconnect().
  * Story: two one-shot probes disconnect after their first reading. The fixed cooling
  * controller keeps receiving; closing the diagnostic session also leaves that fixed path intact.
+ * The session's readings are configured with AllowNoReceivers: probes are optional observers, so a
+ * reading that no probe is listening for is expected, not the failure it would otherwise be reported as.
  * Keep in mind: Snapshot permits callback self-removal. The Domain must outlive its bound
- * handles. This unlocked example is not safe for concurrent access; a plain DynamicPort
- * does not provide these lifetime guarantees.
+ * handles. This unlocked example is not safe for concurrent access.
  * Run: Sub0Pub_Example_scoped_diagnostics returns zero when the checks pass.
  */
 #include "sub0pub/wiring.hpp"
@@ -15,7 +16,7 @@
 struct SessionTemperatureReading
 {
     int celsius;
-    using sub0_config = sub0::config<sub0::Scoped, sub0::Snapshot>;
+    using sub0_config = sub0::config<sub0::Scoped, sub0::Snapshot, sub0::AllowNoReceivers>;
 };
 
 struct SessionCoolingController
@@ -35,7 +36,7 @@ struct OneShotProbe final : sub0::Subscribe<SessionTemperatureReading>
     using Subscribe::Subscribe;
     unsigned readingsReceived = 0;
 
-    void receive(const SessionTemperatureReading&) noexcept override
+    void receive(const SessionTemperatureReading&) noexcept
     {
         ++readingsReceived;
         disconnect(); // BrokerPort with Snapshot permits removal during a callback.

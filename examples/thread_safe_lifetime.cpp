@@ -40,7 +40,7 @@ struct TickCounter final : sub0::Subscribe<Tick>
         disconnect(); // Wait for in-flight callbacks before destroying derived state.
     }
 
-    void receive(const Tick&) noexcept override
+    void receive(const Tick&) noexcept
     {
         ++ticksReceived; // Broker locking protects its table; callbacks can run concurrently.
     }

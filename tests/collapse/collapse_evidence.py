@@ -780,7 +780,7 @@ def verdicts(result, ref):
     v["no extra indirect calls"] = result["path"]["indirect_calls"] <= ref["path"]["indirect_calls"]
     v["no extra RAM"] = (result["sections"]["data"] + result["sections"]["bss"]) <= (ref["sections"]["data"] + ref["sections"]["bss"])
     v["no static init"] = result["sections"]["init_array"] <= ref["sections"]["init_array"]
-    # Sub0Pub code that survives as a named out-of-line function (a Sink thunk, DynamicPort::receive) passes only
+    # Sub0Pub code that survives as a named out-of-line function (a Sink thunk) passes only
     # if the image is no larger than the reference's, i.e. it is the same code the reference has under another
     # name. A runtime registry's retained code always makes its image larger
     v["no Sub0Pub retained"] = result["retained_sub0_bytes"] == 0 or result["sections"]["text"] <= ref["sections"]["text"]

@@ -3,7 +3,7 @@
  * Same control conditions as cmp_sub0pub.cpp: the publish entry point and every receive() are out of line,
  * so each variant pays one real call per delivery and the difference is the dispatch around it.
  * Static-wiring receivers stop a publication by returning false (publishCancelable); it has no filter() and no
- * per-subscriber lifetime, so those rows are n/a except for DynamicPort's add/remove.
+ * per-subscriber lifetime, so those rows are n/a.
  */
 #define ANKERL_NANOBENCH_IMPLEMENT
 #include "sub0pub/sub0pub.hpp"
@@ -23,10 +23,6 @@ struct Gate { // stops the rest of a cancellable publication
     int count = 0;
     CMP_NOINLINE bool receive(const Sample&) noexcept;
 };
-struct PortReceiver final : sub0::DynamicPort<Sample>::Receiver {
-    int count = 0;
-    void receive(const Sample&) noexcept override;
-};
 struct IReceiver {
     virtual void receive(const Sample&) noexcept = 0;
 };
@@ -36,7 +32,6 @@ struct VirtualNoOp final : IReceiver {
 };
 void NoOp::receive(const Sample&) noexcept { ++count; }
 bool Gate::receive(const Sample&) noexcept { ++count; return false; }
-void PortReceiver::receive(const Sample&) noexcept { ++count; }
 void VirtualNoOp::receive(const Sample&) noexcept { ++count; }
 
 NoOp r0, r1, r2, r3, r4, r5, r6, r7;
@@ -63,16 +58,6 @@ struct SinkPublisher {
     sub0::Sink<Sample> out;
     CMP_NOINLINE void send(const Sample& s) const noexcept { out.publish(s); }
 };
-
-// DynamicPort: runtime subscribers behind the static wiring
-CMP_NOINLINE void sendPort(const sub0::DynamicPort<Sample>& port, const Sample& s) noexcept { port.receive(s); }
-CMP_NOINLINE void addRemove(sub0::DynamicPort<Sample>& port) noexcept
-{
-    PortReceiver r;
-    port.add(&r);
-    ankerl::nanobench::doNotOptimizeAway(&r);
-    port.remove(&r);
-}
 
 // Hand-written: direct calls to known receivers, and a virtual loop over an array
 CMP_NOINLINE void handDirect1(const Sample& s) noexcept { r0.receive(s); }
@@ -123,19 +108,6 @@ int main()
         const SinkPublisher eight{sub0::Sink<Sample>(bus8)};
         h.run(cmp::cPublish1, [&] { one.send(msg); });
         h.run(cmp::cPublish8, [&] { eight.send(msg); });
-    }
-
-    h.title("v2 DynamicPort<T, 8>");
-    {
-        sub0::DynamicPort<Sample> port;
-        h.run(cmp::cPublish0, [&] { sendPort(port, msg); });
-        PortReceiver subs[8];
-        port.add(&subs[0]);
-        h.run(cmp::cPublish1, [&] { sendPort(port, msg); });
-        for (int i = 1; i < 8; ++i) port.add(&subs[i]);
-        h.run(cmp::cPublish8, [&] { sendPort(port, msg); });
-        for (auto& s : subs) port.remove(&s);
-        h.run(cmp::cCreateDestroy, [&] { addRemove(port); });
     }
 
     h.title("Hand-written direct calls");

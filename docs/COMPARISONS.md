@@ -25,7 +25,7 @@ not head-to-head performance results.
 Sub0Pub's stream serialization is an additional facility, not an IPC transport or a delivery guarantee.
 Applications still provide the stream/transport and agree on the wire representation; adapters to other event
 systems do not automatically make their payloads serializable. Allocation and performance comparisons need
-matched workloads, connection lifetimes and queue policies; see our [measured design](../README.md#measured-design) for
+matched workloads, connection lifetimes and queue policies; see our [measured design](../README.md#performance-and-validation) for
 what has actually been measured.
 
 ## Bridge candidates (proposed, not implemented)

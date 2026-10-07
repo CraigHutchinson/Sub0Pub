@@ -1,0 +1,13 @@
+// EXPECT: marked 'override'|does not override|did not override|C3668
+#include "sub0pub/sub0pub.hpp"
+class Display;
+extern Display display;
+
+struct Reading { int celsius; using sub0_config = sub0::config<sub0::StaticTo<&display>>; };
+class Display final : public sub0::Subscribe<Reading>
+{
+public:
+    void receive(const Reading&) noexcept override {} // a wired type's base has no virtual to override
+};
+Display display;
+int main() {}

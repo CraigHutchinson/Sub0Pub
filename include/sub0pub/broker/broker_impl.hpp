@@ -45,6 +45,21 @@ namespace sub0
             ~SubscriberInterface() = default;
         };
 
+        /** Whether an empty subscription table is a failure to report: the type's policy says so, and no receiver its
+         *  configuration binds (StaticFirst) has taken the message already.
+         * @remark A function, called where a publication is dispatched, so that the bound receivers' types are complete
+         */
+        template<class Data, class Config>
+        constexpr bool reportsNoReceivers() noexcept
+        {
+            if constexpr (Config::noReceivers != NoReceivers::Report)
+                return false;
+            else if constexpr (TopologyKind<typename Config::topology>::bridged)
+                return Config::topology::template cReceivers<Data> == 0U;
+            else
+                return true;
+        }
+
         /** The library broker for one Data type with one resolved configuration (the default Implementation)
          *
          * Broker concept (what Subscribe/Publish/Route require of any Implementation<>):
@@ -53,6 +68,7 @@ namespace sub0
          *   void disconnect(Subscribe<Data>*) noexcept                   after return: no further receive() calls
          *   void publish(const Data&, const void* origin, PublishReport*) const noexcept
          *   void cancel() const noexcept
+         *   uint32_t receivers() const noexcept                          only for Publish<Data>::receiverCount()
          * Deliver with kit::deliverAt() inside a kit::DispatchScope.
          */
         template<class Data, class Config>
@@ -131,6 +147,7 @@ namespace sub0
 
             void publish(const Data& data, const void* origin = nullptr, PublishReport* report = nullptr) const noexcept
             {
+                constexpr bool cReportNoReceivers = reportsNoReceivers<Data, Config>();
                 TableT& t = table();
                 if constexpr (cConcurrent<Config>)
                 {
@@ -158,8 +175,13 @@ namespace sub0
                             active.current.store(nullptr, std::memory_order_seq_cst);
                         }
                     }
-                    LockGuard<Config> lk(t);
-                    t.unlink(active);
+                    {
+                        LockGuard<Config> lk(t);
+                        t.unlink(active);
+                    }
+                    if constexpr (cReportNoReceivers)
+                        if (active.count == 0)
+                            SUB0PUB_NO_RECEIVERS("sub0pub: a Data type was published and no receiver is subscribed to it");
                 }
                 else if constexpr (Config::dispatch == Dispatch::Snapshot)
                 {
@@ -169,6 +191,12 @@ namespace sub0
                         if (t.closed)
                             return;
                     const uint32_t count = t.count;
+                    if constexpr (cReportNoReceivers)
+                        if (count == 0)
+                        {
+                            SUB0PUB_NO_RECEIVERS("sub0pub: a Data type was published and no receiver is subscribed to it");
+                            return;
+                        }
                     // Pointer arrays are trivially copyable and do not overlap.
                     std::memcpy(snapshot, t.entries, count * sizeof(snapshot[0]));
                     kit::DispatchScope<Data> scope(&t, origin, report, snapshot, count);
@@ -180,9 +208,35 @@ namespace sub0
                     // Direct: a nested publish is fine; only changing this table during its own dispatch is not
                     UseScope<TableT, cThreadCheck<Config>> use(t);
                     kit::DispatchScope<Data> scope(&t, origin, report, nullptr, 0);
-                    for (uint32_t i = 0; !scope.canceled() && i < t.count; ++i)
-                        kit::deliverAt<Data, false>(t.entries[i], data);
+                    if constexpr (cReportNoReceivers)
+                    {
+                        // The report takes the place of the loop's entry test, so a publication that has receivers
+                        // executes the same instructions with the check as without it
+                        if (t.count == 0)
+                        {
+                            if constexpr (cScoped)
+                                if (t.closed)
+                                    return; // the session has ended: dropped, as in the other dispatch modes
+                            SUB0PUB_NO_RECEIVERS("sub0pub: a Data type was published and no receiver is subscribed to it");
+                            return;
+                        }
+                        uint32_t i = 0;
+                        do
+                            kit::deliverAt<Data, false>(t.entries[i], data);
+                        while (!scope.canceled() && ++i < t.count);
+                    }
+                    else
+                        for (uint32_t i = 0; !scope.canceled() && i < t.count; ++i)
+                            kit::deliverAt<Data, false>(t.entries[i], data);
                 }
+            }
+
+            /// The number of subscribers registered at this moment (read under the table's lock)
+            uint32_t receivers() const noexcept
+            {
+                TableT& t = table();
+                LockGuard<Config> lk(t);
+                return t.count;
             }
 
             /// No-op without a publish context: Subscribe/Publish::cancel() reject that at compile time

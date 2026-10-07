@@ -25,7 +25,9 @@ namespace sub0
                 static_cast<uint32_t>(Config::context),
                 static_cast<uint32_t>(Config::storage),
                 Config::filter ? 1U : 0U,
-                utility::typeHash<typename Config::Lock>()
+                utility::typeHash<typename Config::Lock>(),
+                static_cast<uint32_t>(Config::noReceivers),
+                utility::typeHash<typename Config::topology>() // a unit that misses a StaticTo sees another topology
             };
             for (uint32_t f : fields)
                 h = ((h << 5) + h) ^ f;

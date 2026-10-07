@@ -5,6 +5,7 @@ add_subdirectory(cancellation)
 add_subdirectory(ipc_pipe)
 add_subdirectory(layout_check)
 add_subdirectory(minimal_sub0pub)
+add_subdirectory(promote_to_static)
 
 # cross_module disabled: cross-module (DLL / shared library) use is not supported yet (cross_module/README.md).
 # add_subdirectory(cross_module)

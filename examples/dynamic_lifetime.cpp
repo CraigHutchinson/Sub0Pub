@@ -31,7 +31,7 @@ struct TemperatureRecorder final : sub0::Subscribe<TemperatureReading>
     unsigned readingsReceived = 0;
     int lastCelsius = 0;
 
-    void receive(const TemperatureReading& reading) noexcept override
+    void receive(const TemperatureReading& reading) noexcept
     {
         lastCelsius = reading.celsius;
         ++readingsReceived;
@@ -44,7 +44,7 @@ struct FirstReadingRecorder final : sub0::Subscribe<TemperatureReading>
     unsigned readingsReceived = 0;
     int lastCelsius = 0;
 
-    void receive(const TemperatureReading& reading) noexcept override
+    void receive(const TemperatureReading& reading) noexcept
     {
         lastCelsius = reading.celsius;
         ++readingsReceived;

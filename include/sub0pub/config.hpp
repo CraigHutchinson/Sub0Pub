@@ -38,6 +38,14 @@ namespace sub0
         Scoped          ///< tables live in Domain<Data> instances passed at construction (independent sessions)
     };
 
+    /** No-receivers policy: what a publication that reaches no receiver means */
+    enum class NoReceivers : uint8_t
+    {
+        Unchecked,      ///< nothing at run time (the release-build default); a statically wired type is still checked
+        Report,         ///< calls SUB0PUB_NO_RECEIVERS (the debug-build default)
+        Allow           ///< expected: never reported, at run time or at compile time
+    };
+
     /** Lock policy for single-threaded use: an empty base, costs nothing */
     struct NoLock
     {
@@ -59,25 +67,40 @@ namespace sub0
     {
         template<class Data, class Config> class BrokerImpl; ///< the library broker (default implementation)
 
+        /// Topology of a Data type delivered by the runtime broker alone: the default
+        struct BrokeredTopology {};
+
+        /** Topology of a Data type with receivers bound at compile time (StaticTo, StaticFirst).
+         *  Declared here so a Data type's own header can name it with nothing but this file; defined in
+         *  sub0pub/wiring/static_topology.hpp, which the umbrella header includes.
+         * @tparam Open   Whether runtime subscribers are delivered to as well, after the bound receivers
+         * @tparam Bound  Addresses of the bound receivers, in delivery order
+         */
+        template<bool Open, auto*... Bound> struct StaticTopology;
+
         /// Builtin configuration, named by the macro values it derives from: a translation unit that sets
         /// different SUB0PUB_* values for its own (TU-local) Data types gets a different type, not a second
         /// definition of the same one
-        template<uint32_t Capacity, Dispatch D, Context C, bool Filter, class LockT>
+        template<uint32_t Capacity, Dispatch D, Context C, bool Filter, class LockT, NoReceivers N>
         struct BuiltinT
         {
             /// Broker implementation (see Implementation<> and the broker concept on detail::BrokerImpl)
             template<class Data, class Config> using broker = BrokerImpl<Data, Config>;
+            /// How publications are delivered (see StaticTo and StaticFirst)
+            using topology = BrokeredTopology;
             static constexpr uint32_t capacity = Capacity;
             static constexpr Dispatch dispatch = D;
             static constexpr Context context = C;
             static constexpr Storage storage = Storage::Global;
             static constexpr bool filter = Filter;
+            static constexpr NoReceivers noReceivers = N;
             using Lock = LockT;
         };
     }
 
     /** Builtin defaults: the configuration the SUB0PUB_* macros describe
-     * Without any macro: Direct dispatch (DirectChecked in debug builds), no publish context, no filter(), no lock.
+     * Without any macro: Direct dispatch (DirectChecked in debug builds), no publish context, no filter(), no lock,
+     * delivery by the runtime broker, and a publication that reaches no receiver reported in debug builds.
      */
     using Builtin = detail::BuiltinT<SUB0PUB_MAX_SUBSCRIPTIONS,
         (SUB0PUB_REENTRANT_SAFE || SUB0PUB_THREAD_SAFE) ? Dispatch::Snapshot
@@ -85,11 +108,11 @@ namespace sub0
         (SUB0PUB_REENTRANT_SAFE || SUB0PUB_THREAD_SAFE || SUB0PUB_CANCEL) ? Context::ThreadLocal : Context::None,
         SUB0PUB_FILTER,
 #if SUB0PUB_THREAD_SAFE
-        StdMutexLock
+        StdMutexLock,
 #else
-        NoLock
+        NoLock,
 #endif
-        >;
+        SUB0PUB_NO_RECEIVERS_CHECK ? NoReceivers::Report : NoReceivers::Unchecked>;
 
     // Options: each applies itself on top of a base configuration -----------------------------------------
 
@@ -141,9 +164,41 @@ namespace sub0
     struct NoFilter
     { template<class B> struct apply : B { static constexpr bool filter = false; }; };
 
+    template<NoReceivers N> struct NoReceiversWith
+    { template<class B> struct apply : B { static constexpr NoReceivers noReceivers = N; }; };
+
+    /// A publication of this type that reaches no receiver calls SUB0PUB_NO_RECEIVERS, in every build
+    using ReportNoReceivers = NoReceiversWith<NoReceivers::Report>;
+
+    /// An absent receiver is expected for this type: a diagnostic stream, a plug-in loaded at run time, or a
+    /// statically wired type compiled out with an empty StaticTo<>
+    using AllowNoReceivers = NoReceiversWith<NoReceivers::Allow>;
+
     /// Tables live in Domain<Data> instances passed to Subscribe/Publish at construction
     struct Scoped
     { template<class B> struct apply : B { static constexpr Storage storage = Storage::Scoped; }; };
+
+    /** Deliver this type to fixed receivers only, by direct calls: no subscription table, no registration, and no
+     *  virtual call. Subscribe<Data> is then an empty base and Publish<Data> an empty handle, so the code that
+     *  subscribes and publishes is written exactly as for a brokered type.
+     * @tparam Bound  Addresses of the receivers, in delivery order. Each has static storage duration and may be
+     *                declared `extern` with an incomplete type here, where the type is configured.
+     * @remark The list is the whole set: a subscriber it does not name is never called (SUB0PUB_UNLISTED_CHECK),
+     *         and a translation unit that publishes the type must see the receivers' definitions.
+     * @remark Features that need a subscription table (disconnect(), trySubscribe(), cancel(), Route, Domain,
+     *         publish reports) do not compile for the type.
+     */
+    template<auto*... Bound> struct StaticTo
+    { template<class B> struct apply : B { using topology = detail::StaticTopology<false, Bound...>; }; };
+
+    /** Deliver this type to fixed receivers first, by direct calls, then through the runtime broker to whoever is
+     *  subscribed at run time. A convenience for promoting one known receiver while the type stays open: it keeps
+     *  the broker's cost on every publication, so prefer StaticTo where the set of receivers is closed.
+     * @tparam Bound  Addresses of the receivers called directly, in delivery order (as for StaticTo). They are not
+     *                registered with the broker.
+     */
+    template<auto*... Bound> struct StaticFirst
+    { template<class B> struct apply : B { using topology = detail::StaticTopology<true, Bound...>; }; };
 
     /// Replace the broker implementation for a Data type with an application-defined one (Global storage)
     template<template<class, class> class BrokerTemplate> struct Implementation
@@ -241,6 +296,26 @@ namespace sub0
     template<class Data>
     using config_t = typename detail::resolve<Data>::type::type;
 
+    namespace detail
+    {
+        template<class Topology> struct TopologyKind
+        { static constexpr bool wired = false; static constexpr bool bridged = false; };
+        template<auto*... Bound> struct TopologyKind<StaticTopology<false, Bound...>>
+        { static constexpr bool wired = true; static constexpr bool bridged = false; };
+        template<auto*... Bound> struct TopologyKind<StaticTopology<true, Bound...>>
+        { static constexpr bool wired = false; static constexpr bool bridged = true; };
+
+        /// The topology a Data type's configuration selects
+        template<class Data> using topology_t = typename config_t<Data>::topology;
+        /// Whether Data is delivered to bound receivers only (StaticTo): it has no subscription table
+        template<class Data> constexpr bool cWired = TopologyKind<topology_t<Data>>::wired;
+        /// Whether Data is delivered to bound receivers and then through the runtime broker (StaticFirst)
+        template<class Data> constexpr bool cBridged = TopologyKind<topology_t<Data>>::bridged;
+    }
+
+    /// Subscribe<Data> and Publish<Data> take the form their type's topology calls for: a runtime subscriber and a
+    /// broker handle, or, for a StaticTo type, an empty base and an empty handle (a constrained specialisation of each,
+    /// so the brokered classes are the same templates, with the same names, as without the option).
     template<class Data> class Subscribe;
     template<class Data> class Publish;
     template<class Data> class Domain;

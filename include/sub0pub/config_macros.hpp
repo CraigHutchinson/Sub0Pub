@@ -50,12 +50,25 @@
 /** Inlining for the static-wiring delivery chain (sub0pub/wiring): not a configuration option.
  * MSVC's /O2 inliner stops at a delivery chain of many receivers and leaves StaticWiring::publish out of line
  * (32 receivers: 169 publish-path instructions against 69 hand-written; docs/EVIDENCE.md), so the
- * wiring asks for inlining explicitly there. Every other compiler gets plain `inline`, so their code is unchanged.
+ * wiring asks for inlining explicitly there, and so do the two thin functions that lead to it from a StaticTo
+ * type (sub0::publish() and its Publish handle). Every other compiler gets plain `inline`, so their code is unchanged.
  */
 #if defined(_MSC_VER) && !defined(__clang__)
 #define SUB0PUB_FORCE_INLINE __forceinline
 #else
 #define SUB0PUB_FORCE_INLINE inline
+#endif
+
+/** Empty-base layout for a class with several empty bases: not a configuration option.
+ * The MSVC ABI gives every empty base after the first a byte of its own, and value-initialisation then writes
+ * those bytes. A receiver of statically wired types derives from one empty Subscribe<T> per type, so the library's
+ * own multi-base helper (SubscribeAll) asks for the packed layout; a class of yours with several Subscribe<T> or
+ * Publish<T> bases can do the same. Expands to nothing elsewhere, where the layout is already packed.
+ */
+#if defined(_MSC_VER)
+#define SUB0PUB_EMPTY_BASES __declspec(empty_bases)
+#else
+#define SUB0PUB_EMPTY_BASES
 #endif
 
 /* Default configuration: the cheapest correct dispatch. Every feature that costs something is opt-in, and
@@ -64,6 +77,8 @@
  *   SUB0PUB_CANCEL          publish context     cancel(), Route and publish reports do not compile without it
  *   SUB0PUB_FILTER          filter()            a subscriber declaring filter() does not compile without it
  *   SUB0PUB_THREAD_SAFE     lock                detected by SUB0PUB_THREAD_CHECK (debug)
+ * A publication is expected to reach somebody: one that reaches no receiver is detected by
+ * SUB0PUB_NO_RECEIVERS_CHECK (debug), or at compile time for a statically wired type.
  * These macros set the default for every Data type; one type can choose differently (sub0::config).
  */
 
@@ -145,6 +160,53 @@
 /** Action when a Domain is destroyed while handles are still bound to it. Default asserts, then aborts. */
 #ifndef SUB0PUB_DOMAIN_LIFETIME
 #define SUB0PUB_DOMAIN_LIFETIME(what) do { assert(!(what)); std::abort(); } while(false)
+#endif
+
+/** Detect a publication that reaches no receiver
+ * Publishing a Data type that nobody is subscribed to is almost always a mistake: a publisher that starts before
+ * its subscribers, a subscriber that was never constructed, a translation unit that does not see a type's
+ * configuration. With this check enabled such a publication calls SUB0PUB_NO_RECEIVERS(what).
+ * Default: enabled in debug builds (SUB0PUB_ASSERT and no NDEBUG), disabled in release builds. Define it true to
+ * keep the check in release builds: it replaces the dispatch loop's own entry test, so a publication that has
+ * receivers does not pay for it. One type can choose differently: sub0::AllowNoReceivers where an absent receiver
+ * is expected (a diagnostic stream, a plug-in loaded at run time), sub0::ReportNoReceivers to check it in every build.
+ * A statically wired type (sub0::StaticTo) is checked at compile time instead, whatever this is set to.
+ */
+#ifndef SUB0PUB_NO_RECEIVERS_CHECK
+#if SUB0PUB_ASSERT && !defined(NDEBUG)
+#define SUB0PUB_NO_RECEIVERS_CHECK true
+#else
+#define SUB0PUB_NO_RECEIVERS_CHECK false
+#endif
+#endif
+
+/** Action on a publication that reached no receiver (see SUB0PUB_NO_RECEIVERS_CHECK)
+ * @param what  Null-terminated description of the failure
+ * Default asserts (debug) then aborts. Override to log or count instead; if it returns, the publication simply had
+ * no effect.
+ */
+#ifndef SUB0PUB_NO_RECEIVERS
+#define SUB0PUB_NO_RECEIVERS(what) do { assert(!(what)); std::abort(); } while(false)
+#endif
+
+/** Detect a subscriber of a statically wired type that the type's sub0::StaticTo list does not name
+ * Such a subscriber is never called: the list is the whole set of receivers. With this check enabled its
+ * construction calls SUB0PUB_UNLISTED_RECEIVER(what).
+ * Default: enabled in debug builds (SUB0PUB_ASSERT and no NDEBUG). Every translation unit that constructs
+ * subscribers of a type must agree on it. A unit test that constructs one receiver on its own, under a project's
+ * static wiring, switches it off or overrides the action.
+ */
+#ifndef SUB0PUB_UNLISTED_CHECK
+#if SUB0PUB_ASSERT && !defined(NDEBUG)
+#define SUB0PUB_UNLISTED_CHECK true
+#else
+#define SUB0PUB_UNLISTED_CHECK false
+#endif
+#endif
+
+/** Action on a detected unlisted subscriber (see SUB0PUB_UNLISTED_CHECK). Default asserts, then aborts. */
+#ifndef SUB0PUB_UNLISTED_RECEIVER
+#define SUB0PUB_UNLISTED_RECEIVER(what) do { assert(!(what)); std::abort(); } while(false)
 #endif
 
 /** Helper macro for stringifying value using compiler preprocessor

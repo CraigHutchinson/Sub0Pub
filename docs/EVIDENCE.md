@@ -19,14 +19,16 @@ support.
   reported against `handwritten`, which prices the choice (runtime binding, type erasure, a registry) independently
   of any library.
 - Every other file or directory implements the same behaviour through the public API (a *variant*). Case comments
-  call the three static-wiring forms patterns B1, B2 and B3:
+  call the three explicit-wiring forms patterns B1, B2 and B3:
 
 | Variant | Structure |
 |---|---|
-| `sub0_b1_*` (B1) | `wire(...)`: runtime addresses, static types (`sub0_b1_mixin`: through the `Publisher` mixin) |
+| `sub0_b1_*` (B1) | `wire(...)`: runtime addresses, static types |
 | `sub0_b2_*` (B2) | `StaticWiring<&...>`: static storage |
 | `sub0_b3_*` (B3) | `Sink<T>`: a type-erased port |
-| `sub0_bridge_*` | a static wiring with a `DynamicPort` (`slots`) or `BrokerPort` (`broker`) for runtime subscribers |
+| `sub0_bridge_broker` | an explicit wiring with a `BrokerPort` for runtime subscribers |
+| `sub0_typed_static` | `StaticTo` on the message type: the receivers and publisher of `sub0pub_virtual` (`Subscribe`, `Publish`, `publish()`), delivered by direct calls |
+| `sub0_typed_first` | `StaticFirst` on the message type: the listed receivers by direct calls, then the runtime broker |
 | `sub0_dynamic_*` | the runtime broker with a `Domain` or `Route` |
 | `sub0pub_virtual`, `sub0pub_virtual_lean` | the runtime broker through `Subscribe`/`Publish`, default and leanest macros |
 
@@ -40,7 +42,7 @@ around them). Argument side effects are observable in both forms.
 **Behaviour (ctest, every CI compiler).** `tests/collapse/CMakeLists.txt` builds the selected cases in both forms
 and fails if a variant's output differs from its reference. Normal local builds, pull requests, and merge pushes
 use the representative public-API cases in `tests/collapse/smoke_cases.txt`. A manually dispatched CI run, or a
-local build with `-DSUB0PUB_COLLAPSE_PROFILE=full`, covers all 19 cases.
+local build with `-DSUB0PUB_COLLAPSE_PROFILE=full`, covers all 18 cases.
 
 **Evidence (`tests/collapse/collapse_evidence.py`).** For every case, variant, form and build, it links a real
 executable and judges it against its reference of the same build and form:
@@ -89,7 +91,6 @@ CI checks selected runtime-broker and IPC instruction budgets in `tests/bench/bu
 | `transport_endpoint`, `transport_two_links` | a transport endpoint with egress and ingress (split horizon); two links of one transport type |
 | `dynamic_subscriptions` | runtime subscribe and unsubscribe |
 | `static_dynamic_bridge`, `_churn`, `_empty` | static wiring plus runtime subscribers: populated, churning, empty |
-| `publisher_ergonomics` | publisher spellings (the `Publisher` mixin against hand-written runtime binding) |
 | `cross_file` | receivers in another translation unit, with and without LTO |
 
 ## Results (public API)
@@ -106,32 +107,55 @@ hand-written runtime binding and `Sink` with a hand-written context pointer plus
 | Default and runtime filters | = / = / = ¹ | with `SUB0PUB_FILTER`: +67.5 / +55.5; +544 B |
 | Two independent domains | = / = / = ¹; one publisher over both: `StaticWiring` =, `wire` = except Clang observable +3 (K23) | `Domain`: +71 / +63; +2232 B |
 | Transport endpoint (egress and ingress) | = / = / = ¹; two links of one transport type: `StaticWiring` =, `wire` +8 / +10 unless each link has its own type (K18) | `Route`: +116 / +113; +716 B and TLS |
-| Dynamic subscriptions | `DynamicPort` = when empty; populated = except an out-of-line `receive()` on x86 (K21) | against a hand-written registry with the same features: +3.5 / -1.5; +32 B (v1.0: +19 / +37) |
+| Dynamic subscriptions | not applicable: runtime subscribers are the broker's (`StaticFirst`, `BrokerPort`) | against a hand-written registry with the same features: +3.5 / -1.5; +32 B (v1.0: +19 / +37) |
 | Cross-file, LTO off / on | = / = / = ¹ | +25 / +24 without LTO, +56 / +44 with LTO: LTO does not devirtualise the registry |
 
 ¹ `Sink` on Clang fails only the static publish-path criterion: Clang inlines the type-erased call (no indirect call
 remains), and the metric then counts the inlined receiver as path instructions.
 
+**A type's own topology.** `StaticTo` on the message type (`sub0_typed_static`: the receivers and publisher of the
+runtime-broker variant, with one line added to the type) is identical to the equal-work reference on every criterion,
+in both forms, on GCC, Clang and Cortex-M33, with and without LTO: 42 of 42 case × form × build checks over
+`zero_receivers`, `one_receiver`, `many_receivers`, `multi_types`, `filters` and `cross_file`. On MSVC it equals the
+`StaticWiring` variant: identical to hand-written code in five of the cases, and +2 path instructions at 32 receivers
+(the application's own `send()`, as below). Adding the option to a type costs the runtime broker nothing: the brokered
+`Subscribe` and `Publish` are the same class templates as before, and their recorded budgets did not move.
+
+`StaticFirst` (`sub0_typed_first`) is judged against the hand-written registry, as the `BrokerPort` bridge is. Deltas
+against that reference, observable form (publish instructions GCC / Clang; x86-64 RAM GCC / Clang; Cortex-M33 text
+and RAM):
+
+| Runtime side | `StaticFirst` on the type | `StaticWiring` with a `BrokerPort` and a `Domain` |
+|---|---|---|
+| One subscriber | +27 / -1; +192 / +208 B; +184 B and +20 B | +0 / -1; +112 / +104 B; +1332 B and +116 B |
+| Never populated | +17 / +0; +200 / +208 B; +512 B and +16 B | +1 / +0; +16 / +24 B; +1224 B and +108 B |
+
+The two are not the same work: the bridge variant carries a `Domain`, which is most of its Cortex-M33 text, and its
+fixed receivers are plain classes. The receivers a `StaticFirst` list names are `Subscribe<T>` classes (K30), which
+costs their virtual tables and subscription state in RAM, and on GCC one thing more: with a single subscribing class
+in the program GCC devirtualises the runtime dispatch (the hand-written registry and the bridge have no indirect call
+left), and the listed receivers make that class one of three, so the call stays indirect.
+
 Remaining gaps, each a known limitation in [DESIGN.md](DESIGN.md#known-limitations): nested publication on one
-static wiring (K22), two links of one transport type (K18, K23), cancellation combined with `filter()` (K24),
-`DynamicPort`'s out-of-line `receive()` (K21), and the `BrokerPort` bridge's setup, teardown and RAM (the price of
-its policy).
+static wiring (K22), two links of one transport type (K18, K23), cancellation combined with `filter()` (K24), and
+the `BrokerPort` bridge's setup, teardown and RAM (the price of its policy), and `StaticFirst`'s fixed receivers
+being broker subscribers by type (K30).
 
 Every static-wiring variant against its reference, case × form checks meeting every criterion (with and without
 LTO):
 
 | Build | `wire` (`sub0_b1_*`) | `StaticWiring` (`sub0_b2_*`) | `Sink` (`sub0_b3_*`) |
 |---|---:|---:|---:|
-| GCC 13 `-O2` | 49 / 52 | 32 / 34 | 22 / 22 |
-| Clang 18 `-O2` | 47 / 52 | 33 / 34 | 12 / 22 ¹ |
-| arm-none-eabi GCC 13 `-Os` (Cortex-M33) | 50 / 52 | 33 / 34 | 22 / 22 |
-| MSVC 19.51 `/O2` (no instruction counts) | 46 / 52 | 29 / 34 | 22 / 22 |
+| GCC 13 `-O2` | 31 / 34 | 32 / 34 | 22 / 22 |
+| Clang 18 `-O2` | 29 / 34 | 33 / 34 | 12 / 22 ¹ |
+| arm-none-eabi GCC 13 `-Os` (Cortex-M33) | 32 / 34 | 33 / 34 | 22 / 22 |
+| MSVC 19.51 `/O2` (no instruction counts) | 30 / 34 | 29 / 34 | 22 / 22 |
 
 **MSVC.** Every variant behaves identically to its reference. The failures are the cases GCC and Clang fail
 (`transport_two_links` K18, `cancellation_filtered` K24), plus:
 
 - `many_receivers`, `wire`: the 32-binding wiring keeps out-of-line Sub0Pub code (path equal, text +304 B); GCC
-  collapses it fully. The `Publisher` mixin form is +6 path instructions (observable).
+  collapses it fully.
 - `many_receivers`, `StaticWiring`, observable: the application's own `send()` stays out of line (path +2, text
   +48 B, RAM +16 B of alignment); the removable form passes.
 - `nested_publish`, `StaticWiring`, observable: RAM +16 B; LTCG `cross_file`, `StaticWiring`: RAM +8 B.
@@ -154,4 +178,6 @@ and publishes the reports as artifacts. Stored reports (September 2026): GCC, Cl
 [perf/collapse/public-api-2026-09.md](perf/collapse/public-api-2026-09.md); MSVC
 [perf/collapse/msvc-2026-09.md](perf/collapse/msvc-2026-09.md) and
 [perf/collapse/msvc-lto-2026-09.md](perf/collapse/msvc-lto-2026-09.md); JSON beside each. They were measured in C++17
-mode, before the C++23 baseline; CI re-measures in C++23 against the same budgets.
+mode, before the C++23 baseline; CI re-measures in C++23 against the same budgets. The stored reports predate the
+typed variants and still list the removed `Publisher` mixin and `DynamicPort` variants (`sub0_b1_mixin`,
+`sub0_bridge_slots`, `publisher_ergonomics`); the table above counts the variants that remain.
