@@ -92,6 +92,9 @@ without an explicit configuration; diagnostics and serialization macros configur
 | `SUB0PUB_DOMAIN_LIFETIME(what)` | Assert, then abort | Handler when a domain is destroyed while handles remain bound. |
 | `SUB0PUB_NO_RECEIVERS(what)` | Assert, then abort | Handler for a publication that reached no receiver. If it returns, the publication is dropped. |
 | `SUB0PUB_UNLISTED_RECEIVER(what)` | Assert, then abort | Handler for a subscriber its type's `StaticTo` list does not name. If it returns, the subscriber exists but is never called. |
+| `SUB0PUB_AUDIT` | `false` | Records every publication, delivery and subscription and reports wiring mistakes at exit ([usage](USAGE.md#finding-wiring-mistakes-the-audit-build)). Define it for the whole program; a diagnostic build, not a release one. Turns the two checks above off by default. |
+| `SUB0PUB_AUDIT_PRINT(line)` | Write to stderr | Where a line of the audit's report goes. |
+| `SUB0PUB_AUDIT_EXIT(findings)` | Nothing | Action after the audit's report at exit, for example failing a run that has findings. |
 | `SUB0PUB_TRACE` | `false` | Enables event trace logging to `std::cout`. |
 | `SUB0PUB_ASSERT` | `true` | Enables assertion-based checks. |
 | `SUB0PUB_STD` | `false` | Selects standard streams instead of Sub0Pub's lightweight stream types. |

@@ -116,6 +116,45 @@ subscribed. Everything the broker offers remains available to the runtime side, 
 A listed receiver is not registered, does not use the table's capacity, and reports `isSubscribed()` as true. The
 broker's cost stays on every publication, so list every receiver with `StaticTo` once the set is closed.
 
+## Finding wiring mistakes: the audit build
+
+Publish/subscribe fails quietly: a message nobody received and a receiver that was never called both look like
+nothing happening. Build the program with `SUB0PUB_AUDIT` defined true for every translation unit and it records
+each publication and delivery, through the broker and through `StaticTo` / `StaticFirst` lists, then writes a report
+when it exits:
+
+```text
+sub0pub audit: 2 findings
+  Alarm: 1 of 1 publication reached no receiver; 1 by Thermometer
+  Alarm: AlarmLog at 0x7ffd3c1a2b40 never received it: it subscribed after the last publication
+  Reading: 2 publications; runtime table peaked at 1 of 8
+    published by Thermometer: 2
+    1. Display at 0x7ffd3c1a2b50: 2 deliveries
+    its receivers never changed: a candidate for sub0::StaticTo, in this order, if they have static storage
+```
+
+| Finding | What it usually means |
+|---|---|
+| publications reached no receiver | a publisher that starts before its subscribers; say `AllowNoReceivers` on the type if that is expected |
+| a subscriber never received it | it subscribed too late, left too early, or the message is never sent on this path |
+| never published | a subscriber waiting for a message that nothing in this run publishes |
+| a subscription refused | the type's `Capacity` is smaller than the number of subscribers that want it |
+| not in its `StaticTo` list | a subscriber of a statically wired type that the type does not name: it is never called |
+
+Below the findings, each message type lists its publishers and its receivers in the order they joined. The last
+line of a brokered type is the migration hint: receivers that were all there before the first publication and
+stayed are what [`StaticTo`](#2-a-type-with-fixed-receivers-staticto) needs, in that order.
+
+- A test asks for the count with `sub0::auditFindings()`, or writes the report on request with `sub0::auditReport()`.
+  Both are the constant 0 in an ordinary build, so the calls can stay.
+- `SUB0PUB_AUDIT_PRINT(line)` sends each line somewhere other than stderr; `SUB0PUB_AUDIT_EXIT(findings)` runs after
+  the report at exit, for example to fail a CI run that has findings.
+- It is a diagnostic build. Every publication, delivery and subscription takes a process-wide lock, the checks that
+  stop a debug build at the first mistake default to off so the run completes, and it reports this run only. It
+  does not record explicit wirings; the full list of what it cannot see is K33 in [the design](DESIGN.md#known-limitations).
+
+See [audit findings](../examples/audit_findings.cpp) for five mistakes and what the audit says about each.
+
 ## Explicit wiring: when the type cannot decide
 
 `StaticTo` needs receivers with static storage and allows one list per type. For anything else the application
@@ -158,6 +197,7 @@ header when only one area is needed:
 | `sub0pub/wiring.hpp` | Explicit wiring: `wire`, `StaticWiring`, `Sink`, `Forward` |
 | `sub0pub/ipc.hpp` | `StreamSerializer`, `StreamDeserializer`, binary serialization |
 | `sub0pub/config.hpp` | Per-type configuration, including the `StaticTo` and `StaticFirst` options |
+| `sub0pub/audit.hpp` | `auditFindings()`, `auditReport()` and, in an audit build, the ledger behind them |
 
 Some bridge headers need both sides they connect: `sub0pub/wiring/static_topology.hpp` (what `StaticTo` and
 `StaticFirst` deliver through), `sub0pub/wiring/broker_port.hpp` and `sub0pub/ipc/forward.hpp`.

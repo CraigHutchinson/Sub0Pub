@@ -27,7 +27,14 @@ namespace sub0
         template<class C = config_t<T>, std::enable_if_t<C::storage == Storage::Scoped, int> = 0>
         explicit BrokerPort(Domain<T>& domain) noexcept : Publish<T>(domain) {}
 
-        void receive(const T& msg) noexcept { this->publish(msg); }
+        void receive(const T& msg) noexcept
+        {
+#if SUB0PUB_AUDIT
+            this->publishAs(detail::audit::typeSignature<BrokerPort>(), msg); // the audit names the port as the publisher
+#else
+            this->publish(msg);
+#endif
+        }
     };
 } // END: sub0
 

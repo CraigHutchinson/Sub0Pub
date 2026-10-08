@@ -5,6 +5,7 @@
 #ifndef CROG_SUB0PUB_BROKER_PUBLISH_HPP
 #define CROG_SUB0PUB_BROKER_PUBLISH_HPP
 
+#include "sub0pub/audit.hpp"
 #include "sub0pub/broker/subscribe.hpp"
 #include "sub0pub/utility/type_info.hpp"
 #include "sub0pub/utility/streams.hpp"
@@ -92,6 +93,20 @@ namespace sub0
          */
         void publish(const Data& data, PublishReport* report = nullptr) const noexcept
         {
+#if SUB0PUB_AUDIT
+            publishAs(nullptr, data, report);
+        }
+
+        /** publish(), recorded by the audit as made by a named publisher class
+         * @param[in] publisher  detail::audit::typeSignature() of the publishing class, or nullptr
+         */
+        void publishAs(const char* publisher, const Data& data, PublishReport* report = nullptr) const noexcept
+        {
+            uint32_t boundReceivers = 0U;
+            if constexpr (detail::cBridged<Data>)
+                boundReceivers = detail::topology_t<Data>::template cReceivers<Data>;
+            detail::audit::Ledger<Data>::published(publisher, boundReceivers, Config::noReceivers == NoReceivers::Allow);
+#endif
             // StaticFirst: the receivers the type's list names are called directly, ahead of the runtime subscribers
             if constexpr (detail::cBridged<Data>)
                 detail::topology_t<Data>::publish(data);
@@ -157,7 +172,22 @@ namespace sub0
          * @note Protected: use the free function sub0::publish(*this, data) from derived classes
          */
         // An incomplete-type error here: include sub0pub/sub0pub.hpp (or sub0pub/wiring/static_topology.hpp)
-        SUB0PUB_FORCE_INLINE void publish(const Data& data) const noexcept { detail::topology_t<Data>::publish(data); }
+        SUB0PUB_FORCE_INLINE void publish(const Data& data) const noexcept
+        {
+#if SUB0PUB_AUDIT
+            publishAs(nullptr, data);
+        }
+
+        /** publish(), recorded by the audit as made by a named publisher class
+         * @param[in] publisher  detail::audit::typeSignature() of the publishing class, or nullptr
+         */
+        void publishAs(const char* publisher, const Data& data) const noexcept
+        {
+            detail::audit::Ledger<Data>::published(publisher, receiverCount(),
+                                                   config_t<Data>::noReceivers == NoReceivers::Allow);
+#endif
+            detail::topology_t<Data>::publish(data);
+        }
 
     private:
         template<class From, class D> friend void publish(From&, const D&) noexcept;
@@ -173,7 +203,11 @@ namespace sub0
     SUB0PUB_FORCE_INLINE void publish(From& from, const Data& data) noexcept
     {
         const Publish<Data>& publisher = from;
+#if SUB0PUB_AUDIT
+        publisher.publishAs(detail::audit::typeSignature<From>(), data); // the audit names the publishing class
+#else
         publisher.publish(data);
+#endif
     }
 
     /** Publish and report route results (routed / accepted / rejected). Local delivery is unaffected by rejections. */
@@ -182,7 +216,11 @@ namespace sub0
     {
         static_assert(config_t<Data>::context != Context::None, "sub0pub: publish reports need a publish context");
         const Publish<Data>& publisher = from;
+#if SUB0PUB_AUDIT
+        publisher.publishAs(detail::audit::typeSignature<From>(), data, &report);
+#else
         publisher.publish(data, &report);
+#endif
     }
 
     /** @see publish(From&, const Data&) */

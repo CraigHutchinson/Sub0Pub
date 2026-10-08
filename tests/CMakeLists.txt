@@ -48,6 +48,7 @@ sub0pub_add_bench(Sub0Pub_Bench_Axes       bench/bench_axes.cpp) # each configur
 add_subdirectory(config)
 add_subdirectory(wiring)
 add_subdirectory(topology)
+add_subdirectory(audit)
 
 # Header hygiene: every header self-contained, each entry header isolated from the other areas
 add_subdirectory(headers)

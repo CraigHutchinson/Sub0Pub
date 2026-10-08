@@ -36,6 +36,20 @@ into the broker like any publisher, so a wiring whose runtime side may be empty 
   receivers there are with `sub0::receiverCount<Data>(publisher)` and decide for itself;
 - to keep the old behaviour everywhere, define `SUB0PUB_NO_RECEIVERS_CHECK=false`.
 
+### The audit build: `SUB0PUB_AUDIT` (new)
+
+Defining `SUB0PUB_AUDIT` true for the whole program makes it record what it publishes and delivers, through the
+runtime broker and through `StaticTo` / `StaticFirst` lists, and report at exit: publications that reached no
+receiver and who made them, subscribers that were never called, refused subscriptions, subscribers a `StaticTo` list
+does not name, and which brokered types had receivers that never changed (candidates for `StaticTo`).
+`sub0::auditFindings()` returns the number of findings and `sub0::auditReport()` writes the report on request; in a
+build without the macro both are the constant 0 and nothing else exists. `SUB0PUB_AUDIT_PRINT(line)` says where the
+report goes (default: stderr) and `SUB0PUB_AUDIT_EXIT(findings)` what follows the report at exit (default: nothing).
+
+**Action:** None; it is opt-in. In an audit build `SUB0PUB_NO_RECEIVERS_CHECK` and `SUB0PUB_UNLISTED_CHECK` default
+to off, so that a run completes and the audit reports everything they would have stopped at. How to read the report:
+[docs/USAGE.md](docs/USAGE.md#finding-wiring-mistakes-the-audit-build).
+
 ### A Data type can name its receivers: `StaticTo` and `StaticFirst` (new)
 
 A type's configuration can now say that it is delivered to fixed receivers by direct calls:
@@ -468,6 +482,7 @@ Without snapshot dispatch, a `receive()` that subscribes or unsubscribes (or des
 - `SUB0PUB_DOMAIN_LIFETIME(what)`: the action when a `Domain` is destroyed while handles are still bound to it (default: assert, then abort).
 - `SUB0PUB_NO_RECEIVERS_CHECK`, `SUB0PUB_NO_RECEIVERS(what)`: the check for a publication that reaches no receiver, and its action (since v2.0; default: on without `NDEBUG`; assert, then abort).
 - `SUB0PUB_UNLISTED_CHECK`, `SUB0PUB_UNLISTED_RECEIVER(what)`: the check for a subscriber that its type's `StaticTo` list does not name, and its action (since v2.0; default: on without `NDEBUG`; assert, then abort).
+- `SUB0PUB_AUDIT`, `SUB0PUB_AUDIT_PRINT(line)`, `SUB0PUB_AUDIT_EXIT(findings)`: the audit build, where its report goes and what follows it at exit (since v2.0; default: off; stderr; nothing).
 - `SUB0PUB_EMPTY_BASES` (internal): the packed empty-base layout on the MSVC ABI.
 
 The `SUB0PUB_*` policy macros must agree in every translation unit that uses a type. Setting them differently in one translation unit is only valid for types local to it.

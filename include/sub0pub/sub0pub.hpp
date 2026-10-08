@@ -28,6 +28,7 @@
  *   sub0pub/config_macros.hpp  SUB0PUB_* configuration macros: every default, defined once
  *   sub0pub/types.hpp          general-purpose helper types
  *   sub0pub/utility/           hashing and type identity, layout fingerprinting, streams, detection traits
+ *   sub0pub/audit.hpp          the audit (SUB0PUB_AUDIT): what a run published and delivered, and its findings
  *   sub0pub/config.hpp         per-Data policy (capacity, dispatch, context, lock, filter, storage) and its resolution
  *   sub0pub/broker.hpp         the runtime broker: Subscribe, Publish, SubscribeAll, Domain, Route, publish(), cancel()
  *   sub0pub/wiring.hpp         explicit wiring: wire(), StaticWiring, Sink, Forward
@@ -64,6 +65,7 @@
 #include "sub0pub/utility/streams.hpp"
 #include "sub0pub/utility/traits.hpp"
 #include "sub0pub/utility/type_info.hpp"
+#include "sub0pub/audit.hpp"
 #include "sub0pub/config.hpp"
 #include "sub0pub/broker.hpp"
 #include "sub0pub/wiring.hpp"

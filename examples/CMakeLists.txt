@@ -15,7 +15,7 @@ find_package(Threads REQUIRED)
 foreach(recipe
     local_wiring sink_output static_addresses static_cancellation
     dynamic_lifetime thread_safe_lifetime dynamic_diagnostics scoped_diagnostics
-    link_forwarding static_link_forwarding route_reports)
+    link_forwarding static_link_forwarding route_reports audit_findings)
     add_executable(Sub0Pub_Example_${recipe} ${recipe}.cpp)
     target_link_libraries(Sub0Pub_Example_${recipe} PRIVATE Sub0Pub::Sub0Pub Threads::Threads)
     if(SUB0PUB_BUILD_TESTING AND NOT IS_SUBPROJECT)
