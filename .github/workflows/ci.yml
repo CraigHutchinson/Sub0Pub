@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [develop, v2, main]
+    branches: [main]
   pull_request:
-    branches: [develop, v2, main, 'claude/**'] # claude/**: PRs stacked on another PR's branch
+    branches: [main, 'claude/**'] # claude/**: PRs stacked on another PR's branch
   workflow_dispatch:
 
 env:

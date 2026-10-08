@@ -71,11 +71,11 @@ legacy merely because their names existed in v1. See `STYLE_GUIDE.md` for placem
 ## Design and evidence
 - `docs/DESIGN.md` records the design, its decisions and its known limitations (K-numbers); `docs/EVIDENCE.md` how
   collapse is measured. Keep both current with the code: a changed decision or limitation updates them in the same commit.
-- Design research (prototypes, face-offs, dated reports) is preserved at the tag `v2-research-archive`. New exploratory
+- Design research (prototypes, face-offs, dated reports) is preserved at the tags `v2-research-archive` and
+  `api-convergence-research-archive` (the spikes behind `StaticTo` / `StaticFirst` and the audit). New exploratory
   work lives on its own branch; the release tree carries only the public API, its tests, evidence and documentation.
 
 ## Branch Strategy
-- `main` — current v2 release
-- `develop` — ongoing v2 integration
-- `v2` — v2 release-staging history
+- `main` — the single trunk and the default branch: all work merges here through pull requests
+- Short-lived topic branches (`feature/`, `docs/`, `chore/`) are deleted once merged; there is no `develop` or `v2` branch
 - `v1.0` tag — final v1 state

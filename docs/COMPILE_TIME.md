@@ -65,7 +65,7 @@ Ranges and MAD are descriptive, not confidence intervals. Small deltas within ob
 Use a quiet machine, rerun suspicious changes, and compare within the same run. Shared CI hosts add noise; do not
 treat a small timing delta as a hard failure or compare absolute seconds across hosts/compiler versions.
 
-The `Compile time A/B` workflow captures the same-language comparison on v2 PRs and also the migration comparison
+The `Compile time A/B` workflow captures the same-language comparison on pull requests to `main` and also the migration comparison
 when the base declares C++17. It uploads raw JSON and Markdown and adds a job summary. Compilation/harness failures
 fail the job, but there is deliberately no arbitrary wall-clock percentage gate. Meaningful regressions should
 be investigated and justified alongside the existing runtime/footprint gates.
