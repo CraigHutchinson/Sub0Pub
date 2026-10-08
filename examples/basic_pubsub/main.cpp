@@ -1,11 +1,11 @@
 /** Temperature displays — runtime publish/subscribe
  *
- * Use when: objects should discover messages by type and join or leave through their lifetime.
- * Demonstrates: Publish<float>, Subscribe<float>, publish(), and automatic registration/teardown.
- * Story: one sensor sends temperatures to LCD and LOG displays. A temporary display joins for
+ * Use when: objects should discover messages by type and subscribe or unsubscribe through their lifetime.
+ * Demonstrates: Publish<float>, Subscribe<float>, publish(), and subscribing and unsubscribing through construction and destruction.
+ * Story: one sensor sends temperatures to LCD and LOG displays. A temporary display subscribes for
  * 26 degrees, then leaves its scope; the next reading reaches only LCD and LOG. No publisher
  * stores a list of displays or calls them individually.
- * Keep in mind: this uses the default unlocked broker. Subscribers register during construction;
+ * Keep in mind: this uses the default unlocked broker. Subscribers subscribe during construction;
  * locked subscribers need the explicit lifecycle shown in ../thread_safe_lifetime.cpp instead.
  * Run: Sub0Pub_BasicPubSub prints each delivery; TMP appears only for the 26-degree reading.
  */

@@ -65,9 +65,7 @@ namespace sub0
             virtual bool isEof() = 0;
         };
 
-// TODO: Need to refactor use of streams!?
 #if SUB0PUB_STD
-        /// @todo Determine how to avoid this i.e. Drop std::istream or only use interface type?
         inline size_t readline(std::istream& istream, char* const buffer, const size_t bufferCount)
         {
             return istream.getline(buffer, bufferCount).gcount();
@@ -92,7 +90,6 @@ namespace sub0
             return true;
         }
 #else
-        /// @todo Determine how to avoid this i.e. Drop std::istream or only use interface type?
         inline size_t readline(IStream& istream, char* const buffer, const size_t bufferCount)
         {
             if constexpr (sizeof(size_t) > sizeof(IStream::StreamSize)) // where the narrowing below can lose data
@@ -119,22 +116,6 @@ namespace sub0
             return true;
         }
 #endif
-
-
-
-        template< typename Type_t >
-        constexpr size_t sizeOf() { return sizeof(Type_t); }
-
-        template<>
-        constexpr size_t sizeOf<void>() { return 0; }
-
-        template< typename Type_t >
-        constexpr void copyTo(char* buffer)
-        { constexpr Type_t temp; std::memcpy(buffer, (const void*)&temp, sizeof(temp) ); }
-
-        template< typename Type_t >
-        constexpr void copyTo(char* buffer, const Type_t& value)
-        { std::memcpy(buffer, (const void*)&value, sizeof(value)); }
     } // END: utility
 } // END: sub0
 

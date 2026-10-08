@@ -31,10 +31,10 @@ namespace sub0
         constexpr bool cConcurrent = !std::is_same_v<typename Config::Lock, NoLock>;
 
         /** One dispatch in progress (concurrent configurations only), linked into its table under the table lock
-         * @remark disconnect()/close() null a removed subscriber out of every active snapshot, then wait only while
+         * @remark unsubscribe()/close() null a removed subscriber out of every active snapshot, then wait only while
          *         another thread is inside that subscriber's callback (`current`): bounded by one callback, no starvation.
          *         Dispatcher: store current, re-load entry; writer: store null entry, load current. Both seq_cst, so at
-         *         least one side observes the other: a subscriber is never called after disconnect() returns.
+         *         least one side observes the other: a subscriber is never called after unsubscribe() returns.
          */
         template<class Data>
         struct ActiveDispatch
@@ -79,7 +79,7 @@ namespace sub0
             std::atomic<uint32_t> handles{0};
         };
 
-        /// A subscriber's registration flag: atomic only where other threads may read it (a Lock)
+        /// A subscriber's subscribed flag: atomic only where other threads may read it (a Lock)
         template<bool Atomic>
         struct Flag
         {
@@ -159,7 +159,7 @@ namespace sub0
 
         /** One dispatch in progress on this thread. Frames form a per-thread stack (per Data type).
          * @remark `table` identifies the subscription table being dispatched, so cancel(), re-entrancy checks and
-         *         disconnect act only on their own table (per Domain for Scoped storage). `origin` is the ingress
+         *         unsubscribe act only on their own table (per Domain for Scoped storage). `origin` is the ingress
          *         binding that injected the message (split horizon); `report` collects route results (opt-in).
          */
         template<class Data>

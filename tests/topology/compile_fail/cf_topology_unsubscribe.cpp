@@ -10,4 +10,4 @@ public:
     void receive(const Reading&) noexcept {}
 };
 Display display;
-int main() { display.disconnect(); } // a statically wired receiver has no subscription to end
+int main() { display.unsubscribe(); } // a statically wired receiver has no subscription to end

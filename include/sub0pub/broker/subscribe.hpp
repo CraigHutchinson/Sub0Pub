@@ -35,15 +35,15 @@ namespace sub0
      *
      * Topology: this is the form for a type the runtime broker delivers. For a StaticTo type Subscribe<Data> is an
      * empty base instead (the specialisation below). For a StaticFirst type a subscriber the list names is called
-     * directly and is not registered; any other subscriber registers as usual.
+     * directly and has no entry in the table; any other subscriber subscribes as usual.
      *
-     * Activation contract: single-threaded configurations register in the constructor. Concurrent configurations
+     * Subscription contract: single-threaded configurations subscribe in the constructor. Concurrent configurations
      * (a Lock, e.g. SUB0PUB_THREAD_SAFE) do not: another thread could otherwise dispatch into the object before the
      * derived class is constructed. Call trySubscribe() at the end of the most-derived constructor (Route does this).
      *
-     * Teardown contract: after disconnect() returns, receive() is not called again, on any thread. The destructor
-     * disconnects too, but by then the derived object is already destroyed: when other threads may publish, call
-     * disconnect() from the most-derived destructor (Route does this). Same-thread disconnect during a dispatch,
+     * Teardown contract: after unsubscribe() returns, receive() is not called again, on any thread. The destructor
+     * unsubscribes too, but by then the derived object is already destroyed: when other threads may publish, call
+     * unsubscribe() from the most-derived destructor (Route does this). Same-thread unsubscribe during a dispatch,
      * including from the subscriber's own receive(), is safe with Snapshot dispatch.
      *
      * @remark The destructor is protected and non-virtual: a subscriber is destroyed as its own type, never through a
@@ -57,7 +57,7 @@ namespace sub0
         template<class> friend class Domain;
         template<class, class> friend class detail::BrokerImpl;
     public:
-        /** Registers the subscriber (single-threaded configurations)
+        /** Subscribes (single-threaded configurations)
          * @param[in] typeId, typeName  Optional unique identity of Data for inter-process streams (SUB0PUB_TYPEIDNAME)
          */
         template<class C = Config, std::enable_if_t<C::storage == Storage::Global, int> = 0>
@@ -73,22 +73,22 @@ namespace sub0
             activateIfSingleThreaded();
         }
 
-        /** Registers the subscriber in `domain` (Scoped types; single-threaded configurations) */
+        /** Subscribes in `domain` (Scoped types; single-threaded configurations) */
         template<class C = Config, std::enable_if_t<C::storage == Storage::Scoped, int> = 0>
         explicit Subscribe(Domain<Data>& domain) noexcept : broker_(domain.table_) { activateIfSingleThreaded(); }
 
         Subscribe(const Subscribe&) = delete;
         Subscribe& operator=(const Subscribe&) = delete;
 
-        /** @return Whether this subscriber is registered and will receive published Data
-         * @remark False if the table was full (or the Domain closed) at registration, after disconnect(), or, for
+        /** @return Whether this subscriber is subscribed and will receive published Data
+         * @remark False if the table was full (or the Domain closed) when it subscribed, after unsubscribe(), or, for
          *         concurrent configurations, before trySubscribe(). Always true for a subscriber that its type's
-         *         StaticFirst list names: it receives by a direct call, without a registration to lose.
+         *         StaticFirst list names: it receives by a direct call, without a table entry to lose.
          */
         bool isSubscribed() const noexcept { return subscribed_.load() || isBound(); }
 
-        /** Register, or retry registration after SubscribeResult::CapacityExceeded
-         * @return SubscribeResult::Subscribed if now (or already) registered; CapacityExceeded with the table
+        /** Subscribe, or retry after SubscribeResult::CapacityExceeded
+         * @return SubscribeResult::Subscribed if now (or already) subscribed; CapacityExceeded with the table
          *         unchanged; Closed if the Domain has been closed
          */
         SubscribeResult trySubscribe() noexcept
@@ -96,12 +96,12 @@ namespace sub0
             if (isSubscribed())
                 return SubscribeResult::Subscribed;
             const SubscribeResult result = broker_.trySubscribe(this);
-            // The library broker records the registration under its table lock; an application broker cannot
+            // The library broker records the subscription under its table lock; an application broker cannot
             if constexpr (!std::is_same_v<Broker, detail::BrokerImpl<Data, Config>>)
                 subscribed_.store(result == SubscribeResult::Subscribed);
 #if SUB0PUB_AUDIT
             if (result == SubscribeResult::Subscribed)
-                detail::audit::Ledger<Data>::joined(this, Config::capacity, &detail::auditLearn<Data>);
+                detail::audit::Ledger<Data>::subscribed(this, Config::capacity, &detail::auditLearn<Data>);
             else if (result == SubscribeResult::CapacityExceeded)
                 detail::audit::Ledger<Data>::refused(Config::capacity);
 #endif
@@ -109,16 +109,16 @@ namespace sub0
         }
 
         /// Stop receiving. Idempotent; safe from within receive(); see the teardown contract above
-        void disconnect() noexcept
+        void unsubscribe() noexcept
         {
             const bool wasSubscribed = subscribed_.exchange(false);
 #if SUB0PUB_AUDIT
-            detail::audit::Ledger<Data>::left(this, wasSubscribed);
+            detail::audit::Ledger<Data>::unsubscribed(this, wasSubscribed);
 #endif
-            // Concurrent: always, so a subscriber already detached by Domain::close() still waits out a callback in
+            // Concurrent: always, so a subscriber already unsubscribed by Domain::close() still waits out a callback in
             // progress on another thread. Single-threaded: close() already made it safe; nothing left to do.
             if (detail::cConcurrent<Config> || wasSubscribed)
-                broker_.disconnect(this);
+                broker_.unsubscribe(this);
         }
 
         /** Stop delivery of the current publication to the remaining subscribers
@@ -142,7 +142,7 @@ namespace sub0
 #endif
 
     protected:
-        ~Subscribe() { disconnect(); }
+        ~Subscribe() { unsubscribe(); }
 
         void activateIfSingleThreaded() noexcept
         {
@@ -176,12 +176,12 @@ namespace sub0
     /** Subscribe<Data> for a statically wired type (StaticTo): an empty base
      * @tparam  Data  Type whose configuration names its receivers
      *
-     * The receiver is a plain class: no vtable, no registration and no state come from this base, and its
+     * The receiver is a plain class: no vtable, no run-time subscription and no state come from this base, and its
      * `receive(const Data&)` is an ordinary member that the type's StaticTo list calls directly. What remains is
      * what makes the same source valid for either topology: the base class name, and the checks that a receiver
      * was not forgotten.
      *
-     * @remark The members that need a subscription table (isSubscribed(), trySubscribe(), disconnect(), cancel())
+     * @remark The members that need a subscription table (isSubscribed(), trySubscribe(), unsubscribe(), cancel())
      *         do not exist: using one is a compile error that says what a statically wired type cannot do.
      * @remark A subscriber the list does not name is never called; SUB0PUB_UNLISTED_CHECK reports its construction.
      */
@@ -271,7 +271,7 @@ namespace sub0
             {
                 if (!s->filter(data))
                     return;
-                if (slot::load<Data>(slot) != s) // disconnected (or destroyed) inside its own filter()
+                if (slot::load<Data>(slot) != s) // unsubscribed (or destroyed) inside its own filter()
                     return;
             }
             s->receive(data);
@@ -283,17 +283,17 @@ namespace sub0
     void detail::BrokerImpl<Data, Config>::close(TableT& t) noexcept
     {
         uint32_t n;
-        Subscribe<Data>* detached[Config::capacity];
+        Subscribe<Data>* unsubscribed[Config::capacity];
         {
             LockGuard<Config> lk(t);
             UseScope<TableT, cThreadCheck<Config>> use(t);
-            checkNotDispatching(t); // closing detaches every subscriber: a table change, like unsubscribing
+            checkNotDispatching(t); // closing unsubscribes every subscriber: a table change
             t.closed = true;
             n = t.count;
             for (uint32_t i = 0; i < n; ++i)
             {
                 if constexpr (!cConcurrent<Config>)
-                    detached[i] = t.entries[i];
+                    unsubscribed[i] = t.entries[i];
                 t.entries[i]->subscribed_.store(false);
                 t.entries[i] = nullptr; // a Direct dispatch in progress re-reads its slot after filter(): not called
             }
@@ -305,7 +305,7 @@ namespace sub0
             waitWhileCalledElsewhere(t, nullptr);
         else
             for (uint32_t i = 0; i < n; ++i)
-                kit::forgetInOwnDispatches<Data>(&t, detached[i]);
+                kit::forgetInOwnDispatches<Data>(&t, unsubscribed[i]);
     }
 } // END: sub0
 

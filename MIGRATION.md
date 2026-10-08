@@ -36,6 +36,27 @@ into the broker like any publisher, so a wiring whose runtime side may be empty 
   receivers there are with `sub0::receiverCount<Data>(publisher)` and decide for itself;
 - to keep the old behaviour everywhere, define `SUB0PUB_NO_RECEIVERS_CHECK=false`.
 
+### `disconnect()` renamed to `unsubscribe()`
+
+`Subscribe<Data>::disconnect()` was the counterpart of `trySubscribe()` and `isSubscribed()` under another word. It
+is now `unsubscribe()`, and an application-defined broker (`Implementation<Broker>`) implements
+`unsubscribe(Subscribe<Data>*)`. Its behaviour and its teardown contract are unchanged.
+
+**Action:** Rename the calls. There is no alias for the old name.
+
+### Unused helpers removed
+
+- `SUB0PUB_TRACE`: the macro only included `<iostream>`; nothing was ever traced. The audit build (below) is the
+  diagnostic that exists.
+- `SUB0PUB_STRINGIFY`, `SUB0PUB_STRINGIFY_HELPER`: unused.
+- `sub0pub/utility/traits.hpp` (`sub0::utility::is_detected`, `detected_t`, `detected_or_t`, `nonesuch`) and
+  `sub0::forward_receiver_t`: a C++17 detection idiom with one use, now a requires-expression.
+- `sub0::utility::sizeOf<>()` and `copyTo()`: unused.
+- `sub0pub/sub0pub.hpp` no longer includes `<algorithm>`, `<array>`, `<stdexcept>`, `<thread>`, `<tuple>` and the
+  other standard headers the single-file v1 header happened to provide.
+
+**Action:** Include the standard headers your own code uses. The rest need action only if you used them directly.
+
 ### The audit build: `SUB0PUB_AUDIT` (new)
 
 Defining `SUB0PUB_AUDIT` true for the whole program makes it record what it publishes and delivers, through the
@@ -62,7 +83,7 @@ struct Reading { int celsius; using sub0_config = sub0::config<sub0::StaticTo<&d
 
 `Subscribe<Reading>`, `Publish<Reading>`, `SubscribeAll` and `sub0::publish()` follow it, so the code that
 subscribes and publishes is the code you already have. For a `StaticTo` type `Subscribe` is an empty base and
-`Publish` an empty handle: no subscription table, no registration, no virtual call. `StaticFirst<&a>` calls the
+`Publish` an empty handle: no subscription table, no run-time subscription, no virtual call. `StaticFirst<&a>` calls the
 listed receivers directly and then publishes through the runtime broker to whoever subscribed at run time.
 
 **Action:** None; it is opt-in per type. To move an existing type onto direct calls:
@@ -70,12 +91,12 @@ listed receivers directly and then publishes through the runtime broker to whoev
 - remove `override` from the `receive()` of that type's subscribers: the base has no virtual function to override.
   A `receive()` that does not accept `const Data&` is still a compile error, in both forms;
 - include the receivers' definitions in every translation unit that publishes the type (a compile error tells you);
-- `disconnect()`, `trySubscribe()`, `isSubscribed()`, `cancel()`, `Route`, `Domain` and publish reports need a
+- `unsubscribe()`, `trySubscribe()`, `isSubscribed()`, `cancel()`, `Route`, `Domain` and publish reports need a
   subscription table and do not compile for a `StaticTo` type; a `filter()` needs the type's `sub0::Filter`, as it
   does on the broker, and the signature the broker calls (`bool filter(const Data&) noexcept`, not `const`), so that
   it filters the same way if the type returns to the broker.
 
-Delivery is in the order of the list, where the broker delivers in the order subscribers registered. A subscriber
+Delivery is in the order of the list, where the broker delivers in the order subscribers subscribed. A subscriber
 the list does not name is never called: `SUB0PUB_UNLISTED_CHECK` (debug builds) reports its construction through
 `SUB0PUB_UNLISTED_RECEIVER(what)`. A list in which nobody can receive the type is a compile error unless the type is
 also `sub0::AllowNoReceivers`. Which form to use, and when the explicit `wire()` level is the right one instead:
@@ -138,7 +159,7 @@ auto bus = sub0::wire(controller, port);
 Probe probe;                                         // struct Probe : sub0::Subscribe<Sample>
 ```
 
-`tryAdd()` becoming `false` is `isSubscribed()` becoming `false`; `remove()` is `disconnect()`, or the end of the
+`tryAdd()` becoming `false` is `isSubscribed()` becoming `false`; `remove()` is `unsubscribe()`, or the end of the
 subscriber's lifetime.
 
 ### `sub0pub/wiring/publisher.hpp` renamed to `sub0pub/wiring/sink.hpp`
@@ -246,24 +267,24 @@ This removes the deleting-destructor code and the `operator delete` link depende
 - Mark leaf subscriber classes `final` when they are destroyed through a pointer to their own type (`delete`, `std::unique_ptr`) or held in `std::optional`. Otherwise gcc (`-Wdelete-non-virtual-dtor`) and clang (`-Wdelete-non-abstract-non-virtual-dtor`) warn.
 - Remove `override` from subscriber destructors.
 
-### `SUB0PUB_THREAD_SAFE` subscribers register explicitly
+### `SUB0PUB_THREAD_SAFE` subscribers subscribe explicitly
 
-With a lock (`SUB0PUB_THREAD_SAFE`, or `sub0::LockWith<L>`), the `Subscribe<Data>` constructor no longer registers the subscriber. Registering there would let another thread call `receive()` before the derived class is constructed. After `disconnect()` returns, `receive()` is not called again on any thread.
+With a lock (`SUB0PUB_THREAD_SAFE`, or `sub0::LockWith<L>`), the `Subscribe<Data>` constructor no longer subscribes the subscriber. Subscribing there would let another thread call `receive()` before the derived class is constructed. After `unsubscribe()` returns, `receive()` is not called again on any thread.
 
 **Action:** In the most-derived subscriber:
 - call `trySubscribe()` at the end of the constructor;
-- call `disconnect()` at the start of the destructor.
+- call `unsubscribe()` at the start of the destructor.
 
 ```cpp
 struct Logger final : sub0::Subscribe<Sample>
 {
     Logger() noexcept { trySubscribe(); }
-    ~Logger() { disconnect(); }
+    ~Logger() { unsubscribe(); }
     void receive(const Sample&) noexcept;
 };
 ```
 
-Single-threaded configurations are unchanged: they register in the constructor.
+Single-threaded configurations are unchanged: they subscribe in the constructor.
 
 ### `SubscribeResult::Closed` added
 
@@ -399,9 +420,9 @@ longer reports it; it reports only a change to the table being dispatched.
 To restore the earlier v2 behaviour for every type, define `SUB0PUB_REENTRANT_SAFE`, `SUB0PUB_CANCEL` and
 `SUB0PUB_FILTER` as `true`.
 
-### Disconnecting during a dispatch is safe with Snapshot dispatch
+### Unsubscribing during a dispatch is safe with Snapshot dispatch
 
-A subscriber disconnected or destroyed while its type is being dispatched on the same thread is removed from that dispatch. Before, the dispatch's snapshot still held it and called it afterwards (issue #5). `filter()` may also disconnect or destroy its own subscriber: `receive()` is then not called.
+A subscriber unsubscribed or destroyed while its type is being dispatched on the same thread is removed from that dispatch. Before, the dispatch's snapshot still held it and called it afterwards (issue #5). `filter()` may also unsubscribe or destroy its own subscriber: `receive()` is then not called.
 
 Closing a `Domain` from a dispatch of its own table is a table change too. With Snapshot dispatch it is supported, and no subscriber of that domain receives the rest of the publication. With `DirectChecked` it is reported (a debug build aborts by default); if the handler returns, no subscriber receives the rest of the publication.
 
@@ -484,6 +505,7 @@ Without snapshot dispatch, a `receive()` that subscribes or unsubscribes (or des
 - `SUB0PUB_UNLISTED_CHECK`, `SUB0PUB_UNLISTED_RECEIVER(what)`: the check for a subscriber that its type's `StaticTo` list does not name, and its action (since v2.0; default: on without `NDEBUG`; assert, then abort).
 - `SUB0PUB_AUDIT`, `SUB0PUB_AUDIT_PRINT(line)`, `SUB0PUB_AUDIT_EXIT(findings)`: the audit build, where its report goes and what follows it at exit (since v2.0; default: off; stderr; nothing).
 - `SUB0PUB_EMPTY_BASES` (internal): the packed empty-base layout on the MSVC ABI.
+- `SUB0PUB_TRACE` and `SUB0PUB_STRINGIFY` no longer exist (since v2.0, above).
 
 The `SUB0PUB_*` policy macros must agree in every translation unit that uses a type. Setting them differently in one translation unit is only valid for types local to it.
 
@@ -493,11 +515,11 @@ Defined by `sub0pub/config_macros.hpp` for the static-wiring delivery chain: `__
 on every other compiler. It is not a configuration option (it has no `#ifndef` override). It is listed here only so
 a project defining a macro of the same name sees the collision.
 
-### `SUB0_STRINGIFY` renamed to `SUB0PUB_STRINGIFY`
+### `SUB0_STRINGIFY` removed
 
-The macro was renamed for prefix consistency. The old name no longer exists.
+The library never used it, and v2 does not provide a replacement.
 
-**Action:** Replace `SUB0_STRINGIFY(x)` with `SUB0PUB_STRINGIFY(x)`.
+**Action:** Define your own if you used it: `#define STRINGIFY_(x) #x` and `#define STRINGIFY(x) STRINGIFY_(x)`.
 
 ---
 

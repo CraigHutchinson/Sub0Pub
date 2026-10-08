@@ -3,8 +3,8 @@
  * Use when: you want a compact starting point for one publisher and one subscriber.
  * Demonstrates: Publish<uint32_t>, Subscribe<uint32_t>, and a noexcept receive() callback.
  * Story: RunningTotal subscribes when constructed. IncrementSource publishes 3141 once,
- * and RunningTotal adds that value to its own total. Scope exit disconnects the subscriber.
- * Keep in mind: this is the default unlocked runtime broker; nothing here is wired at compile time. Registration
+ * and RunningTotal adds that value to its own total. Scope exit unsubscribes the subscriber.
+ * Keep in mind: this is the default unlocked runtime broker; nothing here is wired at compile time. The subscription
  * must succeed before delivery is expected; the sample checks that its one receiver subscribed.
  * Run: Sub0Pub_MinimalExample returns zero when the total is 3141; it prints nothing.
  */

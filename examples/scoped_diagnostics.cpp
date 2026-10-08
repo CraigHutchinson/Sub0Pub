@@ -1,8 +1,8 @@
 /** One-shot diagnostics leave a cooling controller running
  *
  * Use when: runtime observers behind fixed wiring need broker policy and session ownership.
- * Demonstrates: BrokerPort, Scoped Domain, Snapshot and callback disconnect().
- * Story: two one-shot probes disconnect after their first reading. The fixed cooling
+ * Demonstrates: BrokerPort, Scoped Domain, Snapshot and callback unsubscribe().
+ * Story: two one-shot probes unsubscribe after their first reading. The fixed cooling
  * controller keeps receiving; closing the diagnostic session also leaves that fixed path intact.
  * The session's readings are configured with AllowNoReceivers: probes are optional observers, so a
  * reading that no probe is listening for is expected, not the failure it would otherwise be reported as.
@@ -39,11 +39,11 @@ struct OneShotProbe final : sub0::Subscribe<SessionTemperatureReading>
     void receive(const SessionTemperatureReading&) noexcept
     {
         ++readingsReceived;
-        disconnect(); // BrokerPort with Snapshot permits removal during a callback.
+        unsubscribe(); // BrokerPort with Snapshot permits removal during a callback.
     }
 };
 
-bool letProbesDisconnectThemselves()
+bool letProbesUnsubscribeThemselves()
 {
     sub0::Domain<SessionTemperatureReading> diagnosticSession;
     SessionCoolingController controller;
@@ -56,7 +56,7 @@ bool letProbesDisconnectThemselves()
     if (firstProbe.readingsReceived != 1 || secondProbe.readingsReceived != 1)
         return false;
 
-    wiring.publish(SessionTemperatureReading{21}); // Both probes have disconnected; the controller remains wired.
+    wiring.publish(SessionTemperatureReading{21}); // Both probes have unsubscribed; the controller remains wired.
     if (controller.readingsReceived != 2 || !controller.fanRunning)
         return false;
     diagnosticSession.close();
@@ -68,5 +68,5 @@ bool letProbesDisconnectThemselves()
 
 int main()
 {
-    return letProbesDisconnectThemselves() ? 0 : 1;
+    return letProbesUnsubscribeThemselves() ? 0 : 1;
 }

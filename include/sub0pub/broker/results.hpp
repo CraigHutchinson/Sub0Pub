@@ -10,12 +10,12 @@
 
 namespace sub0
 {
-    /** Outcome of a bounded subscription registration
+    /** Outcome of subscribing to a bounded table
      * @see Subscribe::trySubscribe, Subscribe::isSubscribed
      */
     enum class SubscribeResult : uint8_t
     {
-        Subscribed,        ///< Registered; the subscriber receives subsequent publishes
+        Subscribed,        ///< Subscribed; the subscriber receives subsequent publishes
         CapacityExceeded,  ///< The table was full; table left unchanged
         Closed             ///< The subscriber's Domain has been closed
     };
@@ -25,7 +25,7 @@ namespace sub0
     {
         Accepted,          ///< The transport took the message (copied or serialized it)
         Full,              ///< Temporary: queue or buffer exhausted
-        Disconnected,      ///< No peer at the moment
+        Unsubscribed,      ///< No peer at the moment
         Closed             ///< The transport is shutting down or shut down
     };
 

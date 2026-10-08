@@ -1,14 +1,14 @@
-/** Attach an optional diagnostic probe beside a cooling controller
+/** Subscribe an optional diagnostic probe beside a cooling controller
  *
- * Use when: one receiver of a message type is fixed and known, and others come and go at run time.
+ * Use when: one receiver of a message type is fixed and known, and others subscribe and unsubscribe at run time.
  * Demonstrates: sub0::StaticFirst beside the message type: the listed controller is called directly, then the
  * runtime broker delivers to whoever is subscribed. Capacity bounds the runtime side, and isSubscribed()
  * reports a probe that did not fit.
- * Story: the controller first runs alone. A probe joins for one reading; a second probe cannot fit. The first
- * leaves, and the controller continues without it.
+ * Story: the controller first runs alone. A probe subscribes for one reading; a second probe cannot fit. The
+ * first unsubscribes, and the controller continues without it.
  * Keep in mind: the listed receiver has static storage and is called first. The runtime side is the ordinary
- * broker with the type's configuration, so its rules apply: with the default dispatch a probe must not join or
- * leave from inside its own receive() (see scoped_diagnostics.cpp for that). StaticFirst keeps the broker's cost
+ * broker with the type's configuration, so its rules apply: with the default dispatch a probe must not subscribe or
+ * unsubscribe from inside its own receive() (see scoped_diagnostics.cpp for that). StaticFirst keeps the broker's cost
  * on every publication; where the set of receivers is closed, list them all with StaticTo instead.
  * Run: Sub0Pub_Example_dynamic_diagnostics returns zero when the checks pass.
  */
@@ -59,14 +59,14 @@ bool attachAndRemoveAProbe()
 
     {
         DiagnosticProbe probe;
-        DiagnosticProbe waitingProbe; // The runtime side holds one subscriber: this one is not registered.
+        DiagnosticProbe waitingProbe; // The runtime side holds one subscriber: this one is not subscribed.
         if (!probe.isSubscribed() || waitingProbe.isSubscribed())
             return false;
 
         thermometer.measure(21);
         if (coolingController.readingsReceived != 2 || probe.readingsReceived != 1 || waitingProbe.readingsReceived != 0)
             return false;
-    } // Both probes leave with their lifetimes.
+    } // Both probes unsubscribe as their lifetimes end.
 
     thermometer.measure(22);
     return coolingController.readingsReceived == 3 && coolingController.fanRunning;

@@ -6,7 +6,7 @@
  * broker and through a StaticTo list and writes a report at exit; sub0::auditFindings(), which gives a test the
  * number of findings; and sub0::auditReport(), which writes the report on request.
  * Story: one mistake per message type. An Alarm is raised before the alarm log exists, so nobody hears it. A logger
- * is attached after the last Reading. A maintenance console waits for a message that nothing publishes. Two
+ * subscribes after the last Reading. A maintenance console waits for a message that nothing publishes. Two
  * listeners compete for a Beacon table configured for one. A spare status panel is constructed that the Status
  * type's StaticTo list does not name. None of them stops the program. The audit reports six findings: the first
  * mistake shows from both sides, as a publication nobody received and as a receiver that got nothing. Below the
@@ -111,7 +111,7 @@ int main()
 
     AlarmLog alarmLog;
     thermometer.measure(20);
-    Logger logger;              // 2. Attached after the last Reading.
+    Logger logger;              // 2. Subscribes after the last Reading.
 
     Console console;            // 3. Waits for a Maintenance message that nothing publishes.
 

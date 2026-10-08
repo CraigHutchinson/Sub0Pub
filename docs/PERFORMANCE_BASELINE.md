@@ -43,7 +43,7 @@ The selected rows in `tests/bench/budgets.json` are enforced on each PR and merg
 | unsubscribe first of 8 + resubscribe | 83 | 99 | 94 | 322 |
 | `trySubscribe()`, table full | 12 | 16 | 12 | 92 |
 
-What the opt-in features pay for: **Full** lets a subscriber be disconnected or destroyed during a dispatch, or from
+What the opt-in features pay for: **Full** lets a subscriber be unsubscribed or destroyed during a dispatch, or from
 inside `filter()`, without being called afterwards (limitations K1 and K2 in [DESIGN.md](DESIGN.md)).
 **ThreadSafe** pays for teardown that is safe during concurrent delivery (K3); a lighter lock through `LockWith<L>`
 costs less. `Sub0Pub_Bench_Axes` measures each configuration option alone.

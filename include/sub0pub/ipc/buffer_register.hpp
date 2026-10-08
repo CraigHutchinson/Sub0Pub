@@ -41,11 +41,10 @@ namespace sub0
 
         /** Register a sink to the specified typed Data buffer
          * @remark Performs insertion sorting on buffers by the IPublish::typeId() for the buffer
-         * @todo Make search meahcnism selectable i.e. Array-index, hash, or binary-lookup etc
          * @remark Called by sub0::ForwardPublish<Data>
          *
          * @param[in] publisher  Buffer handling object to store and signal data completion
-         * @param[in] paddingSize  Number of trailing bytes after sizeof(Data) has been consumed to ignore/discard 
+         * @param[in] paddingSize  Number of trailing bytes after sizeof(Data) has been consumed to ignore/discard
          *                         for alignment or protocol-version compatibility
          */
         template < typename Data >
@@ -53,7 +52,7 @@ namespace sub0
         {
             set( Header_t(buffer)
                , Buffer{
-                     &publisher 
+                     &publisher
                     , reinterpret_cast<char*>(&buffer)
                     , static_cast<uint_least16_t>(sizeof(buffer))
                     , paddingSize
@@ -109,7 +108,6 @@ namespace sub0
 
         /** Default validation check against provided header
          * @note No validation occurs by default and processing is pushed onto find() to perform respective lookup operation
-         * @todo Unify find/validate so that find returns a handle that can be validated or buffer accessed etc i.e. Iterator or the likes!
          * @param header Header data to validate against
          * @return True always
         */
@@ -118,7 +116,7 @@ namespace sub0
             return true;
         }
 
-        bool close()///< @TODO This is here as a use-case contained stream state within the buffer map! Remove/deprecate this when/as possible
+        bool close()
         {
             /** Do nothing - no state to clear */
             return true;

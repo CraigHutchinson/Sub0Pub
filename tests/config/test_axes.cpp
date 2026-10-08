@@ -46,7 +46,7 @@ template<class Data>
 struct Probe final : sub0::Subscribe<Data>
 {
     Probe() noexcept { if constexpr (sub0::detail::cConcurrent<sub0::config_t<Data>>) this->trySubscribe(); }
-    ~Probe() { this->disconnect(); }
+    ~Probe() { this->unsubscribe(); }
     std::atomic<int> received{0}; // concurrent configurations call a receiver from several publisher threads at once
     std::function<void(const Data&)> action;
     void receive(const Data& d) noexcept override
@@ -73,11 +73,11 @@ TEST_CASE("axes: Snapshot, a subscriber added during dispatch is called from the
     CHECK(late->received == 1);
 }
 
-TEST_CASE("axes: Snapshot, a later subscriber disconnected during dispatch is not called") {
+TEST_CASE("axes: Snapshot, a later subscriber unsubscribed during dispatch is not called") {
     Source<SnapMsg> pub;
     Probe<SnapMsg> first;
     Probe<SnapMsg> second;
-    first.action = [&](const SnapMsg&) { second.disconnect(); };
+    first.action = [&](const SnapMsg&) { second.unsubscribe(); };
     pub.send(SnapMsg{1});
     CHECK(first.received == 1);
     CHECK(second.received == 0);  // removed from this dispatch's snapshot, not only from the table
@@ -142,7 +142,7 @@ TEST_CASE("axes: Lock, one publisher thread's cancel() never affects another thr
     struct Counter : sub0::Subscribe<LockedMsg>
     {
         explicit Counter(std::atomic<int>& n) noexcept : count(n) { trySubscribe(); }
-        ~Counter() { disconnect(); }
+        ~Counter() { unsubscribe(); }
         void receive(const LockedMsg& m) noexcept override { if (m.value >= 0) count.fetch_add(1, std::memory_order_relaxed); }
         std::atomic<int>& count;
     } counter(delivered);
@@ -164,7 +164,7 @@ TEST_CASE("axes: Lock, concurrent publishers with subscribe/unsubscribe churn: s
     struct Stable : sub0::Subscribe<ChurnMsg>
     {
         explicit Stable(std::atomic<int>& n) noexcept : count(n) { trySubscribe(); }
-        ~Stable() { disconnect(); }
+        ~Stable() { unsubscribe(); }
         void receive(const ChurnMsg&) noexcept override { count.fetch_add(1, std::memory_order_relaxed); }
         std::atomic<int>& count;
     } stable(stableCount);
@@ -174,7 +174,7 @@ TEST_CASE("axes: Lock, concurrent publishers with subscribe/unsubscribe churn: s
     std::thread churn([&] {
         while (publishing.load(std::memory_order_relaxed))
         {
-            Probe<ChurnMsg> transient; // subscribes at construction, disconnects first at destruction
+            Probe<ChurnMsg> transient; // subscribes at construction, unsubscribes first at destruction
             std::this_thread::yield();
         }
     });
@@ -206,7 +206,7 @@ struct Filtering final : sub0::Subscribe<Data>
     bool filter(const Data&) noexcept override
     {
         if (inFilter)
-            inFilter(); // may disconnect or destroy *this
+            inFilter(); // may unsubscribe or destroy *this
         return true;
     }
     void receive(const Data&) noexcept override { ++*received; }
@@ -223,11 +223,11 @@ TEST_CASE("axes: Snapshot, a later subscriber destroyed by an earlier receiver i
     CHECK_FALSE(second);
 }
 
-TEST_CASE("axes: filter() that disconnects its own subscriber prevents receive()") {
+TEST_CASE("axes: filter() that unsubscribes its own subscriber prevents receive()") {
     int received = 0;
     Filtering<FilterMsg> s;
     s.received = &received;
-    s.inFilter = [&] { s.disconnect(); };
+    s.inFilter = [&] { s.unsubscribe(); };
     Source<FilterMsg> pub;
     pub.send(FilterMsg{1});
     CHECK(received == 0);

@@ -8,17 +8,11 @@
 #include "sub0pub/broker/subscribe.hpp"
 #include "sub0pub/broker/publish.hpp"
 #include "sub0pub/ipc/binary_writer.hpp"
-#include "sub0pub/utility/traits.hpp"
 #include <cstdint>
 #include <tuple>
 
 namespace sub0
 {
-    /** Check for `Target::ForwardReceiver` for SFINAE 
-    */
-    template<typename Target>
-    using forward_receiver_t = typename Target::ForwardReceiver;
-
     /** Forward receive() to  Target type convertible from this
      * @remark The call is made with Data type allowing for templated receive<>() handler functions @see class StreamSerializer
      * @note This uses the CRTP(curiously recurring template pattern) to forward to a target type derived from ForwardSubscribe<..>
@@ -34,10 +28,11 @@ namespace sub0
          */
         inline void receive( const Data& data ) noexcept override
         {
-            // Qualified, so the call is not virtual: the class that forward_receiver_t names, else Target itself.
-            // maybe_unused: Clang's -Wunused-local-typedef does not count the qualified call as a use
-            using ForwardReceiver_t [[maybe_unused]] = utility::detected_or_t<Target, forward_receiver_t, Target>;
-            static_cast<Target*>(this)->ForwardReceiver_t::receive(data);
+            // Qualified, so the call is not virtual: the class Target::ForwardReceiver names, else Target itself
+            if constexpr (requires { typename Target::ForwardReceiver; })
+                static_cast<Target*>(this)->Target::ForwardReceiver::receive(data);
+            else
+                static_cast<Target*>(this)->Target::receive(data);
         }
     };
 
@@ -46,8 +41,6 @@ namespace sub0
      * @note This uses the CRTP(curiously recurring template pattern) to forward to a target type derived from ForwardPublish<..>
      * @tparam  Data  Data type which will be read into from a DataProvider
      * @tparam  DataProvider  CRTP Type of derived class which implements a function of type DataProvider::setDataPublisher( Data&, IPublish& ) via base inheritance or direct member
-     *
-     * @todo API not final
      */
     template<typename Data, typename DataProvider >
     class ForwardPublish : public Publish<Data>, protected IPublish
@@ -57,8 +50,8 @@ namespace sub0
          * @param typeName  Unique name given to the serialised data entry @note Replaces compiler generated name which is not portable
          */
         ForwardPublish(
-#if SUB0PUB_TYPEIDNAME            
-            const uint32_t typeId = 0, const char* typeName = 0/*nullptr*/ 
+#if SUB0PUB_TYPEIDNAME
+            const uint32_t typeId = 0, const char* typeName = 0/*nullptr*/
 #endif
         )
             : Publish<Data>(
@@ -80,8 +73,7 @@ namespace sub0
         { Publish<Data>::publish( buffer_ ); }
 
     private:
-        Data buffer_ = {}; ///< Data buffer to be published 
-                      ///< @todo Double-buffer data storage for asynchronous processing and receive?
+        Data buffer_ = {}; ///< Data buffer to be published
     };
 
     /** Forward receive() to Target type convertible from this for all Datas types listed

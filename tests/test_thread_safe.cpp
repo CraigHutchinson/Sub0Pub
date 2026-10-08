@@ -26,11 +26,11 @@ struct TsPublisher : sub0::Publish<TsMsg>
     void send(int value) noexcept { sub0::publish(*this, TsMsg{value}); }
 };
 
-/// The pattern for locked configurations: activate last in the constructor, disconnect first in the destructor
+/// The pattern for locked configurations: activate last in the constructor, unsubscribe first in the destructor
 struct TsCounter : sub0::Subscribe<TsMsg>
 {
     TsCounter() noexcept { trySubscribe(); }
-    ~TsCounter() { disconnect(); }
+    ~TsCounter() { unsubscribe(); }
     std::atomic<int> received{0};
     void receive(const TsMsg&) noexcept override { received.fetch_add(1, std::memory_order_relaxed); }
 };
@@ -52,7 +52,7 @@ TEST_CASE("Thread-safe: a subscriber is inactive until trySubscribe()") {
     CHECK(sub.trySubscribe() == sub0::SubscribeResult::Subscribed);
     pub.send(2);
     CHECK(sub.received == 1);
-    sub.disconnect();
+    sub.unsubscribe();
 }
 
 TEST_CASE("Thread-safe: concurrent publishers with subscriber churn lose nothing for a stable subscriber") {

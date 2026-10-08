@@ -25,7 +25,7 @@ template<class Data>
 struct Sink final : sub0::Subscribe<Data>
 {
     Sink() noexcept { this->trySubscribe(); } // a locked type does not register in its base constructor
-    ~Sink() { this->disconnect(); }
+    ~Sink() { this->unsubscribe(); }
     void receive(const Data& data) noexcept override { total += data.value; }
     int total = 0;
 };

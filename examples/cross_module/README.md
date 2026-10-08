@@ -15,7 +15,7 @@ Before enabling it as a supported v2 example:
   or thread-local contexts are shared identically on ELF, Mach-O and Windows DLLs.
 - Test both directions of delivery, more than one subscribing module, consistent per-type configuration,
   and the supported filter/cancellation/nested-dispatch contract across the boundary.
-- Define compatible compiler/runtime/ABI requirements and object ownership. Disconnect subscribers and
+- Define compatible compiler/runtime/ABI requirements and object ownership. Unsubscribe subscribers and
   drain callbacks before unloading a module containing their code; unload must leave no callable pointers.
 - Add Windows, Linux and macOS shared-library correctness tests, and measure the chosen boundary against
   direct cross-module calls and the equivalent in-process path. Keep static, dynamic and mixed variants distinct.

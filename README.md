@@ -1,14 +1,13 @@
 # Sub0Pub
 
 > Sub0Pub began as a spare-time project, written by hand in 2018 to explore type-safe messaging in C++. This v2
-> release develops that original idea into a more complete library. It is CI-tested, but has not yet been
-> field-tested; the `v1.0` tag preserves the previous baseline.
+> release develops that original idea into a more complete library.
 
 **Typed publish-subscribe for C++23 that compiles to direct calls when the receivers are known.**
 
 Sub0Pub is a header-only library for synchronous, type-safe message delivery. Write publishers and subscribers once;
-each message type then says whether it is delivered through a bounded runtime broker, where subscribers come and go
-independently, or by direct calls to a known set of receivers. The core does not allocate broker storage from the
+each message type then says whether it is delivered through a bounded runtime broker, where subscribers subscribe and
+unsubscribe independently, or by direct calls to a known set of receivers. The core does not allocate broker storage from the
 heap; optional policies and application callbacks have their own costs.
 
 > **Status:** v2.0.0-alpha is CI-tested, but has not yet been field-tested. The `v1.0` tag preserves the previous
@@ -30,9 +29,9 @@ public:
 };
 ```
 
-As written, a `Display` subscribes when it is constructed and leaves when it is destroyed: the runtime broker
+As written, a `Display` subscribes when it is constructed and unsubscribes when it is destroyed: the runtime broker
 delivers through a bounded, per-type table. When the receivers of a type are known, name them beside the type and
-the same code compiles to direct calls, with no table, registration or virtual call behind it:
+the same code compiles to direct calls, with no table, run-time subscription or virtual call behind it:
 
 ```cpp
 class Display;
@@ -51,23 +50,23 @@ flowchart LR
     C -->|StaticTo| R[Listed receivers, direct calls]
     C -->|StaticFirst| F[Listed receivers, direct calls]
     F --> B
-    B -->|registered delivery| S[Subscribe T, joined at run time]
+    B -->|delivery through its table| S[Subscribe T, subscribed at run time]
 ```
 
 | | Your case | Say on the type | Main constraint |
 |---|---|---|---|
-| 1 | Receivers register and leave independently. Start here. | nothing | Fixed capacity; registration can fail when the table is full. |
-| 2 | The receivers are a closed set of objects with static storage. | `sub0::StaticTo<&a, &b>` | The list is the whole truth: nothing joins or leaves at run time. |
-| 3 | A fixed core, plus receivers that come and go. | `sub0::StaticFirst<&a>` | The broker's cost stays on every publication. |
+| 1 | Receivers subscribe and unsubscribe independently. Start here. | nothing | Fixed capacity; a subscription can fail when the table is full. |
+| 2 | The receivers are a closed set of objects with static storage. | `sub0::StaticTo<&a, &b>` | The list is the whole truth: nothing subscribes or unsubscribes at run time. |
+| 3 | A fixed core, plus receivers that subscribe and unsubscribe at run time. | `sub0::StaticFirst<&a>` | The broker's cost stays on every publication. |
 
 A publication that reaches no receiver is treated as a mistake: a debug build reports it, and a `StaticTo` list
 nobody can receive from does not compile. A type for which that is expected says `sub0::AllowNoReceivers`. An
 [audit build](docs/USAGE.md#finding-wiring-mistakes-the-audit-build) reports every such mistake a run makes, and
 which message types are ready to name their receivers.
 
-See [basic pub/sub](examples/basic_pubsub/main.cpp) for the subscriber lifecycle,
+See [basic pub/sub](examples/basic_pubsub/main.cpp) for subscribing and unsubscribing through object lifetime,
 [promote to static](examples/promote_to_static/main.cpp) for one application built both ways from one source, and
-[dynamic diagnostics](examples/dynamic_diagnostics.cpp) for a fixed receiver with runtime probes beside it.
+[dynamic diagnostics](examples/dynamic_diagnostics.cpp) for a fixed receiver with probes that subscribe at run time beside it.
 
 ### When the type cannot decide
 

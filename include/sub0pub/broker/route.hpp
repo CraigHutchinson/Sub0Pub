@@ -17,7 +17,7 @@ namespace sub0
      *            The transport must copy/serialize at acceptance and never retain a reference to `data`.
      *   Ingress: inject(data) publishes a message received from the transport into the table. That message is
      *            not sent back out through this route (split horizon), preventing echo loops between peers.
-     *   Teardown: the destructor disconnects first, so after destruction the transport is never called.
+     *   Teardown: the destructor unsubscribes first, so after destruction the transport is never called.
      *
      * Transport concept: SendResult send(const Data&) noexcept.
      */
@@ -33,7 +33,7 @@ namespace sub0
         template<class C = Config, std::enable_if_t<C::storage == Storage::Scoped, int> = 0>
         Route(Domain<Data>& domain, Transport& transport) noexcept : Subscribe<Data>(domain), transport_(transport) { this->trySubscribe(); }
 
-        ~Route() { this->disconnect(); }
+        ~Route() { this->unsubscribe(); }
 
         /// Ingress: deliver a message received from the transport to this route's table
         void inject(const Data& data) const noexcept { this->injectFrom(this, data); }

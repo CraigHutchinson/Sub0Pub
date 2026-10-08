@@ -5,9 +5,9 @@
  * Demonstrates: sub0::StaticTo, written beside the message type, with Subscribe, Publish and publish() exactly
  * as they are written for the runtime broker.
  * Story: a thermometer publishes one reading. The reading's type names the display that receives it, so the
- * publication compiles to a call of that display's receive(); nothing is registered at run time.
+ * publication compiles to a call of that display's receive(); nothing subscribes at run time.
  * Keep in mind: a listed receiver has static storage and is declared before the type that names it. The list
- * is the whole set of receivers: the display's Subscribe base is empty (no vtable, no registration), and a
+ * is the whole set of receivers: the display's Subscribe base is empty (no vtable, no run-time subscription), and a
  * subscriber the list does not name is never called, which a debug build reports. receive() carries no
  * `override`, because that base has nothing to override. Remove the sub0_config line and the same source runs
  * on the runtime broker.

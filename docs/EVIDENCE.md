@@ -1,7 +1,7 @@
 # Collapse evidence
 
 Sub0Pub's claim is **correctness without cost**: wherever the application's topology allows it, the compiler removes
-the library's dispatch, registration, storage and context machinery. This document defines how that claim is
+the library's dispatch, subscription, storage and context machinery. This document defines how that claim is
 measured, and records the results for the public API. [DESIGN.md](DESIGN.md) records the decisions these results
 support.
 

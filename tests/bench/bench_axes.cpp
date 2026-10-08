@@ -58,7 +58,7 @@ public:
         slot() = s;
         return sub0::SubscribeResult::Subscribed;
     }
-    void disconnect(sub0::Subscribe<Data>* s) noexcept
+    void unsubscribe(sub0::Subscribe<Data>* s) noexcept
     {
         if (slot() == s)
             slot() = nullptr;
@@ -134,9 +134,9 @@ struct NoOpSink final : Subscribe<Data>
 {
     NoOpSink() noexcept { activate(); }
     explicit NoOpSink(Domain<Data>& d) noexcept : Subscribe<Data>(d) { activate(); }
-    // Lifetime contract (docs/DESIGN.md, "Contracts"): disconnect first in the most-derived destructor where
+    // Lifetime contract (docs/DESIGN.md, "Contracts"): unsubscribe first in the most-derived destructor where
     // publishers may run on other threads; single-threaded configurations rely on the base destructor alone
-    ~NoOpSink() { if constexpr (cConcurrentT<Data>) this->disconnect(); }
+    ~NoOpSink() { if constexpr (cConcurrentT<Data>) this->unsubscribe(); }
     void receive(const Data&) noexcept override;
 private:
     void activate() noexcept { if constexpr (cConcurrentT<Data>) this->trySubscribe(); }
@@ -157,7 +157,7 @@ struct Echo final : Subscribe<Data>
 {
     explicit Echo(Source<Data>& s) noexcept : src(s) { activate(); }
     Echo(Domain<Data>& d, Source<Data>& s) noexcept : Subscribe<Data>(d), src(s) { activate(); }
-    ~Echo() { if constexpr (cConcurrentT<Data>) this->disconnect(); }
+    ~Echo() { if constexpr (cConcurrentT<Data>) this->unsubscribe(); }
     void receive(const Data& d) noexcept override;
     Source<Data>& src;
     bool inside = false;

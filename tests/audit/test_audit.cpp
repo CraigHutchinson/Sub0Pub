@@ -104,7 +104,7 @@ namespace
     struct LockedCounter final : sub0::Subscribe<LockedMsg>
     {
         LockedCounter() noexcept { trySubscribe(); }
-        ~LockedCounter() { disconnect(); }
+        ~LockedCounter() { unsubscribe(); }
         void receive(const LockedMsg&) noexcept { ++count; }
         std::atomic<int> count{0};
     };
@@ -202,7 +202,7 @@ TEST_CASE("audit: a subscriber that left before the first publication never rece
     source.send();
 
     CHECK(sub0::auditFindings() == before + 1U);
-    CHECK(has(report(), {"EarlyMsg", "never received it: it left before the first publication"}));
+    CHECK(has(report(), {"EarlyMsg", "never received it: it unsubscribed before the first publication"}));
 }
 
 TEST_CASE("audit: a subscriber that came and went between two publications never received it") {
@@ -259,8 +259,8 @@ TEST_CASE("audit: a brokered type whose receivers came and went is not a candida
     source.send();
 
     const Report lines = report();
-    CHECK(has(lines, {"1 delivery", "joined after publication 1", "left after publication 2"}));
-    CHECK(has(lines, {"receivers joined or left while it was being published: keep it brokered"}));
+    CHECK(has(lines, {"1 delivery", "subscribed after publication 1", "unsubscribed after publication 2"}));
+    CHECK(has(lines, {"receivers subscribed or unsubscribed while it was being published: keep it brokered"}));
 }
 
 TEST_CASE("audit: a StaticTo type records its listed receivers by name and reports a subscriber the list forgot") {
@@ -296,7 +296,7 @@ TEST_CASE("audit: a StaticFirst type counts its listed receivers, so a publicati
     CHECK(sub0::auditFindings() == before);
     const Report lines = report();
     CHECK(has(lines, {"firstController (", "FirstController)", "2 deliveries, wired"}));
-    CHECK(has(lines, {"FirstProbe", "1 delivery", "joined after publication 1"}));
+    CHECK(has(lines, {"FirstProbe", "1 delivery", "subscribed after publication 1"}));
 }
 
 TEST_CASE("audit: a Scoped type with Snapshot dispatch is recorded through its Domain") {

@@ -1,12 +1,12 @@
 /** Two clocks share one counter — publishing from multiple threads
  *
- * Use when: concurrent publishers need a receiver whose registration respects its object lifetime.
- * Demonstrates: LockWith<std::mutex>, explicit trySubscribe()/disconnect(), and atomic receiver state.
- * Story: TickCounter registers after its fields are constructed. Two threads each create a Clock
+ * Use when: concurrent publishers need a receiver whose subscription respects its object lifetime.
+ * Demonstrates: LockWith<std::mutex>, explicit trySubscribe()/unsubscribe(), and atomic receiver state.
+ * Story: TickCounter subscribes after its fields are constructed. Two threads each create a Clock
  * and publish 100 ticks. After both threads join, the counter must hold 200; its destructor
- * then disconnects before its derived state is destroyed.
+ * then unsubscribes before its derived state is destroyed.
  * Keep in mind: broker locking protects the subscription table, not application callback state;
- * callbacks can overlap, hence the atomic counter. disconnect() is the teardown pattern for
+ * callbacks can overlap, hence the atomic counter. unsubscribe() is the teardown pattern for
  * in-flight callbacks, but this particular run joins publishers before destruction.
  * Run: Sub0Pub_Example_thread_safe_lifetime returns zero when all 200 ticks were received.
  */
@@ -31,13 +31,13 @@ struct TickCounter final : sub0::Subscribe<Tick>
 
     TickCounter() noexcept
     {
-        // Locked subscribers do not auto-register: all derived state must be ready first.
+        // Locked subscribers do not subscribe in their base constructor: all derived state must be ready first.
         trySubscribe();
     }
 
     ~TickCounter()
     {
-        disconnect(); // Wait for in-flight callbacks before destroying derived state.
+        unsubscribe(); // Wait for in-flight callbacks before destroying derived state.
     }
 
     void receive(const Tick&) noexcept

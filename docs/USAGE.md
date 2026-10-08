@@ -11,7 +11,7 @@ flowchart LR
     C -->|StaticTo| R[Listed receivers, direct calls]
     C -->|StaticFirst| F[Listed receivers, direct calls]
     F --> B
-    B -->|registered delivery| S[Subscribe T, joined at run time]
+    B -->|delivery through its table| S[Subscribe T, subscribed at run time]
 ```
 
 ## Which one, by case
@@ -20,9 +20,9 @@ Start at the top and move down only when the case beside a step is yours.
 
 | | Your case | What you write | Example |
 |---|---|---|---|
-| 1 | Receivers come and go with their lifetimes, or you are still shaping the application. **Start here.** | `Subscribe<T>`, `Publish<T>`; nothing on the type | [basic_pubsub](../examples/basic_pubsub/main.cpp) |
+| 1 | Receivers subscribe and unsubscribe with their lifetimes, or you are still shaping the application. **Start here.** | `Subscribe<T>`, `Publish<T>`; nothing on the type | [basic_pubsub](../examples/basic_pubsub/main.cpp) |
 | 2 | A type's receivers are now a closed set of objects with static storage, and its publications should cost what direct calls cost | add `sub0::StaticTo<&a, &b>` beside the type | [promote_to_static](../examples/promote_to_static/main.cpp), [static_addresses](../examples/static_addresses.cpp) |
-| 3 | Some receivers of the type are fixed, others still come and go | add `sub0::StaticFirst<&a>` beside the type | [dynamic_diagnostics](../examples/dynamic_diagnostics.cpp) |
+| 3 | Some receivers of the type are fixed, others still subscribe and unsubscribe at run time | add `sub0::StaticFirst<&a>` beside the type | [dynamic_diagnostics](../examples/dynamic_diagnostics.cpp) |
 | | The type cannot name its receivers: they are locals, or one type has several independent wirings, or a receiver must stop a publication, or a transport is one of the receivers | [explicit wiring](#explicit-wiring-when-the-type-cannot-decide) | [local_wiring](../examples/local_wiring.cpp) |
 
 ## 1. The runtime broker
@@ -41,8 +41,8 @@ public:
 };
 ```
 
-An unlocked subscriber registers during construction and disconnects during destruction. Its type's broker has a
-fixed capacity (8 by default); check `isSubscribed()` when registration success matters. If a slot later becomes
+An unlocked subscriber subscribes during construction and unsubscribes during destruction. Its type's broker has a
+fixed capacity (8 by default); check `isSubscribed()` when it matters that the subscription succeeded. If a slot later becomes
 available, `trySubscribe()` can retry. See [basic pub/sub](../examples/basic_pubsub/main.cpp) and
 [dynamic lifetime](../examples/dynamic_lifetime.cpp).
 
@@ -60,14 +60,14 @@ override.
   filter call per subscriber and is enabled per type or with `SUB0PUB_FILTER`. See
   [filtering](../examples/filtering/main.cpp).
 - **Cancellation:** `cancel()` stops delivery to later subscribers for the current publication. It does not
-  disconnect a subscriber or affect later publications; order matters. A publish context is required. See
+  unsubscribe a subscriber or affect later publications; order matters. A publish context is required. See
   [cancellation](../examples/cancellation/main.cpp).
 - **Changes during delivery:** nested publication is supported. Adding/removing a subscriber of the same type during
   its active dispatch, including self-destruction, requires `Snapshot`. Snapshot dispatch copies the table for that
   publication. See [dynamic lifetime](../examples/dynamic_lifetime.cpp).
 - **Concurrency:** unlocked use of one message type must not overlap across threads. `LockWith<L>` enables concurrent
   broker use, but application callback state still needs synchronization because callbacks may overlap. Locked
-  subscribers must call `trySubscribe()` at the end of the most-derived constructor and `disconnect()` at the start
+  subscribers must call `trySubscribe()` at the end of the most-derived constructor and `unsubscribe()` at the start
   of its destructor. See [thread-safe lifetime](../examples/thread_safe_lifetime.cpp).
 
 See [configuration](CONFIGURATION.md) for the available policies and their setup.
@@ -87,7 +87,7 @@ struct TemperatureReading {
 ```
 
 `sub0::publish(*this, TemperatureReading{22})` now compiles to a call of `display.receive()`. `Subscribe` is an
-empty base and `Publish` an empty handle: no subscription table, no registration, no virtual call. What changes for
+empty base and `Publish` an empty handle: no subscription table, no run-time subscription, no virtual call. What changes for
 the type, and how each change is caught:
 
 | Rule | If you get it wrong |
@@ -97,7 +97,7 @@ the type, and how each change is caught:
 | A listed receiver that subscribes to the type has a `receive(const T&)`. | Compile error. |
 | Somebody in the list can receive the type, unless the type is `AllowNoReceivers`. | Compile error. |
 | `filter()` needs the type's `sub0::Filter`, as on the broker, and the broker's signature. | Compile error. |
-| No `isSubscribed()`, `trySubscribe()`, `disconnect()`, `cancel()`, `Domain`, `Route` or publish report: they need a table. | Compile error. |
+| No `isSubscribed()`, `trySubscribe()`, `unsubscribe()`, `cancel()`, `Domain`, `Route` or publish report: they need a table. | Compile error. |
 | Every unit sees the same configuration, which a member alias guarantees. | A debug build reports a unit that disagrees. |
 
 The receivers are borrowed: publish only while they are alive. To take a type back to the broker, remove the line.
@@ -113,7 +113,7 @@ struct TemperatureReading {
 
 The listed receivers are called directly, first and in order; the runtime broker then delivers to whoever is
 subscribed. Everything the broker offers remains available to the runtime side, with the type's own configuration.
-A listed receiver is not registered, does not use the table's capacity, and reports `isSubscribed()` as true. The
+A listed receiver has no entry in the table, does not use its capacity, and reports `isSubscribed()` as true. The
 broker's cost stays on every publication, so list every receiver with `StaticTo` once the set is closed.
 
 ## Finding wiring mistakes: the audit build
@@ -136,12 +136,12 @@ sub0pub audit: 2 findings
 | Finding | What it usually means |
 |---|---|
 | publications reached no receiver | a publisher that starts before its subscribers; say `AllowNoReceivers` on the type if that is expected |
-| a subscriber never received it | it subscribed too late, left too early, or the message is never sent on this path |
+| a subscriber never received it | it subscribed too late, unsubscribed too early, or the message is never sent on this path |
 | never published | a subscriber waiting for a message that nothing in this run publishes |
 | a subscription refused | the type's `Capacity` is smaller than the number of subscribers that want it |
 | not in its `StaticTo` list | a subscriber of a statically wired type that the type does not name: it is never called |
 
-Below the findings, each message type lists its publishers and its receivers in the order they joined. The last
+Below the findings, each message type lists its publishers and its receivers in the order they subscribed. The last
 line of a brokered type is the migration hint: receivers that were all there before the first publication and
 stayed are what [`StaticTo`](#2-a-type-with-fixed-receivers-staticto) needs, in that order.
 

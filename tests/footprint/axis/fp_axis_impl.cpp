@@ -13,7 +13,7 @@ public:
         slot() = s;
         return sub0::SubscribeResult::Subscribed;
     }
-    void disconnect(sub0::Subscribe<Data>* s) noexcept
+    void unsubscribe(sub0::Subscribe<Data>* s) noexcept
     {
         if (slot() == s)
             slot() = nullptr;
