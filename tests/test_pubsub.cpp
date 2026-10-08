@@ -118,9 +118,15 @@ TEST_CASE("Multi-type publish routes correctly") {
     CHECK(floatSub.total == doctest::Approx(1.5f));
 }
 
-TEST_CASE("No subscribers - publish does not crash") {
-    IntPublisher pub;
-    pub.send(99); // Should not crash
+TEST_CASE("No subscribers - a type that allows it publishes without effect") {
+    // An absent receiver is a reported failure by default (test_no_receivers.cpp); a type opts out
+    struct Unheard { int value; using sub0_config = sub0::config<sub0::AllowNoReceivers>; };
+    struct UnheardPublisher : sub0::Publish<Unheard> {
+        void send(int value) { sub0::publish(*this, Unheard{value}); }
+    };
+    UnheardPublisher pub;
+    pub.send(99); // Should not crash, and is not reported
+    CHECK(sub0::receiverCount<Unheard>(pub) == 0U);
 }
 
 TEST_CASE("Filter support") {

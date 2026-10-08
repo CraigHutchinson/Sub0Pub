@@ -2,9 +2,10 @@
 
 [Back to the README](../README.md#how-it-compares)
 
-Sub0Pub v2 offers two delivery models: a bounded runtime subscription table per message type (optionally
-per `Domain`), and explicitly composed `wire()` / `StaticWiring` direct calls. Both deliver synchronously on
-the publishing thread. Locking makes concurrent broker use safe; it does not schedule callbacks on another thread.
+Sub0Pub v2 has one publish/subscribe vocabulary, and each message type decides how it is delivered: through a
+bounded runtime subscription table (optionally per `Domain`), or by direct calls to receivers the type names
+(`StaticTo`); `wire()` / `StaticWiring` compose direct calls explicitly where a type cannot name its receivers. All
+of them deliver synchronously on the publishing thread. Locking makes concurrent broker use safe; it does not schedule callbacks on another thread.
 The broker and wiring do not allocate subscription storage from the heap; application callbacks, payloads,
 streams and external adapters may allocate.
 
@@ -14,7 +15,7 @@ not head-to-head performance results.
 
 | Library / facility | Model and strengths | Where Sub0Pub differs |
 |---|---|---|
-| **Sub0Pub v2** | C++23, header-only; typed messages, fixed-capacity subscriptions, optional scoped domains and static wiring. | Single-threaded subscribers register on construction; concurrent configurations require explicit activation. A subscriber disconnects in its destructor, and once `disconnect()` returns its `receive()` is not called again on any thread; a concurrent `disconnect()` may wait for one callback in progress. Static wiring binds objects at composition time (runtime receivers join through `DynamicPort` or `BrokerPort`) and does not track lifetimes: bound receivers must outlive the wiring. No built-in event queue or scheduler. |
+| **Sub0Pub v2** | C++23, header-only; typed messages, fixed-capacity subscriptions, optional scoped domains, and direct calls for message types whose receivers are known. | Single-threaded subscribers register on construction; concurrent configurations require explicit activation. A subscriber disconnects in its destructor, and once `disconnect()` returns its `receive()` is not called again on any thread; a concurrent `disconnect()` may wait for one callback in progress. Static wiring binds objects at composition time (runtime receivers join through `DynamicPort` or `BrokerPort`) and does not track lifetimes: bound receivers must outlive the wiring. No built-in event queue or scheduler. |
 | [ETL messaging](https://www.etlcpp.com/docs/messaging/) (`message_router`, `message_bus`, `message_broker`) | Close embedded peer: message IDs, typed router handlers, bounded buses and explicit subscriptions by message ID. Useful when an application already uses ETL's embedded utilities. | Sub0Pub's local routing uses the C++ message type without requiring an ETL message base or numeric ID; static wiring can call plain receivers directly. |
 | [EnTT events and signals](https://github.com/skypjack/entt/wiki/Events,-signals-and-everything-in-between) | Close typed-event peer: delegates/signals and a dispatcher with immediate `trigger` or queued `enqueue`/`update`. Useful beyond its ECS. | EnTT also supports typed events and compile-time callback binding. Sub0Pub focuses on bounded broker storage and explicitly composed static fan-out. |
 | [eventpp](https://github.com/wqking/eventpp) | Header-only callback lists, event-key dispatch and queues, with configurable policies and mixins. Useful for runtime listener composition and deferred processing. | Sub0Pub separates message types and static receiver composition; queued processing must be supplied by the application or an adapter. |
@@ -25,7 +26,7 @@ not head-to-head performance results.
 Sub0Pub's stream serialization is an additional facility, not an IPC transport or a delivery guarantee.
 Applications still provide the stream/transport and agree on the wire representation; adapters to other event
 systems do not automatically make their payloads serializable. Allocation and performance comparisons need
-matched workloads, connection lifetimes and queue policies; see our [measured design](../README.md#measured-design) for
+matched workloads, connection lifetimes and queue policies; see our [measured design](../README.md#performance-and-validation) for
 what has actually been measured.
 
 ## Bridge candidates (proposed, not implemented)

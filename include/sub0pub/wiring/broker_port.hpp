@@ -1,4 +1,4 @@
-/** Sub0Pub: BrokerPort<T>: runtime subscribers behind a static wiring, through the runtime broker
+/** Sub0Pub: BrokerPort<T>: runtime subscribers behind an explicit wiring, through the runtime broker
  * @remark Part of Sub0Pub (https://github.com/BareCpper/Sub0Pub), MIT License: see LICENSE.md.
  *         Included by the umbrella header <sub0pub/sub0pub.hpp>.
  */
@@ -10,8 +10,12 @@
 
 namespace sub0
 {
-    /** Runtime subscribers behind a static wiring, with the full per-type broker (sub0pub/config.hpp policy) on the dynamic
-     *  side: bind the port like any receiver; Subscribe<T> objects receive through it.
+    /** Runtime subscribers behind an explicit wiring, with the full per-type broker (sub0pub/config.hpp policy) on the
+     *  dynamic side: bind the port like any receiver; Subscribe<T> objects receive through it.
+     * @remark For a Data type whose known receivers have static storage, sub0::StaticFirst says the same thing on the type.
+     * @remark The port publishes into the broker and cannot see the wiring's other receivers, so a publication that
+     *         finds no runtime subscriber is reported like any other (SUB0PUB_NO_RECEIVERS_CHECK). Where the runtime
+     *         side may be empty, configure the type with sub0::AllowNoReceivers.
      */
     template<class T>
     class BrokerPort : public Publish<T>

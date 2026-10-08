@@ -3,7 +3,150 @@
 This document tracks all breaking changes between Sub0Pub v1 and v2. Update this document with any commit that introduces a migration-relevant change.
 
 For runnable static, dynamic and mixed-path migration recipes, see [examples](examples/README.md).
-[docs/DESIGN.md](docs/DESIGN.md) explains when to use static wiring, the runtime broker, or both.
+[docs/USAGE.md](docs/USAGE.md) explains which delivery to choose: the runtime broker, a message type that names its
+receivers, or explicit wiring.
+
+---
+
+## Changes since v2.0
+
+These apply to code already on v2. Each says what to do.
+
+### A publication that reaches no receiver is reported
+
+Publishing a `Data` type that nobody is subscribed to used to be a silent no-op. It is almost always a mistake (a
+publisher that starts before its subscribers, a subscriber that was never constructed, a translation unit that does
+not see a type's configuration), so it is now detected: `SUB0PUB_NO_RECEIVERS_CHECK` is on in debug builds and calls
+`SUB0PUB_NO_RECEIVERS(what)`, whose default asserts and then aborts. Release builds are unchanged unless you define
+the check `true`; it replaces the dispatch loop's own entry test, so a publication that has receivers does not pay
+for it.
+
+| | Every type | One type |
+|---|---|---|
+| Report an unheard publication in every build | `SUB0PUB_NO_RECEIVERS_CHECK=true` | `sub0::ReportNoReceivers` |
+| Never report it | `SUB0PUB_NO_RECEIVERS_CHECK=false` | `sub0::AllowNoReceivers` |
+
+A closed `Domain` still drops a publication without a report: its session has ended. A `BrokerPort<T>` publishes
+into the broker like any publisher, so a wiring whose runtime side may be empty needs `AllowNoReceivers` on `T`.
+
+**Action:** Build in debug and run. Where a publication is reported:
+- if a receiver should have been there, fix the order in which the publisher and its subscribers are created;
+- if an absent receiver is expected for that type (a diagnostic stream, a plug-in loaded at run time), say so on
+  the type: `using sub0_config = sub0::config<sub0::AllowNoReceivers>;`. A call site can still ask how many
+  receivers there are with `sub0::receiverCount<Data>(publisher)` and decide for itself;
+- to keep the old behaviour everywhere, define `SUB0PUB_NO_RECEIVERS_CHECK=false`.
+
+### A Data type can name its receivers: `StaticTo` and `StaticFirst` (new)
+
+A type's configuration can now say that it is delivered to fixed receivers by direct calls:
+
+```cpp
+class Display;
+extern Display display;
+struct Reading { int celsius; using sub0_config = sub0::config<sub0::StaticTo<&display>>; };
+```
+
+`Subscribe<Reading>`, `Publish<Reading>`, `SubscribeAll` and `sub0::publish()` follow it, so the code that
+subscribes and publishes is the code you already have. For a `StaticTo` type `Subscribe` is an empty base and
+`Publish` an empty handle: no subscription table, no registration, no virtual call. `StaticFirst<&a>` calls the
+listed receivers directly and then publishes through the runtime broker to whoever subscribed at run time.
+
+**Action:** None; it is opt-in per type. To move an existing type onto direct calls:
+- give its receivers static storage, declare them before the type, and add the option beside the type;
+- remove `override` from the `receive()` of that type's subscribers: the base has no virtual function to override.
+  A `receive()` that does not accept `const Data&` is still a compile error, in both forms;
+- include the receivers' definitions in every translation unit that publishes the type (a compile error tells you);
+- `disconnect()`, `trySubscribe()`, `isSubscribed()`, `cancel()`, `Route`, `Domain` and publish reports need a
+  subscription table and do not compile for a `StaticTo` type; a `filter()` needs the type's `sub0::Filter`, as it
+  does on the broker, and the signature the broker calls (`bool filter(const Data&) noexcept`, not `const`), so that
+  it filters the same way if the type returns to the broker.
+
+Delivery is in the order of the list, where the broker delivers in the order subscribers registered. A subscriber
+the list does not name is never called: `SUB0PUB_UNLISTED_CHECK` (debug builds) reports its construction through
+`SUB0PUB_UNLISTED_RECEIVER(what)`. A list in which nobody can receive the type is a compile error unless the type is
+also `sub0::AllowNoReceivers`. Which form to use, and when the explicit `wire()` level is the right one instead:
+[docs/USAGE.md](docs/USAGE.md).
+
+### `Publisher<Derived, Out>` removed
+
+The CRTP mixin gave a publisher `this->publish(msg)` over a wiring it held. A publisher no longer needs to know
+its output at all: it derives from `Publish<T>` and its message type's configuration decides the delivery.
+
+**Action:** Prefer the type's configuration. Where a publisher must hold an explicit wiring (receivers without
+static storage, several wirings of one type), hold it as a member:
+
+```cpp
+// before
+template<class Out>
+struct Sensor : sub0::Publisher<Sensor<Out>, Out>
+{
+    using sub0::Publisher<Sensor<Out>, Out>::Publisher;
+    void measure(int v) noexcept { this->publish(Sample{v}); }
+};
+
+// after: the type decides (preferred)
+struct Sensor : sub0::Publish<Sample>
+{
+    void measure(int v) noexcept { sub0::publish(*this, Sample{v}); }
+};
+
+// after: an explicit wiring, held by value
+template<class Out>
+struct Sensor
+{
+    Out out;
+    void measure(int v) noexcept { out.publish(Sample{v}); }
+};
+```
+
+### `DynamicPort<T, N>` removed
+
+`DynamicPort` was a second, policy-free registry for runtime subscribers behind a static wiring. The runtime broker
+in its default configuration already measures at a hand-written registry's cost, and it has what `DynamicPort`
+lacked: a reported capacity, safe removal during delivery with `Snapshot`, a lock, sessions.
+
+**Action:** Subscribe runtime receivers with `Subscribe<T>`. Beside receivers with static storage, configure the
+type with `sub0::StaticFirst<&fixed>`; in an explicit wiring, bind a `BrokerPort<T>`:
+
+```cpp
+// before
+sub0::DynamicPort<Sample, 4> port;
+auto bus = sub0::wire(controller, port);
+port.add(&probe);                                    // struct Probe : sub0::DynamicPort<Sample, 4>::Receiver
+
+// after: the type decides (preferred; `controller` has static storage)
+struct Sample { int v; using sub0_config = sub0::config<sub0::Capacity<4>, sub0::StaticFirst<&controller>>; };
+Probe probe;                                         // struct Probe : sub0::Subscribe<Sample>
+
+// after: an explicit wiring
+sub0::BrokerPort<Sample> port;
+auto bus = sub0::wire(controller, port);
+Probe probe;                                         // struct Probe : sub0::Subscribe<Sample>
+```
+
+`tryAdd()` becoming `false` is `isSubscribed()` becoming `false`; `remove()` is `disconnect()`, or the end of the
+subscriber's lifetime.
+
+### `sub0pub/wiring/publisher.hpp` renamed to `sub0pub/wiring/sink.hpp`
+
+The header now holds `Sink<T>` alone.
+
+**Action:** Only if you included that header directly rather than `sub0pub/wiring.hpp` or `sub0pub/sub0pub.hpp`.
+
+### `SubscribeAll` packs empty bases on the MSVC ABI
+
+`SubscribeAll` is declared with `SUB0PUB_EMPTY_BASES` (`__declspec(empty_bases)` on the MSVC ABI, nothing elsewhere),
+so that a receiver of statically wired types is as small as a class without the bases. The layout of a class whose
+`Subscribe` bases are all runtime subscribers does not change: none of them is empty.
+
+**Action:** None.
+
+### The configuration fingerprint covers the topology and the no-receivers policy
+
+`SUB0PUB_CHECK_CONFIG` now also reports a type that one translation unit wires statically and another does not, at
+the construction of the second unit's first subscriber or publisher of that type.
+
+**Action:** None.
 
 ---
 
@@ -102,7 +245,7 @@ struct Logger final : sub0::Subscribe<Sample>
 {
     Logger() noexcept { trySubscribe(); }
     ~Logger() { disconnect(); }
-    void receive(const Sample&) noexcept override;
+    void receive(const Sample&) noexcept;
 };
 ```
 
@@ -141,7 +284,9 @@ The options are:
 - `LockWith<L>`, which also selects `Snapshot` and `ThreadLocalContext`;
 - `Filter` or `NoFilter`;
 - `Scoped`, with `Domain<Data>` sessions;
-- `Implementation<Broker>`, for an application-defined broker.
+- `Implementation<Broker>`, for an application-defined broker;
+- `StaticTo<&...>` or `StaticFirst<&...>`, which wire the type to fixed receivers (since v2.0, above);
+- `AllowNoReceivers` or `ReportNoReceivers` (since v2.0, above).
 
 `Route<Data, Transport>` binds a transport endpoint to a table. `sub0::publish(from, data, report)` reports what each route accepted. Invalid combinations are compile errors.
 
@@ -149,15 +294,16 @@ Every translation unit must resolve the same configuration for a type: resolving
 
 **Action:** None for the mechanism itself; see "The default is the cheapest dispatch" below for what the default now includes. Options and what each costs: [docs/DESIGN.md](docs/DESIGN.md#per-type-configuration-of-the-runtime-broker).
 
-### Static wiring (new)
+### Explicit wiring (new)
 
-`sub0::wire(a, b, logger)` and `sub0::StaticWiring<&a, &b, &logger>` bind receivers at the application's composition point. Receivers are plain classes with a non-virtual `receive(const T&)`; each delivery is a direct call, measured equal to hand-written code. The rest of the static wiring API:
+`sub0::wire(a, b, logger)` and `sub0::StaticWiring<&a, &b, &logger>` bind receivers at the application's composition point, for the cases a message type cannot express with `StaticTo` (above; [docs/USAGE.md](docs/USAGE.md)). Receivers are plain classes with a non-virtual `receive(const T&)`; each delivery is a direct call, measured equal to hand-written code. The rest of the static wiring API:
 - `publishCancelable()` stops at a receiver whose `bool receive()` returns `false`;
 - `Sink<T>` is a type-erased port for non-template publishers;
-- `Publisher<Derived, Out>` is a CRTP mixin;
 - `Forward<Transport>` and `StaticForward<&transport>` are transport endpoints, with split horizon through `publishFrom()`;
-- `DynamicPort<T, N>` and `BrokerPort<T>` bring runtime subscribers into a static wiring;
+- `BrokerPort<T>` brings runtime subscribers into an explicit wiring;
 - `handles_v<R, T>` asserts that a receiver handles a message.
+
+v2.0 also had a `Publisher<Derived, Out>` mixin and a `DynamicPort<T, N>`; both were removed afterwards (above).
 
 **Action:** None. Measured forms: [docs/EVIDENCE.md](docs/EVIDENCE.md).
 
@@ -173,7 +319,7 @@ it asserts on overflow when assertions are enabled, and otherwise drops the new 
 
 `include/sub0pub/sub0pub.hpp` was a single 3,200-line file. It is now an umbrella header over one header per
 responsibility, grouped in `utility/`, `broker/`, `wiring/` and `ipc/`, with an entry header per area:
-`sub0pub/broker.hpp` (runtime broker), `sub0pub/wiring.hpp` (static wiring, no broker), `sub0pub/ipc.hpp` (IPC
+`sub0pub/broker.hpp` (runtime broker), `sub0pub/wiring.hpp` (explicit wiring, no broker), `sub0pub/ipc.hpp` (IPC
 serialisation, no broker), and the bridges `sub0pub/wiring/broker_port.hpp` and `sub0pub/ipc/forward.hpp`. The
 `SUB0PUB_*` defaults live in `sub0pub/config_macros.hpp`. No name, namespace or behaviour changed: the generated
 code is identical (collapse evidence, `tests/collapse/budgets.json`).
@@ -320,6 +466,9 @@ Without snapshot dispatch, a `receive()` that subscribes or unsubscribes (or des
 - `SUB0PUB_CHECK_CONFIG`: the debug check for a type configured differently in two translation units (default: on without `NDEBUG`).
 - `SUB0PUB_CONFIG_MISMATCH(what)`: the action when that check fails (default: assert, then abort).
 - `SUB0PUB_DOMAIN_LIFETIME(what)`: the action when a `Domain` is destroyed while handles are still bound to it (default: assert, then abort).
+- `SUB0PUB_NO_RECEIVERS_CHECK`, `SUB0PUB_NO_RECEIVERS(what)`: the check for a publication that reaches no receiver, and its action (since v2.0; default: on without `NDEBUG`; assert, then abort).
+- `SUB0PUB_UNLISTED_CHECK`, `SUB0PUB_UNLISTED_RECEIVER(what)`: the check for a subscriber that its type's `StaticTo` list does not name, and its action (since v2.0; default: on without `NDEBUG`; assert, then abort).
+- `SUB0PUB_EMPTY_BASES` (internal): the packed empty-base layout on the MSVC ABI.
 
 The `SUB0PUB_*` policy macros must agree in every translation unit that uses a type. Setting them differently in one translation unit is only valid for types local to it.
 

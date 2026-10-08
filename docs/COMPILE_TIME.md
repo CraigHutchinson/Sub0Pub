@@ -88,3 +88,9 @@ The two captures ran on different hosts: do not subtract them or compare their a
 [report](perf/compile-time/optimization.md), [raw samples](perf/compile-time/optimization.json)): layout -45.9% with
 non-overlapping ranges; broker -23.7%, whose ranges overlap; umbrella -0.1%; wiring -13.5%, whose headers and workload
 did not change, so it is noise. They reduce, and do not cancel, the migration cost.
+
+**The converged API (October 2026).** `StaticTo`, `StaticFirst` and the no-receivers policy, with the `Publisher` mixin
+and `DynamicPort` removed, against the headers before them (both lanes C++23, same host, Clang 22 on Windows;
+[report](perf/compile-time/api-convergence.md), [raw samples](perf/compile-time/api-convergence.json)): wiring -0.5%,
+broker +1.3%, umbrella -0.0%, layout +0.8%, with overlapping ranges in every profile, so no effect is established. The
+workloads do not use the new options: this is what they cost code that does not ask for them.

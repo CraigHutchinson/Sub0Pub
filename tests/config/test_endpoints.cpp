@@ -282,7 +282,8 @@ struct SpinLock
 struct Shared
 {
     int seq;
-    using sub0_config = sub0::config<sub0::Scoped, sub0::LockWith<SpinLock>>;
+    /// Its subscribers are created and destroyed while another thread publishes: the table is empty in between
+    using sub0_config = sub0::config<sub0::Scoped, sub0::LockWith<SpinLock>, sub0::AllowNoReceivers>;
 };
 
 namespace {

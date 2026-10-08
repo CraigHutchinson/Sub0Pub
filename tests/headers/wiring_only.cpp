@@ -12,20 +12,12 @@
 namespace {
 struct Sample { int value; };
 struct Counter { int total = 0; void receive(const Sample& s) noexcept { total += s.value; } };
-struct Late final : sub0::DynamicPort<Sample>::Receiver
-{
-    int total = 0;
-    void receive(const Sample& s) noexcept override { total += s.value; }
-};
 }
 
 int useWiring()
 {
     Counter a, b;
-    Late late;
-    sub0::DynamicPort<Sample> port;
-    port.add(&late);
-    auto bus = sub0::wire(a, b, port);
+    auto bus = sub0::wire(a, b);
     bus.publish(Sample{1});
-    return a.total + b.total + late.total;
+    return a.total + b.total;
 }

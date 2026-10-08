@@ -35,11 +35,11 @@ Any commit that changes the public API surface in `include/sub0pub/` (the umbrel
 - `sub0::Subscribe`, `sub0::Publish`, `sub0::SubscribeAll`
 - `sub0::ForwardSubscribe`, `sub0::ForwardPublish`, `sub0::ForwardSubscribeAll`, `sub0::ForwardPublishAll`
 - `sub0::StreamSerializer`, `sub0::StreamDeserializer`
-- Free functions: `sub0::publish()`, `sub0::cancel()`
+- Free functions: `sub0::publish()`, `sub0::cancel()`, `sub0::receiverCount()`
 - Configuration macros: `SUB0PUB_*`
 - `sub0::IPublish`, `sub0::Buffer`, `sub0::DefaultSerialisation`
-- Per-type configuration: `sub0::config`, `sub0::config_t`, `sub0::configure`, `sub0::with`, `sub0::Builtin`, the options (`Capacity`, `Snapshot`, `Direct`, `DirectChecked`, `ThreadLocalContext`, `StaticContext`, `NoContext`, `LockWith`, `NoFilter`, `Scoped`, `Implementation`), `sub0::Domain`, `sub0::Route`, `sub0::Tagged`, `sub0::SubscribeResult`, `sub0::SendResult`, `sub0::PublishReport`, `sub0::kit`
-- Static wiring: `sub0::wire`, `sub0::Wiring`, `sub0::StaticWiring`, `sub0::Sink`, `sub0::Publisher`, `sub0::Forward`, `sub0::StaticForward`, `sub0::DynamicPort`, `sub0::BrokerPort`, `sub0::handles_v`
+- Per-type configuration: `sub0::config`, `sub0::config_t`, `sub0::configure`, `sub0::with`, `sub0::Builtin`, the options (`Capacity`, `Snapshot`, `Direct`, `DirectChecked`, `ThreadLocalContext`, `StaticContext`, `NoContext`, `LockWith`, `NoFilter`, `Scoped`, `Implementation`, `StaticTo`, `StaticFirst`, `AllowNoReceivers`, `ReportNoReceivers`), `sub0::Domain`, `sub0::Route`, `sub0::Tagged`, `sub0::SubscribeResult`, `sub0::SendResult`, `sub0::PublishReport`, `sub0::kit`
+- Explicit wiring: `sub0::wire`, `sub0::Wiring`, `sub0::StaticWiring`, `sub0::Sink`, `sub0::Forward`, `sub0::StaticForward`, `sub0::BrokerPort`, `sub0::handles_v`
 
 ### Style
 Follow `STYLE_GUIDE.md` for all C++ code. Key points:
@@ -52,6 +52,11 @@ Every C++ sample and companion file under `examples/` must follow the source-fir
 `STYLE_GUIDE.md` (Use when, Demonstrates, Story, Keep in mind, Run). Review headers against the code and
 observable output, including existing and disabled examples. Use a source-only first-reader review for
 readability; explanatory sample comments are encouraged where they help a developer choose or adapt a pattern.
+
+Examples and guides present one API in tiers of preference: the runtime broker by default, `StaticTo` /
+`StaticFirst` on the message type when its receivers are known, explicit wiring only for the cases a type cannot
+express (`docs/USAGE.md`). A new way to do something an existing tier already does needs a real-world case of its
+own; otherwise it replaces the old way or is not added.
 
 Examples teach the current API without version-based tiers. Isolate actual backwards-compatibility
 adapters and their samples as removable migration debt; do not classify current runtime broker APIs as

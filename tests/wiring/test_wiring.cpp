@@ -261,51 +261,6 @@ TEST_CASE("nested publish: a receiver may publish another type, and the same typ
 // ---------------------------------------------------------------------------------------------------------
 // Static/dynamic bridge
 // ---------------------------------------------------------------------------------------------------------
-struct Probe final : sub0::DynamicPort<Sample, 2>::Receiver
-{
-    int id;
-    sub0::DynamicPort<Sample, 2>* port = nullptr;
-    bool leaveOnReceive = false;
-    explicit Probe(int i) noexcept : id(i) {}
-    void receive(const Sample& s) noexcept override
-    {
-        gTrace.push_back(id * 1000 + static_cast<int>(s.value));
-        if (leaveOnReceive)
-            port->remove(this);
-    }
-};
-
-TEST_CASE("DynamicPort: capacity is reported by tryAdd and silent through add")
-{
-    sub0::DynamicPort<Sample, 2> port;
-    Probe a{1};
-    Probe b{2};
-    Probe c{3};
-    CHECK(port.tryAdd(&a));
-    CHECK(port.tryAdd(&b));
-    CHECK_FALSE(port.tryAdd(&c));
-    port.add(&c); // dropped without a report
-    gTrace.clear();
-    port.receive(Sample{1});
-    CHECK(gTrace == std::vector<int>{1001, 2001});
-}
-
-TEST_CASE("limitation K21: a DynamicPort receiver removing itself during delivery makes the next one miss it")
-{
-    sub0::DynamicPort<Sample, 2> port;
-    Probe a{1};
-    Probe b{2};
-    a.port = &port;
-    a.leaveOnReceive = true;
-    port.add(&a);
-    port.add(&b);
-    gTrace.clear();
-    port.receive(Sample{1}); // no snapshot: b shifts into a's slot, the loop index moves past it
-    CHECK(gTrace == std::vector<int>{1001});
-    port.receive(Sample{2});
-    CHECK(gTrace == std::vector<int>{1001, 2002});
-}
-
 struct BridgeSample
 {
     uint32_t value;

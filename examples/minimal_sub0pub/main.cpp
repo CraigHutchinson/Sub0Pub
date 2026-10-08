@@ -4,7 +4,7 @@
  * Demonstrates: Publish<uint32_t>, Subscribe<uint32_t>, and a noexcept receive() callback.
  * Story: RunningTotal subscribes when constructed. IncrementSource publishes 3141 once,
  * and RunningTotal adds that value to its own total. Scope exit disconnects the subscriber.
- * Keep in mind: this is the default unlocked runtime broker, not static wiring. Registration
+ * Keep in mind: this is the default unlocked runtime broker; nothing here is wired at compile time. Registration
  * must succeed before delivery is expected; the sample checks that its one receiver subscribed.
  * Run: Sub0Pub_MinimalExample returns zero when the total is 3141; it prints nothing.
  */
@@ -21,7 +21,7 @@ class RunningTotal final : public sub0::Subscribe<uint32_t>
 {
 public:
     uint32_t total = 0;
-    void receive(const uint32_t& amount) noexcept override { total += amount; }
+    void receive(const uint32_t& amount) noexcept { total += amount; }
 };
 
 int main()

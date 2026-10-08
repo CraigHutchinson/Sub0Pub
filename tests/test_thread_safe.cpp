@@ -15,7 +15,8 @@
 
 namespace {
 
-struct TsMsg { int value; };
+/// The first test publishes while its only subscriber is deliberately not yet active
+struct TsMsg { int value; using sub0_config = sub0::config<sub0::AllowNoReceivers>; };
 
 static_assert(std::is_same_v<sub0::config_t<TsMsg>::Lock, sub0::StdMutexLock>, "SUB0PUB_THREAD_SAFE selects the mutex");
 static_assert(sub0::config_t<TsMsg>::dispatch == sub0::Dispatch::Snapshot, "a lock requires Snapshot dispatch");

@@ -86,14 +86,14 @@ public:
 
 class RemoteSensorDisplay : public sub0::Subscribe<SensorReading> {
 public:
-    void receive(const SensorReading& r) noexcept override {
+    void receive(const SensorReading& r) noexcept {
         std::printf("  [Remote Display] temp=%.1f, ts=%u\n", r.temperature, r.timestamp);
     }
 };
 
 class HeartbeatMonitor : public sub0::Subscribe<Heartbeat> {
 public:
-    void receive(const Heartbeat& hb) noexcept override {
+    void receive(const Heartbeat& hb) noexcept {
         std::printf("  [Heartbeat] seq=%u\n", hb.sequenceNumber);
     }
 };

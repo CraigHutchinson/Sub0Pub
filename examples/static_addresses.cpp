@@ -1,47 +1,60 @@
-/** A thermometer with fixed receiver addresses — StaticWiring
+/** A thermometer wired to a fixed display: the message type decides
  *
- * Use when: receivers have static storage and their addresses can be part of the wiring type.
- * Demonstrates: StaticWiring<&receiver> and the Publisher mixin with an empty wiring object.
- * Story: a thermometer publishes one reading through FixedWiring to the fixed display.
- * No runtime receiver list is passed to the thermometer.
- * Keep in mind: the receiver must have static storage and be initialized before publication.
- * This does not support adding receivers dynamically; use a port when that is required.
+ * Use when: a message type's receivers are known when the application is composed, and each publication
+ * should be a direct call with no subscription table behind it.
+ * Demonstrates: sub0::StaticTo, written beside the message type, with Subscribe, Publish and publish() exactly
+ * as they are written for the runtime broker.
+ * Story: a thermometer publishes one reading. The reading's type names the display that receives it, so the
+ * publication compiles to a call of that display's receive(); nothing is registered at run time.
+ * Keep in mind: a listed receiver has static storage and is declared before the type that names it. The list
+ * is the whole set of receivers: the display's Subscribe base is empty (no vtable, no registration), and a
+ * subscriber the list does not name is never called, which a debug build reports. receive() carries no
+ * `override`, because that base has nothing to override. Remove the sub0_config line and the same source runs
+ * on the runtime broker.
  * Run: Sub0Pub_Example_static_addresses returns zero when the checks pass.
  */
-#include "sub0pub/wiring.hpp"
+#include "sub0pub/sub0pub.hpp"
 
-struct TemperatureReading { int celsius; };
+class TemperatureDisplay;
+extern TemperatureDisplay fixedTemperatureDisplay;
 
-struct TemperatureDisplay
+struct TemperatureReading
 {
-    int lastCelsius = 0;
-    unsigned readingsReceived = 0;
+    int celsius;
+    using sub0_config = sub0::config<sub0::StaticTo<&fixedTemperatureDisplay>>;
+};
 
+class TemperatureDisplay final : public sub0::Subscribe<TemperatureReading>
+{
+public:
     void receive(const TemperatureReading& reading) noexcept
     {
         lastCelsius = reading.celsius;
         ++readingsReceived;
     }
+
+    int lastCelsius = 0;
+    unsigned readingsReceived = 0;
 };
 
-template<class Output>
-struct TemperatureSensor final : sub0::Publisher<TemperatureSensor<Output>, Output>
+struct TemperatureSensor final : sub0::Publish<TemperatureReading>
 {
-    using sub0::Publisher<TemperatureSensor<Output>, Output>::Publisher;
-    void measure(int celsius) noexcept { this->publish(TemperatureReading{celsius}); }
+    void measure(int celsius) noexcept { sub0::publish(*this, TemperatureReading{celsius}); }
 };
 
 TemperatureDisplay fixedTemperatureDisplay;
-using FixedWiring = sub0::StaticWiring<&fixedTemperatureDisplay>;
 
-bool bindFixedAddresses()
+bool publishToTheListedReceiver()
 {
-    TemperatureSensor<FixedWiring> thermometer{FixedWiring{}};
+    TemperatureSensor thermometer;
     thermometer.measure(22);
+
+    // The number of receivers is a constant of the program, so a mistake in the list can fail the build.
+    static_assert(sub0::Publish<TemperatureReading>::receiverCount() == 1U);
     return fixedTemperatureDisplay.lastCelsius == 22 && fixedTemperatureDisplay.readingsReceived == 1;
 }
 
 int main()
 {
-    return bindFixedAddresses() ? 0 : 1;
+    return publishToTheListedReceiver() ? 0 : 1;
 }

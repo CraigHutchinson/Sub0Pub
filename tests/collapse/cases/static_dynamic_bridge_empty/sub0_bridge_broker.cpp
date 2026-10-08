@@ -5,7 +5,7 @@
 #include "sub0pub/sub0pub.hpp"
 
 namespace {
-struct Sample { uint32_t value; using sub0_config = sub0::config<sub0::Scoped, sub0::Direct, sub0::NoContext, sub0::NoFilter>; }; // lean registry: only the features the hand-written registry has
+struct Sample { uint32_t value; using sub0_config = sub0::config<sub0::Scoped, sub0::Direct, sub0::NoContext, sub0::NoFilter, sub0::AllowNoReceivers>; }; // lean registry: only the features the hand-written registry has; its runtime side stays empty, by design
 struct Controller {
     void receive(const Sample& s) noexcept { COLLAPSE_WORK(s.value * 3U); }
 };
