@@ -45,7 +45,7 @@ public:
         if (closed_)
             return sub0::SendResult::Closed;
         if (peer_ == nullptr)
-            return sub0::SendResult::Disconnected;
+            return sub0::SendResult::Unsubscribed;
         const Data copy = data; // accept by copy: never keep a reference to the publisher's object
         peer_->inject(copy);
         return sub0::SendResult::Accepted;
@@ -173,7 +173,7 @@ TEST_CASE("endpoints: bidirectional ingress/egress between sessions, split horiz
 
 TEST_CASE("endpoints: two transports, rejection is reported, local delivery continues") {
     sub0::Domain<Telemetry> a, c;
-    Pipe pipe;                                       // disconnected: no peer yet
+    Pipe pipe;                                       // unsubscribed: no peer yet
     QueueTransport<Telemetry, 2> queue;             // bounded async uplink
     PipeRoute pipeRoute(a, pipe);
     sub0::Route<Telemetry, QueueTransport<Telemetry, 2>> queueRoute(a, queue);
@@ -190,9 +190,9 @@ TEST_CASE("endpoints: two transports, rejection is reported, local delivery cont
     CHECK(r1.routed == 2);
     CHECK(r1.accepted == 1);                          // queue accepted
     CHECK(r1.rejected == 1);
-    CHECK(r1.lastRejection == sub0::SendResult::Disconnected);
+    CHECK(r1.lastRejection == sub0::SendResult::Unsubscribed);
 
-    CHECK(r3.accepted == 0);                          // queue full, pipe disconnected
+    CHECK(r3.accepted == 0);                          // queue full, pipe unsubscribed
     CHECK(r3.rejected == 2);
     CHECK(r3.lastRejection == sub0::SendResult::Full);
 
@@ -207,7 +207,7 @@ TEST_CASE("endpoints: two transports, rejection is reported, local delivery cont
     queue.close();
     sub0::PublishReport r4;
     pub.send(Telemetry{4, 0}, r4);
-    CHECK(r4.rejected == 2);                          // pipe Disconnected, then queue Closed
+    CHECK(r4.rejected == 2);                          // pipe Unsubscribed, then queue Closed
     CHECK(r4.lastRejection == sub0::SendResult::Closed);
 }
 
@@ -238,12 +238,12 @@ TEST_CASE("endpoints: teardown during delivery on the same thread") {
     CHECK(pipe.sends == 0);                       // destroyed route's transport was never called
     CHECK(survivor.seqs == std::vector<int>{1});  // the rest of the dispatch continued
 
-    struct SelfDisconnect : sub0::Subscribe<Telemetry> {
+    struct SelfUnsubscribe : sub0::Subscribe<Telemetry> {
         using sub0::Subscribe<Telemetry>::Subscribe;
         int received = 0;
-        void receive(const Telemetry&) noexcept override { ++received; disconnect(); }
+        void receive(const Telemetry&) noexcept override { ++received; unsubscribe(); }
     };
-    SelfDisconnect once(a);
+    SelfUnsubscribe once(a);
     pub.send(Telemetry{2, 0});
     pub.send(Telemetry{3, 0});
     CHECK(once.received == 1);
@@ -288,14 +288,14 @@ struct Shared
 
 namespace {
 
-/// Follows the contract: activates at the end of its constructor, disconnects first in its destructor.
-/// Its receive() writes through a heap pointer freed right after disconnect(): a late call is a use-after-free.
+/// Follows the contract: activates at the end of its constructor, unsubscribes first in its destructor.
+/// Its receive() writes through a heap pointer freed right after unsubscribe(): a late call is a use-after-free.
 struct Guarded final : sub0::Subscribe<Shared>
 {
     explicit Guarded(sub0::Domain<Shared>& d) : sub0::Subscribe<Shared>(d), counter(new int(0)) { trySubscribe(); }
     ~Guarded()
     {
-        disconnect();
+        unsubscribe();
         delete counter;
         counter = nullptr;
     }
@@ -362,7 +362,7 @@ public:
         return sub0::SubscribeResult::Subscribed;
     }
 
-    void disconnect(sub0::Subscribe<Data>* s) noexcept
+    void unsubscribe(sub0::Subscribe<Data>* s) noexcept
     {
         if (slot() == s)
             slot() = nullptr;
@@ -404,12 +404,12 @@ TEST_CASE("endpoints: application-defined broker through Implementation<>, with 
     pub.send(Status{7});
     CHECK(only.seqs == std::vector<int>{7});
 
-    only.disconnect();
+    only.unsubscribe();
     CHECK(second.trySubscribe() == sub0::SubscribeResult::Subscribed);
 
     // Routes work with any broker that pushes kit::DispatchScope frames
     NullTransport<Status> uplink;
-    second.disconnect();
+    second.unsubscribe();
     sub0::Route<Status, NullTransport<Status>> route(uplink);
     sub0::PublishReport report;
     pub.send(Status{8}, report);

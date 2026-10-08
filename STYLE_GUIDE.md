@@ -14,7 +14,7 @@ Style conventions derived from the existing codebase. Follow these for consisten
 | Member variables | camelCase with `_` suffix | `state_`, `publishCanceled_`, `ostream_` |
 | Local variables | camelCase | `iSubscription`, `readCount` |
 | Constants | `c` prefix + PascalCase | `cMaxSubscriptions`, `cMaxDataBufferCount` |
-| Macros/Defines | UPPER_SNAKE_CASE with `SUB0PUB_` prefix | `SUB0PUB_TRACE`, `SUB0PUB_MAX_SUBSCRIPTIONS` |
+| Macros/Defines | UPPER_SNAKE_CASE with `SUB0PUB_` prefix | `SUB0PUB_AUDIT`, `SUB0PUB_MAX_SUBSCRIPTIONS` |
 | Free functions | camelCase | `publish()`, `cancel()` |
 | Type aliases | PascalCase | `OStream`, `IStream`, `StreamSize` |
 
@@ -94,6 +94,25 @@ public:
 - Standard library includes sorted alphabetically
 - Project includes use quotes: `#include "sub0pub/sub0pub.hpp"`
 - System includes use angle brackets: `#include <algorithm>`
+
+## Vocabulary
+
+One word per idea, in documentation, comments, diagnostics and identifiers. A second word for the same thing reads as
+a second thing.
+
+| Idea | Say | Do not say |
+|---|---|---|
+| A subscriber starts or stops receiving a type at run time | **subscribe** / **unsubscribe** (`trySubscribe()`, `unsubscribe()`, `isSubscribed()`) | register / unregister, join / leave, attach / detach, connect / disconnect, activate, come and go |
+| What holds the runtime subscribers of a type | the **subscription table**; it is **full** when a subscription is refused | registry, slots, list |
+| Anything with a `receive()` for a message type | **receiver**; a **subscriber** is a receiver that derives from `Subscribe<T>` | listener, handler, sink (a `Sink<T>` is a publication port) |
+| One `publish()` call, and one `receive()` call it causes | a **publication**, and a **delivery** | event, dispatch (the loop inside the broker), send (a transport sends) |
+| A message type's own receivers (`StaticTo`, `StaticFirst`) | the type **names** or **lists** them: a **listed** receiver | bound, wired in, registered |
+| Receivers given to `wire()` or `StaticWiring` | the wiring **binds** them: a **bound** receiver | listed, attached |
+| How a message type is delivered | its **topology**: **brokered**, **statically wired** (`StaticTo`), or both (`StaticFirst`) | static / dynamic API, direct wiring, mode |
+| A `Domain`'s lifetime | **open** / **close**; closing unsubscribes every subscriber | detach, shut down |
+
+Pairs stay pairs: if one half of an operation is named, name the other with its counterpart, in the API first and then
+in the text that describes it.
 
 ## Examples: a source-first reading guide
 

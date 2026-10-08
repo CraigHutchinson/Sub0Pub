@@ -65,7 +65,7 @@ namespace sub0
          * Broker concept (what Subscribe/Publish/Route require of any Implementation<>):
          *   Broker() noexcept                                            Global storage
          *   SubscribeResult trySubscribe(Subscribe<Data>*) noexcept
-         *   void disconnect(Subscribe<Data>*) noexcept                   after return: no further receive() calls
+         *   void unsubscribe(Subscribe<Data>*) noexcept                   after return: no further receive() calls
          *   void publish(const Data&, const void* origin, PublishReport*) const noexcept
          *   void cancel() const noexcept
          *   uint32_t receivers() const noexcept                          only for Publish<Data>::receiverCount()
@@ -77,11 +77,11 @@ namespace sub0
             static_assert(Config::capacity > 0, "sub0pub: Capacity must be at least 1");
             static_assert(!(Config::dispatch == Dispatch::Snapshot && Config::context == Context::None),
                           "sub0pub: Snapshot needs a publish context (StaticContext or ThreadLocalContext): a subscriber "
-                          "disconnected during a dispatch is removed from that dispatch's snapshot through its frame");
+                          "unsubscribed during a dispatch is removed from that dispatch's snapshot through its frame");
             static_assert(!cConcurrent<Config> || Config::dispatch == Dispatch::Snapshot,
                           "sub0pub: a Lock requires Snapshot dispatch (receivers are called outside the lock)");
             static_assert(!cConcurrent<Config> || Config::context == Context::ThreadLocal,
-                          "sub0pub: a Lock requires ThreadLocalContext (disconnect must not wait on its own dispatch, and a "
+                          "sub0pub: a Lock requires ThreadLocalContext (unsubscribe must not wait on its own dispatch, and a "
                           "StaticContext frame stack shared by concurrent publishers lets one thread's cancel() and "
                           "frames act on another thread's dispatch)");
 
@@ -117,10 +117,10 @@ namespace sub0
             /** Remove `subscriber`, keeping the order of the others; on return no dispatch (on any thread) calls it again
              * @remark Dispatches in progress forget it. Concurrent configurations then wait while another thread is
              *         inside its callback. Safe from within the subscriber's own receive().
-             * @warning Concurrent: do not disconnect, from inside a receive(), a subscriber that another thread's
-             *          receive() is disconnecting you from at the same time (mutual wait). Defer such teardown.
+             * @warning Concurrent: do not unsubscribe, from inside a receive(), a subscriber that another thread's
+             *          receive() is unsubscribing you from at the same time (mutual wait). Defer such teardown.
              */
-            void disconnect(Subscribe<Data>* subscriber) noexcept
+            void unsubscribe(Subscribe<Data>* subscriber) noexcept
             {
                 TableT& t = table();
                 {
@@ -171,7 +171,7 @@ namespace sub0
                             if (s == nullptr)
                                 continue;
                             active.current.store(s, std::memory_order_seq_cst);
-                            kit::deliverAt<Data>(snapshot[i], data); // re-checks the slot: not disconnected meanwhile
+                            kit::deliverAt<Data>(snapshot[i], data); // re-checks the slot: not unsubscribed meanwhile
                             active.current.store(nullptr, std::memory_order_seq_cst);
                         }
                     }
@@ -231,7 +231,7 @@ namespace sub0
                 }
             }
 
-            /// The number of subscribers registered at this moment (read under the table's lock)
+            /// The number of subscribers in the table at this moment (read under the table's lock)
             uint32_t receivers() const noexcept
             {
                 TableT& t = table();
@@ -246,7 +246,7 @@ namespace sub0
                     kit::cancel<Data>(&table());
             }
 
-            /// Close a Scoped table: reject subscriptions, drop publishes, detach subscribers, then quiesce
+            /// Close a Scoped table: reject subscriptions, drop publishes, unsubscribe every subscriber, then quiesce
             /// (a member template, so explicitly instantiating a Global broker does not instantiate it)
             template<bool S = cScoped, std::enable_if_t<S, int> = 0>
             static void close(TableT& t) noexcept;

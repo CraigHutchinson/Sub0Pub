@@ -16,7 +16,8 @@ namespace sub0
     * @remark Each Data type keeps its own topology: a receiver may be called directly for one type (StaticTo) and
     *         subscribe at run time for another. The class asks for the packed empty-base layout, so a receiver
     *         of statically wired types only is as small as a class without these bases.
-    * @todo Specialisation on std::tuple exists and could cause unexpected expansion if this was a desired type being published!
+    * @remark A std::tuple argument is a list of Data types, not a Data type: to subscribe to a message that is itself
+    *         a std::tuple, derive from Subscribe<std::tuple<...>> directly.
     */
     template< typename... Datas >
     class SUB0PUB_EMPTY_BASES SubscribeAll : public Subscribe<Datas>...

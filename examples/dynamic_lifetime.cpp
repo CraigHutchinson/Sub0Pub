@@ -1,9 +1,9 @@
 /** A recording session hands a freed slot to a waiting recorder
  *
  * Use when: a bounded set of runtime receivers belongs to a session that can be closed explicitly.
- * Demonstrates: Scoped Domain, Capacity<2>, Snapshot, trySubscribe(), disconnect() and close().
+ * Demonstrates: Scoped Domain, Capacity<2>, Snapshot, trySubscribe(), unsubscribe() and close().
  * Story: FirstReadingRecorder and a continuous recorder fill the two slots. The first reading
- * makes the one-shot recorder disconnect itself; the waiting recorder can then claim that slot.
+ * makes the one-shot recorder unsubscribe itself; the waiting recorder can then claim that slot.
  * Both remaining recorders receive the next temperature. Closing the session drops later readings
  * and rejects new subscriptions, even while the recorder objects themselves remain alive.
  * Keep in mind: Snapshot permits removal during a callback. The Domain must outlive its handles;
@@ -48,7 +48,7 @@ struct FirstReadingRecorder final : sub0::Subscribe<TemperatureReading>
     {
         lastCelsius = reading.celsius;
         ++readingsReceived;
-        disconnect(); // Snapshot lets a callback remove itself without skipping the next receiver.
+        unsubscribe(); // Snapshot lets a callback remove itself without skipping the next receiver.
     }
 };
 
@@ -58,7 +58,7 @@ int main()
     sub0::Domain<TemperatureReading> session;
     TemperatureSensor thermometer(session);
 
-    // Unlocked subscribers register during construction, in this order.
+    // Unlocked subscribers subscribe during construction, in this order.
     FirstReadingRecorder firstReading(session);
     TemperatureRecorder continuousRecorder(session);
     TemperatureRecorder waitingRecorder(session);
@@ -78,7 +78,7 @@ int main()
         waitingRecorder.readingsReceived != 1)
         return 4;
 
-    session.close(); // Detaches subscribers; existing handles stay alive but cannot resume the session.
+    session.close(); // Unsubscribes every subscriber; existing handles stay alive but cannot resume the session.
     thermometer.measure(22);
     if (waitingRecorder.trySubscribe() != sub0::SubscribeResult::Closed)
         return 5;

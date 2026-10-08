@@ -275,7 +275,7 @@ struct BrokerProbe final : sub0::Subscribe<BridgeSample>
     {
         gTrace.push_back(id * 1000 + static_cast<int>(s.value));
         if (leaveOnReceive)
-            this->disconnect();
+            this->unsubscribe();
     }
 };
 

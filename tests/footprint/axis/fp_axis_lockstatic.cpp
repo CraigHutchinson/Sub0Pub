@@ -15,7 +15,7 @@ struct MsgA { int value; using sub0_config = sub0::with<fp::Full, sub0::LockWith
 struct SinkA final : sub0::Subscribe<MsgA>
 {
     SinkA() noexcept { trySubscribe(); } // concurrent configurations activate explicitly after construction
-    ~SinkA() { disconnect(); } // before derived state goes: other threads may publish
+    ~SinkA() { unsubscribe(); } // before derived state goes: other threads may publish
     MsgA last{};
     void receive(const MsgA& d) noexcept override { last = d; }
 };

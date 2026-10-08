@@ -59,7 +59,7 @@ namespace sub0
             broker_.cancel();
         }
 
-        /** @return The number of receivers a publication of Data reaches at this moment: the subscribers registered
+        /** @return The number of receivers a publication of Data reaches at this moment: the subscribers subscribed
          *          now, plus the receivers a StaticFirst list names
          * @remark For a call site that decides for itself what an absent receiver means. A concurrent configuration
          *         reads it under the table's lock; it may have changed by the time the caller acts on it.
@@ -123,7 +123,7 @@ namespace sub0
      * @tparam  Data  Type whose configuration names its receivers
      *
      * publish() calls the receivers in the type's StaticTo list directly, in the order of the list. There is no
-     * subscription table, so there is nothing to register, lock or iterate; the publisher is written exactly as
+     * subscription table, so there is nothing to subscribe, lock or iterate; the publisher is written exactly as
      * for a brokered type.
      *
      * @remark cancel() and publish reports need the runtime broker and do not exist here.
@@ -235,7 +235,7 @@ namespace sub0
 
     /** The number of receivers a publication of Data by `from` reaches at this moment
      * @param[in] from  Producer object inheriting from Publish<Data>
-     * @return Registered subscribers plus bound receivers; a constant for a StaticTo type
+     * @return Subscribed subscribers plus listed receivers; a constant for a StaticTo type
      * @remark Lets a call site treat an absent receiver as its own decision, for a type configured with
      *         AllowNoReceivers: `if (sub0::receiverCount<Reading>(*this) == 0) ...`
      */

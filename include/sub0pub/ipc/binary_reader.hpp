@@ -23,7 +23,7 @@ namespace sub0
     public:
         using Config = detail::Empty; //< Not configurable by default
 
-        enum class State { 
+        enum class State {
               Prefix///< [optional] Prefix-Delimiter is being read
             , Header ///< Data-Header  is being read
             , Data ///< Data payload is being  read
@@ -31,7 +31,7 @@ namespace sub0
 
             , SyncLost ///< Error state entered when an error occurs in any state i.e. Corrupted input stream
 
-            , COUNT_ 
+            , COUNT_
         };
 
     public:
@@ -48,7 +48,6 @@ namespace sub0
         */
         bool open(IStream& /*stream*/)
         {
-            //TODO: Do this on open or close?
             state_ = !std::is_void<Prefix_t>::value ? State::Prefix : stateAfter(State::Prefix);
             currentBuffer_ = findStateBuffer(state_);
             return true;
@@ -98,14 +97,14 @@ namespace sub0
         void setDataPublisher(Data& dataBuffer, IPublish& publisher)
         {
 #if SUB0PUB_ASSERT
-            assert(!currentBuffer_.buffer); /// @todo We don't intend to support adding buffers while stream is being processed?
+            assert(!currentBuffer_.buffer); // publishers are set before the stream is read, not while a frame is in progress
 #endif
             dataBufferRegistry_.set(dataBuffer, publisher);
         }
 
         bool close( IStream& /*stream*/ )
         {
-            dataBufferRegistry_.close(); ///< @TODO This is here as a use-case contained stream state wihin the buffer map! Remove/deprecate this when/as possible
+            dataBufferRegistry_.close();
             return true;
         }
 
@@ -117,18 +116,18 @@ namespace sub0
         {
             switch (state)
             {
-            default: //< @todo unreachable unless SyncLost
-            case State::Prefix: 
+            default: // SyncLost: resynchronise from the prefix
+            case State::Prefix:
                 return {nullptr, reinterpret_cast<char*>(&prefix_), static_cast<uint_least16_t>( !std::is_void<Prefix_t>::value ? sizeof(prefix_) : 0U), 0U};
-            case State::Header: 
+            case State::Header:
                 return {nullptr, reinterpret_cast<char*>(&header_), static_cast<uint_least16_t>(sizeof(header_)), 0U };
-            case State::Data:   
+            case State::Data:
                 return dataBufferRegistry_.find(header_);
-            case State::Postfix: 
+            case State::Postfix:
                 return {currentBuffer_.publisher , reinterpret_cast<char*>(&postfix_), static_cast<uint_least16_t>( !std::is_void<Postfix_t>::value ? sizeof(postfix_) : 0U), 0U};
             }
         }
-        
+
         /** Read payload data from stream and detect payload completion
          * @return True when data packet(s) have been published, false if no completed packet was present in stream
         */
@@ -162,7 +161,6 @@ namespace sub0
                 currentBuffer_.paddingSize -= ignoreCount;
 
                 /// If padding not complete then we need to return and await more data
-                /// @todo We could publish the data before completion of the padding... however we cannot check for a post-fix delimiter without doing pad first!?
                 if (currentBuffer_.paddingSize > 0)
                     return false;
             }
@@ -196,7 +194,6 @@ namespace sub0
 
         constexpr bool isPublishReady(const State currentState) const
         {
-            // @todo In absence of Postfix we should probably wait for Prefix instead of just Data completion?
             return currentState == (!std::is_void<Postfix_t>::value ? State::Postfix : State::Data);
         }
 
@@ -204,7 +201,7 @@ namespace sub0
         {
             switch (currentState)
             {
-            default: //< @todo unreachable
+            default: // not reached: every state is listed
             case State::Prefix:  return State::Header;
             case State::Header:  return State::Data;
             case State::Data:    return !std::is_void<Postfix_t>::value ? State::Postfix : stateAfter(State::Postfix); ///< @note may not have Prefix_t or Postfix_t
@@ -223,7 +220,7 @@ namespace sub0
             {
                 case State::Header: failureMessage = "Binary-Header mismatch - stream corruption or incompatible data-stream"; break;
                 case State::Postfix: failureMessage = "Binary-Postfix mismatch - stream corruption or incompatible data-stream"; break;
-                default: failureMessage = "Sync-Lost - TODO Details"; break;
+                default: failureMessage = "Sync-Lost - prefix mismatch"; break;
             }
 
             // A caller may catch the error and call update() again to resume at the next frame.

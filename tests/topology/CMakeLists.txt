@@ -34,6 +34,6 @@ sub0pub_topology_compile_fail(cf_topology_filter_not_enabled     "declares filte
 sub0pub_topology_compile_fail(cf_topology_filter_signature       "declares a filter\\(\\) the runtime broker would not call")
 sub0pub_topology_compile_fail(cf_topology_no_receivers           "would reach nobody")
 sub0pub_topology_compile_fail(cf_topology_incomplete_receiver    "incomplete type|undefined type|C2027")
-sub0pub_topology_compile_fail(cf_topology_disconnect             "no member named|is not a member|has no member")
+sub0pub_topology_compile_fail(cf_topology_unsubscribe            "no member named|is not a member|has no member")
 sub0pub_topology_compile_fail(cf_topology_override               "marked 'override'|does not override|did not override|C3668")
 sub0pub_topology_compile_fail(cf_topology_report                 "no matching|cannot convert|no viable|too many arguments|C2660|C2664")

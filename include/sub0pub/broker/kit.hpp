@@ -15,7 +15,7 @@ namespace sub0
     namespace kit
     {
         /** RAII dispatch frame: push while calling receivers so cancel(), routes (origin, report) and same-thread
-         * disconnect work. Zero-size when the Data type's configuration has no publish context.
+         * unsubscribe work. Zero-size when the Data type's configuration has no publish context.
          */
         template<class Data>
         class DispatchScope
@@ -71,7 +71,7 @@ namespace sub0
 
         /** Call the subscriber held in a dispatch-owned slot (a snapshot entry, or a table entry for Direct dispatch):
          * filter() when configured, then receive() only if the slot still holds that subscriber. A filter() that
-         * disconnects (or destroys) its own subscriber clears the slot, so receive() is not called. Only the slot is
+         * unsubscribes (or destroys) its own subscriber clears the slot, so receive() is not called. Only the slot is
          * re-read, never the subscriber. Without a filter this is exactly one load and one call.
          * @tparam MayBeCleared  false for a live Direct table entry, which is never null: skips that check
          */
@@ -116,7 +116,7 @@ namespace sub0
                     }
         }
 
-        /// Remove `s` from this thread's in-progress snapshots of `table`, so a subscriber disconnected (and possibly
+        /// Remove `s` from this thread's in-progress snapshots of `table`, so a subscriber unsubscribed (and possibly
         /// destroyed) during a dispatch on this thread is not called afterwards by that dispatch
         template<class Data>
         void forgetInOwnDispatches(const void* table, const Subscribe<Data>* s) noexcept

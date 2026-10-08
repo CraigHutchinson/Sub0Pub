@@ -9,8 +9,8 @@
  * build additionally proves at compile time that its receivers hold no subscription state.
  * Keep in mind: promote a type when its receivers are a closed set of objects with static storage. The list is
  * then the whole truth: a subscriber it does not name is never called (a debug build reports it), delivery is
- * in the order of the list, and disconnect(), cancel(), Domain and Route are not available for that type. Where
- * some receivers still come and go, use sub0::StaticFirst instead (dynamic_diagnostics.cpp). This is a teaching
+ * in the order of the list, and unsubscribe(), cancel(), Domain and Route are not available for that type. Where
+ * some receivers still subscribe and unsubscribe at run time, use sub0::StaticFirst instead (dynamic_diagnostics.cpp). This is a teaching
  * example, not a measurement; docs/EVIDENCE.md has the measured comparison with hand-written calls.
  * Run: Sub0Pub_Example_promote_to_static_brokered and Sub0Pub_Example_promote_to_static_wired each print the
  * form they were built in and return zero when the checks pass.

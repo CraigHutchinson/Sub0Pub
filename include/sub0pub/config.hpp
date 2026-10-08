@@ -23,7 +23,7 @@ namespace sub0
         DirectChecked   ///< Direct, and report re-entrant use through SUB0PUB_REENTRANT_VIOLATION (needs a context)
     };
 
-    /** Publish context policy: per-dispatch state for cancel(), nesting, routes and same-thread disconnect */
+    /** Publish context policy: per-dispatch state for cancel(), nesting, routes and same-thread unsubscribe */
     enum class Context : uint8_t
     {
         ThreadLocal,    ///< thread_local context: cancel() and nested publish on any thread
@@ -178,14 +178,14 @@ namespace sub0
     struct Scoped
     { template<class B> struct apply : B { static constexpr Storage storage = Storage::Scoped; }; };
 
-    /** Deliver this type to fixed receivers only, by direct calls: no subscription table, no registration, and no
+    /** Deliver this type to fixed receivers only, by direct calls: no subscription table, no run-time subscription, and no
      *  virtual call. Subscribe<Data> is then an empty base and Publish<Data> an empty handle, so the code that
      *  subscribes and publishes is written exactly as for a brokered type.
      * @tparam Bound  Addresses of the receivers, in delivery order. Each has static storage duration and may be
      *                declared `extern` with an incomplete type here, where the type is configured.
      * @remark The list is the whole set: a subscriber it does not name is never called (SUB0PUB_UNLISTED_CHECK),
      *         and a translation unit that publishes the type must see the receivers' definitions.
-     * @remark Features that need a subscription table (disconnect(), trySubscribe(), cancel(), Route, Domain,
+     * @remark Features that need a subscription table (unsubscribe(), trySubscribe(), cancel(), Route, Domain,
      *         publish reports) do not compile for the type.
      */
     template<auto*... Bound> struct StaticTo
@@ -195,7 +195,7 @@ namespace sub0
      *  subscribed at run time. A convenience for promoting one known receiver while the type stays open: it keeps
      *  the broker's cost on every publication, so prefer StaticTo where the set of receivers is closed.
      * @tparam Bound  Addresses of the receivers called directly, in delivery order (as for StaticTo). They are not
-     *                registered with the broker.
+     *                entered in the broker's table.
      */
     template<auto*... Bound> struct StaticFirst
     { template<class B> struct apply : B { using topology = detail::StaticTopology<true, Bound...>; }; };

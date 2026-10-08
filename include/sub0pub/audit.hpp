@@ -16,8 +16,8 @@
 //              subscriptions refused because the table was full
 //              subscribers that never received a message, and message types that were never published
 //              subscribers of a statically wired type that its StaticTo list does not name
-//   per type   its publishers and their counts; its receivers in the order they joined, with their deliveries and
-//              when they joined or left; the runtime table's peak against its capacity; and whether the set of
+//   per type   its publishers and their counts; its receivers in the order they subscribed, with their deliveries and
+//              when they subscribed or unsubscribed; the runtime table's peak against its capacity; and whether the set of
 //              receivers ever changed, which is what makes a brokered type a candidate for StaticTo
 //
 // The report is written at exit and whenever sub0::auditReport() is called; sub0::auditFindings() gives a test the
@@ -119,8 +119,8 @@ namespace sub0
         }
 
         /** The dynamic type of an object, or null while it is only its Base (under construction or destruction)
-         * @remark The audit also reads this for subscribers it has not named yet when another subscriber joins or
-         *         leaves. One that is part-way through its own construction then reads as whatever class its
+         * @remark The audit also reads this for subscribers it has not named yet when another subscriber subscribes
+         *         or unsubscribes. One that is part-way through its own construction then reads as whatever class its
          *         constructors have reached; its first delivery corrects the name.
          */
         template<class Base>
@@ -325,7 +325,7 @@ namespace sub0
         {
             Record* head = nullptr; // non-owning
             Record* tail = nullptr; // non-owning
-            uint32_t unnamed = 0;   ///< registered runtime subscribers whose type has not been read yet
+            uint32_t unnamed = 0;   ///< subscribed runtime subscribers whose type has not been read yet
 
             /// @pre gLock is held
             void add(Record& record) noexcept
@@ -334,9 +334,9 @@ namespace sub0
                 tail = &record;
             }
 
-            /** Name every runtime subscriber that is registered now and has not been delivered to yet.
-             *  A subscriber's type cannot be read while it is being constructed, which is when it joins, so the
-             *  audit reads it at its first delivery, or here: when any subscriber joins or leaves, when anything is
+            /** Name every runtime subscriber that is subscribed now and has not been delivered to yet.
+             *  A subscriber's type cannot be read while it is being constructed, which is when it subscribes, so the
+             *  audit reads it at its first delivery, or here: when any subscriber subscribes or unsubscribes, when anything is
              *  published, and before a report. A subscriber that nothing happens around stays unnamed.
              * @pre gLock is held
              */
@@ -355,7 +355,7 @@ namespace sub0
         /** The process's audit.
          *  A function-local static on purpose: it is created by the first recorded event, which may be the constructor
          *  of a subscriber with static storage, and is therefore destroyed after that subscriber, so the report at
-         *  exit sees every subscriber leave. It is write-only diagnostic state: no behaviour depends on it.
+         *  exit sees every subscriber unsubscribe. It is write-only diagnostic state: no behaviour depends on it.
          */
         inline Registry& registry() noexcept
         {
@@ -434,12 +434,12 @@ namespace sub0
         class Ledger
         {
         public:
-            /** A runtime subscriber registered
-             * @param subscriber  Its Subscribe<Data> base; identifies it in left() and delivered()
+            /** A runtime subscriber subscribed
+             * @param subscriber  Its Subscribe<Data> base; identifies it in unsubscribed() and delivered()
              * @param capacity    The capacity of the type's subscription table
              * @param learn       Names the subscribers this ledger holds (see Registry::learn())
              */
-            static void joined(const void* subscriber, uint32_t capacity, void (*learn)() noexcept) noexcept
+            static void subscribed(const void* subscriber, uint32_t capacity, void (*learn)() noexcept) noexcept
             {
                 Guard guard;
                 link();
@@ -451,7 +451,7 @@ namespace sub0
                 if (Receiver* const receiver = add(subscriber))
                 {
                     receiver->runtime = true;
-                    receiver->joinedAt = publications_;
+                    receiver->subscribedAt = publications_;
 #if SUB0PUB_AUDIT_RTTI
                     ++registry().unnamed;
 #endif
@@ -459,9 +459,9 @@ namespace sub0
             }
 
             /** A subscriber stopped receiving, or is being destroyed
-             * @param wasSubscribed  Whether it was registered until now
+             * @param wasSubscribed  Whether it was subscribed until now
              */
-            static void left(const void* subscriber, bool wasSubscribed) noexcept
+            static void unsubscribed(const void* subscriber, bool wasSubscribed) noexcept
             {
                 Guard guard;
                 if (wasSubscribed && present_ != 0U)
@@ -470,10 +470,10 @@ namespace sub0
                 {
                     named(*receiver, receiver->type); // it will not be named now: stop looking for it
                     receiver->present = false;
-                    receiver->leftAt = publications_;
+                    receiver->unsubscribedAt = publications_;
                 }
                 if (linked_)
-                    registry().learn(); // after this one left: it may already be partly destroyed
+                    registry().learn(); // after this one unsubscribed: it may already be partly destroyed
             }
 
             /// A subscription was refused because the table was full
@@ -520,7 +520,7 @@ namespace sub0
                 if (Receiver* const receiver = add(subscriber))
                 {
                     receiver->unlisted = true;
-                    receiver->joinedAt = publications_;
+                    receiver->subscribedAt = publications_;
                 }
             }
 
@@ -550,7 +550,7 @@ namespace sub0
                 unheard_ += unheard ? 1U : 0U;
             }
 
-            /** Name the registered runtime subscribers that have no type yet
+            /** Name the subscribed runtime subscribers that have no type yet
              * @param typeOf  Reads a subscriber's dynamic type from its Subscribe<Data> base; null if not readable yet
              * @pre gLock is held
              */
@@ -570,10 +570,10 @@ namespace sub0
                 const char* signature; // a listed receiver's typeSignature(), else null
                 const char* object;    // a listed receiver's boundSignature(), else null
                 uint64_t deliveries;
-                uint64_t joinedAt;     // publications of the type before it joined
-                uint64_t leftAt;       // publications of the type before it left
+                uint64_t subscribedAt;     // publications of the type before it subscribed
+                uint64_t unsubscribedAt;       // publications of the type before it unsubscribed
                 bool present;
-                bool runtime;          // registered with the runtime broker
+                bool runtime;          // subscribed through the runtime broker
                 bool unlisted;         // a subscriber of a wired type that its StaticTo list does not name
             };
 
@@ -590,7 +590,7 @@ namespace sub0
                 return receiver.runtime && receiver.present && receiver.type == nullptr;
             }
 
-            /// Give a subscriber its type, or (null, as it leaves) give up on it
+            /// Give a subscriber its type, or (null, as it unsubscribes) give up on it
             static void named(Receiver& receiver, TypeId type) noexcept
             {
 #if SUB0PUB_AUDIT_RTTI
@@ -634,16 +634,16 @@ namespace sub0
                 return &receivers_[count_++];
             }
 
-            static bool leftEarly(const Receiver& receiver) noexcept
+            static bool unsubscribedEarly(const Receiver& receiver) noexcept
             {
-                return !receiver.present && receiver.leftAt != publications_;
+                return !receiver.present && receiver.unsubscribedAt != publications_;
             }
 
             /// Whether every receiver was there for every publication
             static bool fixedSet() noexcept
             {
                 for (uint32_t i = 0; i < count_; ++i)
-                    if (receivers_[i].joinedAt != 0U || leftEarly(receivers_[i]) || receivers_[i].unlisted)
+                    if (receivers_[i].subscribedAt != 0U || unsubscribedEarly(receivers_[i]) || receivers_[i].unlisted)
                         return false;
                 return !truncated_;
             }
@@ -706,16 +706,16 @@ namespace sub0
                     describe(line, receiver);
                     if (receiver.unlisted)
                         line.text(" subscribes to it but is not in its StaticTo list, so it is never called");
-                    else if (receiver.joinedAt == publications_)
+                    else if (receiver.subscribedAt == publications_)
                         line.text(" never received it: it subscribed after the last publication");
-                    else if (!receiver.present && receiver.leftAt == 0U)
-                        line.text(" never received it: it left before the first publication");
-                    else if (!receiver.present && receiver.leftAt == receiver.joinedAt)
+                    else if (!receiver.present && receiver.unsubscribedAt == 0U)
+                        line.text(" never received it: it unsubscribed before the first publication");
+                    else if (!receiver.present && receiver.unsubscribedAt == receiver.subscribedAt)
                     {
                         line.text(" never received it: it was subscribed only between publications ");
-                        line.number(receiver.joinedAt);
+                        line.number(receiver.subscribedAt);
                         line.text(" and ");
-                        line.number(receiver.joinedAt + 1U);
+                        line.number(receiver.subscribedAt + 1U);
                     }
                     else
                         line.text(" never received it, although it was subscribed while it was published");
@@ -780,15 +780,15 @@ namespace sub0
                         line.text(", not listed");
                     else if (receiver.object != nullptr)
                         line.text(", wired");
-                    if (receiver.joinedAt != 0U && !receiver.unlisted)
+                    if (receiver.subscribedAt != 0U && !receiver.unlisted)
                     {
-                        line.text(", joined after publication ");
-                        line.number(receiver.joinedAt);
+                        line.text(", subscribed after publication ");
+                        line.number(receiver.subscribedAt);
                     }
-                    if (leftEarly(receiver))
+                    if (unsubscribedEarly(receiver))
                     {
-                        line.text(", left after publication ");
-                        line.number(receiver.leftAt);
+                        line.text(", unsubscribed after publication ");
+                        line.number(receiver.unsubscribedAt);
                     }
                 }
                 if (truncated_ && line.begin())
@@ -801,7 +801,7 @@ namespace sub0
                 if (count_ != 0U && publications_ != 0U && capacity_ != 0U && refused_ == 0U && line.begin())
                     line.text(fixedSet()
                         ? "    its receivers never changed: a candidate for sub0::StaticTo, in this order, if they have static storage"
-                        : "    receivers joined or left while it was being published: keep it brokered, or sub0::StaticFirst for those that stayed");
+                        : "    receivers subscribed or unsubscribed while it was being published: keep it brokered, or sub0::StaticFirst for those that stayed");
             }
 
             inline static Receiver receivers_[cReceivers] = {};
@@ -810,7 +810,7 @@ namespace sub0
             inline static uint32_t publisherCount_ = 0;
             inline static uint64_t publications_ = 0;
             inline static uint64_t unheard_ = 0;
-            inline static uint32_t present_ = 0;   // runtime subscribers registered now, recorded or not
+            inline static uint32_t present_ = 0;   // runtime subscribers subscribed now, recorded or not
             inline static uint32_t peak_ = 0;
             inline static uint32_t capacity_ = 0;
             inline static uint32_t refused_ = 0;

@@ -17,14 +17,7 @@
 #include <cassert>
 #include <cstdlib>
 
-/** Logging output for event tracing
- * Define SUB0PUB_TRACE=true to enable message logging to std::cout for event trace, SUB0PUB_TRACE=false
- */
-#ifndef SUB0PUB_TRACE
-#define SUB0PUB_TRACE false ///< Disable Trace logging to std::cout by default
-#endif
-
-/** Assertion based error handling 
+/** Assertion based error handling
  * Define SUB0PUB_ASSERT=true to enable assertion checks for events, SUB0PUB_ASSERT=false to disable
  */
 #ifndef SUB0PUB_ASSERT
@@ -226,26 +219,9 @@
 #define SUB0PUB_UNLISTED_RECEIVER(what) do { assert(!(what)); std::abort(); } while(false)
 #endif
 
-/** Helper macro for stringifying value using compiler preprocessor
- * e.g. SUB0PUB_STRINGIFY_HELPER(123) == "123", SUB0PUB_STRINGIFY_HELPER(FooBar) == "FooBar"
- * @param  x  A value whos value will be converted to string e.g. FooBar == "FooBar", 123 = "123"
- */
-#define SUB0PUB_STRINGIFY_HELPER(x) #x
-
-/** Helper macro for stringifying define using compiler preprocessor
- * e.g. SUB0PUB_STRINGIFY_HELPER(__LINE__) == "123??"
- * @param  x  A macro definition whos value will be converted to string  e.g. __LINE__ == "123??"
- */
-#define SUB0PUB_STRINGIFY(x) SUB0PUB_STRINGIFY_HELPER(x)
-
 #if SUB0PUB_STD
 #include <ostream> //< std::ostream
 #include <istream> //< std::istream
-#endif
-
-/// @todo Trace interface - currently std::cout only!!
-#if SUB0PUB_TRACE
-#include <iostream>
 #endif
 
 #endif // CROG_SUB0PUB_CONFIG_MACROS_HPP

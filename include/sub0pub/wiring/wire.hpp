@@ -13,7 +13,7 @@
 
 //
 // Receivers are ordinary classes: a non-virtual `receive(const T&)` per message type they handle, and optionally
-// `bool filter(const T&)`. No base class, no registry, no registration. The application binds concrete receiver
+// `bool filter(const T&)`. No base class, no table, no run-time subscription. The application binds concrete receiver
 // instances where it composes itself; their types are kept all the way to the call, so each delivery is a direct,
 // inlinable call (measured equal to hand-written code: docs/EVIDENCE.md):
 //

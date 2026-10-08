@@ -4,7 +4,7 @@
  * Demonstrates: ThreadLocalContext enabling cancel(), and cancellation scoped to one publication.
  * Story: PrimaryHandler subscribes before FallbackHandler. It claims commands below 100 and
  * cancels further delivery. Command 200 reaches the fallback; commands 42 and 7 do not.
- * Keep in mind: receiver order is part of this pattern. cancel() does not disconnect a receiver
+ * Keep in mind: receiver order is part of this pattern. cancel() does not unsubscribe a receiver
  * or cancel the next publication. Unlike filter(), it stops later receivers for this publication.
  * Run: Sub0Pub_Cancellation prints primary handling of 42/7 and fallback handling of 200.
  */

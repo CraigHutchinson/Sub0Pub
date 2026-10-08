@@ -14,7 +14,7 @@ namespace sub0
     /** Session scope for Scoped types: independent subscription tables for the same Data type
      * @remark Lifetime contract: a Domain must outlive every Subscribe/Publish/Route bound to it (debug-checked).
      *         close() ends the session early: subscribe returns Closed, publish is dropped, current subscribers are
-     *         detached, and in-flight dispatches are waited for.
+     *         unsubscribed, and in-flight dispatches are waited for.
      */
     template<class Data>
     class Domain

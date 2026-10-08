@@ -16,7 +16,7 @@ ctest --preset default -R Sub0Pub_Example_
 | Need | Source |
 |---|---|
 | The smallest publisher and subscriber | [minimal_sub0pub](minimal_sub0pub/main.cpp) |
-| Receivers join and leave through object lifetime | [basic_pubsub](basic_pubsub/main.cpp) |
+| Receivers subscribe and unsubscribe through object lifetime | [basic_pubsub](basic_pubsub/main.cpp) |
 | One publisher sends several message types | [multi_type](multi_type/main.cpp) |
 | Different receivers accept different message values | [filtering](filtering/main.cpp) |
 | A primary handler claims a command before a fallback | [cancellation](cancellation/main.cpp) |
@@ -29,7 +29,7 @@ ctest --preset default -R Sub0Pub_Example_
 |---|---|
 | One application built twice from one source: runtime subscription, then direct calls | [promote_to_static](promote_to_static/main.cpp) |
 | A message type wired to one fixed receiver | [static_addresses.cpp](static_addresses.cpp) |
-| A fixed controller with diagnostic probes that come and go beside it | [dynamic_diagnostics.cpp](dynamic_diagnostics.cpp) |
+| A fixed controller with diagnostic probes that subscribe and unsubscribe beside it | [dynamic_diagnostics.cpp](dynamic_diagnostics.cpp) |
 
 Not sure whether a type's receivers are fixed, or why a message is not arriving? Let a run tell you:
 
@@ -44,7 +44,7 @@ Not sure whether a type's receivers are fixed, or why a message is not arriving?
 | Receivers are local objects | [local_wiring.cpp](local_wiring.cpp) |
 | A receiver stops the rest of a publication on the direct-call path | [static_cancellation.cpp](static_cancellation.cpp) |
 | A publisher that cannot name its wiring (a library, a non-template interface) | [sink_output.cpp](sink_output.cpp) |
-| Runtime probes that disconnect during delivery, in their own session, behind a wiring | [scoped_diagnostics.cpp](scoped_diagnostics.cpp) |
+| Runtime probes that unsubscribe during delivery, in their own session, behind a wiring | [scoped_diagnostics.cpp](scoped_diagnostics.cpp) |
 
 ## 4. Transports and IPC
 

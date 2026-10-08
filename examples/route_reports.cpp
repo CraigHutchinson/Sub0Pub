@@ -5,7 +5,7 @@
  * Story: a first reading is accepted by the link. The simulated queue then becomes full:
  * the next send is reported rejected, but the local display still receives it. Once the queue
  * drains, an injected incoming reading reaches the display without being echoed out through that route.
- * Keep in mind: a Route uses a subscriber slot; check registration. The Domain and transport
+ * Keep in mind: a Route uses a subscriber slot; check that it subscribed. The Domain and transport
  * must outlive their bound handles. Acceptance is not remote delivery; immediate echo
  * suppression does not prevent arbitrary network cycles.
  * Run: Sub0Pub_Example_route_reports returns zero when the checks pass.
