@@ -45,4 +45,3 @@ namespace policy
 } // namespace policy
 
 #define SUB0PUB_DEFAULT_CONFIG policy::Defaults
-
