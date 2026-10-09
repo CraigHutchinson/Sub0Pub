@@ -15,7 +15,6 @@ cmake --build --preset default --target Sub0Pub_Bench Sub0Pub_Bench_Checked Sub0
 ./build/tests/Sub0Pub_Bench           # Linux/macOS
 python3 tests/bench/run_baseline.py   # all policies + IPC, with callgrind instr/op (Linux)
 python3 tests/footprint/measure_footprint.py  # code size / RAM, host + Cortex-M33
-python3 tests/compare/compare_versions.py     # v1.0 vs v2 (MIGRATION.md evidence)
 python3 tests/collapse/collapse_evidence.py --budgets tests/collapse/budgets.json  # final-link gate (docs/EVIDENCE.md)
 ```
 Compare against `docs/PERFORMANCE_BASELINE.md`: instr/op is the regression bar; ns/op is noisy.

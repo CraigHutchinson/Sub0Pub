@@ -102,4 +102,4 @@ Macros that affect a type's configuration (`SUB0PUB_MAX_SUBSCRIPTIONS` and the c
 translation unit that uses that type.
 
 See [design contracts](DESIGN.md#per-type-configuration-of-the-runtime-broker) for the configuration resolution
-order and [migration notes](../MIGRATION.md) for v1 behavior changes.
+order.

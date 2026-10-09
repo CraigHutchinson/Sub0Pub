@@ -162,17 +162,13 @@ jobs:
           name: benchmark-regression
           path: baseline.md
 
-  comparison-footprint-benchmarks:
+  footprint-benchmarks:
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - name: Install toolchains
-        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends valgrind clang gcc-arm-none-eabi libstdc++-arm-none-eabi-newlib
-      - name: Migration comparison (including mixed paths)
-        run: python3 tests/compare/compare_versions.py > migration-comparison.md
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends valgrind gcc-arm-none-eabi libstdc++-arm-none-eabi-newlib
       - name: Footprint (host and Cortex-M33, each configuration option)
         run: python3 tests/footprint/measure_footprint.py > footprint.md
       - name: Benchmark baseline (instr/op, docs/PERFORMANCE_BASELINE.md)
@@ -183,9 +179,8 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: comparison-footprint-benchmarks
+          name: footprint-benchmarks
           path: |
-            migration-comparison.md
             footprint.md
             baseline.md
 

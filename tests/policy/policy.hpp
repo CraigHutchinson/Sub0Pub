@@ -1,4 +1,4 @@
-/** Whole-program policies for the measurement tools: the benchmarks, the v1/v2 comparison and the footprint report
+/** Whole-program policies for the benchmarks and footprint report.
  *
  * Named as SUB0PUB_CONFIG_HEADER by each tool, which is how a project gives every Data type an option. The tool
  * chooses the options with POLICY_SNAPSHOT, POLICY_CONTEXT, POLICY_FILTER and POLICY_LOCK (each 0 or 1), so one

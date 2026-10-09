@@ -19,7 +19,6 @@ cmake --build --preset default --target Sub0Pub_Bench Sub0Pub_Bench_Checked Sub0
 python3 tests/bench/run_baseline.py build/tests      # instr/op + ns/op: each policy, each configuration option, IPC
 python3 tests/bench/run_baseline.py build/tests --no-timing --budgets tests/bench/budgets.json  # release gate
 python3 tests/footprint/measure_footprint.py         # host + Cortex-M33 (arm-none-eabi-g++ if installed)
-python3 tests/compare/compare_versions.py            # v1.0 against v2, same scenarios
 ```
 
 **Control conditions.** Every benchmark scenario is the worst case for the runtime broker: publish entry points and
@@ -29,7 +28,7 @@ evidence cases.
 
 ## Runtime broker (instr/op, GCC 13 `-O2`)
 
-`tests/bench/run_baseline.py --no-timing`, measured on GCC 13.3.0 in [the full v2 CI run](https://github.com/CraigHutchinson/Sub0Pub/actions/runs/36790377271).
+`tests/bench/run_baseline.py --no-timing`, measured on GCC 13.3.0 in [the full CI run](https://github.com/CraigHutchinson/Sub0Pub/actions/runs/36790377271).
 The selected rows in `tests/bench/budgets.json` are enforced on each PR and merge; the other rows provide context:
 
 | Scenario | Default (Direct) | Default, debug-build check | Full (Snapshot, `cancel()`, `filter()`) | ThreadSafe (`std::mutex`, `filter()`) |
@@ -59,18 +58,13 @@ Floors, without Sub0Pub:
 
 ## Footprint (Cortex-M33, `-Os`)
 
-One publisher, one subscriber, one publish site ([perf/compare-v1-v2-2026-09.md](perf/compare-v1-v2-2026-09.md)):
+`tests/footprint/measure_footprint.py` measures the current library under each policy on the host and Cortex-M33.
+It reports object text/data/bss, thread-local storage, symbol sizes and link-time dependencies for one publisher,
+one subscriber and one publish site, then measures the marginal cost of another subscriber, publish site or message
+type. Each message type instantiates its own table and dispatch loop (K17).
 
-| Implementation | text / data / bss (bytes) | Thread-local storage | Other link-time dependencies |
-|---|---|---|---|
-| v2 default | 224 / 4 / 58 | no | `memmove`, `__cxa_pure_virtual` |
-| v2 Full | 390 / 4 / 62 | yes | `memcpy`, `memmove`, `__cxa_pure_virtual` |
-| v2 `StaticWiring` | 12 / 0 / 4 | no | none |
-| v1.0 | 418 / 4 / 76 | yes | `operator delete` |
-
-Each further message type instantiates its own table and dispatch loop (K17). `measure_footprint.py` reports the
-cost of each configuration option from the same scenario, and the marginal cost of a second subscriber, publish site
-and message type: [perf/footprint-2026-09.md](perf/footprint-2026-09.md).
+Use the footprint artifact from the full CI run for the revision under review. Sizes depend on the target,
+compiler and flags; compare equal-work scenarios within that report.
 
 ## Not yet measured
 
