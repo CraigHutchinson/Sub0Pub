@@ -3,7 +3,7 @@
 
 namespace {
 
-// cancel() needs a publish context: opt-in per type (or SUB0PUB_CANCEL for every type)
+// cancel() needs a publish context: the type opts in
 struct Tick { int value; using sub0_config = sub0::config<sub0::ThreadLocalContext>; };
 
 struct CancelPublisher : sub0::Publish<Tick> {

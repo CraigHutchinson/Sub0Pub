@@ -9,10 +9,6 @@
 #include <cstdint>
 #include <type_traits>
 
-#if SUB0PUB_THREAD_SAFE
-#include <mutex>
-#endif
-
 namespace sub0
 {
     /** Dispatch policy: how publish() walks the subscription table */
@@ -53,16 +49,6 @@ namespace sub0
         void unlock() noexcept {}
     };
 
-#if SUB0PUB_THREAD_SAFE
-    /** Lock policy selected by SUB0PUB_THREAD_SAFE */
-    struct StdMutexLock
-    {
-        void lock() noexcept { m.lock(); }
-        void unlock() noexcept { m.unlock(); }
-        std::mutex m;
-    };
-#endif
-
     namespace detail
     {
         template<class Data, class Config> class BrokerImpl; ///< the library broker (default implementation)
@@ -78,9 +64,9 @@ namespace sub0
          */
         template<bool Open, auto*... Bound> struct StaticTopology;
 
-        /// Builtin configuration, named by the macro values it derives from: a translation unit that sets
-        /// different SUB0PUB_* values for its own (TU-local) Data types gets a different type, not a second
-        /// definition of the same one
+        /// Builtin configuration, named by the values it derives from: a translation unit that sets different
+        /// SUB0PUB_* check macros for its own (TU-local) Data types gets a different type, not a second definition
+        /// of the same one
         template<uint32_t Capacity, Dispatch D, Context C, bool Filter, class LockT, NoReceivers N>
         struct BuiltinT
         {
@@ -98,20 +84,16 @@ namespace sub0
         };
     }
 
-    /** Builtin defaults: the configuration the SUB0PUB_* macros describe
-     * Without any macro: Direct dispatch (DirectChecked in debug builds), no publish context, no filter(), no lock,
-     * delivery by the runtime broker, and a publication that reaches no receiver reported in debug builds.
+    /** Builtin defaults: the cheapest correct runtime dispatch
+     * Direct dispatch (DirectChecked in debug builds), no publish context, no filter(), no lock, delivery by the
+     * runtime broker, and a publication that reaches no receiver reported in debug builds. Everything else is an
+     * option: on one type with sub0::config<...>, or on every type through the project's SUB0PUB_CONFIG_HEADER.
      */
     using Builtin = detail::BuiltinT<SUB0PUB_MAX_SUBSCRIPTIONS,
-        (SUB0PUB_REENTRANT_SAFE || SUB0PUB_THREAD_SAFE) ? Dispatch::Snapshot
-            : (SUB0PUB_REENTRANT_CHECK ? Dispatch::DirectChecked : Dispatch::Direct),
-        (SUB0PUB_REENTRANT_SAFE || SUB0PUB_THREAD_SAFE || SUB0PUB_CANCEL) ? Context::ThreadLocal : Context::None,
-        SUB0PUB_FILTER,
-#if SUB0PUB_THREAD_SAFE
-        StdMutexLock,
-#else
+        SUB0PUB_REENTRANT_CHECK ? Dispatch::DirectChecked : Dispatch::Direct,
+        Context::None,
+        false,
         NoLock,
-#endif
         SUB0PUB_NO_RECEIVERS_CHECK ? NoReceivers::Report : NoReceivers::Unchecked>;
 
     // Options: each applies itself on top of a base configuration -----------------------------------------
@@ -217,9 +199,9 @@ namespace sub0
 } // END: sub0
 
 /** Project default configuration (resolution step 2)
- * Name a header with SUB0PUB_CONFIG_HEADER from the build system, so every translation unit agrees. It may
- * define e.g. `struct ProjectDefaults : sub0::with<sub0::Builtin, sub0::NoFilter> {};` and
- * `#define SUB0PUB_DEFAULT_CONFIG ProjectDefaults`.
+ * Name a header with SUB0PUB_CONFIG_HEADER from the build system, so every translation unit agrees. It defines
+ * e.g. `struct ProjectDefaults : sub0::with<sub0::Builtin, sub0::Snapshot, sub0::Filter> {};` and
+ * `#define SUB0PUB_DEFAULT_CONFIG ProjectDefaults`. This is the one way to give every Data type an option.
  */
 #if defined(SUB0PUB_CONFIG_HEADER)
 #include SUB0PUB_CONFIG_HEADER

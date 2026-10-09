@@ -17,14 +17,14 @@ python3 tests/compile_time/compare.py --baseline <base-ref> --candidate <head-re
 Refs are resolved to full commit IDs, and only the headers archived at those commits are measured: uncommitted
 library edits are **not**. The harness and fixture come from the invoking checkout, and their SHA-256 hashes are
 recorded; both lanes use the same fixture and compiler. `--baseline-standard` and `--candidate-standard` (default
-`c++23`) select each lane's language mode, for example `c++17` to reproduce the migration capture below.
+`c++23`) select each lane's language mode when comparing revisions with different language requirements.
 
 ## Workloads
 
 | Profile | Includes | Instantiated work |
 |---|---|---|
 | wiring | `sub0pub/wiring.hpp` | Multiple message types and receivers, fan-out, Sink construction/copy/publication |
-| broker | `sub0pub/broker.hpp` | Per-message subscriptions, virtual receive, publisher and registration/teardown |
+| broker | `sub0pub/broker.hpp` | Per-message subscriptions, virtual receive, publisher and subscription/teardown |
 | umbrella | `sub0pub/sub0pub.hpp` | Exactly the wiring work, through the full include surface |
 | layout | `sub0pub/utility/layout.hpp` | Distinct 32-member aggregates and recursive array fingerprints |
 
@@ -65,32 +65,16 @@ Ranges and MAD are descriptive, not confidence intervals. Small deltas within ob
 Use a quiet machine, rerun suspicious changes, and compare within the same run. Shared CI hosts add noise; do not
 treat a small timing delta as a hard failure or compare absolute seconds across hosts/compiler versions.
 
-The `Compile time A/B` workflow captures the same-language comparison on pull requests to `main` and also the migration comparison
-when the base declares C++17. It uploads raw JSON and Markdown and adds a job summary. Compilation/harness failures
+The `Compile time A/B` workflow compares revisions in C++23 on pull requests to `main`; it also accepts explicit
+baseline and candidate refs when dispatched manually. It uploads raw JSON and Markdown and adds a job summary. Compilation/harness failures
 fail the job, but there is deliberately no arbitrary wall-clock percentage gate. Meaningful regressions should
 be investigated and justified alongside the existing runtime/footprint gates.
 
 These results do not measure MSVC, parallel build latency, incremental/no-op rebuilds, linker cost, peak compiler
 memory or application-specific include graphs. Those are distinct studies if a consumer's build profile warrants them.
 
-## Recorded results (September 2026)
+## Evidence for a revision
 
-**Moving from C++17 to C++23 costs compile time.** Clean serial compilation of eight consumer translation units, the
-v2 headers in C++17 against the same headers moved to C++23 in C++23 mode
-([report](perf/compile-time/cxx23-migration.md), [raw samples](perf/compile-time/cxx23-migration.json)):
-wiring +58.7%, broker +61.8%, umbrella +82.8%. The ranges do not overlap, so this is a real cost for these workloads,
-not a prediction for every application. Holding both lanes in C++23 separates the source changes from the mode
-([report](perf/compile-time/cxx23-source.md), [raw samples](perf/compile-time/cxx23-source.json)): wiring -14.6%,
-broker +0.9%, umbrella +16.0%, with overlapping ranges in every profile, so no source-level effect is established.
-The two captures ran on different hosts: do not subtract them or compare their absolute seconds.
-
-**The compile-cost reductions** (arity detection, the broker include surface; both lanes C++23, same host;
-[report](perf/compile-time/optimization.md), [raw samples](perf/compile-time/optimization.json)): layout -45.9% with
-non-overlapping ranges; broker -23.7%, whose ranges overlap; umbrella -0.1%; wiring -13.5%, whose headers and workload
-did not change, so it is noise. They reduce, and do not cancel, the migration cost.
-
-**The converged API (October 2026).** `StaticTo`, `StaticFirst` and the no-receivers policy, with the `Publisher` mixin
-and `DynamicPort` removed, against the headers before them (both lanes C++23, same host, Clang 22 on Windows;
-[report](perf/compile-time/api-convergence.md), [raw samples](perf/compile-time/api-convergence.json)): wiring -0.5%,
-broker +1.3%, umbrella -0.0%, layout +0.8%, with overlapping ranges in every profile, so no effect is established. The
-workloads do not use the new options: this is what they cost code that does not ask for them.
+Use the `compile-time-ab` artifact and job summary from the pull request for the revision under review. The report
+and raw JSON identify both commits, workloads, compiler, flags and repeated samples. Review those results alongside
+the runtime and footprint gates; a successful workflow alone does not establish a compile-time improvement.

@@ -57,7 +57,7 @@ override.
   an absent receiver is expected, say so on the type with `sub0::AllowNoReceivers`; a call site that wants to decide
   for itself asks `sub0::receiverCount<T>(publisher)`. `sub0::ReportNoReceivers` checks a type in release builds too.
 - **Filtering:** `filter()` can skip delivery to one subscriber; other subscribers are still considered. It costs one
-  filter call per subscriber and is enabled per type or with `SUB0PUB_FILTER`. See
+  filter call per subscriber and is enabled per type with `sub0::Filter`. See
   [filtering](../examples/filtering/main.cpp).
 - **Cancellation:** `cancel()` stops delivery to later subscribers for the current publication. It does not
   unsubscribe a subscriber or affect later publications; order matters. A publish context is required. See

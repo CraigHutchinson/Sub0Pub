@@ -27,7 +27,7 @@ namespace sub0
 
             /** filter() is not enabled for this Data type: a subscriber that declares `bool filter(const Data&)` fails
              *  to compile here (conflicting return type / overrides a final function), with or without `override`,
-             *  rather than being silently ignored. Enable it with SUB0PUB_FILTER or sub0::Filter. Never called.
+             *  rather than being silently ignored. Enable it with sub0::Filter. Never called.
              */
             virtual void filter(const Data&) noexcept final {}
         protected:
@@ -292,7 +292,7 @@ namespace sub0
             {
                 if constexpr (Config::dispatch == Dispatch::DirectChecked)
                     if (kit::ownDispatches<Data>(&t) != 0)
-                        SUB0PUB_REENTRANT_VIOLATION("sub0pub: subscribing or unsubscribing a Data type during its own dispatch requires Snapshot dispatch (SUB0PUB_REENTRANT_SAFE or sub0::Snapshot)");
+                        SUB0PUB_REENTRANT_VIOLATION("sub0pub: subscribing or unsubscribing a Data type during its own dispatch requires Snapshot dispatch (sub0::Snapshot)");
                 (void)t;
             }
 

@@ -2,7 +2,6 @@
 /** Case: cross-file application (receivers in another translation unit, external linkage).
  *  The runtime broker (Subscribe/Publish), virtual receivers implemented in another TU. Built with and without LTO. */
 // Today's API at its leanest settings (fair comparison): direct dispatch, no assertion checks
-#define SUB0PUB_REENTRANT_SAFE false
 #define SUB0PUB_ASSERT false
 #include "collapse_case.hpp"
 #include "sub0pub/sub0pub.hpp"

@@ -1,5 +1,5 @@
-/** config<Opts...> identity across translation units (see identity_main.cpp): this TU makes its types locked */
-#define SUB0PUB_THREAD_SAFE true
+/** config<Opts...> identity across translation units (see identity_main.cpp): this TU's default is locked */
+#define SUB0PUB_CONFIG_HEADER "identity_locked.hpp"
 #include "sub0pub/sub0pub.hpp"
 
 namespace {

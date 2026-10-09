@@ -32,10 +32,6 @@
 #define SUB0PUB_TYPEIDNAME false ///< Types given unique/user-defined type index and string name for diagnostics and IPC
 #endif
 
-#ifndef SUB0PUB_THREAD_SAFE
-#define SUB0PUB_THREAD_SAFE false ///< Optional mutex guard for multi-threaded pub/sub (e.g. FreeRTOS dual-core)
-#endif
-
 #ifndef SUB0PUB_MAX_SUBSCRIPTIONS
 #define SUB0PUB_MAX_SUBSCRIPTIONS 8 ///< Fixed subscription table size per Broker<T>. Override globally or per-TU.
 #endif
@@ -64,33 +60,23 @@
 #define SUB0PUB_EMPTY_BASES
 #endif
 
-/* Default configuration: the cheapest correct dispatch. Every feature that costs something is opt-in, and
- * using one without opting in is detected: at compile time where possible, otherwise by a debug-build check.
- *   SUB0PUB_REENTRANT_SAFE  snapshot dispatch   detected by SUB0PUB_REENTRANT_CHECK (debug)
- *   SUB0PUB_CANCEL          publish context     cancel(), Route and publish reports do not compile without it
- *   SUB0PUB_FILTER          filter()            a subscriber declaring filter() does not compile without it
- *   SUB0PUB_THREAD_SAFE     lock                detected by SUB0PUB_THREAD_CHECK (debug)
+#if defined(SUB0PUB_REENTRANT_SAFE) || defined(SUB0PUB_CANCEL) || defined(SUB0PUB_FILTER) || defined(SUB0PUB_THREAD_SAFE)
+#error "Sub0Pub policy macros were removed: use per-type options or SUB0PUB_CONFIG_HEADER (see MIGRATION.md)"
+#endif
+
+/* Default configuration: the cheapest correct dispatch. Every feature that costs something is an option of a Data
+ * type's configuration (sub0pub/config.hpp), and using one without it is detected: at compile time where possible,
+ * otherwise by a debug-build check.
+ *   sub0::Snapshot             snapshot dispatch   detected by SUB0PUB_REENTRANT_CHECK (debug)
+ *   sub0::ThreadLocalContext   publish context     cancel(), Route and publish reports do not compile without it
+ *   sub0::Filter               filter()            a subscriber declaring filter() does not compile without it
+ *   sub0::LockWith<L>          lock                detected by SUB0PUB_THREAD_CHECK (debug)
  * A publication is expected to reach somebody: one that reaches no receiver is detected by
  * SUB0PUB_NO_RECEIVERS_CHECK (debug), or at compile time for a statically wired type.
- * These macros set the default for every Data type; one type can choose differently (sub0::config).
+ * A project that wants an option for every Data type says so once, in its SUB0PUB_CONFIG_HEADER.
  */
 
-#ifndef SUB0PUB_REENTRANT_SAFE
-#define SUB0PUB_REENTRANT_SAFE false ///< Snapshot dispatch: subscribe or unsubscribe a Data type from inside its own
-                                     ///< receive() (including destroying the receiving subscriber). Costs a copy of
-                                     ///< the table and a publish context per publish.
-#endif
-
-#ifndef SUB0PUB_CANCEL
-#define SUB0PUB_CANCEL false ///< Publish context: cancel(), Route (transport endpoints) and publish reports.
-                             ///< Costs a thread_local frame per publish.
-#endif
-
-#ifndef SUB0PUB_FILTER
-#define SUB0PUB_FILTER false ///< Subscribe<Data>::filter(): a virtual call per subscriber per publish.
-#endif
-
-/** Detect re-entrancy that Direct dispatch (SUB0PUB_REENTRANT_SAFE=false) does not support
+/** Detect re-entrancy that Direct dispatch does not support
  * Subscribing or unsubscribing (including destroying) a subscriber of a Data type from within a receive() of that
  * same Data type on the same thread is a contract violation of Direct dispatch; nested publish is supported. With
  * this check enabled the violation calls SUB0PUB_REENTRANT_VIOLATION(what).
@@ -116,7 +102,7 @@
 #endif
 
 /** Detect a Data type used from two threads at once without a lock
- * Publish, subscribe and unsubscribe of a Data type without a lock (SUB0PUB_THREAD_SAFE or sub0::LockWith) must not
+ * Publish, subscribe and unsubscribe of a Data type without a lock (sub0::LockWith) must not
  * overlap on different threads. With this check enabled an overlap calls SUB0PUB_THREAD_VIOLATION(what).
  * Default: enabled in debug builds (SUB0PUB_ASSERT and no NDEBUG). It detects overlaps that happen, not every race.
  */

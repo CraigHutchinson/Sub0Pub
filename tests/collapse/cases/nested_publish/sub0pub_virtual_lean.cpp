@@ -2,8 +2,8 @@
  *  Sample{v + 1} (same type, re-entrant, bounded by the data). Actuator receives Command, Tail (gain 5)
  *  receives Sample. Bound order relay, actuator, tail: the nested publications complete before Tail sees
  *  the outer Sample.
- *  The runtime broker, leanest valid macros: SUB0PUB_REENTRANT_SAFE=false is not valid here (re-entrant publish of Sample), so only assertions are off. */
-// Today's API at its leanest valid settings for re-entrant publish: snapshot kept, assertions off
+ *  The runtime broker uses direct dispatch: nested publication is supported without changing the table. */
+// Assertions are disabled for the lean measurement.
 #define SUB0PUB_ASSERT false
 #include "collapse_case.hpp"
 #include "sub0pub/sub0pub.hpp"

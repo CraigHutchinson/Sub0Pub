@@ -130,7 +130,7 @@ TEST_CASE("No subscribers - a type that allows it publishes without effect") {
 }
 
 TEST_CASE("Filter support") {
-    // filter() is opt-in: the type enables it (or the project defines SUB0PUB_FILTER)
+    // filter() is opt-in: the type enables it
     struct Reading { int value; using sub0_config = sub0::config<sub0::Filter>; };
     struct EvenOnly : sub0::Subscribe<Reading> {
         int total = 0;

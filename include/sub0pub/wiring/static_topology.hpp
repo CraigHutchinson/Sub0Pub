@@ -103,7 +103,7 @@ namespace sub0
                 static_assert(config_t<Data>::filter
                               || !(wiring::HasFilter<wiring::receiver_t<std::remove_pointer_t<decltype(Bound)>>, Data> || ...),
                               "sub0pub: a receiver listed in StaticTo declares filter(), but its Data type is not configured "
-                              "with sub0::Filter (SUB0PUB_FILTER)");
+                              "with sub0::Filter");
 
                 // A const or throwing filter() is called here and ignored by the broker, which calls its own virtual
                 static_assert(((!std::is_base_of_v<Subscribe<Data>, wiring::receiver_t<std::remove_pointer_t<decltype(Bound)>>>

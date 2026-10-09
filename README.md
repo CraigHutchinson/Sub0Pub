@@ -1,8 +1,5 @@
 # Sub0Pub
 
-> Sub0Pub began as a spare-time project, written by hand in 2018 to explore type-safe messaging in C++. This v2
-> release develops that original idea into a more complete library.
-
 **Typed publish-subscribe for C++23 that compiles to direct calls when the receivers are known.**
 
 Sub0Pub is a header-only library for synchronous, type-safe message delivery. Write publishers and subscribers once;
@@ -10,8 +7,7 @@ each message type then says whether it is delivered through a bounded runtime br
 unsubscribe independently, or by direct calls to a known set of receivers. The core does not allocate broker storage from the
 heap; optional policies and application callbacks have their own costs.
 
-> **Status:** v2.0.0-alpha is CI-tested, but has not yet been field-tested. The `v1.0` tag preserves the previous
-> baseline.
+> **Status:** v2.0.0-alpha is CI-tested, but has not yet been field-tested.
 
 ## One API; the message type decides the delivery
 
@@ -121,7 +117,7 @@ The README is an overview; detailed behavior, constraints, and complete examples
 | [Runnable examples](examples/README.md) | Standalone programs for the current API, organized by use case |
 | [Design and contracts](docs/DESIGN.md) | Design rationale, measured constraints, and known limitations |
 | [Comparisons](docs/COMPARISONS.md) | Architectural trade-offs versus related libraries; not a speed ranking |
-| [v1 migration](MIGRATION.md) | Behavior and API changes from the v1 baseline |
+| [Migration notes](MIGRATION.md) | Changes to consider when updating an existing application |
 
 ## How it compares
 

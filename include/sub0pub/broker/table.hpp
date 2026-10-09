@@ -134,8 +134,8 @@ namespace sub0
                 std::uintptr_t seen = 0;
                 acquired_ = t_.user.compare_exchange_strong(seen, me, std::memory_order_acquire, std::memory_order_relaxed);
                 if (!acquired_ && seen != me)
-                    SUB0PUB_THREAD_VIOLATION("sub0pub: a Data type was used from two threads at once without a lock: define "
-                                             "SUB0PUB_THREAD_SAFE, or configure the type with sub0::LockWith<L>");
+                    SUB0PUB_THREAD_VIOLATION("sub0pub: a Data type was used from two threads at once without a lock: "
+                                             "configure the type with sub0::LockWith<L>");
             }
             ~UseScope()
             {

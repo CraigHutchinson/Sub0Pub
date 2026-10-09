@@ -10,6 +10,8 @@ struct ProjectDefaults : sub0::with<sub0::Builtin, sub0::Capacity<4>, sub0::Snap
 #if defined(SUB0PUB_TEST_COUNT_MISMATCHES)
 extern int gMismatches;
 extern int gViolations;
+#undef SUB0PUB_CONFIG_MISMATCH
 #define SUB0PUB_CONFIG_MISMATCH(what) ((void)(what), ++gMismatches)
+#undef SUB0PUB_REENTRANT_VIOLATION
 #define SUB0PUB_REENTRANT_VIOLATION(what) ((void)(what), ++gViolations)
 #endif

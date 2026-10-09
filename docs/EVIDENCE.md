@@ -73,7 +73,7 @@ not enforced: the runtime broker is expected to fail them, which is the price of
 
 Routine CI measures the representative cases with GCC, Clang, and Cortex-M33 in separate jobs. Each checks ordinary
 and cross-file LTO builds against the recorded budgets. A manually dispatched CI run measures all cases and also
-collects the v1/v2 comparison, full footprint, complete benchmark report, and MSVC final-image evidence. Every
+collects the full footprint and complete benchmark report, and runs all behaviour tests on MSVC. Every
 selected case retains its variants, both forms, behaviour checks, and recorded budget gates. Separately, routine
 CI checks selected runtime-broker and IPC instruction budgets in `tests/bench/budgets.json`.
 
@@ -104,10 +104,10 @@ hand-written runtime binding and `Sink` with a hand-written context pointer plus
 | Zero receivers | = / = / = | = |
 | One receiver | = / = / = ¹ | +11 / +23; +416 B |
 | Multiple receivers, repeated types | = / = / = ¹ | +56 / +46; +484 B |
-| Default and runtime filters | = / = / = ¹ | with `SUB0PUB_FILTER`: +67.5 / +55.5; +544 B |
+| Default and runtime filters | = / = / = ¹ | with `sub0::Filter`: +67.5 / +55.5; +544 B |
 | Two independent domains | = / = / = ¹; one publisher over both: `StaticWiring` =, `wire` = except Clang observable +3 (K23) | `Domain`: +71 / +63; +2232 B |
 | Transport endpoint (egress and ingress) | = / = / = ¹; two links of one transport type: `StaticWiring` =, `wire` +8 / +10 unless each link has its own type (K18) | `Route`: +116 / +113; +716 B and TLS |
-| Dynamic subscriptions | not applicable: runtime subscribers are the broker's (`StaticFirst`, `BrokerPort`) | against a hand-written registry with the same features: +3.5 / -1.5; +32 B (v1.0: +19 / +37) |
+| Dynamic subscriptions | not applicable: runtime subscribers are the broker's (`StaticFirst`, `BrokerPort`) | against a hand-written registry with the same features: +3.5 / -1.5; +32 B |
 | Cross-file, LTO off / on | = / = / = ¹ | +25 / +24 without LTO, +56 / +44 with LTO: LTO does not devirtualise the registry |
 
 ¹ `Sink` on Clang fails only the static publish-path criterion: Clang inlines the type-erased call (no indirect call
@@ -119,7 +119,7 @@ in both forms, on GCC, Clang and Cortex-M33, with and without LTO: 42 of 42 case
 `zero_receivers`, `one_receiver`, `many_receivers`, `multi_types`, `filters` and `cross_file`. On MSVC it equals the
 `StaticWiring` variant: identical to hand-written code in five of the cases, and +2 path instructions at 32 receivers
 (the application's own `send()`, as below). Adding the option to a type costs the runtime broker nothing: the brokered
-`Subscribe` and `Publish` are the same class templates as before, and their recorded budgets did not move.
+`Subscribe` and `Publish` use the delivery policy of their message type; their runtime costs are covered by the broker budgets.
 
 `StaticFirst` (`sub0_typed_first`) is judged against the hand-written registry, as the `BrokerPort` bridge is. Deltas
 against that reference, observable form (publish instructions GCC / Clang; x86-64 RAM GCC / Clang; Cortex-M33 text
@@ -173,11 +173,7 @@ python tests/collapse/collapse_evidence.py --build msvc-O2                      
 ```
 
 The GCC, Clang and Cortex-M33 builds need `g++`, `clang++`, `arm-none-eabi-g++` and valgrind; on Windows the tool
-finds the newest Visual Studio itself. CI runs the full gate on Linux and a smoke run of both MSVC builds on Windows,
-and publishes the reports as artifacts. Stored reports (September 2026): GCC, Clang and Cortex-M33
-[perf/collapse/public-api-2026-09.md](perf/collapse/public-api-2026-09.md); MSVC
-[perf/collapse/msvc-2026-09.md](perf/collapse/msvc-2026-09.md) and
-[perf/collapse/msvc-lto-2026-09.md](perf/collapse/msvc-lto-2026-09.md); JSON beside each. They were measured in C++17
-mode, before the C++23 baseline; CI re-measures in C++23 against the same budgets. The stored reports predate the
-typed variants and still list the removed `Publisher` mixin and `DynamicPort` variants (`sub0_b1_mixin`,
-`sub0_bridge_slots`, `publisher_ergonomics`); the table above counts the variants that remain.
+finds the newest Visual Studio itself. CI collects the GCC, Clang and Cortex-M33 reports and their budget gates
+as artifacts. The MSVC job runs the behaviour tests; use the commands above to collect MSVC final-image evidence
+locally. Review reports for the exact revision under consideration, with their compiler, flags and reference
+variants; dated captures do not describe a later revision automatically.

@@ -1,10 +1,11 @@
 /** Core publish/subscribe benchmarks
  *
- * Built once per macro policy (see tests/CMakeLists.txt) so every policy is measured with identical scenarios:
+ * Built once per policy (tests/policy/policy.hpp, see tests/CMakeLists.txt) so every policy is measured with
+ * identical scenarios:
  *   Sub0Pub_Bench            default: Direct dispatch, no publish context, no filter(), no lock
  *   Sub0Pub_Bench_Checked    SUB0PUB_REENTRANT_CHECK=true (the debug-build default: re-entrancy detected)
- *   Sub0Pub_Bench_Full       SUB0PUB_REENTRANT_SAFE, SUB0PUB_CANCEL, SUB0PUB_FILTER (snapshot, cancel(), filter())
- *   Sub0Pub_Bench_ThreadSafe SUB0PUB_THREAD_SAFE=true, SUB0PUB_FILTER (mutex + snapshot, uncontended)
+ *   Sub0Pub_Bench_Full       Snapshot, a publish context and Filter for every type (snapshot, cancel(), filter())
+ *   Sub0Pub_Bench_ThreadSafe LockWith<mutex> and Filter for every type (mutex + snapshot, uncontended)
  * Scenarios for a feature the policy does not enable (filter, cancel) are left out.
  *
  * "Floor" scenarios are hand-written equivalents without Sub0Pub (virtual call loop, std::function
@@ -78,12 +79,12 @@ using floor_types::NoOpReceiver;
 /// more than one implementation) so every scenario measures real indirect dispatch, i.e. the
 /// worst case / control. Compiler collapse of dispatch (inlining, devirtualisation) is a follow-up.
 namespace bench_types {
-/// Locked configurations (SUB0PUB_THREAD_SAFE) register explicitly after construction; others in the constructor
+/// Locked configurations subscribe explicitly after construction; others in the constructor
 template<class Data>
 struct Active : sub0::Subscribe<Data> {
     Active() noexcept
     {
-#if SUB0PUB_THREAD_SAFE
+#if POLICY_LOCK
         this->trySubscribe();
 #endif
     }
@@ -102,13 +103,13 @@ struct CountingFloatSub : Active<float> {
     int count = 0;
     void receive(const float&) noexcept override;
 };
-#if SUB0PUB_FILTER
+#if POLICY_FILTER
 struct FilteredSubscriber : Active<int> {
     void receive(const int&) noexcept override;
     bool filter(const int& v) noexcept override;
 };
 #endif
-#if SUB0PUB_CANCEL || SUB0PUB_REENTRANT_SAFE || SUB0PUB_THREAD_SAFE
+#if POLICY_CONTEXT || POLICY_SNAPSHOT || POLICY_LOCK
 #define BENCH_CANCEL 1
 struct CancellingSubscriber : Active<int> {
     void receive(const int&) noexcept override;
@@ -118,7 +119,7 @@ void NoOpSubscriber::receive(const int&) noexcept {}
 void CountingSubscriber::receive(const int&) noexcept { ++count; }
 void NoOpFloatSub::receive(const float&) noexcept {}
 void CountingFloatSub::receive(const float&) noexcept { ++count; }
-#if SUB0PUB_FILTER
+#if POLICY_FILTER
 void FilteredSubscriber::receive(const int&) noexcept {}
 bool FilteredSubscriber::filter(const int& v) noexcept { return (v & 1) == 0; }
 #endif
@@ -132,9 +133,9 @@ namespace {
 
 const char* policyName()
 {
-#if SUB0PUB_THREAD_SAFE
+#if POLICY_LOCK
     return "ThreadSafe (mutex + snapshot, filter)";
-#elif SUB0PUB_REENTRANT_SAFE
+#elif POLICY_SNAPSHOT
     return "Full (snapshot, cancel, filter)";
 #elif SUB0PUB_REENTRANT_CHECK
     return "Direct + reentrancy check";
@@ -210,7 +211,7 @@ int main()
 
     // --- Filter and cancel ---
     h.title("Filter and cancel");
-#if SUB0PUB_FILTER
+#if POLICY_FILTER
     {
         IntPublisher pub;
         FilteredSubscriber sub;

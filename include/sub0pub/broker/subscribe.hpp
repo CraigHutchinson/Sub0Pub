@@ -38,7 +38,7 @@ namespace sub0
      * directly and has no entry in the table; any other subscriber subscribes as usual.
      *
      * Subscription contract: single-threaded configurations subscribe in the constructor. Concurrent configurations
-     * (a Lock, e.g. SUB0PUB_THREAD_SAFE) do not: another thread could otherwise dispatch into the object before the
+     * (a Lock: sub0::LockWith) do not: another thread could otherwise dispatch into the object before the
      * derived class is constructed. Call trySubscribe() at the end of the most-derived constructor (Route does this).
      *
      * Teardown contract: after unsubscribe() returns, receive() is not called again, on any thread. The destructor
@@ -127,7 +127,7 @@ namespace sub0
         void cancel() const noexcept
         {
             static_assert(Config::context != Context::None,
-                          "sub0pub: cancel() needs a publish context: define SUB0PUB_CANCEL, or configure the type with "
+                          "sub0pub: cancel() needs a publish context: configure the type with "
                           "sub0::ThreadLocalContext or sub0::StaticContext");
             broker_.cancel();
         }

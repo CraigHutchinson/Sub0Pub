@@ -1,4 +1,4 @@
-# Sub0Pub v2 design
+# Sub0Pub design
 
 Sub0Pub's design intent is **correctness without cost**: wherever an application's topology and behaviour allow it,
 the compiler must be able to remove dispatch, subscription, storage and context machinery, and only a genuinely
@@ -68,7 +68,7 @@ is brokered, so the configuration is **a property of the type**. It is resolved 
    - a `Tagged<Payload, Tag>` payload, whose tag carries the member alias
 2. **The project default:** a header named by `SUB0PUB_CONFIG_HEADER`, set by the build system so every
    translation unit agrees, which defines `SUB0PUB_DEFAULT_CONFIG`.
-3. **Builtin:** the `SUB0PUB_*` macros.
+3. **Builtin:** the cheapest correct dispatch, with a table of `SUB0PUB_MAX_SUBSCRIPTIONS`.
 
 `sub0::config<Opts...>` means "the project default with these options applied". Consistent visibility of a type's
 configuration is a build contract: a type that resolves differently in two translation units is an ODR violation.
@@ -90,19 +90,19 @@ observes at run time.
 Every option that costs something is opt-in, and using a feature without opting in is caught: `cancel()`, routes,
 publish reports and `filter()` do not compile without their option, on the broker and in a `StaticTo` list alike; invalid combinations (a lock without Snapshot,
 Snapshot without a context, a lock with `StaticContext`, `Domain<T>` for a non-scoped type) are compile errors; table
-changes during a Direct dispatch are reported by the debug-build check. [MIGRATION.md](../MIGRATION.md) lists the
-opt-in for each v1 behaviour.
+changes during a Direct dispatch are reported by the debug-build check. See [configuration](CONFIGURATION.md) for
+the options and project-wide defaults.
 
 ## Decisions
 
 | # | Decision | Chosen | Rejected, with the measured reason |
 |---|---|---|---|
-| D1 | Where a type's broker policy lives | On the type (member alias, ADL declaration, `SUB0PUB_CONFIGURE`, `Tagged`), else the project header, else the macros | a broker chosen at each use site (sites can silently disagree); a central registry header of every type (dependency inversion) |
+| D1 | Where a type's broker policy lives | On the type (member alias, ADL declaration, `SUB0PUB_CONFIGURE`, `Tagged`), else the project header, else the builtin default | a broker chosen at each use site (sites can silently disagree); a central registry header of every type (dependency inversion); a macro per feature beside the project header (a second way to set the same defaults, and one a single translation unit could set differently) |
 | D2 | What the default costs | The cheapest correct dispatch: direct iteration, no publish context, no `filter()`, no lock | snapshot, `cancel()` and `filter()` always on: 77 / 287 instructions per publish against 38 / 101 for 1 / 8 subscribers |
 | D3 | The hot-path structure | Direct calls to receivers bound at compile time: named by the type (`StaticTo`), or at the composition point (explicit wiring) | policy switches inside the virtual registry, which keep its dispatch model; routing static receivers through the registry: +78 to +86 publish instructions |
-| D4 | The static-to-dynamic boundary | The runtime broker itself: `StaticFirst` on the type, or a `BrokerPort` in an explicit wiring | a second, policy-free slot registry (`DynamicPort`, removed): it duplicated the broker's default configuration, which already costs what a hand-written registry does (+3.5 / -1.5 publish instructions), without its capacity report, snapshot, lock or sessions; a registry in front of the static wiring: publish +37 (GCC) / +10 (Clang) over the hand-written equivalent |
+| D4 | The static-to-dynamic boundary | The runtime broker itself: `StaticFirst` on the type, or a `BrokerPort` in an explicit wiring | a second, policy-free subscription table: it duplicates the broker's default configuration, which already costs what a hand-written registry does (+3.5 / -1.5 publish instructions), without its capacity report, snapshot, lock or sessions; a registry in front of the static wiring: publish +37 (GCC) / +10 (Clang) over the hand-written equivalent |
 | D5 | Cancellation on the static path | `bool` result with `publishCancelable` | a thread-local `cancel()` flag: GCC +3 instructions; Cortex-M33 +14 path instructions, +257 B RAM and a TLS dependency |
-| D6 | Publisher spelling | `Publish<T>` with `sub0::publish()`, the type deciding the delivery; in explicit wiring the publisher holds its wiring by value, or a `Sink<T>` | a CRTP `Publisher` mixin (removed: it only renamed a wiring the publisher holds, made every publisher a template, and cost +6 path instructions on MSVC at 32 receivers); a CTAD factory (Clang +4 instructions, +24 B); C++23 deducing this (GCC 13 rejects it, and it costs the same as the mixin) |
+| D6 | Publisher spelling | `Publish<T>` with `sub0::publish()`, the type deciding the delivery; in explicit wiring the publisher holds its wiring by value, or a `Sink<T>` | a CRTP publisher mixin (it only renames a wiring the publisher holds, makes every publisher a template, and costs +6 path instructions on MSVC at 32 receivers); a CTAD factory (Clang +4 instructions, +24 B); C++23 deducing this (GCC 13 rejects it, and it costs the same as the mixin) |
 | D7 | Lifetime | `Subscribe<T>` and `Publish<T>` have protected, non-virtual destructors; locked types subscribe with `trySubscribe()` after construction; `unsubscribe()` during a dispatch is safe under Snapshot; `Domain::close()` unsubscribes every subscriber, rejects new ones and quiesces | a virtual destructor (a vptr per object and an `operator delete` link dependency on small targets); subscribing in the base constructor for concurrent types (another thread could dispatch into a half-built object) |
 | D8 | Teardown under concurrency | a sequentially consistent handshake: `unsubscribe()` waits only for a callback running on another thread | hazard pointers and epochs: cheaper only because they drop self-unsubscribe, nested-publish and thread-count safety, and they drop publications past their bounds in release builds |
 | D10 | Where a type's topology lives | On the type, as a configuration option (`StaticTo`, `StaticFirst`), so `Subscribe<T>`, `Publish<T>` and `publish()` are written once and follow it; one topology per type, and `Tagged` makes a second type where a variation is needed | a topology chosen by each publisher or use site (sites can silently disagree, and a receiver cannot know which publisher will call it); a project-wide topology header that every unit must include (intrusive, build-system dependent, and a unit that misses it brokers the type silently); a second receiver and publisher vocabulary for wired types (the rewrite that kept applications on the broker); a second template parameter on `Subscribe` and `Publish` to select the wired form (it lengthened the RTTI name of every brokered `Subscribe<T>`: +4 B per message type; the wired forms are constrained specialisations instead) |
@@ -132,11 +132,11 @@ opt-in for each v1 behaviour.
 ## Known limitations
 
 Each limitation has a measured price or a documented usage rule. Identifiers are stable, so tests and comments can
-refer to them; a number that is missing was retired with its limitation (K21 went with `DynamicPort`).
+refer to them; resolved limitations leave gaps so references to the remaining items stay stable.
 
 | # | Limitation | Price | Route to removing it |
 |---|---|---|---|
-| K1 | Teardown safety on create + destroy: a subscribed flag and, with a publish context, a check for dispatches in progress | create + destroy 47 instructions in the default (v1.0: 48; GCC, compare-v1-v2 report) | skip the check when no dispatch of the table is active on this thread |
+| K1 | Teardown safety on create + destroy: a subscribed flag and, with a publish context, a check for dispatches in progress | create + destroy 46 instructions in the default (GCC; see the runtime broker baseline) | skip the check when no dispatch of the table is active on this thread |
 | K2 | Types with a publish context carry a dispatch frame (origin, report, snapshot) even without routes | Snapshot, 1 subscriber: +2; Direct, 0 subscribers: +7 | a minimal frame for types without routes |
 | K3 | Locked types pay a handshake per subscriber per publish, and a second lock acquisition | `std::mutex`, 1 / 8 subscribers: 260 / 554 instructions per publish | per-subscriber reference counts or epochs, if they can pass the same lifetime tests |
 | K4 | Concurrent `unsubscribe()` blocks for at most one callback on another thread; two receivers unsubscribing each other at once from different threads deadlock | a usage rule | a non-blocking `unsubscribeLater()` for use inside receivers |
@@ -164,7 +164,7 @@ refer to them; a number that is missing was retired with its limitation (K21 wen
 | K31 | The no-receivers report is a run-time check for brokered types, on by default only in debug builds | a release build still publishes to nobody silently unless `SUB0PUB_NO_RECEIVERS_CHECK` or `ReportNoReceivers` says otherwise | none planned: the default follows the library's other contract checks |
 | K32 | Topology belongs to the type, not to a publisher: a publisher cannot choose another delivery (a queue, an asynchronous fan-out) for a type it publishes from a hot loop | a second type, through `Tagged<Payload, Tag>` | publisher-side topology, when a real case needs it |
 | K33 | The audit describes one run and has blind spots: explicit wirings are not recorded; a `Scoped` type's sessions share one ledger; a subscriber counts as reached when delivery gets to it, whatever `filter()` or `cancel()` then do; 16 receivers and 8 publisher classes are remembered per type; a subscriber of a `StaticTo` type that its list does not name is shown by address only, and so is every runtime subscriber without RTTI | a finding it cannot make, never a wrong program: the audit changes no behaviour | per-`Domain` ledgers; recording `wire()` and `StaticWiring` |
-| K34 | The stream serialisation layer (`sub0pub/ipc/`) keeps its v1 design: its own virtual `IStream` / `OStream` beside `SUB0PUB_STD`, CRTP `ForwardSubscribe` / `ForwardPublish` whose name collides with the wiring's unrelated `Forward<Transport>`, a reader that publishes a frame only after its postfix, and raw in-memory payloads | two meanings of "forward" to learn; one virtual call per stream operation | a redesign of the serialisation API against the converged vocabulary, with its own evidence |
+| K34 | The stream serialisation layer (`sub0pub/ipc/`) uses its own virtual `IStream` / `OStream` beside `SUB0PUB_STD`, CRTP `ForwardSubscribe` / `ForwardPublish` whose name collides with the wiring's unrelated `Forward<Transport>`, a reader that publishes a frame only after its postfix, and raw in-memory payloads | two meanings of "forward" to learn; one virtual call per stream operation | a redesign of the serialisation API against the converged vocabulary, with its own evidence |
 | K26 | Under `Direct` dispatch, a table change during that table's own dispatch is detected only by the debug-build check | a release build may skip a subscriber or call one added during it | opt in with `Snapshot` for types that change their table from their own callbacks |
 
 Not yet measured: throughput under lock contention and teardown latency, embedded stack use (Snapshot copies the
