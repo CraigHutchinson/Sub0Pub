@@ -59,28 +59,27 @@ type is also `AllowNoReceivers`; a listed receiver's `filter()` needs the type's
 
 ## Project-wide defaults
 
-Set `SUB0PUB_CONFIG_HEADER` in the build and have that header define `SUB0PUB_DEFAULT_CONFIG`. For example:
+Set options for every message type in a project header. Name the header with
+`SUB0PUB_CONFIG_HEADER` from the build system, so that every translation unit gets it, and have it define
+`SUB0PUB_DEFAULT_CONFIG`:
 
 ```cpp
-struct ProjectDefaults : sub0::with<sub0::Builtin, sub0::NoFilter> {};
+// project_sub0pub.hpp, built with -DSUB0PUB_CONFIG_HEADER="project_sub0pub.hpp"
+struct ProjectDefaults : sub0::with<sub0::Builtin, sub0::Snapshot, sub0::Filter> {};
 #define SUB0PUB_DEFAULT_CONFIG ProjectDefaults
 ```
 
-Every translation unit using the configured types must include the same project-default header. Per-type
-`sub0::config<...>` options are applied on top of the project default.
+Per-type `sub0::config<...>` options are applied on top of the project default. Feature policies use these options
+rather than per-feature macros. The remaining macros below control capacity, checks, diagnostics and serialization.
 
 ## Configuration macros
 
-Define macros before the first Sub0Pub header is included. Policy macros determine the default for message types
-without an explicit configuration; diagnostics and serialization macros configure other library behavior.
+Define macros for the whole program, from the build system. They size the default table and control diagnostics
+and serialization; what a message type's broker does is configured on the type or in the project header, above.
 
 | Macro | Default | Purpose |
 |---|---|---|
 | `SUB0PUB_MAX_SUBSCRIPTIONS` | `8` | Default fixed broker capacity per message type. |
-| `SUB0PUB_REENTRANT_SAFE` | `false` | Snapshot dispatch by default; supports same-type table changes during `receive()`. |
-| `SUB0PUB_CANCEL` | `false` | Enables context-dependent `cancel()`, routes, and publish reports by default. |
-| `SUB0PUB_FILTER` | `false` | Enables subscriber `filter()` by default. |
-| `SUB0PUB_THREAD_SAFE` | `false` | Uses a mutex and snapshot dispatch for the default policy. |
 | `SUB0PUB_REENTRANT_CHECK` | Debug: `true`; `NDEBUG`: `false` | Detects same-type table changes during direct dispatch; not a safety mechanism. |
 | `SUB0PUB_THREAD_CHECK` | Debug: `true`; `NDEBUG`: `false` | Detects some overlapping unlocked cross-thread use; not synchronization. |
 | `SUB0PUB_CHECK_CONFIG` | Debug: `true`; `NDEBUG`: `false` | Reports observed per-type configuration mismatches across translation units, including a type one unit wires statically and another does not. |
@@ -99,8 +98,8 @@ without an explicit configuration; diagnostics and serialization macros configur
 | `SUB0PUB_STD` | `false` | Selects standard streams instead of Sub0Pub's lightweight stream types. |
 | `SUB0PUB_TYPEIDNAME` | `false` | Enables user-defined type IDs and names for diagnostics and IPC. |
 
-Policy macros that affect a type's configuration must agree in every translation unit that uses that type. Prefer
-`SUB0PUB_CONFIG_HEADER` or the per-type forms above over inconsistent translation-unit-local definitions.
+Macros that affect a type's configuration (`SUB0PUB_MAX_SUBSCRIPTIONS` and the checks) must agree in every
+translation unit that uses that type.
 
 See [design contracts](DESIGN.md#per-type-configuration-of-the-runtime-broker) for the configuration resolution
 order and [migration notes](../MIGRATION.md) for v1 behavior changes.

@@ -1,12 +1,10 @@
-/** SUB0PUB_THREAD_SAFE: the Builtin configuration gains a mutex, and subscribers activate explicitly
+/** A locked type (sub0::LockWith): concurrent publishers, and subscribers that subscribe explicitly
  *
- * Types are unique to this translation unit (anonymous namespace): the macro changes their configuration only.
- * A locked configuration does not register in the Subscribe constructor, so another thread can never dispatch into
+ * A locked configuration does not subscribe in the Subscribe constructor, so another thread can never dispatch into
  * an object whose derived part is not yet constructed; the most-derived constructor calls trySubscribe().
  */
-#define SUB0PUB_THREAD_SAFE true
-
 #include <atomic>
+#include <mutex>
 #include <thread>
 #include <vector>
 
@@ -16,9 +14,9 @@
 namespace {
 
 /// The first test publishes while its only subscriber is deliberately not yet active
-struct TsMsg { int value; using sub0_config = sub0::config<sub0::AllowNoReceivers>; };
+struct TsMsg { int value; using sub0_config = sub0::config<sub0::LockWith<std::mutex>, sub0::AllowNoReceivers>; };
 
-static_assert(std::is_same_v<sub0::config_t<TsMsg>::Lock, sub0::StdMutexLock>, "SUB0PUB_THREAD_SAFE selects the mutex");
+static_assert(std::is_same_v<sub0::config_t<TsMsg>::Lock, std::mutex>, "LockWith names the lock");
 static_assert(sub0::config_t<TsMsg>::dispatch == sub0::Dispatch::Snapshot, "a lock requires Snapshot dispatch");
 
 struct TsPublisher : sub0::Publish<TsMsg>

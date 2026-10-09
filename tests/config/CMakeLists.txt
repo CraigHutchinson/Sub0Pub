@@ -56,9 +56,21 @@ function(sub0pub_default_compile_fail name regex)
 endfunction()
 
 sub0pub_default_compile_fail(cf_config_filter_not_enabled   "conflicting return type|different return type|overrides a 'final'|return type differs|C2555")
-sub0pub_default_compile_fail(cf_config_cancel_default       "SUB0PUB_CANCEL")
+sub0pub_default_compile_fail(cf_config_cancel_default       "needs a publish context")
 
-# config<Opts...> with different SUB0PUB_* macros in different translation units, in both link orders
+# Removed policy flags must fail rather than silently disabling an application's requested safety policy.
+foreach(policy REENTRANT_SAFE CANCEL FILTER THREAD_SAFE)
+    set(target cf_config_removed_${policy})
+    add_library(${target} OBJECT EXCLUDE_FROM_ALL compile_fail/cf_config_removed_policy.cpp)
+    target_link_libraries(${target} PRIVATE Sub0Pub::Sub0Pub)
+    target_compile_definitions(${target} PRIVATE SUB0PUB_${policy}=false)
+    add_test(NAME Sub0Pub_Config_${target}
+             COMMAND ${CMAKE_COMMAND} --build "${CMAKE_BINARY_DIR}" --target ${target} --config $<CONFIG>)
+    set_tests_properties(Sub0Pub_Config_${target} PROPERTIES
+                         PASS_REGULAR_EXPRESSION "Sub0Pub policy macros were removed" RESOURCE_LOCK cmake_build)
+endforeach()
+
+# config<Opts...> over different defaults in different translation units, in both link orders
 foreach(order ab ba)
     if(order STREQUAL "ab")
         set(sources identity_a.cpp identity_b.cpp)
@@ -67,6 +79,7 @@ foreach(order ab ba)
     endif()
     add_executable(Sub0Pub_ConfigIdentity_${order} ${sources} identity_main.cpp)
     target_link_libraries(Sub0Pub_ConfigIdentity_${order} PRIVATE Sub0Pub::Sub0Pub Threads::Threads)
+    target_include_directories(Sub0Pub_ConfigIdentity_${order} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
     # Out-of-line calls, so the linker's choice between the TUs' definitions of a merged function is observable
     target_compile_options(Sub0Pub_ConfigIdentity_${order} PRIVATE
         $<IF:$<CXX_COMPILER_ID:MSVC>,/Od /Ob0,-O0 -fno-inline>)

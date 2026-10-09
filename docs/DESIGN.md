@@ -68,7 +68,7 @@ is brokered, so the configuration is **a property of the type**. It is resolved 
    - a `Tagged<Payload, Tag>` payload, whose tag carries the member alias
 2. **The project default:** a header named by `SUB0PUB_CONFIG_HEADER`, set by the build system so every
    translation unit agrees, which defines `SUB0PUB_DEFAULT_CONFIG`.
-3. **Builtin:** the `SUB0PUB_*` macros.
+3. **Builtin:** the cheapest correct dispatch, with a table of `SUB0PUB_MAX_SUBSCRIPTIONS`.
 
 `sub0::config<Opts...>` means "the project default with these options applied". Consistent visibility of a type's
 configuration is a build contract: a type that resolves differently in two translation units is an ODR violation.
@@ -97,7 +97,7 @@ opt-in for each v1 behaviour.
 
 | # | Decision | Chosen | Rejected, with the measured reason |
 |---|---|---|---|
-| D1 | Where a type's broker policy lives | On the type (member alias, ADL declaration, `SUB0PUB_CONFIGURE`, `Tagged`), else the project header, else the macros | a broker chosen at each use site (sites can silently disagree); a central registry header of every type (dependency inversion) |
+| D1 | Where a type's broker policy lives | On the type (member alias, ADL declaration, `SUB0PUB_CONFIGURE`, `Tagged`), else the project header, else the builtin default | a broker chosen at each use site (sites can silently disagree); a central registry header of every type (dependency inversion); a macro per feature beside the project header (removed: a second way to set the same defaults, and one a single translation unit could set differently) |
 | D2 | What the default costs | The cheapest correct dispatch: direct iteration, no publish context, no `filter()`, no lock | snapshot, `cancel()` and `filter()` always on: 77 / 287 instructions per publish against 38 / 101 for 1 / 8 subscribers |
 | D3 | The hot-path structure | Direct calls to receivers bound at compile time: named by the type (`StaticTo`), or at the composition point (explicit wiring) | policy switches inside the virtual registry, which keep its dispatch model; routing static receivers through the registry: +78 to +86 publish instructions |
 | D4 | The static-to-dynamic boundary | The runtime broker itself: `StaticFirst` on the type, or a `BrokerPort` in an explicit wiring | a second, policy-free slot registry (`DynamicPort`, removed): it duplicated the broker's default configuration, which already costs what a hand-written registry does (+3.5 / -1.5 publish instructions), without its capacity report, snapshot, lock or sessions; a registry in front of the static wiring: publish +37 (GCC) / +10 (Clang) over the hand-written equivalent |

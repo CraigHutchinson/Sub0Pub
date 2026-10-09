@@ -54,7 +54,7 @@ namespace sub0
         void cancel() const noexcept
         {
             static_assert(Config::context != Context::None,
-                          "sub0pub: cancel() needs a publish context: define SUB0PUB_CANCEL, or configure the type with "
+                          "sub0pub: cancel() needs a publish context: configure the type with "
                           "sub0::ThreadLocalContext or sub0::StaticContext");
             broker_.cancel();
         }

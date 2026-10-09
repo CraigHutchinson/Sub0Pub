@@ -14,7 +14,7 @@
 struct LogEntry {
     int level;      // 0=debug, 1=info, 2=warn, 3=error
     const char* msg;
-    using sub0_config = sub0::config<sub0::Filter>; // filter() is opt-in per type (or SUB0PUB_FILTER)
+    using sub0_config = sub0::config<sub0::Filter>; // filter() is opt-in: the type says so
 };
 
 class Logger : public sub0::Publish<LogEntry> {

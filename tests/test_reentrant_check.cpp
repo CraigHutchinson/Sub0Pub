@@ -1,15 +1,12 @@
 /** Tests for SUB0PUB_REENTRANT_CHECK: detection of table changes during a direct-iteration dispatch
- *  (SUB0PUB_REENTRANT_SAFE=false, the default). A nested publish is supported; subscribing or unsubscribing
+ *  (the default). A nested publish is supported; subscribing or unsubscribing
  *  the dispatched type from its own receive() needs Snapshot dispatch.
  *
  * The violation handler is overridden to count instead of abort. Types are unique
  * to this translation unit (anonymous namespace) so their Broker<T> instantiations
  * are not shared with other test files that use the default configuration.
  */
-#ifndef SUB0PUB_THREAD_SAFE // THREAD_SAFE forces the snapshot path; the check is then inactive
-#define SUB0PUB_REENTRANT_SAFE false
 #define SUB0PUB_REENTRANT_CHECK true
-#endif
 
 namespace { int gViolations = 0; }
 #define SUB0PUB_REENTRANT_VIOLATION(what) (void)(what), ++gViolations
@@ -21,7 +18,7 @@ namespace { int gViolations = 0; }
 
 namespace {
 
-constexpr bool cCheckActive = SUB0PUB_REENTRANT_CHECK && !(SUB0PUB_REENTRANT_SAFE || SUB0PUB_THREAD_SAFE);
+constexpr bool cCheckActive = SUB0PUB_REENTRANT_CHECK;
 
 struct ReMsg { int value; };
 struct OtherMsg { int value; };

@@ -44,16 +44,18 @@ SCENARIOS = [
 ]
 SHORT = ["publish 0", "publish 1", "publish 8", "filtered 1", "8, first cancels", "create + destroy"]
 
-V2_OFF = ["-DSUB0PUB_REENTRANT_SAFE=false"]
-V2_FULL = ["-DSUB0PUB_REENTRANT_SAFE=true", "-DSUB0PUB_CANCEL=true", "-DSUB0PUB_FILTER=true"]
+# v2 has no policy macros: a project gives every type an option through its configuration header, and
+# tests/policy/policy.hpp is that header here, with the options chosen by POLICY_* definitions
+V2_OFF = ["-DCMP_V2=1", "-I" + os.path.join(HERE, "..", "policy"), '-DSUB0PUB_CONFIG_HEADER="policy.hpp"']
+V2_FULL = V2_OFF + ["-DPOLICY_SNAPSHOT=1", "-DPOLICY_CONTEXT=1", "-DPOLICY_FILTER=1"]
 # (label, header, macros): cmp_sub0pub.cpp built once per entry
 HEADER_VARIANTS = [
     ("v1.0", "v1", []),
     ("v1.0 ThreadSafe (mutex)", "v1", ["-DSUB0PUB_THREAD_SAFE=true"]),
-    ("v2 default (Direct)", "v2", []),
-    ("v2 default + debug checks", "v2", ["-DSUB0PUB_REENTRANT_CHECK=true", "-DSUB0PUB_THREAD_CHECK=true"]),
+    ("v2 default (Direct)", "v2", V2_OFF),
+    ("v2 default + debug checks", "v2", V2_OFF + ["-DSUB0PUB_REENTRANT_CHECK=true", "-DSUB0PUB_THREAD_CHECK=true"]),
     ("v2 Full (snapshot, cancel, filter)", "v2", V2_FULL),
-    ("v2 ThreadSafe (mutex + snapshot, filter)", "v2", ["-DSUB0PUB_THREAD_SAFE=true", "-DSUB0PUB_FILTER=true"]),
+    ("v2 ThreadSafe (mutex + snapshot, filter)", "v2", V2_OFF + ["-DPOLICY_LOCK=1", "-DPOLICY_FILTER=1"]),
 ]
 HOST_COMPILERS = OrderedDict([("gcc", "g++"), ("clang", "clang++")])
 HOST_FLAGS = ["-std=c++23", "-O2", "-DNDEBUG", "-pthread"]

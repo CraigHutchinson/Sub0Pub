@@ -24,7 +24,7 @@ recorded; both lanes use the same fixture and compiler. `--baseline-standard` an
 | Profile | Includes | Instantiated work |
 |---|---|---|
 | wiring | `sub0pub/wiring.hpp` | Multiple message types and receivers, fan-out, Sink construction/copy/publication |
-| broker | `sub0pub/broker.hpp` | Per-message subscriptions, virtual receive, publisher and registration/teardown |
+| broker | `sub0pub/broker.hpp` | Per-message subscriptions, virtual receive, publisher and subscription/teardown |
 | umbrella | `sub0pub/sub0pub.hpp` | Exactly the wiring work, through the full include surface |
 | layout | `sub0pub/utility/layout.hpp` | Distinct 32-member aggregates and recursive array fingerprints |
 

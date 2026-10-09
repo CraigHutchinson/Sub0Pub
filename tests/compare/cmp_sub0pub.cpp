@@ -1,6 +1,6 @@
 /** v1 vs v2 comparison: the public header, built against either the v1.0 tag's sub0pub.hpp or the current one.
  *
- * compare_versions.py compiles this file once per header and policy macro set, and passes the column label
+ * compare_versions.py compiles this file once per header and policy, and passes the column label
  * as CMP_LABEL. Only API common to v1.0 and v2 is used: Subscribe/Publish, virtual receive()/filter(),
  * Subscribe::cancel() and sub0::publish().
  */
@@ -10,13 +10,16 @@
 
 #include "cmp_common.hpp"
 
-// filter() and cancel() are opt-in in a header that defines SUB0PUB_CANCEL; v1.0 always had them
-#if defined(SUB0PUB_CANCEL)
-#define CMP_FILTER SUB0PUB_FILTER
-#define CMP_CANCEL (SUB0PUB_CANCEL || SUB0PUB_REENTRANT_SAFE || SUB0PUB_THREAD_SAFE)
+// filter() and cancel() are opt-in in v2, where the policy (tests/policy/policy.hpp) says which this build has;
+// v1.0 always had them
+#if defined(CMP_V2)
+#define CMP_FILTER POLICY_FILTER
+#define CMP_CANCEL (POLICY_CONTEXT || POLICY_SNAPSHOT || POLICY_LOCK)
+#define CMP_LOCKED POLICY_LOCK
 #else
 #define CMP_FILTER 1
 #define CMP_CANCEL 1
+#define CMP_LOCKED 0
 #endif
 
 #include <type_traits>
@@ -30,12 +33,12 @@ namespace cmp_types {
 template<class S, class = void> struct has_try_subscribe : std::false_type {};
 template<class S> struct has_try_subscribe<S, std::void_t<decltype(std::declval<S&>().trySubscribe())>> : std::true_type {};
 
-/// v2 locked configurations (SUB0PUB_THREAD_SAFE) register explicitly after construction; v1.0 has no trySubscribe()
+/// v2 locked configurations subscribe explicitly after construction; v1.0 has no trySubscribe()
 template<class Data>
 struct Active : sub0::Subscribe<Data> {
     Active() noexcept
     {
-        if constexpr (SUB0PUB_THREAD_SAFE && has_try_subscribe<sub0::Subscribe<Data>>::value)
+        if constexpr (CMP_LOCKED && has_try_subscribe<sub0::Subscribe<Data>>::value)
             this->trySubscribe();
     }
 };

@@ -1,4 +1,4 @@
-/** Translation units may give their own (TU-local) message types different SUB0PUB_* policy macros.
+/** Translation units may give their own (TU-local) message types different defaults.
  *  `config<Opts...>` must then name a different type in each, or the linker merges one TU's definitions
  *  (e.g. its lock guard) into the other. Built twice, once per link order; a merge shows as a hang or a failure.
  */

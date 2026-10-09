@@ -2,7 +2,6 @@
  *  and 15) and a logger (xors word 7 with its count), by const reference.
  *  The runtime broker at its leanest macros. */
 // Today's API at its leanest settings (fair comparison): direct dispatch, no assertion checks
-#define SUB0PUB_REENTRANT_SAFE false
 #define SUB0PUB_ASSERT false
 #include "collapse_case.hpp"
 #include "sub0pub/sub0pub.hpp"

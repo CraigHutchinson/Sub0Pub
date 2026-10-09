@@ -36,6 +36,32 @@ into the broker like any publisher, so a wiring whose runtime side may be empty 
   receivers there are with `sub0::receiverCount<Data>(publisher)` and decide for itself;
 - to keep the old behaviour everywhere, define `SUB0PUB_NO_RECEIVERS_CHECK=false`.
 
+### The policy macros are removed: defaults come from the project header
+
+`SUB0PUB_REENTRANT_SAFE`, `SUB0PUB_CANCEL`, `SUB0PUB_FILTER` and `SUB0PUB_THREAD_SAFE` set an option for every `Data`
+type. The project header already did that, so there were two ways to say the same thing, and the macro form could
+differ between translation units. They no longer exist, and neither does `sub0::StdMutexLock`.
+
+**Action:** Set the option on the types that need it, or once for every type in the header that
+`SUB0PUB_CONFIG_HEADER` names:
+
+| Macro | Option |
+|---|---|
+| `SUB0PUB_REENTRANT_SAFE` | `sub0::Snapshot` |
+| `SUB0PUB_CANCEL` | `sub0::ThreadLocalContext` (or `sub0::StaticContext`) |
+| `SUB0PUB_FILTER` | `sub0::Filter` |
+| `SUB0PUB_THREAD_SAFE` | `sub0::LockWith<std::mutex>` |
+
+```cpp
+// project_sub0pub.hpp, built with -DSUB0PUB_CONFIG_HEADER="project_sub0pub.hpp"
+struct ProjectDefaults : sub0::with<sub0::Builtin, sub0::Snapshot, sub0::Filter> {};
+#define SUB0PUB_DEFAULT_CONFIG ProjectDefaults
+```
+
+A definition of one of the removed macros is a compile error, including a definition set to `false`. Remove it
+from your build flags and configure the required options explicitly. This prevents an old locking or snapshot
+setting from silently losing its effect.
+
 ### `disconnect()` renamed to `unsubscribe()`
 
 `Subscribe<Data>::disconnect()` was the counterpart of `trySubscribe()` and `isSubscribed()` under another word. It
@@ -267,9 +293,9 @@ This removes the deleting-destructor code and the `operator delete` link depende
 - Mark leaf subscriber classes `final` when they are destroyed through a pointer to their own type (`delete`, `std::unique_ptr`) or held in `std::optional`. Otherwise gcc (`-Wdelete-non-virtual-dtor`) and clang (`-Wdelete-non-abstract-non-virtual-dtor`) warn.
 - Remove `override` from subscriber destructors.
 
-### `SUB0PUB_THREAD_SAFE` subscribers subscribe explicitly
+### Locked subscribers subscribe explicitly
 
-With a lock (`SUB0PUB_THREAD_SAFE`, or `sub0::LockWith<L>`), the `Subscribe<Data>` constructor no longer subscribes the subscriber. Subscribing there would let another thread call `receive()` before the derived class is constructed. After `unsubscribe()` returns, `receive()` is not called again on any thread.
+With a lock (`sub0::LockWith<L>`), the `Subscribe<Data>` constructor no longer subscribes the subscriber. Subscribing there would let another thread call `receive()` before the derived class is constructed. After `unsubscribe()` returns, `receive()` is not called again on any thread.
 
 **Action:** In the most-derived subscriber:
 - call `trySubscribe()` at the end of the constructor;
@@ -395,15 +421,15 @@ The member function `Publish<Data>::publish(data)` is no longer public. Use the 
 ### The default is the cheapest dispatch; costly features are opt-in and detected
 
 A type without its own configuration dispatches with the cheapest correct loop: direct iteration over the table, no
-publish context, no `filter()`, no lock. Each feature that costs something is opt-in, per type or for every type.
+publish context, no `filter()`, no lock. Each feature that costs something is opt-in, per type, or for every type in the project header.
 Using one without opting in is caught at compile time or by a debug-build check:
 
-| Feature | Opt in for every type | Per type | Without it |
-|---|---|---|---|
-| Subscribe or unsubscribe a type from its own `receive()` (including destroying the subscriber) | `SUB0PUB_REENTRANT_SAFE` | `sub0::Snapshot` | Reported in debug builds (`SUB0PUB_REENTRANT_CHECK`) |
-| `cancel()`, `Route`, publish reports | `SUB0PUB_CANCEL` | `sub0::ThreadLocalContext` (or `StaticContext`) | Compile error naming the opt-in |
-| `filter()` | `SUB0PUB_FILTER` | `sub0::Filter` | Compile error: a subscriber declaring `filter()` does not compile, even without `override` |
-| Publishing or subscribing from several threads at once | `SUB0PUB_THREAD_SAFE` | `sub0::LockWith<L>` | Reported in debug builds (`SUB0PUB_THREAD_CHECK`) |
+| Feature | Option | Without it |
+|---|---|---|
+| Subscribe or unsubscribe a type from its own `receive()` (including destroying the subscriber) | `sub0::Snapshot` | Reported in debug builds (`SUB0PUB_REENTRANT_CHECK`) |
+| `cancel()`, `Route`, publish reports | `sub0::ThreadLocalContext` (or `StaticContext`) | Compile error naming the opt-in |
+| `filter()` | `sub0::Filter` | Compile error: a subscriber declaring `filter()` does not compile, even without `override` |
+| Publishing or subscribing from several threads at once | `sub0::LockWith<L>` | Reported in debug builds (`SUB0PUB_THREAD_CHECK`) |
 
 Earlier v2 builds defaulted to snapshot dispatch with `cancel()` and `filter()` always available.
 
@@ -411,14 +437,14 @@ A nested publish of the same type from `receive()` is supported under every disp
 longer reports it; it reports only a change to the table being dispatched.
 
 **Action:** Build in debug and fix what is reported:
-- add `SUB0PUB_FILTER` or `sub0::Filter` where `filter()` is overridden;
-- add `SUB0PUB_CANCEL` or `sub0::ThreadLocalContext` where `cancel()` is called;
-- add `SUB0PUB_REENTRANT_SAFE` or `sub0::Snapshot` where a subscriber of a type is created or destroyed, or its
-  `Domain` closed, from that type's `receive()` or `filter()`;
-- add `SUB0PUB_THREAD_SAFE` or `sub0::LockWith<L>` where a type is used from several threads at once.
+- add `sub0::Filter` where `filter()` is overridden;
+- add `sub0::ThreadLocalContext` where `cancel()` is called;
+- add `sub0::Snapshot` where a subscriber of a type is created or destroyed, or its `Domain` closed, from that
+  type's `receive()` or `filter()`;
+- add `sub0::LockWith<L>` where a type is used from several threads at once.
 
-To restore the earlier v2 behaviour for every type, define `SUB0PUB_REENTRANT_SAFE`, `SUB0PUB_CANCEL` and
-`SUB0PUB_FILTER` as `true`.
+To restore the earlier v2 behaviour for every type, give the project default `sub0::Snapshot` and `sub0::Filter`
+(see "The policy macros are removed" above).
 
 ### Unsubscribing during a dispatch is safe with Snapshot dispatch
 
@@ -471,17 +497,10 @@ The commented-out `SUB0_BROKERSTATE` macro has been removed. C++17 `inline stati
 
 The fixed `cMaxSubscriptions = 8` is now configurable via `#define SUB0PUB_MAX_SUBSCRIPTIONS N` before including the header.
 
-### `SUB0PUB_THREAD_SAFE` (new in v1.0, carried to v2)
+### `SUB0PUB_THREAD_SAFE` (v1.0) becomes `sub0::LockWith<L>`
 
-Define `SUB0PUB_THREAD_SAFE true` to enable mutex-guarded subscribe/unsubscribe/publish operations.
-
-### `SUB0PUB_REENTRANT_SAFE` (new in v2)
-
-Default `false`. With `true`, `publish()` snapshot-copies the subscriber list before dispatching, so a subscriber may subscribe or unsubscribe (or destroy) a subscriber of the same type from within `receive()`. It also gives every type a publish context (`cancel()`).
-
-### `SUB0PUB_CANCEL`, `SUB0PUB_FILTER` (new in v2)
-
-Default `false`. `SUB0PUB_CANCEL` gives every type a publish context: `cancel()`, `Route` and publish reports. `SUB0PUB_FILTER` gives every subscriber a `filter()`. Per type: `sub0::ThreadLocalContext`, `sub0::Filter`.
+v1.0's macro guarded every type with a `std::mutex`. In v2 a lock is an option of the types that need one, with any
+type that has `lock()` and `unlock()`.
 
 ### `SUB0PUB_THREAD_CHECK` and `SUB0PUB_THREAD_VIOLATION` (new in v2)
 
@@ -491,7 +510,7 @@ Without a lock, a `Data` type must not be published, subscribed or unsubscribed 
 
 Without snapshot dispatch, a `receive()` that subscribes or unsubscribes (or destroys) a subscriber of its own `Data` type on the same thread is unsupported. `SUB0PUB_REENTRANT_CHECK` detects it and calls `SUB0PUB_REENTRANT_VIOLATION(what)`, which by default asserts and then aborts. A nested publish is supported and not reported. The check defaults to on in debug builds (`SUB0PUB_ASSERT` without `NDEBUG`) and off in release builds; it costs a `thread_local` frame per publish. Define `SUB0PUB_REENTRANT_CHECK true` to keep it in release. It has no effect with snapshot dispatch.
 
-**Action:** A debug build that hits the abort relies on unsupported behaviour. Enable `SUB0PUB_REENTRANT_SAFE` (or `sub0::Snapshot` for the type) or restructure the subscriber.
+**Action:** A debug build that hits the abort relies on unsupported behaviour. Configure the type with `sub0::Snapshot`, or restructure the subscriber.
 
 ### Configuration macros for per-type configuration (new in v2)
 
@@ -591,9 +610,9 @@ operation under callgrind, the repository's regression bar, not wall-clock time.
 | **v1.0** | 60 (60) | 221 (214) | 60 (57) | 48 (31) |
 | v2 default | 34 (31) | 104 (101) | n/a (opt-in) | 47 (35) |
 | v2 default, debug build checks | 60 (59) | 144 (150) | n/a (opt-in) | 91 (79) |
-| v2 Full (`SUB0PUB_REENTRANT_SAFE`, `SUB0PUB_CANCEL`, `SUB0PUB_FILTER`) | 80 (73) | 290 (262) | 102 (91) | 54 (41) |
+| v2 Full (`Snapshot`, a publish context, `Filter` for every type) | 80 (73) | 290 (262) | 102 (91) | 54 (41) |
 | v1.0 ThreadSafe | 130 (133) | 291 (287) | 130 (130) | 204 (192) |
-| v2 ThreadSafe (with `SUB0PUB_FILTER`) | 260 (266) | 554 (516) | 301 (281) | 293 (290) |
+| v2 ThreadSafe (`LockWith<std::mutex>`, `Filter`) | 260 (266) | 554 (516) | 301 (281) | 293 (290) |
 | v2 static wiring (`StaticWiring`, `wire()`) | 8–9 (7–9) | 37 (37–40) | 15–16 (8–10) | n/a |
 | hand-written direct calls | 9 (7) | 37 (37) | 15 (8) | n/a |
 
@@ -622,12 +641,11 @@ operation under callgrind, the repository's regression bar, not wall-clock time.
   delivery without a use-after-free. v1.0 had no such guarantee.
 - **Debug builds pay for detection.** Their checks cost a frame per publish and an atomic per operation, which is
   about 26 to 40 instructions per publish on gcc. Release builds (`NDEBUG`) have none.
-- **`SUB0PUB_THREAD_SAFE` costs about twice v1.0's.** v1.0 is 130 and 291 instructions for 1 and 8 subscribers; v2 is
+- **A `std::mutex` lock costs about twice v1.0's `SUB0PUB_THREAD_SAFE`.** v1.0 is 130 and 291 instructions for 1 and 8 subscribers; v2 is
   260 and 554.
   - It buys teardown that is safe during concurrent delivery. v1.0's ThreadSafe mode could call a subscriber after it
     was destroyed.
   - A lighter lock than `std::mutex`, through `LockWith<L>`, closes most of the gap: a spin lock measures 134 and 421.
-  - `SUB0PUB_THREAD_SAFE` still does not build on `arm-none-eabi`, which has no `std::mutex`. Use `LockWith<L>` with
-    the RTOS lock.
+  - `arm-none-eabi` has no `std::mutex`: use `LockWith<L>` with the RTOS lock there.
 - **Where the receivers are known when the application is composed, static wiring costs exactly what hand-written
   calls cost.** That is about 6 times fewer instructions than v1.0 for 8 subscribers, and 12 bytes of code.

@@ -3,7 +3,6 @@
  *  controller, logger, actuator, so Sample reaches controller then logger, Command controller then actuator.
  *  The runtime broker at its leanest macros. Controller subscribes to both types (two bases). */
 // Today's API at its leanest settings (fair comparison): direct dispatch, no assertion checks
-#define SUB0PUB_REENTRANT_SAFE false
 #define SUB0PUB_ASSERT false
 #include "collapse_case.hpp"
 #include "sub0pub/sub0pub.hpp"

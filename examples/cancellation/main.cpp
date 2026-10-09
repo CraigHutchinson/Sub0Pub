@@ -11,7 +11,7 @@
 #include "sub0pub/sub0pub.hpp"
 #include <cstdio>
 
-// cancel() needs a publish context: opt in per type (or SUB0PUB_CANCEL for every type)
+// cancel() needs a publish context: the type opts in
 struct Command { int id; using sub0_config = sub0::config<sub0::ThreadLocalContext>; };
 
 class CommandSource : public sub0::Publish<Command> {

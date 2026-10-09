@@ -11,3 +11,8 @@ foreach(name cmp_sub0pub cmp_config cmp_static cmp_mixed)
     target_link_libraries(Sub0Pub_Compare_${name} PRIVATE Sub0Pub::Sub0Pub)
     target_include_directories(Sub0Pub_Compare_${name} PRIVATE ${SUB0PUB_COMPARE_INCLUDES})
 endforeach()
+
+# The standalone target uses the current API with the full policy, just like the scripted v2 Full lane.
+target_include_directories(Sub0Pub_Compare_cmp_sub0pub PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../policy")
+target_compile_definitions(Sub0Pub_Compare_cmp_sub0pub PRIVATE
+    CMP_V2=1 SUB0PUB_CONFIG_HEADER="policy.hpp" POLICY_SNAPSHOT=1 POLICY_CONTEXT=1 POLICY_FILTER=1)

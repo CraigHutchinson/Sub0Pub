@@ -1,7 +1,6 @@
 /** Case: 32 receivers of one type. The runtime broker (Subscribe/Publish) at its leanest macros,
  *  with a 32-entry subscription table. */
 // Today's API at its leanest settings (fair comparison): direct dispatch, no assertion checks
-#define SUB0PUB_REENTRANT_SAFE false
 #define SUB0PUB_ASSERT false
 #define SUB0PUB_MAX_SUBSCRIPTIONS 32
 #include "collapse_case.hpp"

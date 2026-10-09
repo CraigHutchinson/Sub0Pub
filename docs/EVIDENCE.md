@@ -104,7 +104,7 @@ hand-written runtime binding and `Sink` with a hand-written context pointer plus
 | Zero receivers | = / = / = | = |
 | One receiver | = / = / = ¹ | +11 / +23; +416 B |
 | Multiple receivers, repeated types | = / = / = ¹ | +56 / +46; +484 B |
-| Default and runtime filters | = / = / = ¹ | with `SUB0PUB_FILTER`: +67.5 / +55.5; +544 B |
+| Default and runtime filters | = / = / = ¹ | with `sub0::Filter`: +67.5 / +55.5; +544 B |
 | Two independent domains | = / = / = ¹; one publisher over both: `StaticWiring` =, `wire` = except Clang observable +3 (K23) | `Domain`: +71 / +63; +2232 B |
 | Transport endpoint (egress and ingress) | = / = / = ¹; two links of one transport type: `StaticWiring` =, `wire` +8 / +10 unless each link has its own type (K18) | `Route`: +116 / +113; +716 B and TLS |
 | Dynamic subscriptions | not applicable: runtime subscribers are the broker's (`StaticFirst`, `BrokerPort`) | against a hand-written registry with the same features: +3.5 / -1.5; +32 B (v1.0: +19 / +37) |

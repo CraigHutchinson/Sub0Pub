@@ -28,7 +28,8 @@ target_include_directories(Sub0Pub_Tests PRIVATE
 add_test(NAME Sub0Pub_Tests COMMAND Sub0Pub_Tests)
 
 # Performance benchmarks are built explicitly by the measurement job, not by routine builds or ctest.
-# The core benchmark is built once per macro policy so policies are compared on identical scenarios.
+# The core benchmark is built once per policy (tests/policy/policy.hpp, named as the project's configuration header)
+# so policies are compared on identical scenarios.
 function(sub0pub_add_bench name source)
     add_executable(${name} EXCLUDE_FROM_ALL ${source})
     target_link_libraries(${name} PRIVATE Sub0Pub::Sub0Pub)
@@ -38,8 +39,12 @@ endfunction()
 
 sub0pub_add_bench(Sub0Pub_Bench            bench/bench_core.cpp SUB0PUB_REENTRANT_CHECK=false)
 sub0pub_add_bench(Sub0Pub_Bench_Checked    bench/bench_core.cpp SUB0PUB_REENTRANT_CHECK=true)
-sub0pub_add_bench(Sub0Pub_Bench_Full       bench/bench_core.cpp SUB0PUB_REENTRANT_SAFE=true SUB0PUB_CANCEL=true SUB0PUB_FILTER=true)
-sub0pub_add_bench(Sub0Pub_Bench_ThreadSafe bench/bench_core.cpp SUB0PUB_THREAD_SAFE=true SUB0PUB_FILTER=true)
+sub0pub_add_bench(Sub0Pub_Bench_Full       bench/bench_core.cpp POLICY_SNAPSHOT=1 POLICY_CONTEXT=1 POLICY_FILTER=1)
+sub0pub_add_bench(Sub0Pub_Bench_ThreadSafe bench/bench_core.cpp POLICY_LOCK=1 POLICY_FILTER=1)
+foreach(bench Sub0Pub_Bench Sub0Pub_Bench_Checked Sub0Pub_Bench_Full Sub0Pub_Bench_ThreadSafe)
+    target_include_directories(${bench} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/policy")
+    target_compile_definitions(${bench} PRIVATE SUB0PUB_CONFIG_HEADER="policy.hpp")
+endforeach()
 sub0pub_add_bench(Sub0Pub_Bench_Ipc        bench/bench_ipc.cpp)
 sub0pub_add_bench(Sub0Pub_Bench_Axes       bench/bench_axes.cpp) # each configuration option alone (docs/DESIGN.md)
 

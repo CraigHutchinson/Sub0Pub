@@ -105,7 +105,7 @@ namespace sub0
         {
             using Ctx = detail::PublishContext<Data, detail::frameContext<config_t<Data>>>;
             static_assert(config_t<Data>::context != Context::None,
-                          "sub0pub: cancel() needs a publish context: define SUB0PUB_CANCEL, or configure the type with "
+                          "sub0pub: cancel() needs a publish context: configure the type with "
                           "sub0::ThreadLocalContext or sub0::StaticContext");
             if constexpr (Ctx::enabled)
                 for (detail::Frame<Data>* f = Ctx::top(); f; f = f->previous)

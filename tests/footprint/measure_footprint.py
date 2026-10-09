@@ -32,12 +32,16 @@ SCENARIOS = OrderedDict([
     ("fp_ipc", "1 type forwarded to StreamSerializer"),
 ])
 
+# A project gives every type an option through its configuration header; tests/policy/policy.hpp is that header
+# here, with the options chosen by POLICY_* definitions
+POLICY = ["-I" + os.path.join(HERE, "..", "policy"), '-DSUB0PUB_CONFIG_HEADER="policy.hpp"']
+
 POLICIES = OrderedDict([
     ("Direct (default)", ["-DNDEBUG"]),
     ("Direct + check", ["-DNDEBUG", "-DSUB0PUB_REENTRANT_CHECK=true"]),
-    ("Full (snapshot, cancel, filter)", ["-DNDEBUG", "-DSUB0PUB_REENTRANT_SAFE=true", "-DSUB0PUB_CANCEL=true",
-                                         "-DSUB0PUB_FILTER=true"]),
-    ("ThreadSafe", ["-DNDEBUG", "-DSUB0PUB_THREAD_SAFE=true"]),
+    ("Full (snapshot, cancel, filter)", ["-DNDEBUG", *POLICY, "-DPOLICY_SNAPSHOT=1", "-DPOLICY_CONTEXT=1",
+                                         "-DPOLICY_FILTER=1"]),
+    ("ThreadSafe", ["-DNDEBUG", *POLICY, "-DPOLICY_LOCK=1"]),
 ])
 
 AXIS_DIR = os.path.join(HERE, "axis")
