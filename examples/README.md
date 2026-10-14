@@ -55,10 +55,10 @@ Not sure whether a type's receivers are fixed, or why a message is not arriving?
 | Report transport rejection while preserving local delivery | [route_reports.cpp](route_reports.cpp) |
 | Serialize typed messages and replay them from a byte buffer | [ipc_pipe](ipc_pipe/main.cpp) |
 | Inspect message layouts before exchanging raw bytes | [layout_check](layout_check/main.cpp) |
-| Investigate a shared-library / DLL boundary (currently disabled) | [cross_module](cross_module/main.cpp), [status](cross_module/README.md) |
 
 The focused recipes (including `audit_findings`) and both `promote_to_static` builds return a failure code when their checks fail, including
 with `NDEBUG`. The minimal example also checks its result; the other enabled introductory examples print their story.
-These are teaching examples, not performance evidence; cross-module (DLL) use is not supported yet.
+These are teaching examples, not performance evidence; shared-library (DLL) use is not supported yet (K35 in
+[the design](../docs/DESIGN.md#known-limitations)).
 See [the design](../docs/DESIGN.md) for the decisions behind the tiers, and [migration](../MIGRATION.md) for v1 users.
 New examples follow the [sample-header convention](../STYLE_GUIDE.md#examples-a-source-first-reading-guide).

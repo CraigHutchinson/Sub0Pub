@@ -112,7 +112,7 @@ public:
 };
 
 class AllDeserializer : public sub0::StreamDeserializer<>
-                      , public sub0::ForwardPublishAll<AllDeserializer, int, float>
+                      , public sub0::ForwardPublishAll<AllDeserializer, sub0::Types<int, float>> // a named list, expanded
 {
 public:
     AllDeserializer(sub0::IStream& in) : sub0::StreamDeserializer<>(in) {}

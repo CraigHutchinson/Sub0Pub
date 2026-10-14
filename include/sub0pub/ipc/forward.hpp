@@ -1,5 +1,5 @@
 /** Sub0Pub: Bridge between the runtime broker and IPC: ForwardSubscribe, ForwardPublish and their *All forms
- * @remark Part of Sub0Pub (https://github.com/BareCpper/Sub0Pub), MIT License: see LICENSE.md.
+ * @remark Part of Sub0Pub (https://github.com/CraigHutchinson/Sub0Pub), MIT License: see LICENSE.md.
  *         Included by the umbrella header <sub0pub/sub0pub.hpp>.
  */
 #ifndef CROG_SUB0PUB_IPC_FORWARD_HPP
@@ -8,6 +8,7 @@
 #include "sub0pub/broker/subscribe.hpp"
 #include "sub0pub/broker/publish.hpp"
 #include "sub0pub/ipc/binary_writer.hpp"
+#include "sub0pub/types.hpp"
 #include <cstdint>
 #include <tuple>
 
@@ -76,26 +77,53 @@ namespace sub0
         Data buffer_ = {}; ///< Data buffer to be published
     };
 
-    /** Forward receive() to Target type convertible from this for all Datas types listed
+    namespace detail
+    {
+        template<class T> struct IsTuple : std::false_type {};
+        template<class... Ts> struct IsTuple<std::tuple<Ts...>> : std::true_type {};
+
+        /// The forms below took a std::tuple as a list until v2.0: reject one, so such code does not compile to a
+        /// forwarder of the tuple type instead
+        template<class... Datas>
+        inline constexpr bool cNoTupleList = !(IsTuple<Datas>::value || ...);
+    }
+
+    /** Forward receive() to the Target for each message type listed (ForwardSubscribe<Data, Target> per type)
      * @remark The call is made with Data type allowing for templated receive<>() handler functions @see `class StreamSerializer` for example `template receive<>()`
-     * @note This uses the CRTP(curiously recurring template pattern) to forward to a target type derived from ForwardSubscribe<..>
-     * @tparam  Data  Data type which will be forwarded to the derived Target implementation
-     * @tparam  Target  Type of derived class which implements a function of type Target::receive<>( const Data& data ) via base inheritance or direct member
+     * @tparam  SubscriberTarget  CRTP type of the derived class, which implements Target::receive<>( const Data& data )
+     * @tparam  Datas  Message types, or sub0::Types<...> lists of them, expanded in place
      */
-    template< typename SubscriberTarget, typename... Datas >
-    class ForwardSubscribeAll : public ForwardSubscribe<Datas, SubscriberTarget>... {};
-
     template<typename SubscriberTarget, typename... Datas>
-    class ForwardSubscribeAll<SubscriberTarget, std::tuple<Datas...> > : public ForwardSubscribe<Datas, SubscriberTarget>... {};
+    class ForwardSubscribeAll : public ForwardSubscribe<Datas, SubscriberTarget>...
+    {
+        static_assert(detail::cNoTupleList<Datas...>, "sub0pub: pass a list of message types as sub0::Types<...>; "
+                      "a std::tuple is not a list here (ForwardSubscribe<std::tuple<...>, Target> forwards a tuple message)");
+    };
 
+    /// ForwardSubscribeAll with a sub0::Types list among its message types: the list's members, in its place
+    template<typename SubscriberTarget, typename... Datas>
+        requires detail::cAnyTypes<Datas...>
+    class ForwardSubscribeAll<SubscriberTarget, Datas...>
+        : public detail::Apply<::sub0::ForwardSubscribeAll, typename detail::Flatten<Datas...>::type, SubscriberTarget>::type
+    {};
 
-    /** Register publication of data with a provider instance
-    */
-    template< typename DataProvider, typename... Datas >
-    class ForwardPublishAll : public ForwardPublish<Datas, DataProvider>... {};
-
+    /** Publish each message type listed from the DataProvider (ForwardPublish<Data, DataProvider> per type)
+     * @tparam  DataProvider  CRTP type of the derived class, which implements setDataPublisher( Data&, IPublish& )
+     * @tparam  Datas  Message types, or sub0::Types<...> lists of them, expanded in place
+     */
     template<typename DataProvider, typename... Datas>
-    class ForwardPublishAll<DataProvider, std::tuple<Datas...> > : public ForwardPublish<Datas, DataProvider>... {};
+    class ForwardPublishAll : public ForwardPublish<Datas, DataProvider>...
+    {
+        static_assert(detail::cNoTupleList<Datas...>, "sub0pub: pass a list of message types as sub0::Types<...>; "
+                      "a std::tuple is not a list here (ForwardPublish<std::tuple<...>, Provider> publishes a tuple message)");
+    };
+
+    /// ForwardPublishAll with a sub0::Types list among its message types: the list's members, in its place
+    template<typename DataProvider, typename... Datas>
+        requires detail::cAnyTypes<Datas...>
+    class ForwardPublishAll<DataProvider, Datas...>
+        : public detail::Apply<::sub0::ForwardPublishAll, typename detail::Flatten<Datas...>::type, DataProvider>::type
+    {};
 } // END: sub0
 
 #endif // CROG_SUB0PUB_IPC_FORWARD_HPP

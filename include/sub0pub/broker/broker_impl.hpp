@@ -1,5 +1,5 @@
 /** Sub0Pub: The library broker (BrokerImpl) and the subscriber interface it dispatches to
- * @remark Part of Sub0Pub (https://github.com/BareCpper/Sub0Pub), MIT License: see LICENSE.md.
+ * @remark Part of Sub0Pub (https://github.com/CraigHutchinson/Sub0Pub), MIT License: see LICENSE.md.
  *         Included by the umbrella header <sub0pub/sub0pub.hpp>.
  */
 #ifndef CROG_SUB0PUB_BROKER_BROKER_IMPL_HPP
