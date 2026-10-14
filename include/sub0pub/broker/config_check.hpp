@@ -1,5 +1,5 @@
 /** Sub0Pub: Debug-build detection of a Data type resolved to different configurations (SUB0PUB_CHECK_CONFIG)
- * @remark Part of Sub0Pub (https://github.com/BareCpper/Sub0Pub), MIT License: see LICENSE.md.
+ * @remark Part of Sub0Pub (https://github.com/CraigHutchinson/Sub0Pub), MIT License: see LICENSE.md.
  *         Included by the umbrella header <sub0pub/sub0pub.hpp>.
  */
 #ifndef CROG_SUB0PUB_BROKER_CONFIG_CHECK_HPP

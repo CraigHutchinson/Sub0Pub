@@ -46,6 +46,11 @@ fixed capacity (8 by default); check `isSubscribed()` when it matters that the s
 available, `trySubscribe()` can retry. See [basic pub/sub](../examples/basic_pubsub/main.cpp) and
 [dynamic lifetime](../examples/dynamic_lifetime.cpp).
 
+One subscriber can receive several message types: derive from `SubscribeAll<A, B>`, with one `receive()` per type.
+To name a set of types once and use it in several places, make it a list, `using HubMessages = sub0::Types<A, B>;`,
+and write `SubscribeAll<HubMessages>`; lists and single types combine. Every other argument is one message type, a
+`std::tuple` included. See [multi-type](../examples/multi_type/main.cpp).
+
 `receive()` needs no `override`. A signature that does not match is a compile error either way (the base's
 `receive` is pure), and without the keyword the same class serves the type at step 2, where the base has nothing to
 override.

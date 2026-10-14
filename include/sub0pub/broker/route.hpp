@@ -1,5 +1,5 @@
 /** Sub0Pub: Route<Data, Transport>: a transport endpoint bound to a table (egress, ingress, split horizon)
- * @remark Part of Sub0Pub (https://github.com/BareCpper/Sub0Pub), MIT License: see LICENSE.md.
+ * @remark Part of Sub0Pub (https://github.com/CraigHutchinson/Sub0Pub), MIT License: see LICENSE.md.
  *         Included by the umbrella header <sub0pub/sub0pub.hpp>.
  */
 #ifndef CROG_SUB0PUB_BROKER_ROUTE_HPP

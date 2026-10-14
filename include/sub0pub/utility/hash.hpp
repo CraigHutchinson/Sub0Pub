@@ -1,5 +1,5 @@
 /** Sub0Pub: Compile-time hashing and type identity: FourCC, hash(), typeHash<T>()
- * @remark Part of Sub0Pub (https://github.com/BareCpper/Sub0Pub), MIT License: see LICENSE.md.
+ * @remark Part of Sub0Pub (https://github.com/CraigHutchinson/Sub0Pub), MIT License: see LICENSE.md.
  *         Included by the umbrella header <sub0pub/sub0pub.hpp>.
  */
 #ifndef CROG_SUB0PUB_UTILITY_HASH_HPP

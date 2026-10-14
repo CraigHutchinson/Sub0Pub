@@ -165,11 +165,12 @@ refer to them; resolved limitations leave gaps so references to the remaining it
 | K32 | Topology belongs to the type, not to a publisher: a publisher cannot choose another delivery (a queue, an asynchronous fan-out) for a type it publishes from a hot loop | a second type, through `Tagged<Payload, Tag>` | publisher-side topology, when a real case needs it |
 | K33 | The audit describes one run and has blind spots: explicit wirings are not recorded; a `Scoped` type's sessions share one ledger; a subscriber counts as reached when delivery gets to it, whatever `filter()` or `cancel()` then do; 16 receivers and 8 publisher classes are remembered per type; a subscriber of a `StaticTo` type that its list does not name is shown by address only, and so is every runtime subscriber without RTTI | a finding it cannot make, never a wrong program: the audit changes no behaviour | per-`Domain` ledgers; recording `wire()` and `StaticWiring` |
 | K34 | The stream serialisation layer (`sub0pub/ipc/`) uses its own virtual `IStream` / `OStream` beside `SUB0PUB_STD`, CRTP `ForwardSubscribe` / `ForwardPublish` whose name collides with the wiring's unrelated `Forward<Transport>`, a reader that publishes a frame only after its postfix, and raw in-memory payloads | two meanings of "forward" to learn; one virtual call per stream operation | a redesign of the serialisation API against the converged vocabulary, with its own evidence |
+| K35 | Publishing across a shared-library (DLL) boundary is not supported: each module may hold its own subscription tables and thread-local contexts, so publishers and subscribers in different modules can silently miss each other | keep a message type's publishers and subscribers in one module, or bridge modules explicitly | decide where a type's table lives and how both sides reach it (an application-owned `Domain` passed across is the candidate, not inline globals); test both directions, several subscribing modules and unloading on Windows, Linux and macOS; measure against direct cross-module calls. `Sink<T>` alone gives neither lifetime safety nor a stable ABI |
 | K26 | Under `Direct` dispatch, a table change during that table's own dispatch is detected only by the debug-build check | a release build may skip a subscriber or call one added during it | opt in with `Snapshot` for types that change their table from their own callbacks |
 
 Not yet measured: throughput under lock contention and teardown latency, embedded stack use (Snapshot copies the
-table to the stack, so size `Capacity` to the real bound), and cross-module (DLL / shared library) use, which is not
-supported yet ([examples/cross_module](../examples/cross_module/README.md)).
+table to the stack, so size `Capacity` to the real bound), and shared-library (DLL) use, which is not supported
+yet (K35).
 
 ## Language baseline
 

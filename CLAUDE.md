@@ -31,7 +31,7 @@ serial clean-object measurements.
 
 ### Migration Document
 Any commit that changes the public API surface in `include/sub0pub/` (the umbrella `sub0pub.hpp` and the headers it includes) MUST update `MIGRATION.md` with the breaking change details. The public API includes:
-- `sub0::Subscribe`, `sub0::Publish`, `sub0::SubscribeAll`
+- `sub0::Subscribe`, `sub0::Publish`, `sub0::SubscribeAll`, `sub0::Types`
 - `sub0::ForwardSubscribe`, `sub0::ForwardPublish`, `sub0::ForwardSubscribeAll`, `sub0::ForwardPublishAll`
 - `sub0::StreamSerializer`, `sub0::StreamDeserializer`
 - Free functions: `sub0::publish()`, `sub0::cancel()`, `sub0::receiverCount()`, `sub0::auditFindings()`, `sub0::auditReport()`
