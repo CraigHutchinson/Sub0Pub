@@ -116,7 +116,7 @@ in the text that describes it.
 
 ## Examples: a source-first reading guide
 
-Every C++ sample under `examples/`, including retained/disabled samples, MUST start with a `/** ... */`
+Every C++ sample under `examples/` MUST start with a `/** ... */`
 header before includes or pragmas. The entry source is a standalone crib: a developer should be able to
 judge its relevance and follow its story without opening a README or the library headers.
 

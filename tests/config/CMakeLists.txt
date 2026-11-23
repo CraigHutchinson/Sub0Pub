@@ -57,6 +57,7 @@ endfunction()
 
 sub0pub_default_compile_fail(cf_config_filter_not_enabled   "conflicting return type|different return type|overrides a 'final'|return type differs|C2555")
 sub0pub_default_compile_fail(cf_config_cancel_default       "needs a publish context")
+sub0pub_default_compile_fail(cf_config_tuple_list           "pass a list of message types as sub0::Types")
 
 # Removed policy flags must fail rather than silently disabling an application's requested safety policy.
 foreach(policy REENTRANT_SAFE CANCEL FILTER THREAD_SAFE)

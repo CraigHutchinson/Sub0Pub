@@ -36,6 +36,27 @@ into the broker like any publisher, so a wiring whose runtime side may be empty 
   receivers there are with `sub0::receiverCount<Data>(publisher)` and decide for itself;
 - to keep the old behaviour everywhere, define `SUB0PUB_NO_RECEIVERS_CHECK=false`.
 
+### A `std::tuple` is a message type; a list of message types is `sub0::Types<...>`
+
+`SubscribeAll`, `ForwardSubscribeAll` and `ForwardPublishAll` read a `std::tuple` argument as a list of message types,
+so a tuple could not be subscribed to through them, and `SubscribeAll<std::tuple<A, B>, C>` did not compile. A list
+now has its own name, `sub0::Types<...>`, expanded in place wherever it appears, nested lists included. A
+`std::tuple` argument is one message type, like any other.
+
+```cpp
+// before
+class Logger : public sub0::SubscribeAll<std::tuple<Reading, Fault>> { ... };
+
+// after
+using StationMessages = sub0::Types<Reading, Fault>;
+class Logger : public sub0::SubscribeAll<StationMessages> { ... };
+class Recorder : public sub0::SubscribeAll<StationMessages, std::tuple<int, int>> { ... }; // + a tuple message
+```
+
+**Action:** Replace a `std::tuple` used as a list with `sub0::Types`. `SubscribeAll` code that was not changed no
+longer compiles (its `receive()` overloads do not accept the tuple), and `ForwardSubscribeAll` / `ForwardPublishAll`
+reject a `std::tuple` with a message that says so, because a forwarder of the tuple type would otherwise compile.
+
 ### The policy macros are removed: defaults come from the project header
 
 `SUB0PUB_REENTRANT_SAFE`, `SUB0PUB_CANCEL`, `SUB0PUB_FILTER` and `SUB0PUB_THREAD_SAFE` set an option for every `Data`
